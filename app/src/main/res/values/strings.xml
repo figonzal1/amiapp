@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">AMI</string>
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+    <!-- General -->
+    <string name="error_invalid_email">Correo no válido</string>
+    <string name="error_invalid_name">Nombre no válido</string>
+    <string name="error_field_required">Campo requerido</string>
+    <string name="retry">Volver a intentar</string>
+    <string name="did_forget_your_pass">¿Olvidaste tu contraseña?</string>
+
+    <!-- Strings login -->
+    <string name="title_activity_login">Inicio sesión</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Ingresar</string>
+    <string name="email_dont_exist">No existe una cuenta con el correo ingresado</string>
+    <string name="ask_new_account">¿Quieres registrarte?</string>
+
+
+    <!-- Se muestra en el teclado del movil -->
+    <string name="action_sign_in_short">Listo</string>
+    <string name="error_invalid_password">Contraseña demasiado corta</string>
+    <string name="error_match_password">Las contraseñas no coinciden</string>
+    <string name="error_incorrect_password">Contraseña incorrecta</string>
+    <string name="permission_rationale">"Permisos requeridos para acceder a Contactos."</string>
+
+    <!-- String register -->
+    <string name="titleActivityRegister">Registro</string>
+    <string name="promptPasswordRepeat">Repetir contraseña</string>
+    <string name="actionSignUp">Registrar</string>
+    <string name="promptName">Nombre</string>
+    <string name="registrateEnAMI">Regístrate en AMI</string>
+    <string name="email_already_exist">"El email ingresado ya esta asociado a una cuenta"</string>
+    <string name="insert_another_email">"Ingresa otro correo"</string>
+
+    <!-- String restablecerPass -->
+    <string name="titleActivityRestorePass">Restablecer contraseña</string>
+    <string name="actionRestablecerPass">Enviar</string>
+    <string name="ingresaCorreo">Ingresa tu correo registrado</string>
+
+    <!-- String menu AppBar -->
+    <string name="action_settings">Configuración</string>
+    <string name="action_search">Buscar</string>
+
+    <!-- Edit Profile Strings -->
+    <string name="titleActivityEditProfile">Editar Perfil</string>
+    <string name="getProfileError">No se pudo obtener su perfil</string>
+    <string name="editProfileTitle">Editar perfil</string>
+    <string name="editProfileLeyend">Aquí puedes actualizar tus datos</string>
+    <string name="editProfileName">Nombre</string>
+    <string name="editProfileEmail">Correo</string>
+    <string name="editProfileDate">Fecha de nacimiento</string>
+    <string name="editProfileOccupation">Ocupación</string>
+    <string name="editProfileGenre">Género</string>
+    <string name="editProfileSave">Guardar</string>
+    <string name="editProfilePhone">Teléfono (Opcional)</string>
+    <string name="fetching">Obteniendo los datos</string>
+    <string name="fetchingFail">No se han podido obtener tus datos correctamente</string>
+    <string name="saving">Guardando los datos</string>
+    <string name="saveOk">Tus datos se han guardado correctamente</string>
+    <string name="restoreEmailSend">Se ha enviado un email de restauración</string>
+    <string name="restoreEmailNotExists">No se encuentra una cuenta con el email ingresado</string>
+    <string name="saveFail">Tus datos no se han podido guardar, inténtalo más tarde nuevamente</string>
+    <string name="duplicateUser">Ya existe una cuenta con el email ingresado</string>
+    <string name="wait">Espere por favor…</string>
+    <string name="dateDialog">Ingrese su cumpleaños</string>
+    <string name="errorInvalidName">Este nombre parece ser inválido</string>
+    <string name="defaultOccupation">Otro</string>
+    <string name="defaultGenre">Otro</string>
+
+    <!-- After Login Strings -->
+    <string name="titleActivityAfterLogin">Bienvenido</string>
+    <string name="afterLoginTitle">¡Bienvenido a AMI!</string>
+    <string name="afterLoginLeyend">Desde ahora podrás enterarte de las mejores ofertas pensadas en tus gustos, pero primero necesitamos conocer un poco más de tí…</string>
+    <string name="afterLoginDate">Fecha de nacimiento</string>
+    <string name="AL_textViewBirthDate">¿Cuándo naciste?</string>
+    <string name="AL_textViewOccupation">¿A qué te dedicas?</string>
+    <string name="AL_textViewGenre">¿Cuál es tu género?</string>
+    <string name="AL_textViewUbication">¿En dónde vives?</string>
+    <string name="afterLoginContinue">Continuar</string>
+    <string name="occupationNoSelected">Seleccionar Ocupación</string>
+    <string name="genreNoSelected">Seleccionar Género</string>
+    <string name="countryNoSelected">Seleccionar País</string>
+    <string name="regionNoSelected">Seleccionar Región</string>
+    <string name="provinceNoSelected">Seleccionar Provincia</string>
+    <string name="communeNoSelected">Seleccionar Comuna</string>
+
+    <!-- Explore Offers Strings -->
+    <string name="titleActivityExploreOffers">Explorar ofertas</string>
+
+    <!-- Offer Strings -->
+    <string name="reserve_ok">Reserva realizada!</string>
+    <string name="reserving">Reservando</string>
+    <string name="operation_fail">Ha ocurrido un error</string>
+</resources>

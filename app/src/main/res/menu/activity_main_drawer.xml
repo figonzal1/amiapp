@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_edit_profile"
+            android:icon="@drawable/nav_edit_profile"
+            android:title="Editar Perfil" />
+        <item
+            android:id="@+id/nav_my_preferences"
+            android:icon="@drawable/nav_my_preferences"
+            android:title="Mis Gustos" />
+        <item
+            android:id="@+id/nav_reservations"
+            android:icon="@drawable/nav_my_reservations"
+            android:title="Mis Reservas" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/nav_manage"
+            android:title="Configuración" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="Cerrar Sesión" />
+    </group>
+
+    <item android:title="Comunícate">
+        <menu>
+            <item
+                android:id="@+id/nav_contact_us"
+                android:icon="@drawable/nav_contact_us"
+                android:title="Contáctanos" />
+        </menu>
+    </item>
+
+</menu>
