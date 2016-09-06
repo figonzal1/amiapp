@@ -29,7 +29,5 @@ public class CategoryView extends AppCompatActivity {
         Picasso.with(this).load(Config.URL_IMAGES_CATEGORY+bundle.getString(Config.TAG_GC_IMAGE))
                 .into(ivImage);
 
-
-
     }
 }

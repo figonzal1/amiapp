@@ -60,11 +60,11 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
                    android:value="AIzaSyBqz3kiAPD6gFdPjo71dAHIEnx0VUnqEmg" />
 
-        <activity
+       <!-- <activity
             android:name=".MapsActivity"
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme">
-        </activity>
+        </activity>-->
 
         <activity android:name=".Category.CategoryView"/>
         <activity android:name=".Offer.OfferView"/>

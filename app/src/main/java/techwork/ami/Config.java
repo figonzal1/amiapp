@@ -25,7 +25,6 @@ public class Config {
 	//public static final String URL_IMAGES_OFFER2 ="http://amiapp.cl/admin/public/uploads/";
 	public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String TAG_GO_OFFERS="offers";
-	public static final String TAG_GO_OFFERS2="ofertas";
 	public static final String TAG_GO_OFFER_ID="id";
 	public static final String TAG_GO_TITLE="titulo";
 	public static final String TAG_GO_DESCRIPTION="descripcion";
@@ -38,7 +37,6 @@ public class Config {
 	public static final String TAG_GO_MAXXPER="maxPPersona";
 	public static final String TAG_GO_COMPANY="empresa";
 	public static final String TAG_GO_IMAGE ="imagen" ;
-	public static final String URL_OFFERT_IMAGE_DEFAULT = "imageDefault.svg";
 
 	// Keys that will be used to send the request to php scripts
 	public static final  String KEY_ID ="id"; // UP = Update Profile

@@ -28,6 +28,7 @@ import java.util.List;
 import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
+import techwork.ami.RequestHandler;
 
 
 public class FragmentCategory extends Fragment {
@@ -67,86 +68,69 @@ public class FragmentCategory extends Fragment {
         GridLayoutManager layout = new GridLayoutManager(getActivity(), 2);
         rv.setLayoutManager(layout);
 
-        //Seteamos el adapter y le pasamos categoryList vacio, para evitar un error skipLayout
-        categoryList = new ArrayList<CategoryModel>();
-        adapter = new CategoryAdapter(getActivity(),categoryList);
-        rv.setAdapter(adapter);
-
         //Llammamos a la clase que permitira realzar acciones de segundo plano.
-        new CategoryAsyncTask().execute(Config.URL_GET_CATEGORY);
+        getCategories();
         return v;
     }
 
-    //Clase que realiza operaciones antes,durante y despues de la carga de datos.
-    class CategoryAsyncTask extends AsyncTask<String,Void,Integer> {
-        ProgressDialog loading = new ProgressDialog(getActivity());
+    private void getCategories() {
+        sendGetRequest();
+    }
+
+    private void sendGetRequest() {
+
+        //Clase que realiza operaciones antes,durante y despues de la carga de datos.
+        class CategoryAsyncTask extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading = new ProgressDialog(getActivity());
 
 
-        //Se ejecuta antes de que se carguen los datos (Hacemos esperar al usuario)
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            loading = ProgressDialog.show(getContext(),
-                    getResources().getString(R.string.fetching),
-                    getResources().getString(R.string.wait),false,false);
-        }
-
-        /*Clase que realiza tareas de segundo plano y
-        llama a otra la clase categoryData que obtendra los datos de la BD.*/
-        @Override
-        protected Integer doInBackground(String... strings) {
-            Integer result = 0;
-            HttpURLConnection urlConnection;
-            try {
-                URL url = new URL(strings[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                int statusCode = urlConnection.getResponseCode();
-
-                if (statusCode == 200) {
-                    BufferedReader r = new BufferedReader((new InputStreamReader(urlConnection.getInputStream())));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        response.append(line);
-                    }
-                    getCategoryData(response.toString());
-                    result = 1; // Successful
-                } else {
-                    result = 0; //"Failed to fetch data!";
-                }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                Log.d("Recycle view",e.getLocalizedMessage());
+            //Se ejecuta antes de que se carguen los datos (Hacemos esperar al usuario)
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
             }
-            return result;
-        }
 
-        //Clase que realiza operaciones despues de cargar datos. Carga los datos en el adapter de RecycleView.
-        @Override
-        protected void onPostExecute(Integer result) {
-            loading.dismiss();
+            /*Clase que realiza tareas de segundo plano y
+            llama a otra la clase categoryData que obtendra los datos de la BD.*/
+            @Override
+            protected String doInBackground(Void... strings) {
+                RequestHandler rh = new RequestHandler();
+                return rh.sendGetRequest(Config.URL_GET_CATEGORY);
 
-            if(result==1){
-                adapter = new CategoryAdapter(getActivity(),categoryList);
-                rv.setAdapter(adapter);
-                adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
-                    @Override
-                    public void onItemClick(View view) {
-                        Intent intent = new Intent(getActivity(), CategoryView.class);
-                        int position= rv.getChildAdapterPosition(view);
-                        CategoryModel c = categoryList.get(position);
+            }
 
-                        intent.putExtra(Config.TAG_GC_NAME,c.getName());
-                        intent.putExtra(Config.TAG_GC_ID,c.getId());
-                        intent.putExtra(Config.TAG_GC_IMAGE,c.getImage());
-                        startActivity(intent);
-                    }
-                });
-            }else {
-                Toast.makeText(getActivity(),"Failed to fetch data!",Toast.LENGTH_SHORT).show();
+            //Clase que realiza operaciones despues de cargar datos. Carga los datos en el adapter de RecycleView.
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //refreshLayout.setRefreshing(false);
+                showCategories(s);
             }
         }
+
+        CategoryAsyncTask go = new CategoryAsyncTask();
+        go.execute();
+    }
+
+    //Clase que muestra lso datos en el recycler view y realiza el listener del click
+    private void showCategories(String s){
+        getCategoryData(s);
+        adapter= new CategoryAdapter(getActivity(),categoryList);
+        rv.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+            @Override
+            public void onItemClick(View view) {
+                Intent intent = new Intent(getActivity(),CategoryView.class);
+                int position = rv.getChildAdapterPosition(view);
+                CategoryModel c = categoryList.get(position);
+
+                intent.putExtra(Config.TAG_GC_ID,c.getId());
+                intent.putExtra(Config.TAG_GC_NAME,c.getName());
+                intent.putExtra(Config.TAG_GC_IMAGE,c.getImage());
+                startActivity(intent);
+            }
+        });
     }
 
     //Clase que itera sobre el json array para obtener datos de la BD.
@@ -175,4 +159,5 @@ public class FragmentCategory extends Fragment {
             e.printStackTrace();
         }
     }
+
 }
