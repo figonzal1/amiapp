@@ -1,4 +1,4 @@
-package techwork.ami.category;
+package techwork.ami.Category;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

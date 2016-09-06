@@ -10,6 +10,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
+import techwork.ami.Category.FragmentCategory;
+
 /**
  * Created by Daniel on 27-07-2016.
  */

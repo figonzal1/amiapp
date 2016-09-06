@@ -1,4 +1,4 @@
-package techwork.ami;
+package techwork.ami.Category;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,9 +25,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import techwork.ami.category.CategoryAdapter;
-import techwork.ami.category.CategoryModel;
-import techwork.ami.category.CategoryView;
+import techwork.ami.Config;
+import techwork.ami.OnItemClickListenerRecyclerView;
+import techwork.ami.R;
 
 
 public class FragmentCategory extends Fragment {

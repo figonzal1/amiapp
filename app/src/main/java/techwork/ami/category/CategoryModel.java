@@ -1,4 +1,4 @@
-package techwork.ami.category;
+package techwork.ami.Category;
 
 /**
  * Created by tataf on 20-08-2016.

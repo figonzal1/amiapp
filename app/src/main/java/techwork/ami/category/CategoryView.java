@@ -1,4 +1,4 @@
-package techwork.ami.category;
+package techwork.ami.Category;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

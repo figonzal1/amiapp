@@ -23,7 +23,7 @@ public class Config {
 
 	// GO = Get Offers
 	//public static final String URL_IMAGES_OFFER2 ="http://amiapp.cl/admin/public/uploads/";
-	public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/CategoryList/imagenes/";
+	public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String TAG_GO_OFFERS="offers";
 	public static final String TAG_GO_OFFERS2="ofertas";
 	public static final String TAG_GO_OFFER_ID="id";
@@ -84,7 +84,7 @@ public class Config {
 	public static final String TAG_EXIST_EMAIL ="emailExiste";
 
 	//Tags and Url for CategoryFragments
-	public static final String URL_IMAGES_CATEGORY="http://amiapp.cl/public/getData/CategoryList/imagenes/";
+	public static final String URL_IMAGES_CATEGORY="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String TAG_GC_CATEGORY= "categorias";
 	public static final String TAG_GC_ID="idCategoria";
 	public static final String TAG_GC_NAME="nombre";
