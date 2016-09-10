@@ -104,34 +104,7 @@ public class FragmentHome extends Fragment {
             protected String doInBackground(Void... voids) {
                 RequestHandler rh = new RequestHandler();
                 return rh.sendGetRequest(Config.URL_GET_OFFERS);
-                /* TODO
-                Integer result = 0;
-                HttpURLConnection urlConnection;
-                try {
-                    URL url = new URL(strings[0]);
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    int statusCode = urlConnection.getResponseCode();
 
-                    if (statusCode == 200) {
-                        BufferedReader r = new BufferedReader((new InputStreamReader(urlConnection.getInputStream())));
-                        StringBuilder response = new StringBuilder();
-                        String line;
-                        while ((line = r.readLine()) != null) {
-                            response.append(line);
-                        }
-                        // Get data from DB
-                        getData(response.toString());
-                        // Successful
-                        result = 1;
-                    } else {
-                        // Failed to fetch data!;
-                        result = 0;
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    Log.d("Recycle view",e.getLocalizedMessage());
-                }*/
             }
 
             // Do operations after load data from DB.
