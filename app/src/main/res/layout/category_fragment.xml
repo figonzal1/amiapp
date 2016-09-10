@@ -2,28 +2,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     tools:context=".Category.FragmentCategory">
 
-    <RelativeLayout
+    <!-- Permite realizar el refresh del fragment -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tx_category"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Listado de Categorías"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_marginBottom="25dp"/>
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_category"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:layout_below="@+id/tx_category"/>
-
-    </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                />
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

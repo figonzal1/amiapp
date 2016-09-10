@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,6 +38,8 @@ public class FragmentCategory extends Fragment {
     private CategoryAdapter adapter;
     private List<CategoryModel> categoryList;
     private RecyclerView rv;
+    private GridLayoutManager layout;
+    private SwipeRefreshLayout refreshLayout;
 
     public FragmentCategory() {
         // Required empty public constructor
@@ -65,8 +68,19 @@ public class FragmentCategory extends Fragment {
         rv.setHasFixedSize(true);
 
         //Seteamos el layout que usara el recycle view
-        GridLayoutManager layout = new GridLayoutManager(getActivity(), 2);
+        layout = new GridLayoutManager(getActivity(), 2);
         rv.setLayoutManager(layout);
+
+        //Refreshing fragment
+        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.refresh_recycle_view);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getCategories();
+            }
+        });
 
         //Llammamos a la clase que permitira realzar acciones de segundo plano.
         getCategories();
@@ -103,7 +117,7 @@ public class FragmentCategory extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                //refreshLayout.setRefreshing(false);
+                refreshLayout.setRefreshing(false);
                 showCategories(s);
             }
         }
