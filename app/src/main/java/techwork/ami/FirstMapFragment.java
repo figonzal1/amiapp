@@ -1,6 +1,6 @@
 package techwork.ami;
 
-/*
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +10,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 
 
-*/
+
 /**
  * Muestra el mapa
- *//*
+ */
 
 public class FirstMapFragment extends SupportMapFragment {
 
@@ -32,4 +32,4 @@ public class FirstMapFragment extends SupportMapFragment {
         return root;
     }
 
-}*/
+}
