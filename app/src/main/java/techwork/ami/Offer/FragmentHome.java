@@ -1,6 +1,5 @@
 package techwork.ami.Offer;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,14 +28,7 @@ import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@ link FragmentHome.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentHome#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class FragmentHome extends Fragment {
 
     // Required for fragment use
@@ -77,7 +69,7 @@ public class FragmentHome extends Fragment {
         rv.setLayoutManager(layout);
 
         //Refreshing layout
-        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.refresh_recycle_view_offer);
+        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_offer);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
