@@ -2,6 +2,7 @@ package techwork.ami.Category;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -67,11 +68,38 @@ public class FragmentCategory extends Fragment {
         rv = (RecyclerView) v.findViewById(R.id.recycler_view_category);
         rv.setHasFixedSize(true);
 
-        //Seteamos el layout que usara el recycle view
-        layout = new GridLayoutManager(getActivity(), 2);
+        //Evita el error de skipping layout
+        //adapter= new CategoryAdapter(getActivity(),categoryList);
+
+        // Category list in normal size screen. (Tablet Screen )
+        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            Toast.makeText(getContext(), "Large screen", Toast.LENGTH_LONG).show();
+            //3 cardviews per row in portrait view
+            if (getResources().getConfiguration().orientation==1){
+                layout = new GridLayoutManager(getActivity(), 3);
+            }
+            //4 cardviews per row in landscape view
+            else if (getResources().getConfiguration().orientation==2){
+                layout = new GridLayoutManager(getActivity(), 4);
+            }
+        }
+
+        // Category list in normal size screen. (Phone Screen )
+        else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+            Toast.makeText(getContext(), "Normal sized screen", Toast.LENGTH_LONG).show();
+
+            //2 cardviews per row in portrait view
+            if (getResources().getConfiguration().orientation==1){
+                layout = new GridLayoutManager(getActivity(), 2);
+            }
+            //3 cardviews per row in landscape view
+            else if (getResources().getConfiguration().orientation==2){
+                layout = new GridLayoutManager(getActivity(), 3);
+            }
+        }
         rv.setLayoutManager(layout);
 
-        //Refreshing fragment
+        // Refreshing fragment
         refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.refresh_recycle_view);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
@@ -126,7 +154,7 @@ public class FragmentCategory extends Fragment {
         go.execute();
     }
 
-    //Clase que muestra lso datos en el recycler view y realiza el listener del click
+    //Clase que muestra los datos en el recycler view y realiza el listener del click
     private void showCategories(String s){
         getCategoryData(s);
         adapter= new CategoryAdapter(getActivity(),categoryList);
