@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import techwork.ami.Category.FragmentCategory;
+import techwork.ami.Offer.FragmentHome;
 
 /**
  * Created by Daniel on 27-07-2016.

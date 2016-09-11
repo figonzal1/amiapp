@@ -36,7 +36,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         public TextView offerPrice;
         public TextView offerCompany;
         // TODO: no se aprecia, borrar
-        // public TextView offerDescription;
+        public TextView offerDescription;
         public ImageView offerImage;
 
         public OfferViewHolder(View itemView) {
@@ -44,8 +44,8 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
             offerTitle = (TextView)itemView.findViewById(R.id.offer_tittle);
             offerPrice = (TextView)itemView.findViewById(R.id.offer_price);
             // TODO: implementar
-            //offerCompany = (TextView)itemView.findViewById(R.id.offer_company);
-            //offerDescription= (TextView)itemView.findViewById(R.id.offer_description);
+            offerCompany = (TextView)itemView.findViewById(R.id.offer_company);
+            offerDescription= (TextView)itemView.findViewById(R.id.offer_description);
             offerImage = (ImageView)itemView.findViewById(R.id.offer_photo);
         }
     }
@@ -65,15 +65,13 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         OfferModel offer = items.get(position);
         holder.offerTitle.setText(offer.getTitle());
         holder.offerPrice.setText("$"+String.format(Config.CLP_FORMAT,offer.getPrice()));
-        //holder.offerCompany.setText(offer.getCompany());
+        holder.offerCompany.setText(offer.getCompany());
+        holder.offerDescription.setText(offer.getDescription());
         String s = offer.getImage();
-        /*
-        if (null == s || s.equals("")){
-            holder.offerImage.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.image_default, null));
-        }
-        else{*/
-            Picasso.with(context).load(Config.URL_IMAGES_OFFER+s).placeholder(R.drawable.image_default).into(holder.offerImage);
-        //}
+        Picasso.with(context).load(Config.URL_IMAGES_OFFER+s)
+                .placeholder(R.drawable.image_default)
+                .into(holder.offerImage);
+
     }
     @Override
     public int getItemCount() {

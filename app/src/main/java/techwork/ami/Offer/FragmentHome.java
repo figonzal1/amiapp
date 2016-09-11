@@ -1,10 +1,11 @@
-package techwork.ami;
+package techwork.ami.Offer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,9 +24,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import techwork.ami.Offer.OfferAdapter;
-import techwork.ami.Offer.OfferModel;
-import techwork.ami.Offer.OfferView;
+import techwork.ami.Config;
+import techwork.ami.OnItemClickListenerRecyclerView;
+import techwork.ami.R;
+import techwork.ami.RequestHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +43,8 @@ public class FragmentHome extends Fragment {
     private OfferAdapter adapter;
     private List<OfferModel> offerList;
     private RecyclerView rv;
+    private LinearLayoutManager layout;
+    private SwipeRefreshLayout refreshLayout;
 
     // Empty constructor (default)
     public FragmentHome() {
@@ -65,18 +69,23 @@ public class FragmentHome extends Fragment {
         rv = (RecyclerView) v.findViewById(R.id.recycler_view_offer);
         rv.setHasFixedSize(true);
 
+        //Evita el error de skipping layout
+        //adapter= new OfferAdapter(getActivity(),offerList);
+
         // Set the layout that will use recycle view
-        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        layout = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layout);
 
-        // TODO: es posible borrar esto
-        // Set the adapter, pass empty object offers (not necessary, cause set this in onPostExecute
-        //offerList = new ArrayList<OfferModel>();
-        //adapter = new OfferAdapter(getContext(),offerList);
-        //rv.setAdapter(adapter);
+        //Refreshing layout
+        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.refresh_recycle_view_offer);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getOffers();
+            }
+        });
 
-        // Set class to execute async task
-        // TODO: actualizar cuando se mejore la DB (CAMBIAR DE OFFER2 A 1 para el otro select por ej)
         getOffers();
         return v;
     }
@@ -89,19 +98,17 @@ public class FragmentHome extends Fragment {
     private void sendGetRequest(){
         // Execute operations before, durign and after of data load
         class MyAsyncTask extends AsyncTask<Void,Void,String> {
-            ProgressDialog loading = new ProgressDialog(getActivity());
+
 
             // Execute before load data (user waiting)
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                // Pop up waiting (for user)
-                loading = ProgressDialog.show(getContext(), getResources().getString(R.string.fetching), getResources().getString(R.string.wait), false, false);
             }
 
             // Class that execute background task (get BD data).
             @Override
-            protected String doInBackground(Void... voids) {
+            protected String doInBackground(Void... strings) {
                 RequestHandler rh = new RequestHandler();
                 return rh.sendGetRequest(Config.URL_GET_OFFERS);
 
@@ -112,7 +119,7 @@ public class FragmentHome extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+                refreshLayout.setRefreshing(false);
                 showOffers(s);
             }
         }
@@ -149,7 +156,7 @@ public class FragmentHome extends Fragment {
         try{
 
             JSONObject jsonObject = new JSONObject(json);
-            //CAMBIAR OFFER2 a OFFER para acceder al otro select
+
             JSONArray jsonOffers = jsonObject.optJSONArray(Config.TAG_GO_OFFERS);
             Calendar c = Calendar.getInstance();
             offerList = new ArrayList<>();
@@ -159,7 +166,7 @@ public class FragmentHome extends Fragment {
                 JSONObject jsonObjectItem = jsonOffers.optJSONObject(i);
                 OfferModel item = new OfferModel();
 
-                dIni =jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
+                dIni =jsonObjectItem.getString(Config.TAG_GO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
                 dateIni= format.parse(dIni);
                 dateFin =format.parse(dFin);
@@ -178,7 +185,7 @@ public class FragmentHome extends Fragment {
                 item.setFinalDate(String.format(Locale.US, Config.DATE_FORMAT, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH)+1, c.get(Calendar.YEAR)));
 
                 item.setMaxPPerson(jsonObjectItem.getInt(Config.TAG_GO_MAXXPER));
-                //item.setCompany(jsonObjectItem.getString(Config.TAG_GO_COMPANY));
+                item.setCompany(jsonObjectItem.getString(Config.TAG_GO_COMPANY));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GO_IMAGE));
 
                 offerList.add(item);
