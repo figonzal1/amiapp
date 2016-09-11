@@ -100,9 +100,8 @@ public class FragmentCategory extends Fragment {
         rv.setLayoutManager(layout);
 
         // Refreshing fragment
-        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.refresh_recycle_view);
+        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_category);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -110,7 +109,7 @@ public class FragmentCategory extends Fragment {
             }
         });
 
-        //Llammamos a la clase que permitira realzar acciones de segundo plano.
+        //Llamamos a la clase que permitira realzar acciones de segundo plano.
         getCategories();
         return v;
     }

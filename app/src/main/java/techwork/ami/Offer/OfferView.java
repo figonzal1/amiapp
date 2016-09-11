@@ -46,13 +46,12 @@ public class OfferView extends AppCompatActivity {
             offerDescription.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
             offerPrice.setText("$" + String.format(Config.CLP_FORMAT, bundle.getInt(Config.TAG_GO_PRICE)));
 
-            //Cambiar URL_IMAGES_OFFER2 (Usaba tabla Oferta mayuscula y no tenia fotos)
+
             String s = bundle.getString(Config.TAG_GO_IMAGE);
-            if (null == s || s.equals("")) {
-                offerImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.image_default, null));
-            } else {
-                Picasso.with(this).load(Config.URL_IMAGES_OFFER + s).into(offerImage);
-            }
+            Picasso.with(this).load(Config.URL_IMAGES_OFFER + s)
+                    .placeholder(R.drawable.image_default)
+                    .into(offerImage);
+
 
             btnReserve = (Button) findViewById(R.id.viewOfferBtnReserve);
             btnReserve.setOnClickListener(new View.OnClickListener() {

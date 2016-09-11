@@ -11,10 +11,9 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import techwork.ami.Category.FragmentCategory;
+import techwork.ami.Need.FragmentNeed;
+import techwork.ami.Offer.FragmentHome;
 
-/**
- * Created by Daniel on 27-07-2016.
- */
 public class MainPageAdapter extends FragmentPagerAdapter {
     private static final int HOME = 0;
     private static final int CATEGORY = 1;
@@ -50,7 +49,7 @@ public class MainPageAdapter extends FragmentPagerAdapter {
                 f = FragmentCategory.newInstance();
                 break;
             case NECESIDAD:
-                f = FragmentMap.newInstance();
+                f = FragmentNeed.newInstance();
                 break;
         }
         return f;
