@@ -32,11 +32,13 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:id="@+id/login_imageView"
                 android:src="@drawable/logo_ami"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="30dp"
                 />
 
             <android.support.design.widget.TextInputLayout
@@ -47,6 +49,7 @@
                     android:id="@+id/login_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="30sp"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
@@ -58,10 +61,12 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/login_password"
+                    android:textSize="30sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -81,7 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"/>
 
             <Button
                 android:id="@+id/login_start_restorePassActivity"
@@ -90,7 +97,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/titleActivityRestorePass"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"/>
 
             <Button
                 android:id="@+id/login_start_registerActivity"
@@ -99,7 +108,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/titleActivityRegister"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"/>
 
         </LinearLayout>
     </ScrollView>
