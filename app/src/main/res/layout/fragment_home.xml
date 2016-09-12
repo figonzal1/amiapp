@@ -11,6 +11,7 @@
         android:id="@+id/swipe_refresh_offer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -19,7 +20,8 @@
                 android:id="@+id/recycler_view_offer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"/>
+                android:scrollbars="vertical"
+                />
 
         </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>

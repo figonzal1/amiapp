@@ -10,13 +10,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground">
 
 
         <!-- Width y height dan el tamaño de la foto (ImageView)-->
         <ImageView
             android:id="@+id/category_photo"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/logo_ami"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Entretención"
+            android:text="Categoría"
             android:textColor="#ffffff"
             android:background="#99000000"
             android:gravity="center"

@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -123,7 +124,9 @@ public class FragmentHome extends Fragment {
     private void showOffers(String s){
         getData(s);
         adapter = new OfferAdapter(getActivity(), offerList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
+
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {

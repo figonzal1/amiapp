@@ -27,6 +27,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -66,7 +72,7 @@ public class FragmentCategory extends Fragment {
         //Inflamos el view y buscamos el recycle view en los layouts
         View v = inflater.inflate(R.layout.category_fragment, container, false);
         rv = (RecyclerView) v.findViewById(R.id.recycler_view_category);
-        rv.setHasFixedSize(true);
+
 
         //Evita el error de skipping layout
         //adapter= new CategoryAdapter(getActivity(),categoryList);
@@ -156,8 +162,10 @@ public class FragmentCategory extends Fragment {
     //Clase que muestra los datos en el recycler view y realiza el listener del click
     private void showCategories(String s){
         getCategoryData(s);
+
         adapter= new CategoryAdapter(getActivity(),categoryList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
