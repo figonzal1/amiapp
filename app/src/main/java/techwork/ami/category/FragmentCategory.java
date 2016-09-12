@@ -171,7 +171,13 @@ public class FragmentCategory extends Fragment {
                 intent.putExtra(Config.TAG_GC_IMAGE,c.getImage());
                 startActivity(intent);
             }
+
+            @Override
+            public void onItemLongClick(View view) {
+                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
+            }
         });
+
     }
 
     //Clase que itera sobre el json array para obtener datos de la BD.

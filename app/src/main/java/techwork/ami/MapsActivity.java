@@ -1,5 +1,6 @@
 package techwork.ami;
 
+/*
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -182,3 +183,4 @@ public class MapsActivity extends AppCompatActivity implements
     };
 }
 
+*/

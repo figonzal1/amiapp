@@ -31,8 +31,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:id="@+id/register_imageView"
                 android:src="@drawable/logo_ami"
                 android:layout_gravity="center_horizontal" />

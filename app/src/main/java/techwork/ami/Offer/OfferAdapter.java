@@ -4,7 +4,9 @@ package techwork.ami.Offer;
 import android.content.Context;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,7 +20,7 @@ import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
-public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder> implements View.OnClickListener {
+public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder> implements View.OnClickListener,View.OnLongClickListener {
 
     private OnItemClickListenerRecyclerView itemClick;
     private List<OfferModel> items;
@@ -35,7 +37,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         public TextView offerTitle;
         public TextView offerPrice;
         public TextView offerCompany;
-        // TODO: no se aprecia, borrar
+
         public TextView offerDescription;
         public ImageView offerImage;
 
@@ -43,7 +45,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
             super(itemView);
             offerTitle = (TextView)itemView.findViewById(R.id.offer_tittle);
             offerPrice = (TextView)itemView.findViewById(R.id.offer_price);
-            // TODO: implementar
+
             offerCompany = (TextView)itemView.findViewById(R.id.offer_company);
             offerDescription= (TextView)itemView.findViewById(R.id.offer_description);
             offerImage = (ImageView)itemView.findViewById(R.id.offer_photo);
@@ -54,6 +56,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
     @Override
     public OfferAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_card_view,parent,false);
+        v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         OfferViewHolder vh = new OfferViewHolder(v);
         return vh;
@@ -78,6 +81,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         return (null != items)? items.size() : 0;
     }
 
+    //Simple click item
     @Override
     public void onClick(View view) {
         if (itemClick!=null){
@@ -85,8 +89,19 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         }
     }
 
+    //Long click item
+    @Override
+    public boolean onLongClick(View view) {
+        if (itemClick!=null) {
+            itemClick.onItemLongClick(view);
+        }
+        return true;
+    }
+
+
     public void setOnItemClickListener(OnItemClickListenerRecyclerView listener){
         this.itemClick = listener;
+
     }
 
 }

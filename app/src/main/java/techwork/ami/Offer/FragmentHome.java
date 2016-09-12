@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,6 +136,11 @@ public class FragmentHome extends Fragment {
                 intent.putExtra(Config.TAG_GO_PRICE, o.getPrice());
                 intent.putExtra(Config.TAG_GO_OFFER_ID, o.getId());
                 startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view) {
+                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
             }
         });
     }
