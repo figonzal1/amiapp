@@ -8,6 +8,10 @@
     <string name="error_field_required">Campo requerido</string>
     <string name="retry">Volver a intentar</string>
     <string name="did_forget_your_pass">¿Olvidaste tu contraseña?</string>
+    <string name="close_without_save">¿Estás seguro que quieres salir?</string>
+    <string name="close_without_save_title">Existen cambios sin guardar</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
 
     <!-- Strings login -->
     <string name="title_activity_login">Inicio sesión</string>

@@ -6,15 +6,20 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -42,6 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	static final String KEY_GENRES_NAMES = "genresNames";
 	static final String KEY_GENRES_MAP = "genresMap";
 	static final String KEY_GENRES_SELECTION = "genresSelection";
+	static final String KEY_UNSAVED_CHANGES = "unsavedChanges";
 
 	// UI references
 	EditText editTextName;
@@ -65,6 +71,8 @@ public class EditProfileActivity extends AppCompatActivity {
 	// Defines if the form is enable
 	boolean formState;
 
+	boolean unsavedChanges;
+
 	static int day;
 	static int month; // Starts from 0
 	static int year;
@@ -79,6 +87,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
 		// Get the id of the profile from the login data
 		id = getProfileId();
+
+		unsavedChanges = false;
 
 		// Prevent the keyboard
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -109,6 +119,8 @@ public class EditProfileActivity extends AppCompatActivity {
 				genresMap = (HashMap<String, String>) savedInstanceState.getSerializable(KEY_GENRES_MAP);
 				setGenresList();
 				spinnerGenre.setSelection(savedInstanceState.getInt(KEY_GENRES_SELECTION));
+
+				unsavedChanges = savedInstanceState.getBoolean(KEY_UNSAVED_CHANGES);
 			}
 		} else
 			// Disable the form until get the profile data
@@ -134,11 +146,14 @@ public class EditProfileActivity extends AppCompatActivity {
 		datePickerFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-				year = y;
-				day = d;
-				month = m;
-				// Update the textEdit with the selected date
-				setDate(year, month + 1, day);
+				if ((year != y) || (day != d) || (month != m)) {
+					year = y;
+					day = d;
+					month = m;
+
+					// Update the textEdit with the selected date
+					setDate(year, month + 1, day);
+				}
 			}
 		});
 	}
@@ -208,8 +223,6 @@ public class EditProfileActivity extends AppCompatActivity {
 				Toast.makeText(getApplicationContext(),
 						getResources().getString(R.string.fetchingFail), Toast.LENGTH_LONG).show();
 				return;
-			} else {
-				enableForm(true);
 			}
 
 			String name = profile.getString(Config.TAG_NAME);
@@ -249,9 +262,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
 			// Select the current profile occupation
 			if (!occupation.isEmpty() && !occupation.equals("null"))
-				spinnerOccupation.setSelection(adapterOccupation.getPosition(occupation));
+				spinnerOccupation.setSelection(adapterOccupation.getPosition(occupation), false);
 			else
-				spinnerOccupation.setSelection(adapterOccupation.getPosition(getResources().getString(R.string.defaultOccupation)));
+				spinnerOccupation.setSelection(adapterOccupation.getPosition(getResources().getString(R.string.defaultOccupation)), false);
 
 			// Fill the genres spinner
 			getGenres(jsonObject);
@@ -260,13 +273,50 @@ public class EditProfileActivity extends AppCompatActivity {
 
 			// Select the current profile genre
 			if (!genre.isEmpty() && !genre.equals("null"))
-				spinnerGenre.setSelection(adapterGenre.getPosition(genre));
+				spinnerGenre.setSelection(adapterGenre.getPosition(genre), false);
 			else
-				spinnerGenre.setSelection(adapterGenre.getPosition(getResources().getString(R.string.defaultGenre)));
+				spinnerGenre.setSelection(adapterGenre.getPosition(getResources().getString(R.string.defaultGenre)), false);
+
+			enableForm(true);
+
+			setChangesListeners();
 
 		} catch (JSONException | ParseException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void setChangesListeners() {
+		TextWatcher tw = new TextWatcher(){
+			public void afterTextChanged(Editable s) {
+			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (formState) {
+					unsavedChanges = true;
+				}
+			}
+		};
+
+		AdapterView.OnItemSelectedListener oisl = new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				if (formState) {
+					unsavedChanges = true;
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {}
+		};
+
+		editTextName.addTextChangedListener(tw);
+		editTextEmail.addTextChangedListener(tw);
+		editTextDate.addTextChangedListener(tw);
+		editTextPhone.addTextChangedListener(tw);
+
+		spinnerOccupation.setOnItemSelectedListener(oisl);
+		spinnerGenre.setOnItemSelectedListener(oisl);
 	}
 
 	// Fill the occupation arrays with the data from the JSON
@@ -450,8 +500,9 @@ public class EditProfileActivity extends AppCompatActivity {
 				super.onPostExecute(s);
 				loading.dismiss();
 				if (s.equals("0")) {
+					unsavedChanges = false;
 
-					Snackbar.make(findViewById(android.R.id.content), R.string.saveOk, Snackbar.LENGTH_LONG)
+					Snackbar.make(findViewById(R.id.coordinatorLayout), R.string.saveOk, Snackbar.LENGTH_LONG)
 							.show();
 
 					// Save the new data of the profile on the application's shared preferences
@@ -463,7 +514,7 @@ public class EditProfileActivity extends AppCompatActivity {
 					editor.apply();
 				}
 				else
-					Snackbar.make(findViewById(android.R.id.content), R.string.saveFail, Snackbar.LENGTH_LONG)
+					Snackbar.make(findViewById(R.id.coordinatorLayout), R.string.saveFail, Snackbar.LENGTH_LONG)
 							.setAction(R.string.retry, new View.OnClickListener() {
 								@Override
 								@TargetApi(Build.VERSION_CODES.M)
@@ -525,8 +576,30 @@ public class EditProfileActivity extends AppCompatActivity {
 			savedInstanceState.putInt(KEY_GENRES_SELECTION, spinnerGenre.getSelectedItemPosition());
 			savedInstanceState.putStringArray(KEY_GENRES_NAMES, genresNames);
 			savedInstanceState.putSerializable(KEY_GENRES_MAP, genresMap);
+			savedInstanceState.putBoolean(KEY_UNSAVED_CHANGES, unsavedChanges);
 		}
 		super.onSaveInstanceState(savedInstanceState);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (unsavedChanges)
+			new AlertDialog.Builder(this)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle(getResources().getString(R.string.close_without_save_title))
+					.setMessage(getResources().getString(R.string.close_without_save))
+					.setNegativeButton(getResources().getString(R.string.no), null)
+					.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
+
+					})
+					.show();
+		else
+			finish();
 	}
 
 	private void delay(long d) {
