@@ -2,7 +2,8 @@ package techwork.ami.Need;
 
 
 public class NeedModel {
-    String id;
+    String idNeed;
+    String idPerson;
     String tittle;
     String description;
     String dateFin;
@@ -12,9 +13,10 @@ public class NeedModel {
     String radio;
 
     //Getters
-    public String getId() {
-        return id;
+    public String getIdNeed() {
+        return idNeed;
     }
+    public String getIdPerson(){return idPerson;}
     public String getTittle(){
         return tittle;
     }
@@ -44,10 +46,11 @@ public class NeedModel {
 
     //Setters
 
-
-    public void setId(String id) {
-        this.id = id;
+    public void setIdNeed(String idNeed) {
+        this.idNeed = idNeed;
     }
+
+    public void setIdPerson(String idPerson){this.idPerson=idPerson;}
 
     public void setDescription(String description) {
         this.description = description;

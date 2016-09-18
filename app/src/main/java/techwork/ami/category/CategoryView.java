@@ -19,9 +19,9 @@ public class CategoryView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_view);
 
-        ivImage =(ImageView)findViewById(R.id.iv_categoria);
-        tvName = (TextView)findViewById(R.id.tv_nombre_cat);
-        tvId =(TextView)findViewById(R.id.tv_id_categoria);
+        ivImage =(ImageView)findViewById(R.id.iv_category_photo_view);
+        tvName = (TextView)findViewById(R.id.tv_category_name_view);
+        tvId =(TextView)findViewById(R.id.tv_category_id_view);
 
         Bundle bundle = getIntent().getExtras();
         tvName.setText(String.format("Categoria: \n %s", bundle.getString(Config.TAG_GC_NAME)));

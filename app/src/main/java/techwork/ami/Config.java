@@ -20,6 +20,7 @@ public class Config {
 	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php?email=";
 	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers2.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
+	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
 
 	// GO = Get Offers
 	//public static final String URL_IMAGES_OFFER2 ="http://amiapp.cl/admin/public/uploads/";
@@ -87,6 +88,20 @@ public class Config {
 	public static final String TAG_GC_ID="idCategoria";
 	public static final String TAG_GC_NAME="nombre";
 	public static final String TAG_GC_IMAGE ="imagen";
+
+	//Tags for NeedFragment
+	public static final String KEY_GN_ID="id";
+	public static final String TAG_GN_NEED= "needs";
+	public static final String TAG_GN_IDNEED ="idNecesidad";
+	public static final String TAG_GN_IDPER="idPersona";
+	public static final String TAG_GN_TITTLE ="titulo";
+	public static final String TAG_GN_DESCRIPTION="descripcion";
+	public static final String TAG_GN_EXPIRATIONDATE = "fechaExpiracion";
+	public static final String TAG_GN_PRICEMIN="precioMin";
+	public static final String TAG_GN_LATITUDE = "latitud";
+	public static final String TAG_GN_LONGITUDE="longitud";
+	public static final String TAG_GN_RADIO="radio";
+
 
 	// Money format
 	public static final String CLP_FORMAT = "%,d";

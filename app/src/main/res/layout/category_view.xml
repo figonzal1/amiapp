@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_nombre_cat"
+            android:id="@+id/tv_category_name_view"
             android:text="Nombre Categoria"
             android:gravity="center_horizontal"
             android:layout_alignParentStart="true"
@@ -22,22 +22,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_id_categoria"
+            android:id="@+id/tv_category_id_view"
             android:text="ID"
             android:textSize="20sp"
             android:gravity="center"
-            android:layout_below="@+id/tv_nombre_cat"
+            android:layout_below="@+id/tv_category_name_view"
             />
 
         <ImageView
-            android:layout_below="@+id/tv_id_categoria"
+            android:id="@+id/iv_category_photo_view"
+            android:layout_below="@+id/tv_category_id_view"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@mipmap/ic_launcher"
             android:layout_marginTop="10dp"
-            android:id="@+id/iv_categoria"/>
+            />
 
     </RelativeLayout>
-
 </ScrollView>
 
