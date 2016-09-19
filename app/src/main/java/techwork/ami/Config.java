@@ -78,6 +78,7 @@ public class Config {
 	public static final String TAG_NAME ="nombre";
 	public static final String TAG_EMAIL ="email";
 	public static final String TAG_DATE ="fechaNacimiento";
+	public static final String TAG_IMAGE ="imagen";
 	public static final String TAG_PHONE ="telefono";
 	public static final String TAG_OCCUPATION ="ocupacion";
 	public static final String TAG_GENRE ="genero";

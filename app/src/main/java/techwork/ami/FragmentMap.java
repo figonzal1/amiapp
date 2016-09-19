@@ -31,8 +31,7 @@ public class FragmentMap extends Fragment {
 
     // TODO: Rename and change types and number of parameters
     public static FragmentMap newInstance() {
-        FragmentMap fragment = new FragmentMap();
-        return fragment;
+        return new FragmentMap();
     }
 
     @Override
