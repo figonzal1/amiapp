@@ -15,10 +15,7 @@ import techwork.ami.Need.FragmentNeed;
 import techwork.ami.Offer.FragmentHome;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
-    private static final int HOME = 0;
-    private static final int CATEGORY = 1;
-    private static final int NECESIDAD = 2;
-    final int PAGE_COUNT = 3;
+
 
     Context context;
 
@@ -35,20 +32,20 @@ public class MainPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return Config.PAGE_COUNT;
     }
 
     @Override
     public Fragment getItem(int position) {
         Fragment f = null;
         switch(position) {
-            case HOME:
+            case Config.HOME:
                f = FragmentHome.newInstance();
                 break;
-            case CATEGORY:
+            case Config.CATEGORY:
                 f = FragmentCategory.newInstance();
                 break;
-            case NECESIDAD:
+            case Config.NECESIDAD:
                 f = FragmentNeed.newInstance();
                 break;
         }

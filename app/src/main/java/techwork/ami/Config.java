@@ -102,6 +102,11 @@ public class Config {
 	public static final String TAG_GN_LONGITUDE="longitud";
 	public static final String TAG_GN_RADIO="radio";
 
+	//Keys for Fragments (MainPageAdapter)
+	public static final int HOME = 0;
+	public static final int CATEGORY = 1;
+	public static final int NECESIDAD = 2;
+	public static final int PAGE_COUNT = 3;
 
 	// Money format
 	public static final String CLP_FORMAT = "%,d";

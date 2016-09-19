@@ -91,7 +91,7 @@ public class OfferView extends AppCompatActivity {
                 // TODO: OBTENER LA CANTIDAD DE MIERDAS QUE RESERVA
                 hashMap.put(Config.KEY_RESERVE_QUANTITY, "1");
 
-                // TODO: OBTENER LA FECHA (?), LA DEJARE POR SQL
+                // Date and time is getting directly for SQL, the next line is unnecessary
                 //hashMap.put(Config.KEY_RESERVE_RESERVE_DATE, date);
 
                 RequestHandler rh = new RequestHandler();
@@ -102,7 +102,6 @@ public class OfferView extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                System.out.println(s+"\n\n\n\n");
                 if (s.equals("0")) {
                     Toast.makeText(OfferView.this, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
                     finish();
