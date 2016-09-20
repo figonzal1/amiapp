@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +44,7 @@ public class FragmentNeed extends Fragment {
     private RecyclerView rv;
     private LinearLayoutManager layout;
     private GridLayoutManager layout2Grid;
+    private SwipeRefreshLayout refreshLayout;
 
     public FragmentNeed() {
         // Required empty public constructor
@@ -57,7 +59,7 @@ public class FragmentNeed extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        adapter= new NeedAdapter(getActivity(),needList);
     }
 
     //Listo
@@ -67,12 +69,22 @@ public class FragmentNeed extends Fragment {
 
         View v = inflater.inflate(R.layout.need_fragment,container,false);
         rv = (RecyclerView)v.findViewById(R.id.recycler_view_need);
-
+        rv.setHasFixedSize(true);
         /*layout = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layout);*/
 
+
         layout2Grid = new GridLayoutManager(getContext(),1);
         rv.setLayoutManager(layout2Grid);
+
+        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_need);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNeeds();
+            }
+        });
 
         getNeeds();
         return v;
@@ -94,6 +106,7 @@ public class FragmentNeed extends Fragment {
             @Override
             protected void onPreExecute(){
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             @Override
@@ -108,6 +121,7 @@ public class FragmentNeed extends Fragment {
             @Override
             protected  void onPostExecute(String s){
                 super.onPostExecute(s);
+                refreshLayout.setRefreshing(false);
                 showNeeds(s);
             }
         }

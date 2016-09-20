@@ -53,6 +53,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapter= new OfferAdapter(getActivity(),offerList);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class FragmentHome extends Fragment {
         rv.setHasFixedSize(true);
 
         //Evita el error de skipping layout
-        //adapter= new OfferAdapter(getActivity(),offerList);
+        adapter= new OfferAdapter(getActivity(),offerList);
 
         // Set the layout that will use recycle view
         layout = new LinearLayoutManager(getContext());
@@ -98,6 +99,7 @@ public class FragmentHome extends Fragment {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             // Class that execute background task (get BD data).
