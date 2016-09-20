@@ -1,16 +1,17 @@
 package techwork.ami.Offer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -145,7 +146,20 @@ public class FragmentHome extends Fragment {
 
             @Override
             public void onItemLongClick(View view) {
-                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("¿Desea descartar esta oferta?")
+                        .setMessage("Confirme la acción")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with discard
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
             }
         });
     }
@@ -201,6 +215,7 @@ public class FragmentHome extends Fragment {
             e.printStackTrace();
         }
     }
+
 
 }
 
