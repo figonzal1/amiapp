@@ -21,10 +21,10 @@ public class Config {
 	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers2.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
 	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
+    public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
+    public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
 
-	// GO = Get Offers
-	//public static final String URL_IMAGES_OFFER2 ="http://amiapp.cl/admin/public/uploads/";
-	public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
+    // GO = Get Offers
 	public static final String TAG_GO_OFFERS="offers";
 	public static final String TAG_GO_OFFER_ID="id";
 	public static final String TAG_GO_TITLE="titulo";
@@ -39,7 +39,23 @@ public class Config {
 	public static final String TAG_GO_COMPANY="empresa";
 	public static final String TAG_GO_IMAGE ="imagen" ;
 
-	// Keys that will be used to send the request to php scripts
+    //GRO = Get Reservations Offers (not same)
+    public static final String TAG_GRO = "reservationsOffers";
+    public static final String TAG_GRO_ID_OFFER = "idOferta";
+    public static final String TAG_GRO_TITLE = "titulo";
+    public static final String TAG_GRO_DESCRIPTION = "descripcion";
+    public static final String TAG_GRO_PROMOCOD = "codPromocion";
+    public static final String TAG_GRO_DATEINI = "fechaInicio";
+    public static final String TAG_GRO_DATEFIN = "fechaTermino";
+    public static final String TAG_GRO_PRICE = "precio";
+    public static final String TAG_GRO_STATE = "estado";
+    public static final String TAG_GRO_IMAGE = "imagen";
+    public static final String TAG_GRO_COMPANY = "empresa";
+    public static final String TAG_GRO_QUANTITY = "cantidad";
+    public static final String TAG_GRO_RESERDATE = "fechaReserva";
+    public static final String TAG_GRO_PAYDATE = "fechaCobro";
+
+    // Keys that will be used to send the request to php scripts
 	public static final  String KEY_ID ="id"; // UP = Update Profile
 	public static final  String KEY_NAME ="nombre";
 	public static final  String KEY_EMAIL ="email";
@@ -82,6 +98,7 @@ public class Config {
 	public static final String TAG_GENRE ="genero";
 	public static final String TAG_EXIST_EMAIL ="emailExiste";
 
+
 	//Tags and Url for CategoryFragments
 	public static final String URL_IMAGES_CATEGORY="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String TAG_GC_CATEGORY= "categorias";
@@ -102,12 +119,6 @@ public class Config {
 	public static final String TAG_GN_LONGITUDE="longitud";
 	public static final String TAG_GN_RADIO="radio";
 
-	//Keys for Fragments (MainPageAdapter)
-	public static final int HOME = 0;
-	public static final int CATEGORY = 1;
-	public static final int NECESIDAD = 2;
-	public static final int PAGE_COUNT = 3;
-
 	// Money format
 	public static final String CLP_FORMAT = "%,d";
 
@@ -120,4 +131,10 @@ public class Config {
 	// Date format
 	public static final String DATETIME_FORMAT_DB="yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_FORMAT="%02d/%02d/%04d";
+
+    //Keys for Fragments (MainPageAdapter)
+    public static final int HOME = 0;
+    public static final int CATEGORY = 1;
+    public static final int NECESIDAD = 2;
+    public static final int PAGE_COUNT = 3;
 }

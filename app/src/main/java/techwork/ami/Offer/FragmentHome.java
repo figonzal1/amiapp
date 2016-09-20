@@ -105,7 +105,6 @@ public class FragmentHome extends Fragment {
             protected String doInBackground(Void... strings) {
                 RequestHandler rh = new RequestHandler();
                 return rh.sendGetRequest(Config.URL_GET_OFFERS);
-
             }
 
             // Do operations after load data from DB.

@@ -93,4 +93,5 @@
     <string name="reserve_ok">Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>
+    <string name="title_activity_my_reservations">Mis reservas</string>
 </resources>

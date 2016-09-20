@@ -6,4 +6,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cardCornerRadius">2dp</dimen>
+    <dimen name="appBarTop">5dp</dimen>
+    <dimen name="appBarBottom">5dp</dimen>
 </resources>

@@ -349,6 +349,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Boolean b[] = new Boolean[3];
 
             try {
+                // TODO: eliminar este print @Pineitor
                 System.out.println("json = " +json);
                 JSONObject jsonObject = new JSONObject(json);
                 id = jsonObject.getString(Config.TAG_ID_P);

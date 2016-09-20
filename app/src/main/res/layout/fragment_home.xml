@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:paddingTop="@dimen/appBarTop"
+    android:paddingBottom="@dimen/appBarBottom"
     tools:context=".Offer.FragmentHome">
 
     <!-- Permite realizar el refresh del fragment -->
@@ -12,17 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_offer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_offer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                />
-
-        </RelativeLayout>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            />
     </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

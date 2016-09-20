@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -194,7 +196,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_my_preferences) {
 
         } else if (id == R.id.nav_reservations) {
-
+            Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);
+            startActivity(iMyReservations);
         } else if (id == R.id.nav_edit_profile) {
             Intent iEditProfile = new Intent(MainActivity.this, EditProfileActivity.class);
             startActivity(iEditProfile);

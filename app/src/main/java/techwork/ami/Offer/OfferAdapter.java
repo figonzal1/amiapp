@@ -20,7 +20,9 @@ import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
-public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder> implements View.OnClickListener,View.OnLongClickListener {
+public class OfferAdapter
+        extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder>
+        implements View.OnClickListener,View.OnLongClickListener {
 
     private OnItemClickListenerRecyclerView itemClick;
     private List<OfferModel> items;
@@ -37,7 +39,6 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         public TextView offerTitle;
         public TextView offerPrice;
         public TextView offerCompany;
-
         public TextView offerDescription;
         public ImageView offerImage;
 
@@ -45,7 +46,6 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
             super(itemView);
             offerTitle = (TextView)itemView.findViewById(R.id.offer_tittle);
             offerPrice = (TextView)itemView.findViewById(R.id.offer_price);
-
             offerCompany = (TextView)itemView.findViewById(R.id.offer_company);
             offerDescription= (TextView)itemView.findViewById(R.id.offer_description);
             offerImage = (ImageView)itemView.findViewById(R.id.offer_photo);
