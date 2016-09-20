@@ -20,7 +20,7 @@ import techwork.ami.R;
  * Created by tataf on 11-09-2016.
  */
 
-public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder> implements View.OnClickListener {
+public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder> implements View.OnClickListener,View.OnLongClickListener {
 
     private List<NeedModel> items;
     private OnItemClickListenerRecyclerView itemClick;
@@ -56,7 +56,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
     @Override
     public NeedAdapter.NeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.need_card_view,parent,false);
-        //v.setOnLongClickListener(this);
+        v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         NeedViewHolder vh = new NeedViewHolder(v);
         return vh;
@@ -82,7 +82,14 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         if(itemClick!=null){
             itemClick.onItemClick(view);
         }
+    }
 
+    @Override
+    public boolean onLongClick(View v) {
+        if(itemClick!=null){
+            itemClick.onItemLongClick(v);
+        }
+        return true;
     }
 
     public void setOnItemClickListener(OnItemClickListenerRecyclerView listener){

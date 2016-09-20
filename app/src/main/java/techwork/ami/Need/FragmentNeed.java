@@ -1,17 +1,20 @@
 package techwork.ami.Need;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -117,7 +122,26 @@ public class FragmentNeed extends Fragment {
         getNeedsData(s);
 
         adapter = new NeedAdapter(getActivity(),needList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+            @Override
+            public void onItemClick(View view) {
+                Intent intent = new Intent(getActivity(),NeedOffersList.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view) {
+                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Long Click apretado")
+                        .setMessage("Aqui debería ir alguna opcion")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
 
     }
 
