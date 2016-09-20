@@ -182,7 +182,7 @@ public class FragmentCategory extends Fragment {
 
             @Override
             public void onItemLongClick(View view) {
-                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
+                //No hara nada
             }
         });
 
