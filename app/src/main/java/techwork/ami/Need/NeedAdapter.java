@@ -68,8 +68,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         holder.tvTitle.setText(model.getTittle());
         holder.tvDateFin.setText(model.getDateFin());
         holder.tvpricemin.setText(model.getPriceMin());
-        //Determinar el numero de compañias.
-
+        holder.tvCompany.setText("Ofertas recibidas: "+model.getOffersCompany());
 
     }
 

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class FragmentNeed extends Fragment {
     private List<NeedModel> needList;
     private RecyclerView rv;
     private LinearLayoutManager layout;
+    private GridLayoutManager layout2Grid;
 
     public FragmentNeed() {
         // Required empty public constructor
@@ -61,8 +63,11 @@ public class FragmentNeed extends Fragment {
         View v = inflater.inflate(R.layout.need_fragment,container,false);
         rv = (RecyclerView)v.findViewById(R.id.recycler_view_need);
 
-        layout = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(layout);
+        /*layout = new LinearLayoutManager(getContext());
+        rv.setLayoutManager(layout);*/
+
+        layout2Grid = new GridLayoutManager(getContext(),1);
+        rv.setLayoutManager(layout2Grid);
 
         getNeeds();
         return v;
@@ -147,6 +152,7 @@ public class FragmentNeed extends Fragment {
                 item.setLat(jsonObjectItem.getString(Config.TAG_GN_LATITUDE));
                 item.setLon(jsonObjectItem.getString(Config.TAG_GN_LONGITUDE));
                 item.setRadio(jsonObjectItem.getString(Config.TAG_GN_RADIO));
+                item.setOffersCompany(jsonObjectItem.getString(Config.TAG_GN_OFFERS_COMPANY));
 
                 needList.add(item);
             }
