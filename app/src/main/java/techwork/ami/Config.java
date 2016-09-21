@@ -106,7 +106,7 @@ public class Config {
 	public static final String TAG_GC_NAME="nombre";
 	public static final String TAG_GC_IMAGE ="imagen";
 
-	//Tags for NeedFragment
+	//Tags and keys for NeedFragment
 	public static final String KEY_GN_ID="id";
 	public static final String TAG_GN_NEED= "needs";
 	public static final String TAG_GN_IDNEED ="idNecesidad";
@@ -118,6 +118,7 @@ public class Config {
 	public static final String TAG_GN_LATITUDE = "latitud";
 	public static final String TAG_GN_LONGITUDE="longitud";
 	public static final String TAG_GN_RADIO="radio";
+	public static final String TAG_GN_OFFERS_COMPANY = "ofertasEmpresas";
 
 	// Money format
 	public static final String CLP_FORMAT = "%,d";

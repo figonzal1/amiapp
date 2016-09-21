@@ -11,6 +11,7 @@ public class NeedModel {
     String lat;
     String lon;
     String radio;
+    String offersCompany;
 
     //Getters
     public String getIdNeed() {
@@ -23,25 +24,23 @@ public class NeedModel {
     public String getRadio() {
         return radio;
     }
-
     public String getDescription() {
         return description;
     }
-
     public String getDateFin() {
         return dateFin;
     }
-
     public String getLat() {
         return lat;
     }
-
     public String getLon() {
         return lon;
     }
-
     public String getPriceMin() {
         return priceMin;
+    }
+    public String getOffersCompany(){
+        return offersCompany;
     }
 
     //Setters
@@ -79,4 +78,6 @@ public class NeedModel {
     public void setRadio(String radio) {
         this.radio = radio;
     }
+
+    public void setOffersCompany(String offersCompany){this.offersCompany=offersCompany;}
 }

@@ -1,16 +1,21 @@
 package techwork.ami.Need;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -36,6 +43,8 @@ public class FragmentNeed extends Fragment {
     private List<NeedModel> needList;
     private RecyclerView rv;
     private LinearLayoutManager layout;
+    private GridLayoutManager layout2Grid;
+    private SwipeRefreshLayout refreshLayout;
 
     public FragmentNeed() {
         // Required empty public constructor
@@ -50,7 +59,7 @@ public class FragmentNeed extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        adapter= new NeedAdapter(getActivity(),needList);
     }
 
     //Listo
@@ -60,9 +69,22 @@ public class FragmentNeed extends Fragment {
 
         View v = inflater.inflate(R.layout.need_fragment,container,false);
         rv = (RecyclerView)v.findViewById(R.id.recycler_view_need);
+        rv.setHasFixedSize(true);
+        /*layout = new LinearLayoutManager(getContext());
+        rv.setLayoutManager(layout);*/
 
-        layout = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(layout);
+
+        layout2Grid = new GridLayoutManager(getContext(),1);
+        rv.setLayoutManager(layout2Grid);
+
+        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_need);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNeeds();
+            }
+        });
 
         getNeeds();
         return v;
@@ -84,6 +106,7 @@ public class FragmentNeed extends Fragment {
             @Override
             protected void onPreExecute(){
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             @Override
@@ -98,6 +121,7 @@ public class FragmentNeed extends Fragment {
             @Override
             protected  void onPostExecute(String s){
                 super.onPostExecute(s);
+                refreshLayout.setRefreshing(false);
                 showNeeds(s);
             }
         }
@@ -112,7 +136,26 @@ public class FragmentNeed extends Fragment {
         getNeedsData(s);
 
         adapter = new NeedAdapter(getActivity(),needList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+            @Override
+            public void onItemClick(View view) {
+                Intent intent = new Intent(getActivity(),NeedOffersList.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view) {
+                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Long Click apretado")
+                        .setMessage("Aqui debería ir alguna opcion")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
 
     }
 
@@ -147,6 +190,7 @@ public class FragmentNeed extends Fragment {
                 item.setLat(jsonObjectItem.getString(Config.TAG_GN_LATITUDE));
                 item.setLon(jsonObjectItem.getString(Config.TAG_GN_LONGITUDE));
                 item.setRadio(jsonObjectItem.getString(Config.TAG_GN_RADIO));
+                item.setOffersCompany(jsonObjectItem.getString(Config.TAG_GN_OFFERS_COMPANY));
 
                 needList.add(item);
             }

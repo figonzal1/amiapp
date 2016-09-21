@@ -60,6 +60,7 @@ public class FragmentCategory extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapter= new CategoryAdapter(getActivity(),categoryList);
 
     }
 
@@ -75,7 +76,7 @@ public class FragmentCategory extends Fragment {
 
 
         //Evita el error de skipping layout
-        //adapter= new CategoryAdapter(getActivity(),categoryList);
+        adapter= new CategoryAdapter(getActivity(),categoryList);
 
         // Category list in normal size screen. (Tablet Screen )
         if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
@@ -128,13 +129,12 @@ public class FragmentCategory extends Fragment {
 
         //Clase que realiza operaciones antes,durante y despues de la carga de datos.
         class CategoryAsyncTask extends AsyncTask<Void, Void, String> {
-            ProgressDialog loading = new ProgressDialog(getActivity());
-
 
             //Se ejecuta antes de que se carguen los datos (Hacemos esperar al usuario)
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             /*Clase que realiza tareas de segundo plano y
@@ -182,7 +182,7 @@ public class FragmentCategory extends Fragment {
 
             @Override
             public void onItemLongClick(View view) {
-                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
+                //No hara nada
             }
         });
 
