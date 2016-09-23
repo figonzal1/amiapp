@@ -22,7 +22,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -66,17 +65,7 @@ public class MapsActivity extends AppCompatActivity implements
         }
 
         // Get the googleMap instance
-        googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap)).getMap();
-
-        googleMap.setMapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL);
-
-        // Add top padding
-        googleMap.setPadding(0, 200, 0, 0);
-
-        googleMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
-
-        sendGetRequest();
-        setCameraPosition();
+        ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap)).getMapAsync(this);
 
     }
 
@@ -109,6 +98,7 @@ public class MapsActivity extends AppCompatActivity implements
                         .title(offerTitle)
                         .snippet(address)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_loading_image));
 
                 if (googleMap != null) {
                     Marker m = googleMap.addMarker(marker);
@@ -173,7 +163,16 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap map) {
+
+        this.googleMap = map;
+
+        googleMap.setMapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL);
+
+        // Add top padding
+        googleMap.setPadding(0, 200, 0, 0);
+
+        googleMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
 
         googleMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
@@ -192,6 +191,9 @@ public class MapsActivity extends AppCompatActivity implements
             return;
         }
         googleMap.setMyLocationEnabled(true);
+
+        sendGetRequest();
+        setCameraPosition();
     }
 
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
