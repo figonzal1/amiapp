@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
 
     // Get the profile's data from the shared preferences
     private void getProfile() {
+        // TODO: revisar seguridad de sharedPreferences, onda si puede cambiar el id a la mala
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         id = sharedPref.getString(Config.KEY_SP_ID, "-1");
         name = sharedPref.getString(Config.KEY_SP_NAME, "");

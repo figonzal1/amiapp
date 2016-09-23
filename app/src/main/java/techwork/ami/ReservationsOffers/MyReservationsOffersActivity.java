@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -146,8 +147,9 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             protected String doInBackground(Void... strings) {
                 HashMap<String,String> hashMap = new HashMap<>();
 
-                // TODO: de alguna parte obtener el id de la persona (?)
-                String idPersona = "3";
+                // Found person id from shared preferences
+                SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+                String idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
 
                 hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
                 RequestHandler rh = new RequestHandler();
