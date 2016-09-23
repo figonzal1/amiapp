@@ -1,16 +1,21 @@
 package techwork.ami.ReservationsOffers;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,15 +37,14 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Interfaces.SimpleDialogPasswordEditText;
 import techwork.ami.MainActivity;
 import techwork.ami.ReservationsOffers.ReservationOffer;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class MyReservationsOffersActivity extends AppCompatActivity implements MyReservationOfferValidateDialog.MyReservationOfferValidateListener {
-
-    private MyReservationOfferValidateDialog myReservationOfferValidateDialog = new MyReservationOfferValidateDialog();
+public class MyReservationsOffersActivity extends AppCompatActivity {
 
     // UI references
     private RecyclerView mRecyclerView;
@@ -47,10 +53,12 @@ public class MyReservationsOffersActivity extends AppCompatActivity implements M
     private List<ReservationOffer> reservationsOffersList;
     private MyReservationsOffersListAdapter adapter;
     FragmentManager fm;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_my_reservations_offers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -175,7 +183,30 @@ public class MyReservationsOffersActivity extends AppCompatActivity implements M
                 startActivity(intent);*/
                 Snackbar.make(view, "Short snackbar", Snackbar.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(),"Short click",Toast.LENGTH_SHORT).show();
-                showMyReservationOfferValidateDialog();
+
+                // Following to https://goo.gl/6AAnXP (oficial doc)
+                // Create a custom dialog (see class declaration) to this context
+                ValidateOfferAlertDialog voad = new ValidateOfferAlertDialog(context);
+                // Create new object that implements SimpledialogPassWordEditText (this means thtat can do "doPositive" and "doNegative")
+                SimpleDialogPasswordEditText sdpe = new SimpleDialogPasswordEditText() {
+                    @Override
+                    public int doPositive() {
+                        System.out.println("Positivo");
+                        return 0;
+                    }
+
+                    @Override
+                    public int doNegative() {
+                        System.out.println("Negativo");
+                        return 0;
+                    }
+                };
+                // Show dialog and listen the answer
+                voad.showAlert(getResources().getString(R.string.my_reservations_offers_validate_message),
+                        getResources().getString(R.string.my_reservations_offers_validate_title),
+                        getResources().getString(R.string.my_reservations_offers_validate_positiveText),
+                        getResources().getString(R.string.my_reservations_offers_validate_negativeText),
+                        sdpe);
             }
 
             @Override
@@ -184,28 +215,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity implements M
                 Toast.makeText(getApplicationContext(),"Long click",Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void showMyReservationOfferValidateDialog() {
-        myReservationOfferValidateDialog.show(fm, getResources().getString(R.string.myReservationOfferDialog));
-    }
-
-    @Override
-    public void onFinishMyReservationOfferValidateDialog(String inputText) {
-        Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
     }
 
     private void getData(String s) {

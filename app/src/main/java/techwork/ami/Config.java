@@ -1,6 +1,11 @@
 package techwork.ami;
 
+import android.text.InputType;
+
 public class Config {
+	// Input type constant
+	public static int inputPasswordType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+
 	// Shared preferences keys
 	public static final String KEY_SHARED_PREF ="cl.usm.techwork.ami";
 	public static final String KEY_SP_ID="idPersona";
@@ -138,4 +143,5 @@ public class Config {
     public static final int CATEGORY = 1;
     public static final int NECESIDAD = 2;
     public static final int PAGE_COUNT = 3;
+
 }
