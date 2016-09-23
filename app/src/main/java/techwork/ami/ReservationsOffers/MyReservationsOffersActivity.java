@@ -1,5 +1,6 @@
 package techwork.ami.ReservationsOffers;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +18,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -34,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.Inflater;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
@@ -213,6 +220,66 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             public void onItemLongClick(View view) {
                 Snackbar.make(view, "Long snackbar", Snackbar.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(),"Long click",Toast.LENGTH_LONG).show();
+
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                // ...Irrelevant code for customizing the buttons and title
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.rank_dialog, null);
+                dialogBuilder.setView(dialogView);
+                dialogBuilder.setCancelable(false);
+                dialogBuilder.setMessage("Tu opinión nos interesa");
+                dialogBuilder.setTitle("Califica tu experiencia con esta empresa");
+
+                dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                Button rank = (Button) dialogView.findViewById(R.id.rank_dialog_button);
+
+
+                rank.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                /*Button rankBtn = (Button) findViewById(R.id.rank_dialog_button);
+                rankBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Dialog rankDialog = new Dialog(context);
+                        rankDialog.setContentView(R.layout.rank_dialog);
+                        rankDialog.setCancelable(true);
+                        RatingBar ratingBar = (RatingBar) rankDialog.findViewById(R.id.dialog_ratingbar);
+                        float userRankValue = 10;
+                        ratingBar.setRating(userRankValue);
+
+                        TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
+                        text.setText("AMI");
+
+                        Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
+                        updateButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //rankDialog.dismiss();
+                            }
+                        });
+                        //now that the dialog is set up, it's time to show it
+                        rankDialog.show();
+                    }
+                });*/
             }
         });
     }

@@ -71,9 +71,6 @@
         <activity android:name=".Category.CategoryView" />
         <activity android:name=".Offer.OfferView" />
         <activity android:name=".Need.NeedOffersList"/>
-        <activity android:name=".Category.CategoryView" />
-
-        <activity android:name=".Offer.OfferView" />
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
