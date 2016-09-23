@@ -44,7 +44,7 @@ import java.util.zip.Inflater;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
-import techwork.ami.Interfaces.SimpleDialogPasswordEditText;
+import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
 import techwork.ami.ReservationsOffers.ReservationOffer;
 import techwork.ami.OnItemClickListenerRecyclerView;
@@ -174,9 +174,10 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         mRecyclerView.setAdapter(scaleAdapter);
 
+        // Set behavior to click in some item
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
-            public void onItemClick(View view) {
+            public void onItemClick(final View view) {
                 // TODO: adecuar a reserva, abrir otra activity o algo
                 //Intent intent = new Intent(ReservationView.class);
                 /*Intent intent = new Intent(getApplicationContext(), MyReservationsOffersActivity.class);
@@ -188,33 +189,37 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 intent.putExtra(Config.TAG_GO_PRICE, ro.getPrice());
                 intent.putExtra(Config.TAG_GO_OFFER_ID, ro.getIdReservationOffer());
                 startActivity(intent);*/
-                
-                Snackbar.make(view, "Short snackbar", Snackbar.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(),"Short click",Toast.LENGTH_SHORT).show();
 
-                // Following to https://goo.gl/6AAnXP (oficial doc)
-                // Create a custom dialog (see class declaration) to this context
-                ValidateOfferAlertDialog voad = new ValidateOfferAlertDialog(context);
-                // Create new object that implements SimpledialogPassWordEditText (this means thtat can do "doPositive" and "doNegative")
-                SimpleDialogPasswordEditText sdpe = new SimpleDialogPasswordEditText() {
-                    @Override
-                    public int doPositive() {
-                        System.out.println("Positivo");
-                        return 0;
-                    }
+                // Create the CustomAlertDialogBuilder
+                CustomAlertDialogBuilder dialogBuilder = new CustomAlertDialogBuilder(context);
 
-                    @Override
-                    public int doNegative() {
-                        System.out.println("Negativo");
-                        return 0;
+                // Set the usual data, as you would do with AlertDialog.Builder
+                dialogBuilder.setTitle(getResources().getString(R.string.my_reservations_offers_validate_title));
+                dialogBuilder.setMessage(getResources().getString(R.string.my_reservations_offers_validate_message));
+
+                // Create a EditText
+                final EditText edittext = new EditText(context);
+                // Type no visible password
+                edittext.setInputType(Config.inputPasswordType);
+                dialogBuilder.setView(edittext);
+                // Set your buttons OnClickListeners
+                dialogBuilder.setPositiveButton (getResources().getString(R.string.my_reservations_offers_validate_positiveText),
+                        new DialogInterface.OnClickListener() {
+                    public void onClick (DialogInterface dialog, int which) {
+                        // Dialog will not dismiss when the button is clicked
+                        // call dialog.dismiss() to actually dismiss it.
                     }
-                };
-                // Show dialog and listen the answer
-                voad.showAlert(getResources().getString(R.string.my_reservations_offers_validate_message),
-                        getResources().getString(R.string.my_reservations_offers_validate_title),
-                        getResources().getString(R.string.my_reservations_offers_validate_positiveText),
-                        getResources().getString(R.string.my_reservations_offers_validate_negativeText),
-                        sdpe);
+                });
+
+                // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+                dialogBuilder.setNegativeButton(getResources().getString(R.string.my_reservations_offers_validate_negativeText),
+                null);
+
+                // (optional) set whether to dismiss dialog when touching outside
+                dialogBuilder.setCanceledOnTouchOutside(false);
+
+                // Show the dialog
+                dialogBuilder.show();
             }
 
             @Override
@@ -222,8 +227,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 Snackbar.make(view, "Long snackbar", Snackbar.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(),"Long click",Toast.LENGTH_LONG).show();
 
-                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-                // ...Irrelevant code for customizing the buttons and title
+                // Rate the Offer
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 LayoutInflater inflater = getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.rank_dialog, null);
                 dialogBuilder.setView(dialogView);
@@ -247,15 +252,15 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
                 Button rank = (Button) dialogView.findViewById(R.id.rank_dialog_button);
 
+                final AlertDialog alertDialog = dialogBuilder.create();
 
                 rank.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        alertDialog.dismiss();
                     }
                 });
 
-                AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
                 /*Button rankBtn = (Button) findViewById(R.id.rank_dialog_button);
                 rankBtn.setOnClickListener(new View.OnClickListener() {
@@ -285,6 +290,17 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         });
     }
 
+    // Actions to validate Offer
+    private int doPositive(View view, String editTextPromotionCode) {
+        Toast.makeText(getApplicationContext(),reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view)).getPromotionCode(),Toast.LENGTH_SHORT).show();
+        Snackbar.make(view, "Cobrado!", Snackbar.LENGTH_LONG).show();
+        return 0;
+    }
+
+    // Actions to calificate Offer
+
+
+    // Get data from DB and put into each ReservationOffer (to be shown)
     private void getData(String s) {
         String sFinalDate, sReservationDate;
         Date dFinalDate, dReservationDate;
@@ -321,6 +337,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 item.setReservationDate(String.format(Locale.US, Config.DATE_FORMAT,
                         c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH)+1, c.get(Calendar.YEAR)));
                 item.setQuantity(jsonObjectItem.getString(Config.TAG_GRO_QUANTITY));
+                item.setPromotionCode(jsonObjectItem.getString(Config.TAG_GRO_PROMOCOD));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GRO_IMAGE));
 
                 reservationsOffersList.add(item);
