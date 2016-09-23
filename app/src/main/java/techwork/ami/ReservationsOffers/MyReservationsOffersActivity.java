@@ -188,6 +188,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 intent.putExtra(Config.TAG_GO_PRICE, ro.getPrice());
                 intent.putExtra(Config.TAG_GO_OFFER_ID, ro.getIdReservationOffer());
                 startActivity(intent);*/
+                
                 Snackbar.make(view, "Short snackbar", Snackbar.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(),"Short click",Toast.LENGTH_SHORT).show();
 
