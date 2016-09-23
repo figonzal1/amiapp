@@ -51,6 +51,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	// UI references
 	EditText editTextName;
+	EditText editTextLastnames;
 	EditText editTextEmail;
 	EditText editTextDate;
 	EditText editTextPhone;
@@ -95,6 +96,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 		// get the UI references
 		editTextName = (EditText) findViewById(R.id.EP_editTextName);
+		editTextLastnames = (EditText) findViewById(R.id.EP_editTextLastnames);
 		editTextEmail = (EditText) findViewById(R.id.EP_editTextEmail);
 		editTextDate = (EditText) findViewById(R.id.EP_editTextDate);
 		editTextPhone = (EditText) findViewById(R.id.EP_editTextPhone);
@@ -171,6 +173,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 		// Update the enable state of the views
 		editTextName.setEnabled(e);
+		editTextLastnames.setEnabled(e);
 		editTextEmail.setEnabled(e);
 		editTextDate.setEnabled(e);
 		editTextPhone.setEnabled(e);
@@ -226,6 +229,7 @@ public class EditProfileActivity extends AppCompatActivity {
 			}
 
 			String name = profile.getString(Config.TAG_NAME);
+			String lastnames = profile.getString(Config.TAG_LASTNAMES);
 			String email = profile.getString(Config.TAG_EMAIL);
 			String date = profile.getString(Config.TAG_DATE);
 			String phone = profile.getString(Config.TAG_PHONE);
@@ -234,6 +238,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
 			// Fill the name field
 			editTextName.setText(name);
+
+			// Fill the lastnames field
+			editTextLastnames.setText(lastnames);
 
 			// Fill the email field
 			editTextEmail.setText(email);
@@ -311,6 +318,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		};
 
 		editTextName.addTextChangedListener(tw);
+		editTextLastnames.addTextChangedListener(tw);
 		editTextEmail.addTextChangedListener(tw);
 		editTextDate.addTextChangedListener(tw);
 		editTextPhone.addTextChangedListener(tw);
@@ -457,6 +465,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	// Send the new profile data to the server
 	private void sendUpdateRequest() {
 		final String name = editTextName.getText().toString().trim();
+		final String lastnames = editTextLastnames.getText().toString().trim();
 		final String email = editTextEmail.getText().toString().trim();
 		final String phone = editTextPhone.getText().toString().trim();
 		Calendar c = Calendar.getInstance();
@@ -484,6 +493,7 @@ public class EditProfileActivity extends AppCompatActivity {
 				HashMap<String,String> hashMap = new HashMap<>();
 				hashMap.put(Config.KEY_ID, id);
 				hashMap.put(Config.KEY_NAME, name);
+				hashMap.put(Config.KEY_LASTNAMES, lastnames);
 				hashMap.put(Config.KEY_EMAIL, email);
 				hashMap.put(Config.KEY_DATE, date);
 				hashMap.put(Config.KEY_PHONE, phone);
@@ -509,6 +519,7 @@ public class EditProfileActivity extends AppCompatActivity {
 					SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString(Config.KEY_SP_NAME, name);
+					editor.putString(Config.KEY_SP_LASTNAMES, lastnames);
 					editor.putString(Config.KEY_SP_EMAIL, email);
 					editor.putString(Config.KEY_SP_GENRE, idGenre);
 					editor.apply();

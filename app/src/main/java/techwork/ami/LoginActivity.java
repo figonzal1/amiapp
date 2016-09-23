@@ -345,11 +345,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             String id = "-1";
             String firstLogin = "0";
             String name = "";
+            String lastnames = "";
             String genre = "0";
             Boolean b[] = new Boolean[3];
 
             try {
-                System.out.println("json = " +json);
                 JSONObject jsonObject = new JSONObject(json);
                 id = jsonObject.getString(Config.TAG_ID_P);
 
@@ -360,6 +360,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 } else { // successful error, get the basic profile data
                     firstLogin = jsonObject.getString(Config.TAG_FIRST_LOGIN);
                     name = jsonObject.getString(Config.TAG_NAME);
+                    lastnames = jsonObject.getString(Config.TAG_LASTNAMES);
                     genre = jsonObject.getString(Config.TAG_ID_GENRE);
                 }
 
@@ -375,6 +376,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString(Config.KEY_SP_ID, id);
             editor.putString(Config.KEY_SP_NAME, name);
+            editor.putString(Config.KEY_SP_LASTNAMES, lastnames);
             editor.putString(Config.KEY_SP_EMAIL, mEmail);
             editor.putString(Config.KEY_SP_GENRE, genre);
             editor.apply();

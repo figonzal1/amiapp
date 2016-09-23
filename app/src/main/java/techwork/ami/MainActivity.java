@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private static final int LOCATION_REQUEST_CODE = 101;
 
     private String name;
+    private String lastnames;
     private String email;
     private String id;
     private String genre;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         id = sharedPref.getString(Config.KEY_SP_ID, "-1");
         name = sharedPref.getString(Config.KEY_SP_NAME, "");
+        lastnames = sharedPref.getString(Config.KEY_SP_LASTNAMES, "");
         email = sharedPref.getString(Config.KEY_SP_EMAIL, "");
         genre = sharedPref.getString(Config.KEY_SP_GENRE, "0");
     }
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         TextView textViewNavHeaderName = (TextView) header.findViewById(R.id.navHeaderTextName);
         TextView textViewNavHeaderEmail = (TextView) header.findViewById(R.id.navHeaderTextEmail);
 
-        textViewNavHeaderName.setText(name);
+        textViewNavHeaderName.setText(name + " " + lastnames);
         textViewNavHeaderEmail.setText(email);
 
         switch (genre) {
@@ -179,7 +181,7 @@ public class MainActivity extends AppCompatActivity
         TextView textViewNavHeaderName = (TextView) header.findViewById(R.id.navHeaderTextName);
         TextView textViewNavHeaderEmail = (TextView) header.findViewById(R.id.navHeaderTextEmail);
 
-        textViewNavHeaderName.setText(name);
+        textViewNavHeaderName.setText(name + " " + lastnames);
         textViewNavHeaderEmail.setText(email);
     }
 

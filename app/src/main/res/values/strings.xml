@@ -34,6 +34,7 @@
     <string name="promptPasswordRepeat">Repetir contraseña</string>
     <string name="actionSignUp">Registrar</string>
     <string name="promptName">Nombre</string>
+    <string name="promptLastnames">Apellidos</string>
     <string name="registrateEnAMI">Regístrate en AMI</string>
     <string name="email_already_exist">"El email ingresado ya esta asociado a una cuenta"</string>
     <string name="insert_another_email">"Ingresa otro correo"</string>
@@ -53,6 +54,7 @@
     <string name="editProfileTitle">Editar perfil</string>
     <string name="editProfileLeyend">Aquí puedes actualizar tus datos</string>
     <string name="editProfileName">Nombre</string>
+    <string name="editProfileLastnames">Apellidos</string>
     <string name="editProfileEmail">Correo</string>
     <string name="editProfileDate">Fecha de nacimiento</string>
     <string name="editProfileOccupation">Ocupación</string>
