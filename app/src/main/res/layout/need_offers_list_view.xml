@@ -17,6 +17,21 @@
         android:textSize="25sp"
         />
 
+    <TextView
+        android:id="@+id/tv_need_offer_list_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_need_offer_list"
+        android:text="Id Necesidad"
+        android:gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/tv_need_offer_list_tittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_need_offer_list_id"
+        android:text="Titulo Necesidad"
+        android:gravity="center_horizontal"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyler_view_need_offer_list"
         android:layout_width="match_parent"

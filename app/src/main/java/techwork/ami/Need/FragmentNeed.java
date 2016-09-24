@@ -42,8 +42,7 @@ public class FragmentNeed extends Fragment {
     private NeedAdapter adapter;
     private List<NeedModel> needList;
     private RecyclerView rv;
-    private LinearLayoutManager layout;
-    private GridLayoutManager layout2Grid;
+    private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
 
     public FragmentNeed() {
@@ -70,12 +69,16 @@ public class FragmentNeed extends Fragment {
         View v = inflater.inflate(R.layout.need_fragment,container,false);
         rv = (RecyclerView)v.findViewById(R.id.recycler_view_need);
         rv.setHasFixedSize(true);
-        /*layout = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(layout);*/
 
-
-        layout2Grid = new GridLayoutManager(getContext(),1);
-        rv.setLayoutManager(layout2Grid);
+        //1 cardviews in portrait mode.
+        if (getResources().getConfiguration().orientation==1){
+            layout = new GridLayoutManager(getActivity(), 1);
+        }
+        //2 cardviews per row in landscape view
+        else if (getResources().getConfiguration().orientation==2){
+            layout = new GridLayoutManager(getActivity(), 2);
+        }
+        rv.setLayoutManager(layout);
 
         refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_need);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
@@ -143,17 +146,16 @@ public class FragmentNeed extends Fragment {
             @Override
             public void onItemClick(View view) {
                 Intent intent = new Intent(getActivity(),NeedOffersList.class);
+                int position = rv.getChildAdapterPosition(view);
+                NeedModel n = needList.get(position);
+                intent.putExtra(Config.TAG_GN_IDNEED,n.getIdNeed());
+                intent.putExtra(Config.TAG_GN_TITTLE,n.getTittle());
                 startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(View view) {
-                Toast.makeText(getContext(),"Long click",Toast.LENGTH_LONG).show();
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Long Click apretado")
-                        .setMessage("Aqui debería ir alguna opcion")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                //Nada
             }
         });
 
