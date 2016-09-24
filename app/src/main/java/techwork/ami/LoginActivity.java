@@ -348,6 +348,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             String lastnames = "";
             String genre = "0";
             Boolean b[] = new Boolean[3];
+            String commune = "";
 
             try {
                 JSONObject jsonObject = new JSONObject(json);
@@ -362,6 +363,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     name = jsonObject.getString(Config.TAG_NAME);
                     lastnames = jsonObject.getString(Config.TAG_LASTNAMES);
                     genre = jsonObject.getString(Config.TAG_ID_GENRE);
+                    b[1] = firstLogin.equals("1");
+
+                    if (!b[1])
+                        commune = jsonObject.getString(Config.TAG_ID_COMMUNE);
                 }
 
             } catch (JSONException e) {
@@ -369,7 +374,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
             // idPerson found
             b[0] = true;
-            b[1] = firstLogin.equals("1");
 
             // Save the data of the profile on the application's shared preferences
             SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
@@ -379,6 +383,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             editor.putString(Config.KEY_SP_LASTNAMES, lastnames);
             editor.putString(Config.KEY_SP_EMAIL, mEmail);
             editor.putString(Config.KEY_SP_GENRE, genre);
+            if (!b[1])
+                editor.putString(Config.KEY_SP_COMMUNE, commune);
             editor.apply();
 
             return b;

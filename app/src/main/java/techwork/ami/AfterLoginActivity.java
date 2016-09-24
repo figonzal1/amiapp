@@ -576,6 +576,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 					SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString(Config.KEY_SP_GENRE, idGenre);
+					editor.putString(Config.KEY_SP_COMMUNE, idCommune);
 					editor.apply();
 
 					// Close this Activity
