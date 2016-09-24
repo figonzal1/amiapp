@@ -101,4 +101,6 @@
     <string name="my_reservations_offers_validate_title">Validar oferta</string>
     <string name="my_reservations_offers_validate_positiveText">Validar</string>
     <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
+    <string name="my_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
+    <string name="my_reservations_offers_validate_ok">Oferta validada!</string>
 </resources>

@@ -19,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -111,22 +113,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         getReservations();
     }
 
-    /*
-    private void getReservations() {
-        reservationsList = new ArrayList<>();
-        OfferModel o = new OfferModel();
-        for(int i=0; i<100; i++) {
-            o.setTitle("título");
-            o.setDescription("descripción");
-            o.setPrice(1123);
-            o.setCompany("Company");
-            reservationsList.add(o);
-        }
-        adapter = new MyReservationsOffersListAdapter(this, reservationsList);
-        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
-        mRecyclerView.setAdapter(scaleAdapter);
-    }*/
-
     // Call to DB
     private void getReservations(){
         sendPostRequest();
@@ -176,7 +162,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         mRecyclerView.setAdapter(scaleAdapter);
 
-        // Set behavior to click in some item
+        // Set behavior to click in some item (offer validate)
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
@@ -193,7 +179,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 startActivity(intent);*/
 
                 // Create the CustomAlertDialogBuilder
-                CustomAlertDialogBuilder dialogBuilder = new CustomAlertDialogBuilder(context);
+                final CustomAlertDialogBuilder dialogBuilder = new CustomAlertDialogBuilder(context);
 
                 // Set the usual data, as you would do with AlertDialog.Builder
                 dialogBuilder.setTitle(getResources().getString(R.string.my_reservations_offers_validate_title));
@@ -210,6 +196,30 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                     public void onClick (DialogInterface dialog, int which) {
                         // Dialog will not dismiss when the button is clicked
                         // call dialog.dismiss() to actually dismiss it.
+                        ReservationOffer ro = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
+                        // If promotion code from edittext is equals to the object promotion code
+                        if (!ro.getPromotionCode().equals(edittext.getText().toString())){
+                            edittext.setError(getResources().getString(R.string.my_reservations_offers_validate_errorPromotionCode));
+                        }
+                        // Else
+                        else{
+                            RequestHandler rh = new RequestHandler();
+                            SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+                            String idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
+                            HashMap<String,String> hashMap = new HashMap<>();
+                            hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+                            String s = rh.sendPostRequest(Config.URL_MRO_VALIDATE, hashMap);
+                            if(true){
+                                Toast.makeText(getApplicationContext(),
+                                        getResources().getString(R.string.my_reservations_offers_validate_ok),Toast.LENGTH_LONG).show();
+                                //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
+                                dialog.dismiss();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),
+                                        getResources().getString(R.string.operation_fail),Toast.LENGTH_LONG).show();
+                            }
+                        }
                     }
                 });
 
