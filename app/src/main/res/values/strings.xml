@@ -8,6 +8,10 @@
     <string name="error_field_required">Campo requerido</string>
     <string name="retry">Volver a intentar</string>
     <string name="did_forget_your_pass">¿Olvidaste tu contraseña?</string>
+    <string name="close_without_save">¿Estás seguro que quieres salir?</string>
+    <string name="close_without_save_title">Existen cambios sin guardar</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
 
     <!-- Strings login -->
     <string name="title_activity_login">Inicio sesión</string>
@@ -30,6 +34,7 @@
     <string name="promptPasswordRepeat">Repetir contraseña</string>
     <string name="actionSignUp">Registrar</string>
     <string name="promptName">Nombre</string>
+    <string name="promptLastnames">Apellidos</string>
     <string name="registrateEnAMI">Regístrate en AMI</string>
     <string name="email_already_exist">"El email ingresado ya esta asociado a una cuenta"</string>
     <string name="insert_another_email">"Ingresa otro correo"</string>
@@ -49,6 +54,7 @@
     <string name="editProfileTitle">Editar perfil</string>
     <string name="editProfileLeyend">Aquí puedes actualizar tus datos</string>
     <string name="editProfileName">Nombre</string>
+    <string name="editProfileLastnames">Apellidos</string>
     <string name="editProfileEmail">Correo</string>
     <string name="editProfileDate">Fecha de nacimiento</string>
     <string name="editProfileOccupation">Ocupación</string>

@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
     // UI references.
     private AutoCompleteTextView mNameView;
+    private AutoCompleteTextView mLastnameView;
     private AutoCompleteTextView mEmailView;
     private EditText mPassword1View;
     private EditText mPassword2View;
@@ -62,8 +63,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         // Set up the register form.
         mNameView = (AutoCompleteTextView) findViewById(R.id.register_name);
+        mLastnameView = (AutoCompleteTextView) findViewById(R.id.register_lastnames);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.register_email);
 
         // Check if this activity was started with any extra argument
@@ -163,6 +166,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
         // Store values at the time of the register attempt.
         String name = mNameView.getText().toString();
+        String lastnames = mLastnameView.getText().toString();
         String email = mEmailView.getText().toString();
         String password1 = mPassword1View.getText().toString();
         String password2 = mPassword2View.getText().toString();
@@ -213,7 +217,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             focusView = mNameView;
             cancel = true;
 
-        } else if (!isNameValid(email)) {
+        } else if (!isNameValid(name)) {
             mNameView.setError(getString(R.string.error_invalid_name));
             focusView = mNameView;
             cancel = true;
@@ -227,7 +231,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             // Show a progress spinner, and kick off a background task to
             // perform the user register attempt.
             showProgress(true);
-            mAuthTask = new UserRegisterTask(name, email, password1);
+            mAuthTask = new UserRegisterTask(name, email, lastnames, password1);
             mAuthTask.execute((Void) null);
         }
     }
@@ -352,10 +356,12 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
         private final String mEmail;
         private final String mName;
+        private final String mLastnames;
         private final String mPassword;
 
-        UserRegisterTask(String name, String email, String password) {
+        UserRegisterTask(String name, String email, String lastnames, String password) {
             mName = name;
+            mLastnames = lastnames;
             mEmail = email;
             mPassword = password;
         }
@@ -364,6 +370,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         protected String doInBackground(Void... params) {
             HashMap<String,String> hashMap = new HashMap<>();
             hashMap.put(Config.KEY_NAME, mName);
+            hashMap.put(Config.KEY_LASTNAMES, mLastnames);
             hashMap.put(Config.KEY_EMAIL, mEmail);
             hashMap.put(Config.KEY_PASS, mPassword);
 

@@ -5,6 +5,7 @@ public class Config {
 	public static final String KEY_SHARED_PREF ="cl.usm.techwork.ami";
 	public static final String KEY_SP_ID="idPersona";
 	public static final String KEY_SP_NAME="Persona.nombre";
+	public static final String KEY_SP_LASTNAMES="Persona.apellidos";
 	public static final String KEY_SP_EMAIL="Persona.email";
 	public static final String KEY_SP_GENRE="Persona.genero";
 
@@ -58,6 +59,7 @@ public class Config {
     // Keys that will be used to send the request to php scripts
 	public static final  String KEY_ID ="id"; // UP = Update Profile
 	public static final  String KEY_NAME ="nombre";
+	public static final  String KEY_LASTNAMES ="apellidos";
 	public static final  String KEY_EMAIL ="email";
 	public static final  String KEY_DATE ="fechaNacimiento";
 	public static final  String KEY_PASS ="password";
@@ -91,13 +93,14 @@ public class Config {
 	public static final String TAG_COUNTRIES ="countries";
 	public static final String TAG_GENRES ="genres";
 	public static final String TAG_NAME ="nombre";
+	public static final String TAG_LASTNAMES ="apellidos";
 	public static final String TAG_EMAIL ="email";
 	public static final String TAG_DATE ="fechaNacimiento";
+	public static final String TAG_IMAGE ="imagen";
 	public static final String TAG_PHONE ="telefono";
 	public static final String TAG_OCCUPATION ="ocupacion";
 	public static final String TAG_GENRE ="genero";
 	public static final String TAG_EXIST_EMAIL ="emailExiste";
-
 
 	//Tags and Url for CategoryFragments
 	public static final String URL_IMAGES_CATEGORY="http://amiapp.cl/public/getData/Imagenes/";
