@@ -162,9 +162,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_search:
                 Toast.makeText(MainActivity.this,"Menu buscar", Toast.LENGTH_SHORT).show();
                 return true;
-            /*case R.id.action_maps:
+            case R.id.action_maps:
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
-                return true;*/
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

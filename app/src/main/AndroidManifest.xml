@@ -60,20 +60,16 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
                    android:value="AIzaSyBqz3kiAPD6gFdPjo71dAHIEnx0VUnqEmg" />
 
-        <!--
         <activity
             android:name=".MapsActivity"
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme">
         </activity>
-        -->
 
         <activity android:name=".Category.CategoryView" />
         <activity android:name=".Offer.OfferView" />
         <activity android:name=".Need.NeedOffersList"/>
-        <activity android:name=".Category.CategoryView" />
 
-        <activity android:name=".Offer.OfferView" />
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
