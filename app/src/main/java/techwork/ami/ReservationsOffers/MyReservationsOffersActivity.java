@@ -186,7 +186,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                     // Create a EditText
                     final EditText edittext = new EditText(context);
                     // Type no visible password
-                    edittext.setInputType(Config.inputPasswordType);
+                    edittext.setInputType(Config.inputPromotionCodeType);
                     dialogBuilder.setView(edittext);
 
                     // Set your buttons OnClickListeners
