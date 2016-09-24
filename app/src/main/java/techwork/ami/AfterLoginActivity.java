@@ -314,7 +314,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 			protected void onPreExecute() {
 				super.onPreExecute();
 				loading = ProgressDialog.show(AfterLoginActivity.this,
-						getResources().getString(R.string.fetching),
+						getResources().getString(R.string.gettingData),
 						getResources().getString(R.string.wait),false,false);
 			}
 

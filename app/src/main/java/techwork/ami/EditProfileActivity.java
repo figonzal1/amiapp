@@ -176,7 +176,7 @@ public class EditProfileActivity extends AppCompatActivity {
 			protected void onPreExecute() {
 				super.onPreExecute();
 				loading = ProgressDialog.show(EditProfileActivity.this,
-						getResources().getString(R.string.fetching),
+						getResources().getString(R.string.gettingData),
 						getResources().getString(R.string.wait),false,false);
 			}
 
@@ -206,7 +206,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 			if (!id.equals(this.id)) {
 				Toast.makeText(getApplicationContext(),
-						getResources().getString(R.string.fetchingFail), Toast.LENGTH_LONG).show();
+						getResources().getString(R.string.editProfileFetchingFail), Toast.LENGTH_LONG).show();
 				return;
 			} else {
 				enableForm(true);
@@ -450,7 +450,6 @@ public class EditProfileActivity extends AppCompatActivity {
 				super.onPostExecute(s);
 				loading.dismiss();
 				if (s.equals("0")) {
-
 					Snackbar.make(findViewById(android.R.id.content), R.string.saveOk, Snackbar.LENGTH_LONG)
 							.show();
 

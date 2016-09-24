@@ -55,8 +55,8 @@
     <string name="editProfileGenre">Género</string>
     <string name="editProfileSave">Guardar</string>
     <string name="editProfilePhone">Teléfono (Opcional)</string>
-    <string name="fetching">Obteniendo los datos</string>
-    <string name="fetchingFail">No se han podido obtener tus datos correctamente</string>
+    <string name="gettingData">Obteniendo datos</string>
+    <string name="editProfileFetchingFail">No se han podido obtener tus datos correctamente</string>
     <string name="saving">Guardando los datos</string>
     <string name="saveOk">Tus datos se han guardado correctamente</string>
     <string name="restoreEmailSend">Se ha enviado un email de restauración</string>
@@ -103,4 +103,5 @@
     <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
     <string name="my_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
     <string name="my_reservations_offers_validate_ok">Oferta validada!</string>
+    <string name="my_reservations_offers_validate_processing">Validando oferta</string>
 </resources>

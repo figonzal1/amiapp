@@ -1,6 +1,6 @@
 package techwork.ami.ReservationsOffers;
 
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,32 +9,23 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,13 +34,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.zip.Inflater;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
-import techwork.ami.ReservationsOffers.ReservationOffer;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -64,6 +53,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private MyReservationsOffersListAdapter adapter;
     FragmentManager fm;
     Context context;
+    CustomAlertDialogBuilder dialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +169,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 startActivity(intent);*/
 
                 // Create the CustomAlertDialogBuilder
-                final CustomAlertDialogBuilder dialogBuilder = new CustomAlertDialogBuilder(context);
+                dialogBuilder = new CustomAlertDialogBuilder(context);
 
                 // Set the usual data, as you would do with AlertDialog.Builder
                 dialogBuilder.setTitle(getResources().getString(R.string.my_reservations_offers_validate_title));
@@ -190,6 +180,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 // Type no visible password
                 edittext.setInputType(Config.inputPasswordType);
                 dialogBuilder.setView(edittext);
+
                 // Set your buttons OnClickListeners
                 dialogBuilder.setPositiveButton (getResources().getString(R.string.my_reservations_offers_validate_positiveText),
                         new DialogInterface.OnClickListener() {
@@ -203,22 +194,59 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         }
                         // Else
                         else{
-                            RequestHandler rh = new RequestHandler();
-                            SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
-                            String idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
-                            HashMap<String,String> hashMap = new HashMap<>();
-                            hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
-                            String s = rh.sendPostRequest(Config.URL_MRO_VALIDATE, hashMap);
-                            if(true){
-                                Toast.makeText(getApplicationContext(),
-                                        getResources().getString(R.string.my_reservations_offers_validate_ok),Toast.LENGTH_LONG).show();
-                                //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
-                                dialog.dismiss();
+                            //HashMap<String,String> hashMap = new HashMap<>();
+                            //hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+                            //hashMap.put(Config.KEY_RESERVE_OFFER_ID, ro.getIdReservationOffer());
+                            //System.out.println(Config.URL_MRO_VALIDATE+Config.KEY_RESERVE_PERSON_ID+"="+idPersona+
+                             //       "&"+Config.KEY_RESERVE_OFFER_ID+"="+ro.getIdReservationOffer());
+                            //String s = rh.sendGetRequestParam(Config.URL_MRO_VALIDATE, Config.KEY_RESERVE_PERSON_ID+"="+idPersona+
+                                    //"&"+Config.KEY_RESERVE_OFFER_ID+"="+ro.getIdReservationOffer());
+
+                            class ValidateReservationOffer extends AsyncTask<String,Void,String> {
+                                ProgressDialog loading;
+                                DialogInterface dialog;
+
+                                ValidateReservationOffer(DialogInterface dialog){
+                                    this.dialog = dialog;
+                                }
+
+                                @Override
+                                protected void onPreExecute() {
+                                    super.onPreExecute();
+                                    loading = ProgressDialog.show(MyReservationsOffersActivity.this,
+                                            getResources().getString(R.string.my_reservations_offers_validate_processing),
+                                            getResources().getString(R.string.wait),false,false);
+                                }
+
+                                @Override
+                                protected String doInBackground(String... params) {
+                                    SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+                                    String idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
+                                    HashMap<String,String> hashMap = new HashMap<>();
+                                    hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+                                    hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
+                                    RequestHandler rh = new RequestHandler();
+                                    return rh.sendPostRequest(Config.URL_MRO_VALIDATE, hashMap);
+                                }
+
+                                @Override
+                                protected void onPostExecute(String s) {
+                                    super.onPostExecute(s);
+                                    loading.dismiss();
+                                    if(s.equals("0")){
+                                        Toast.makeText(getApplicationContext(),
+                                                getResources().getString(R.string.my_reservations_offers_validate_ok),Toast.LENGTH_LONG).show();
+                                        //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
+                                        this.dialog.dismiss();
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(),
+                                                getResources().getString(R.string.operation_fail),Toast.LENGTH_LONG).show();
+                                    }
+                                }
                             }
-                            else{
-                                Toast.makeText(getApplicationContext(),
-                                        getResources().getString(R.string.operation_fail),Toast.LENGTH_LONG).show();
-                            }
+                            ValidateReservationOffer gp = new ValidateReservationOffer(dialog);
+                            gp.execute(ro.getIdReservationOffer());
                         }
                     }
                 });
