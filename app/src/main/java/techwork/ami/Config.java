@@ -65,7 +65,6 @@ public class Config {
 
 	//MRO = My Reservations Offers URLs
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
-	// TODO: aquí voy
 	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
 
     // Keys that will be used to send the request to php scripts

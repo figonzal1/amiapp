@@ -97,7 +97,7 @@
     <!-- My Reservations Offers Strings -->
     <string name="title_activity_my_reservations">Mis reservas</string>
     <string name="myReservationOfferDialog">Cobrar oferta</string>
-    <string name="my_reservations_offers_validate_message">Ingrese código del local</string>
+    <string name="my_reservations_offers_validate_message">Solicite a un empleado de %s que ingrese código del local</string>
     <string name="my_reservations_offers_validate_title">Validar oferta</string>
     <string name="my_reservations_offers_validate_positiveText">Validar</string>
     <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
@@ -106,5 +106,11 @@
     <string name="my_reservations_offers_validate_processing">Validando oferta</string>
     <string name="my_reservations_offers_rate_processing">Opinando</string>
     <string name="my_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
-    <string name="my_reservations_offers_validate_local">El código de la promoción es:</string>
+    <string name="my_reservations_offers_validate_local">El código de la promoción es</string>
+    <string name="my_reservations_offers_already">Esta oferta ya ha sido cobrada</string>
+    <string name="my_reservations_offers_already_commented">¡Gracias, ya opinaste!</string>
+    <string name="my_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
+    <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
+    <string name="skip">Omitir</string>
+    <string name="my_reservations_offers_rate_positive">Calificar</string>
 </resources>
