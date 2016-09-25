@@ -1,4 +1,4 @@
-package techwork.ami.Need;
+package techwork.ami.Need.MyNeeds;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,16 +6,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +28,7 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Need.NeedOffers.NeedOffersActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -145,7 +142,7 @@ public class FragmentNeed extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                Intent intent = new Intent(getActivity(),NeedOffersList.class);
+                Intent intent = new Intent(getActivity(),NeedOffersActivity.class);
                 int position = rv.getChildAdapterPosition(view);
                 NeedModel n = needList.get(position);
                 intent.putExtra(Config.TAG_GN_IDNEED,n.getIdNeed());

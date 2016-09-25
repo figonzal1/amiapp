@@ -68,7 +68,7 @@
 
         <activity android:name=".Category.CategoryView" />
         <activity android:name=".Offer.OfferView" />
-        <activity android:name=".Need.NeedOffersList"/>
+        <activity android:name=".Need.NeedOffers.NeedOffersActivity"/>
 
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"

@@ -13,7 +13,7 @@
         android:background="?android:attr/selectableItemBackground">
 
         <TextView
-            android:id="@+id/tv_need_tittle_card_view"
+            android:id="@+id/tv_need_offer_tittle_card_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Titulo Oferta Empresa"
@@ -22,11 +22,11 @@
             android:layout_marginStart="10dp"/>
 
         <TextView
-            android:id="@+id/tv_need_price_card_view"
+            android:id="@+id/tv_need_offer_price_card_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Precio : $xx.xx"
-            android:layout_below="@+id/tv_need_tittle_card_view"
+            android:layout_below="@+id/tv_need_offer_tittle_card_view"
             android:layout_marginStart="10dp"/>
         <Button
             android:id="@+id/btn_need_card_view_info"
