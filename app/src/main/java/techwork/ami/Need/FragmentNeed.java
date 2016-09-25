@@ -179,7 +179,6 @@ public class FragmentNeed extends Fragment {
                 NeedModel item = new NeedModel();
 
                 item.setIdNeed(jsonObjectItem.getString(Config.TAG_GN_IDNEED));
-                item.setIdPerson(jsonObjectItem.getString(Config.TAG_GN_IDPER));
                 item.setTittle(jsonObjectItem.getString(Config.TAG_GN_TITTLE));
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GN_DESCRIPTION));
 

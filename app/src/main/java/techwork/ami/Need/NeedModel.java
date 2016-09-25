@@ -3,7 +3,6 @@ package techwork.ami.Need;
 
 public class NeedModel {
     String idNeed;
-    String idPerson;
     String tittle;
     String description;
     String dateFin;
@@ -17,7 +16,7 @@ public class NeedModel {
     public String getIdNeed() {
         return idNeed;
     }
-    public String getIdPerson(){return idPerson;}
+
     public String getTittle(){
         return tittle;
     }
@@ -48,8 +47,6 @@ public class NeedModel {
     public void setIdNeed(String idNeed) {
         this.idNeed = idNeed;
     }
-
-    public void setIdPerson(String idPerson){this.idPerson=idPerson;}
 
     public void setDescription(String description) {
         this.description = description;

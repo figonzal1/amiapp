@@ -113,7 +113,6 @@ public class Config {
 	public static final String KEY_GN_ID="id";
 	public static final String TAG_GN_NEED= "needs";
 	public static final String TAG_GN_IDNEED ="idNecesidad";
-	public static final String TAG_GN_IDPER="idPersona";
 	public static final String TAG_GN_TITTLE ="titulo";
 	public static final String TAG_GN_DESCRIPTION="descripcion";
 	public static final String TAG_GN_EXPIRATIONDATE = "fechaExpiracion";
