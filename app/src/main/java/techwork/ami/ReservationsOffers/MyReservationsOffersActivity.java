@@ -1,7 +1,9 @@
 package techwork.ami.ReservationsOffers;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -120,14 +122,27 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             // Class that execute background task (get BD data).
             @Override
             protected String doInBackground(Void... strings) {
-                HashMap<String,String> hashMap = new HashMap<>();
-
-                // TODO: de alguna parte obtener el id de la persona (?)
-                String idPersona = "3";
-
-                hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_RESERVATIONS_OFFERS, hashMap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(mRecyclerView, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String,String> hashMap = new HashMap<>();
+
+                    // TODO: de alguna parte obtener el id de la persona (?)
+                    String idPersona = "3";
+
+                    hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+                    return rh.sendPostRequest(Config.URL_GET_RESERVATIONS_OFFERS, hashMap);
+                }
+                else
+                    return "-1";
             }
 
             // Do operations after load data from DB.
@@ -136,7 +151,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showOffersReservations(s);
+                if (!s.equals("-1"))
+                    showOffersReservations(s);
             }
         }
         MyAsyncTask go = new MyAsyncTask();

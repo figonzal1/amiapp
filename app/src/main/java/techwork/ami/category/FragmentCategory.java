@@ -1,9 +1,11 @@
 package techwork.ami.Category;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -142,8 +144,18 @@ public class FragmentCategory extends Fragment {
             @Override
             protected String doInBackground(Void... strings) {
                 RequestHandler rh = new RequestHandler();
-                return rh.sendGetRequest(Config.URL_GET_CATEGORY);
 
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendGetRequest();
+                    }
+                });
+                if (connectionStatus)
+                    return rh.sendGetRequest(Config.URL_GET_CATEGORY);
+                else
+                    return "-1";
             }
 
             //Clase que realiza operaciones despues de cargar datos. Carga los datos en el adapter de RecycleView.
@@ -151,7 +163,8 @@ public class FragmentCategory extends Fragment {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showCategories(s);
+                if (!s.equals("-1"))
+                    showCategories(s);
             }
         }
 

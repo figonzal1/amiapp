@@ -2,6 +2,7 @@ package techwork.ami.Need;
 
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -249,19 +251,32 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
 
             @Override
             protected String doInBackground(Void... params) {
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_NE_USER_ID, user_id);
-                hashMap.put(Config.KEY_NE_COMMUNE_ID, commune_id);
-                hashMap.put(Config.KEY_NE_SUBCATEGORY_ID, subcategory_id);
-                hashMap.put(Config.KEY_NE_LAT, Lat);
-                hashMap.put(Config.KEY_NE_LON, Lon);
-                hashMap.put(Config.KEY_NE_TITLE, title);
-                hashMap.put(Config.KEY_NE_DESCRIPTION, description);
-                hashMap.put(Config.KEY_NE_MONEY, money);
-                hashMap.put(Config.KEY_NE_DAYS, days);
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_NEW_NEED, hashMap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(editTextDays, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendSaveRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String,String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_NE_USER_ID, user_id);
+                    hashMap.put(Config.KEY_NE_COMMUNE_ID, commune_id);
+                    hashMap.put(Config.KEY_NE_SUBCATEGORY_ID, subcategory_id);
+                    hashMap.put(Config.KEY_NE_LAT, Lat);
+                    hashMap.put(Config.KEY_NE_LON, Lon);
+                    hashMap.put(Config.KEY_NE_TITLE, title);
+                    hashMap.put(Config.KEY_NE_DESCRIPTION, description);
+                    hashMap.put(Config.KEY_NE_MONEY, money);
+                    hashMap.put(Config.KEY_NE_DAYS, days);
+
+                    return rh.sendPostRequest(Config.URL_NEW_NEED, hashMap);
+                }
+                else
+                    return "-1";
             }
 
             @Override
@@ -292,7 +307,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
                     }, 2500);
                     */
                 }
-                else {
+                else if (!s.equals("-1")) {
                     Toast.makeText(NeedActivity.this, getResources().getString(R.string.NeedError), Toast.LENGTH_LONG).show();
                     c = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     c.vibrate(500);
@@ -342,7 +357,8 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
         }
     }
 
-    private void getData(String type, String id) {
+    private void getData(final String type, final String id) {
+
         class GetProfile extends AsyncTask<String,Void,String> {
             private ProgressDialog loading;
             @Override
@@ -355,16 +371,28 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
 
             @Override
             protected String doInBackground(String... params) {
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendGetRequestParam(Config.URL_NEED_DATA, params[0]);
+
+                Boolean connectionStatus = rh.isConnectedToServer(editTextDays, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        getData(type, id);
+                    }
+                });
+
+                if (connectionStatus)
+                    return rh.sendGetRequestParam(Config.URL_NEED_DATA, params[0]);
+                else
+                    return "-1";
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                showData(s);
+                if (!s.equals("-1"))
+                    showData(s);
             }
         }
         GetProfile gp = new GetProfile();

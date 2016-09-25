@@ -203,14 +203,27 @@ public class EditProfileActivity extends AppCompatActivity {
 			@Override
 			protected String doInBackground(Void... params) {
 				RequestHandler rh = new RequestHandler();
-				return rh.sendGetRequestParam(Config.URL_GET_PROFILE,id);
+
+				Boolean connectionStatus = rh.isConnectedToServer(editProfileView, new View.OnClickListener() {
+					@Override
+					@TargetApi(Build.VERSION_CODES.M)
+					public void onClick(View v) {
+						sendGetRequest();
+					}
+				});
+
+				if (connectionStatus)
+					return rh.sendGetRequestParam(Config.URL_GET_PROFILE,id);
+				else
+					return "-1";
 			}
 
 			@Override
 			protected void onPostExecute(String s) {
 				super.onPostExecute(s);
 				loading.dismiss();
-				showProfile(s);
+				if (!s.equals("-1"))
+					showProfile(s);
 			}
 		}
 		GetProfile gp = new GetProfile();
@@ -494,19 +507,31 @@ public class EditProfileActivity extends AppCompatActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				HashMap<String,String> hashMap = new HashMap<>();
-				hashMap.put(Config.KEY_ID, id);
-				hashMap.put(Config.KEY_NAME, name);
-				hashMap.put(Config.KEY_LASTNAMES, lastnames);
-				hashMap.put(Config.KEY_EMAIL, email);
-				hashMap.put(Config.KEY_DATE, date);
-				hashMap.put(Config.KEY_PHONE, phone);
-				hashMap.put(Config.KEY_OCCUPATION, idOccupation);
-				hashMap.put(Config.KEY_GENRE, idGenre);
-
 				RequestHandler rh = new RequestHandler();
 
-				return rh.sendPostRequest(Config.URL_UPDATE_PROFILE, hashMap);
+				Boolean connectionStatus = rh.isConnectedToServer(editProfileView, new View.OnClickListener() {
+					@Override
+					@TargetApi(Build.VERSION_CODES.M)
+					public void onClick(View v) {
+						sendUpdateRequest();
+					}
+				});
+
+				if (connectionStatus) {
+					HashMap<String, String> hashMap = new HashMap<>();
+					hashMap.put(Config.KEY_ID, id);
+					hashMap.put(Config.KEY_NAME, name);
+					hashMap.put(Config.KEY_LASTNAMES, lastnames);
+					hashMap.put(Config.KEY_EMAIL, email);
+					hashMap.put(Config.KEY_DATE, date);
+					hashMap.put(Config.KEY_PHONE, phone);
+					hashMap.put(Config.KEY_OCCUPATION, idOccupation);
+					hashMap.put(Config.KEY_GENRE, idGenre);
+
+					return rh.sendPostRequest(Config.URL_UPDATE_PROFILE, hashMap);
+				}
+				else
+					return "-1";
 			}
 
 			@Override
@@ -528,7 +553,7 @@ public class EditProfileActivity extends AppCompatActivity {
 					editor.putString(Config.KEY_SP_GENRE, idGenre);
 					editor.apply();
 				}
-				else
+				else if (!s.equals("-1"))
 					Snackbar.make(findViewById(R.id.coordinatorLayout), R.string.saveFail, Snackbar.LENGTH_LONG)
 							.setAction(R.string.retry, new View.OnClickListener() {
 								@Override

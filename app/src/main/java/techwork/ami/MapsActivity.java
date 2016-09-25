@@ -1,6 +1,7 @@
 package techwork.ami;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -8,6 +9,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.Snackbar;
@@ -136,7 +138,7 @@ public class MapsActivity extends AppCompatActivity implements
     // AsyncTask that send a request to the server
     private void sendGetRequest(){
         class GetOffersLocations extends AsyncTask<Void,Void,String> {
-            ProgressDialog loading;
+            private ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -148,14 +150,27 @@ public class MapsActivity extends AppCompatActivity implements
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                return rh.sendGetRequest(Config.URL_GET_MAP_OFFERS);
+
+                Boolean connectionStatus = rh.isConnectedToServer(findViewById(R.id.googleMap), new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendGetRequest();
+                    }
+                });
+
+                if (connectionStatus)
+                    return rh.sendGetRequest(Config.URL_GET_MAP_OFFERS);
+                else
+                    return "-1";
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                fillOffersLocations(s);
+                if (!s.equals("-1"))
+                    fillOffersLocations(s);
             }
         }
         GetOffersLocations go = new GetOffersLocations();

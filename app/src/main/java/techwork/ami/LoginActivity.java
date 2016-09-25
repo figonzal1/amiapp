@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LoginActivity.this,RestorePassActivity.class);
+                i.putExtra("email", mEmailView.getText().toString());
                 startActivity(i);
             }
         });
@@ -314,7 +316,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
     /**
@@ -335,7 +336,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected String doInBackground(Void... params) {
             RequestHandler rh = new RequestHandler();
 
-            if (rh.isConnectedToServer(4000)) {
+            Boolean connectionStatus = rh.isConnectedToServer(mEmailView, new View.OnClickListener() {
+                @Override
+                @TargetApi(Build.VERSION_CODES.M)
+                public void onClick(View v) {
+                    attemptLogin();
+                }
+            });
+
+            if (connectionStatus) {
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put(Config.KEY_LI_EMAIL, mEmail);
                 hashMap.put(Config.KEY_LI_PASS, mPassword);
@@ -349,16 +358,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final String s) {
             mAuthTask = null;
             showProgress(false);
-            if (s.equals("-1")) {
-                Snackbar.make(mEmailView, R.string.error_on_connection, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.retry, new View.OnClickListener() {
-                            @Override
-                            @TargetApi(Build.VERSION_CODES.M)
-                            public void onClick(View v) {
-                                attemptLogin();
-                            }
-                        }).show();
-            } else
+            if (!s.equals("-1"))
                 processResult(s, mEmail);
         }
 

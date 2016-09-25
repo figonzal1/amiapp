@@ -1,5 +1,10 @@
 package techwork.ami;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -16,11 +21,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class RequestHandler {
 	// Method for write
-		//Method to send httpPostRequest
-		//This method is taking two arguments
-		//First argument is the URL of the script to which we will send the request
-		//Other is an HashMap with name value pairs containing the data to be send with the request
-		public String sendPostRequest(String requestURL,  HashMap<String, String> postDataParams) {
+	//Method to send httpPostRequest
+	//This method is taking two arguments
+	//First argument is the URL of the script to which we will send the request
+	//Other is an HashMap with name value pairs containing the data to be send with the request
+	public String sendPostRequest(String requestURL,  HashMap<String, String> postDataParams) {
 		//Creating a URL
 		URL url;
 		HttpURLConnection conn = null;
@@ -120,14 +125,16 @@ public class RequestHandler {
 		return sb.toString();
 	}
 
-	public boolean isConnectedToServer(int timeout) {
+	public boolean isConnectedToServer(View v, View.OnClickListener listener) {
 		try{
 			URL myUrl = new URL(Config.URL_GENERAL_SERVER);
 			HttpURLConnection connection = (HttpURLConnection) myUrl.openConnection();
-			connection.setConnectTimeout(timeout);
+			connection.setConnectTimeout(5000);
 			connection.connect();
 			return true;
 		} catch (Exception e) {
+			Snackbar.make(v, R.string.error_on_connection, Snackbar.LENGTH_INDEFINITE)
+					.setAction(R.string.retry, listener).show();
 			return false;
 		}
 	}

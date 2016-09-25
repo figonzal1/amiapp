@@ -1,9 +1,11 @@
 package techwork.ami.Need;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
@@ -86,11 +88,11 @@ public class FragmentNeed extends Fragment {
         refreshLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getNeeds();
+                getNeeds();
             }
         });
 
-        //getNeeds();
+        getNeeds();
 
         Button button = (Button) v.findViewById(R.id.btn_create_order);
         button.setOnClickListener(new View.OnClickListener()
@@ -127,18 +129,32 @@ public class FragmentNeed extends Fragment {
 
             @Override
             protected String doInBackground(Void... voids) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_GN_ID,id);
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_NEED,hashMap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_GN_ID, id);
+
+                    return rh.sendPostRequest(Config.URL_GET_NEED, hashMap);
+                }
+                else
+                    return "-1";
             }
 
             @Override
             protected  void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showNeeds(s);
+                if (!s.equals("-1"))
+                    showNeeds(s);
             }
         }
         NeedAsyncTask go = new NeedAsyncTask();

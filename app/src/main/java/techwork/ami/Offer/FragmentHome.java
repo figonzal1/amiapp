@@ -1,8 +1,10 @@
 package techwork.ami.Offer;
 
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -107,7 +109,19 @@ public class FragmentHome extends Fragment {
             @Override
             protected String doInBackground(Void... strings) {
                 RequestHandler rh = new RequestHandler();
-                return rh.sendGetRequest(Config.URL_GET_OFFERS);
+
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendGetRequest();
+                    }
+                });
+
+                if (connectionStatus)
+                    return rh.sendGetRequest(Config.URL_GET_OFFERS);
+                else
+                    return "-1";
             }
 
             // Do operations after load data from DB.
@@ -116,7 +130,8 @@ public class FragmentHome extends Fragment {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showOffers(s);
+                if (!s.equals("-1"))
+                    showOffers(s);
             }
         }
         MyAsyncTask go = new MyAsyncTask();

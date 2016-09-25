@@ -368,15 +368,27 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
         @Override
         protected String doInBackground(Void... params) {
-            HashMap<String,String> hashMap = new HashMap<>();
-            hashMap.put(Config.KEY_NAME, mName);
-            hashMap.put(Config.KEY_LASTNAMES, mLastnames);
-            hashMap.put(Config.KEY_EMAIL, mEmail);
-            hashMap.put(Config.KEY_PASS, mPassword);
-
             RequestHandler rh = new RequestHandler();
 
-            return rh.sendPostRequest(Config.URL_REGISTER, hashMap);
+            Boolean connectionStatus = rh.isConnectedToServer(mEmailView, new View.OnClickListener() {
+                @Override
+                @TargetApi(Build.VERSION_CODES.M)
+                public void onClick(View v) {
+                    attemptRegister();
+                }
+            });
+
+            if (connectionStatus) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_NAME, mName);
+                hashMap.put(Config.KEY_LASTNAMES, mLastnames);
+                hashMap.put(Config.KEY_EMAIL, mEmail);
+                hashMap.put(Config.KEY_PASS, mPassword);
+
+                return rh.sendPostRequest(Config.URL_REGISTER, hashMap);
+            }
+            else
+                return "-1";
         }
 
         @Override
@@ -405,6 +417,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                     mEmailView.requestFocus();
                     mPassword1View.setText("");
                     mPassword2View.setText("");
+                    break;
+                case "-1":
                     break;
                 default:
                     Snackbar.make(findViewById(android.R.id.content), R.string.saveFail, Snackbar.LENGTH_LONG)
