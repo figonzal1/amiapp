@@ -1,5 +1,6 @@
 package techwork.ami.ReservationsOffers;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,7 +53,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
     private List<ReservationOffer> reservationsOffersList;
     private MyReservationsOffersListAdapter adapter;
-    FragmentManager fm;
     Context context;
     CustomAlertDialogBuilder dialogBuilder;
 
@@ -96,9 +96,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Fragment manager for validate reserve dialog
-        fm = getSupportFragmentManager();
 
         //Get and show data
         getReservations();
@@ -164,87 +161,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                     Snackbar.make(mRecyclerView, "Ya Cobrado!", Snackbar.LENGTH_LONG).show();
                 }
                 else {
-                    // Create the CustomAlertDialogBuilder
-                    dialogBuilder = new CustomAlertDialogBuilder(context);
-
-                    // Set the usual data, as you would do with AlertDialog.Builder
-                    dialogBuilder.setTitle(getResources().getString(R.string.my_reservations_offers_validate_title));
-                    dialogBuilder.setMessage(getResources().getString(R.string.my_reservations_offers_validate_message));
-
-                    // Create a EditText
-                    final EditText edittext = new EditText(context);
-                    // Type no visible password
-                    edittext.setInputType(Config.inputPromotionCodeType);
-                    dialogBuilder.setView(edittext);
-
-                    // Set your buttons OnClickListeners
-                    dialogBuilder.setPositiveButton(getResources().getString(R.string.my_reservations_offers_validate_positiveText),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Dialog will not dismiss when the button is clicked
-                                    // Call dialog.dismiss() to actually dismiss it.
-                                    // If promotion code from edittext is equals to the object promotion code
-                                    if (!ro.getPromotionCode().equals(edittext.getText().toString())) {
-                                        edittext.setError(getResources().getString(R.string.my_reservations_offers_validate_errorPromotionCode));
-                                    }
-                                    // Else
-                                    else {
-                                        class ValidateReservationOffer extends AsyncTask<String, Void, String> {
-                                            ProgressDialog loading;
-                                            DialogInterface dialog;
-
-                                            ValidateReservationOffer(DialogInterface dialog) {
-                                                this.dialog = dialog;
-                                            }
-
-                                            @Override
-                                            protected void onPreExecute() {
-                                                super.onPreExecute();
-                                                loading = ProgressDialog.show(MyReservationsOffersActivity.this,
-                                                        getResources().getString(R.string.my_reservations_offers_validate_processing),
-                                                        getResources().getString(R.string.wait), false, false);
-                                            }
-
-                                            @Override
-                                            protected String doInBackground(String... params) {
-                                                HashMap<String, String> hashMap = new HashMap<>();
-                                                hashMap.put(Config.KEY_RESERVE_PERSON_ID,
-                                                        getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
-                                                                .getString(Config.KEY_SP_ID, "-1"));
-                                                hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
-                                                RequestHandler rh = new RequestHandler();
-                                                return rh.sendPostRequest(Config.URL_MRO_VALIDATE, hashMap);
-                                            }
-
-                                            @Override
-                                            protected void onPostExecute(String s) {
-                                                super.onPostExecute(s);
-                                                loading.dismiss();
-                                                if (s.equals("0")) {
-                                                    Toast.makeText(getApplicationContext(),
-                                                            getResources().getString(R.string.my_reservations_offers_validate_ok), Toast.LENGTH_LONG).show();
-                                                    //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
-                                                    this.dialog.dismiss();
-                                                } else {
-                                                    Toast.makeText(getApplicationContext(),
-                                                            getResources().getString(R.string.operation_fail), Toast.LENGTH_LONG).show();
-                                                }
-                                                getReservations();
-                                            }
-                                        }
-                                        new ValidateReservationOffer(dialog).execute(ro.getIdReservationOffer());
-                                    }
-                                }
-                            });
-
-                    // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
-                    dialogBuilder.setNegativeButton(getResources().getString(R.string.my_reservations_offers_validate_negativeText), null);
-
-                    // (optional) set whether to dismiss dialog when touching outside
-                    dialogBuilder.setCanceledOnTouchOutside(false);
-
-                    // Show the dialog
-                    dialogBuilder.show();
+                    dialogLocalCode(ro);
                 }
             }
 
@@ -262,6 +179,126 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void dialogLocalCode(final ReservationOffer ro) {
+        // Create the CustomAlertDialogBuilder
+        dialogBuilder = new CustomAlertDialogBuilder(context);
+
+        // Set the usual data, as you would do with AlertDialog.Builder
+        dialogBuilder.setTitle(getResources().getString(R.string.my_reservations_offers_validate_title));
+        dialogBuilder.setMessage(getResources().getString(R.string.my_reservations_offers_validate_message));
+
+        // Create a EditText
+        final EditText edittext = new EditText(context);
+        // Type no visible password
+        edittext.setInputType(Config.inputPromotionCodeType);
+        dialogBuilder.setView(edittext);
+
+        // Set your buttons OnClickListeners
+        dialogBuilder.setPositiveButton(getResources().getString(R.string.my_reservations_offers_validate_positiveText),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Dialog will not dismiss when the button is clicked
+                        // Call dialog.dismiss() to actually dismiss it.
+                        // If promotion code from edittext is equals to the object promotion code
+                        if (!ro.getLocalCode().equals(edittext.getText().toString())) {
+                            edittext.setError(getResources().getString(R.string.my_reservations_offers_validate_errorPromotionCode));
+                        }
+                        // Else
+                        else {
+                            // First validate for the local operator
+                            dialog.dismiss();
+                            dialogPromotionCode(ro);
+                        }
+                    }
+                });
+
+        // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+        dialogBuilder.setNegativeButton(getResources().getString(R.string.my_reservations_offers_validate_negativeText), null);
+
+        // (optional) set whether to dismiss dialog when touching outside
+        dialogBuilder.setCanceledOnTouchOutside(false);
+
+        // Show the dialog
+        dialogBuilder.show();
+    }
+
+    private void dialogPromotionCode(final ReservationOffer ro) {
+        // Create the CustomAlertDialogBuilder
+        dialogBuilder = new CustomAlertDialogBuilder(context);
+
+        // Set the usual data, as you would do with AlertDialog.Builder
+        dialogBuilder.setTitle(getResources().getString(R.string.my_reservations_offers_validate_local));
+        dialogBuilder.setMessage(ro.getPromotionCode());
+
+        // Set your buttons OnClickListeners
+        dialogBuilder.setPositiveButton(getResources().getString(R.string.my_reservations_offers_validate_positiveText),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        // Write in the DB that offer has been hired
+                        class ValidateReservationOffer extends AsyncTask<String, Void, String> {
+                            ProgressDialog loading;
+                            DialogInterface dialog;
+
+                            ValidateReservationOffer(DialogInterface dialog) {
+                                this.dialog = dialog;
+                            }
+
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                loading = ProgressDialog.show(MyReservationsOffersActivity.this,
+                                        getResources().getString(R.string.my_reservations_offers_validate_processing),
+                                        getResources().getString(R.string.wait), false, false);
+                            }
+
+                            @Override
+                            protected String doInBackground(String... params) {
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put(Config.KEY_RESERVE_PERSON_ID,
+                                        getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                                .getString(Config.KEY_SP_ID, "-1"));
+                                hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
+                                RequestHandler rh = new RequestHandler();
+                                return rh.sendPostRequest(Config.URL_MRO_VALIDATE, hashMap);
+                            }
+
+                            @Override
+                            protected void onPostExecute(String s) {
+                                super.onPostExecute(s);
+                                loading.dismiss();
+                                if (s.equals("0")) {
+                                    Toast.makeText(getApplicationContext(),
+                                            getResources().getString(R.string.my_reservations_offers_validate_ok), Toast.LENGTH_LONG).show();
+                                    //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
+                                    this.dialog.dismiss();
+                                } else {
+                                    Toast.makeText(getApplicationContext(),
+                                            getResources().getString(R.string.operation_fail), Toast.LENGTH_LONG).show();
+                                }
+                                getReservations();
+                            }
+                        }
+                        new ValidateReservationOffer(dialog).execute(ro.getIdReservationOffer());
+
+                    }
+                });
+
+        // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+        dialogBuilder.setNegativeButton(getResources().getString(R.string.my_reservations_offers_validate_negativeText),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        // (optional) set whether to dismiss dialog when touching outside
+        dialogBuilder.setCanceledOnTouchOutside(false);
+        // Show the dialog
+        dialogBuilder.show();
     }
 
     private void rateOffer(final ReservationOffer ro) {
@@ -392,6 +429,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH)+1, c.get(Calendar.YEAR)));
                 item.setQuantity(jsonObjectItem.getString(Config.TAG_GRO_QUANTITY));
                 item.setPromotionCode(jsonObjectItem.getString(Config.TAG_GRO_PROMOCOD));
+                item.setLocalCode(jsonObjectItem.getString(Config.TAG_GRO_LOCCODE));
                 item.setCalificacion(jsonObjectItem.getString(Config.TAG_GRO_CALIFICATION));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GRO_IMAGE));
 

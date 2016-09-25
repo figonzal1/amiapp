@@ -61,6 +61,7 @@ public class Config {
     public static final String TAG_GRO_RESERDATE = "fechaReserva";
     public static final String TAG_GRO_PAYDATE = "fechaCobro";
 	public static final String TAG_GRO_CALIFICATION = "calificacion";
+	public static final String TAG_GRO_LOCCODE = "codigoLocal";
 
 	//MRO = My Reservations Offers URLs
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";

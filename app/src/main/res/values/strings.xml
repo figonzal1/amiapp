@@ -97,7 +97,7 @@
     <!-- My Reservations Offers Strings -->
     <string name="title_activity_my_reservations">Mis reservas</string>
     <string name="myReservationOfferDialog">Cobrar oferta</string>
-    <string name="my_reservations_offers_validate_message">Ingrese código promoción</string>
+    <string name="my_reservations_offers_validate_message">Ingrese código del local</string>
     <string name="my_reservations_offers_validate_title">Validar oferta</string>
     <string name="my_reservations_offers_validate_positiveText">Validar</string>
     <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
@@ -106,4 +106,5 @@
     <string name="my_reservations_offers_validate_processing">Validando oferta</string>
     <string name="my_reservations_offers_rate_processing">Opinando</string>
     <string name="my_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
+    <string name="my_reservations_offers_validate_local">El código de la promoción es:</string>
 </resources>
