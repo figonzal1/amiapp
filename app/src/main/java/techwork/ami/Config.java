@@ -85,6 +85,7 @@ public class Config {
 	public static final  String KEY_NE_USER_ID="User_id";
 	public static final  String KEY_NE_SUBCATEGORY_ID="Subcategory_id";
 	public static final  String KEY_NE_COMMUNE_ID="Commune_id";
+	public static final  String KEY_NE_LOCATION="userlocation";
 
 	// login Keys
 	public static final  String KEY_LI_PASS="password";

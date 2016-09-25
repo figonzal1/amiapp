@@ -43,6 +43,8 @@ import techwork.ami.Config;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
+import android.widget.CheckBox;
+
 
 public class NeedActivity extends AppCompatActivity implements LocationListener {
     // State Keys for saving activity's instance
@@ -81,6 +83,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
     private String user_name;
     private String commune_id;
     private Vibrator c;
+    private CheckBox selectLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
         editTextTitle = (EditText) findViewById(R.id.Need_editTextTitle);
         editTextDays = (EditText) findViewById(R.id.Need_editTextDays);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        selectLocation = (CheckBox) findViewById(R.id.select_location);
 
         getProfileId();
 
@@ -176,6 +180,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
         editTextDescription.setEnabled(e);
         editTextMoney.setEnabled(e);
         editTextDays.setEnabled(e);
+        selectLocation.setEnabled(e);
         if (!e) {
             spinnerSubcategory.setEnabled(false);
             buttonRegister.setEnabled(false);
@@ -238,6 +243,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
         final String money = editTextMoney.getText().toString();
         final String days = editTextDays.getText().toString();
         final String subcategory_id = subCategoriesMap.get(spinnerSubcategory.getSelectedItem().toString());
+        final String userlocation = (selectLocation.isChecked() ? "1" : "0");
 
         class saveNeed extends AsyncTask<Void,Void,String> {
             private ProgressDialog loading;
@@ -272,6 +278,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
                     hashMap.put(Config.KEY_NE_DESCRIPTION, description);
                     hashMap.put(Config.KEY_NE_MONEY, money);
                     hashMap.put(Config.KEY_NE_DAYS, days);
+                    hashMap.put(Config.KEY_NE_LOCATION, userlocation);
 
                     return rh.sendPostRequest(Config.URL_NEW_NEED, hashMap);
                 }
