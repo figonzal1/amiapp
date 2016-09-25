@@ -103,10 +103,10 @@ public class MainActivity extends AppCompatActivity
         textViewNavHeaderEmail.setText(email);
 
         switch (genre) {
-            case "2":
+            case "1":
                 imageViewProfileIcon.setImageResource(R.drawable.profile_icon_woman);
                 break;
-            case "3":
+            case "2":
                 imageViewProfileIcon.setImageResource(R.drawable.profile_icon_man);
                 break;
             default:
@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_manage) {
-            // Handle the camera action
+        if (id == R.id.nav_settings) {
+
         } else if (id == R.id.nav_my_preferences) {
 
         } else if (id == R.id.nav_reservations) {

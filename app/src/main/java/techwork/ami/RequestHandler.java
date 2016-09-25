@@ -108,7 +108,7 @@ public class RequestHandler {
 		StringBuilder sb =new StringBuilder();
 		HttpURLConnection con = null;
 		try {
-			URL url = new URL(requestURL+id);
+			URL url = new URL(requestURL+"?"+id);
 
 			con = (HttpURLConnection) url.openConnection();
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));

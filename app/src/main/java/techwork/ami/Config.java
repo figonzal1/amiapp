@@ -15,22 +15,22 @@ public class Config {
 	// Request URLs
 	public static final String URL_GENERAL_SERVER="http://amiapp.cl";
 
-	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php?id=";
+	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php";
 	public static final String URL_GET_MAP_OFFERS="http://amiapp.cl/public/getData/Maps/getData.php";
-	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php?";
+	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php";
 	public static final String URL_GET_CATEGORY="http://amiapp.cl/public/getData/CategoryList/getCategoryList.php";
 	public static final String URL_UPDATE_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/updateAfterLogin.php";
 	public static final String URL_UPDATE_PROFILE="http://amiapp.cl/public/getData/Profile/updateProfile.php";
 	public static final String URL_LOGIN="http://amiapp.cl/public/getData/Login/login.php";
 	public static final String URL_REGISTER="http://amiapp.cl/public/getData/Register/register.php";
-	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php?email=";
+	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php";
 	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers2.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
 	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
     public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
-	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php?";
+	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php";
 
     // GO = Get Offers
 	public static final String TAG_GO_OFFERS="offers";

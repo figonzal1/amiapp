@@ -14,6 +14,15 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
 
+    <!-- Main Activity Strings -->
+    <string name="nav_edit_profile">Editar Perfil</string>
+    <string name="nav_my_preferences">Mis Gustos</string>
+    <string name="nav_reservations">Mis Reservas</string>
+    <string name="nav_settings">Configuración</string>
+    <string name="nav_logout">Cerrar Sesión</string>
+    <string name="nav_contact_us">Contáctanos</string>
+    <string name="nav_group_communication">Comunícate</string>
+
     <!-- Strings login -->
     <string name="title_activity_login">Inicio sesión</string>
     <string name="prompt_email">Email</string>
@@ -21,7 +30,6 @@
     <string name="action_sign_in">Ingresar</string>
     <string name="email_dont_exist">No existe una cuenta con el correo ingresado</string>
     <string name="ask_new_account">¿Quieres registrarte?</string>
-
 
     <!-- Se muestra en el teclado del movil -->
     <string name="action_sign_in_short">Listo</string>
@@ -126,4 +134,5 @@
     <string name="MA_storeFormatSingle">En este local existe %s oferta disponible.</string>
     <string name="MA_storeFormatPlural">En este local existen %s ofertas disponibles.</string>
     <string name="MA_go">Ver</string>
+
 </resources>

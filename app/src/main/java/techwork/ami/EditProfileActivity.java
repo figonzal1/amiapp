@@ -190,7 +190,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	// AsyncTask that send a request to the server
 	private void sendGetRequest(){
-		class GetProfile extends AsyncTask<Void,Void,String> {
+		class GetProfile extends AsyncTask<String,Void,String> {
 			private ProgressDialog loading;
 			@Override
 			protected void onPreExecute() {
@@ -201,7 +201,7 @@ public class EditProfileActivity extends AppCompatActivity {
 			}
 
 			@Override
-			protected String doInBackground(Void... params) {
+			protected String doInBackground(String... params) {
 				RequestHandler rh = new RequestHandler();
 
 				Boolean connectionStatus = rh.isConnectedToServer(editProfileView, new View.OnClickListener() {
@@ -213,7 +213,7 @@ public class EditProfileActivity extends AppCompatActivity {
 				});
 
 				if (connectionStatus)
-					return rh.sendGetRequestParam(Config.URL_GET_PROFILE,id);
+					return rh.sendGetRequestParam(Config.URL_GET_PROFILE, params[0]);
 				else
 					return "-1";
 			}
@@ -227,7 +227,7 @@ public class EditProfileActivity extends AppCompatActivity {
 			}
 		}
 		GetProfile gp = new GetProfile();
-		gp.execute();
+		gp.execute("id=" + id);
 	}
 
 	@SuppressLint("SimpleDateFormat")
