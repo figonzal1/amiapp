@@ -321,7 +321,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean[]> {
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         private final String mEmail;
         private final String mPassword;
@@ -332,78 +332,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected Boolean[] doInBackground(Void... params) {
-
-            HashMap<String,String> hashMap = new HashMap<>();
-            hashMap.put(Config.KEY_LI_EMAIL, mEmail);
-            hashMap.put(Config.KEY_LI_PASS, mPassword);
-
+        protected String doInBackground(Void... params) {
             RequestHandler rh = new RequestHandler();
 
-            String json = rh.sendPostRequest(Config.URL_LOGIN, hashMap);
-
-            String id = "-1";
-            String firstLogin = "0";
-            String name = "";
-            String lastnames = "";
-            String genre = "0";
-            Boolean b[] = new Boolean[3];
-
-            try {
-                JSONObject jsonObject = new JSONObject(json);
-                id = jsonObject.getString(Config.TAG_ID_P);
-
-                if (id.equals("-1")) {
-                    b[0] = false; //  login error
-                    b[2] = jsonObject.getString(Config.TAG_EXIST_EMAIL).equals("1");
-                    return b;
-                } else { // successful error, get the basic profile data
-                    firstLogin = jsonObject.getString(Config.TAG_FIRST_LOGIN);
-                    name = jsonObject.getString(Config.TAG_NAME);
-                    lastnames = jsonObject.getString(Config.TAG_LASTNAMES);
-                    genre = jsonObject.getString(Config.TAG_ID_GENRE);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if (rh.isConnectedToServer(4000)) {
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_LI_EMAIL, mEmail);
+                hashMap.put(Config.KEY_LI_PASS, mPassword);
+                return rh.sendPostRequest(Config.URL_LOGIN, hashMap);
             }
-            // idPerson found
-            b[0] = true;
-            b[1] = firstLogin.equals("1");
-
-            // Save the data of the profile on the application's shared preferences
-            SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(Config.KEY_SP_ID, id);
-            editor.putString(Config.KEY_SP_NAME, name);
-            editor.putString(Config.KEY_SP_LASTNAMES, lastnames);
-            editor.putString(Config.KEY_SP_EMAIL, mEmail);
-            editor.putString(Config.KEY_SP_GENRE, genre);
-            editor.apply();
-
-            return b;
+            else
+                return "-1";
         }
 
         @Override
-        protected void onPostExecute(final Boolean b[]) {
+        protected void onPostExecute(final String s) {
             mAuthTask = null;
             showProgress(false);
+            if (s.equals("-1")) {
+                Snackbar.make(mEmailView, R.string.error_on_connection, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.retry, new View.OnClickListener() {
+                            @Override
+                            @TargetApi(Build.VERSION_CODES.M)
+                            public void onClick(View v) {
+                                attemptLogin();
+                            }
+                        }).show();
+            } else
+                processResult(s, mEmail);
+        }
 
-            // Check if the person was found
-            if (b[0]) {
-                // Check if the first login in not completed
-                if (b[1]) {
-                    Intent it = new Intent(LoginActivity.this, AfterLoginActivity.class);
-                    finish();
-                    startActivity(it);
-                } else {
-                    Intent iLogin = new Intent(LoginActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(iLogin);
-                }
-            } else {
-                // Check if already exist an account with the given email
-                if (b[2]) {
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+    }
+
+    private void processResult(String json, String email) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            String id = jsonObject.getString(Config.TAG_ID_P);
+
+            // Check if the login was successful
+            if (id.equals("-1")) {
+                // If login fails, check if the account exist
+                if (jsonObject.getString(Config.TAG_EXIST_EMAIL).equals("1")) {
+                    // If the account exist
                     Snackbar.make(mEmailView, R.string.error_incorrect_password, Snackbar.LENGTH_INDEFINITE)
                             .setAction(R.string.did_forget_your_pass, new View.OnClickListener() {
                                 @Override
@@ -418,8 +393,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mPasswordView.setError(getString(R.string.error_incorrect_password));
                     mPasswordView.setText("");
                     mPasswordView.requestFocus();
-                }
-                else
+                } else {
+                    // If the account doesn't exist
                     Snackbar.make(mEmailView, R.string.email_dont_exist, Snackbar.LENGTH_INDEFINITE)
                             .setAction(R.string.ask_new_account, new View.OnClickListener() {
                                 @Override
@@ -430,14 +405,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     startActivity(iRegisterPass);
                                 }
                             }).show();
-            }
-        }
+                }
+            } else {
+                // Successful login
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+                // Save the data of the profile on the application's shared preferences
+                SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                editor.putString(Config.KEY_SP_ID, id);
+                editor.putString(Config.KEY_SP_NAME, jsonObject.getString(Config.TAG_NAME));
+                editor.putString(Config.KEY_SP_LASTNAMES, jsonObject.getString(Config.TAG_LASTNAMES));
+                editor.putString(Config.KEY_SP_EMAIL, email);
+                editor.putString(Config.KEY_SP_GENRE, jsonObject.getString(Config.TAG_ID_GENRE));
+
+                // Check if the user made the first login
+                if (jsonObject.getString(Config.TAG_FIRST_LOGIN).equals("1")) {
+                    editor.apply();
+                    Intent it = new Intent(LoginActivity.this, AfterLoginActivity.class);
+                    finish();
+                    startActivity(it);
+                } else {
+                    editor.putString(Config.KEY_SP_COMMUNE, jsonObject.getString(Config.TAG_ID_COMMUNE));
+                    editor.apply();
+                    Intent iLogin = new Intent(LoginActivity.this, MainActivity.class);
+                    finish();
+                    startActivity(iLogin);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
+
 }
 

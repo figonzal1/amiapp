@@ -1,5 +1,6 @@
 package techwork.ami;
 
+@SuppressWarnings("WeakerAccess")
 public class Config {
 	// Shared preferences keys
 	public static final String KEY_SHARED_PREF ="cl.usm.techwork.ami";
@@ -8,8 +9,12 @@ public class Config {
 	public static final String KEY_SP_LASTNAMES="Persona.apellidos";
 	public static final String KEY_SP_EMAIL="Persona.email";
 	public static final String KEY_SP_GENRE="Persona.genero";
+	public static final String KEY_SP_COMMUNE="Persona.comuna";
+
 
 	// Request URLs
+	public static final String URL_GENERAL_SERVER="http://amiapp.cl";
+
 	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php?id=";
 	public static final String URL_GET_MAP_OFFERS="http://amiapp.cl/public/getData/Maps/getData.php";
 	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php?";
@@ -24,6 +29,8 @@ public class Config {
 	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
     public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
+	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
+	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php?";
 
     // GO = Get Offers
 	public static final String TAG_GO_OFFERS="offers";
@@ -68,6 +75,17 @@ public class Config {
 	public static final  String KEY_COMMUNE ="idComuna";
 	public static final  String KEY_GENRE ="idGenero";
 
+	// Need Keys
+	public static final  String KEY_NE_TITLE="Title";
+	public static final  String KEY_NE_DESCRIPTION="Description";
+	public static final  String KEY_NE_MONEY="Money";
+	public static final  String KEY_NE_DAYS="NeedDays";
+	public static final  String KEY_NE_LAT="Lat";
+	public static final  String KEY_NE_LON="Lon";
+	public static final  String KEY_NE_USER_ID="User_id";
+	public static final  String KEY_NE_SUBCATEGORY_ID="Subcategory_id";
+	public static final  String KEY_NE_COMMUNE_ID="Commune_id";
+
 	// login Keys
 	public static final  String KEY_LI_PASS="password";
 	public static final  String KEY_LI_EMAIL="email";
@@ -87,6 +105,8 @@ public class Config {
 	public static final String TAG_ID_REGION ="idRegion";
 	public static final String TAG_ID_PROVINCE ="idProvincia";
 	public static final String TAG_ID_COMMUNE ="idComuna";
+	public static final String TAG_ID_CATEGORIES ="idCategoria";
+	public static final String TAG_ID_SUBCATEGORIES ="idSubcategoria";
 	public static final String TAG_OCCUPATION_NAME ="nombre";
 	public static final String TAG_PROFILE ="profile";
 	public static final String TAG_OCCUPATIONS ="occupations";
@@ -134,6 +154,12 @@ public class Config {
 	// Date format
 	public static final String DATETIME_FORMAT_DB="yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_FORMAT="%02d/%02d/%04d";
+
+	//Tags used in the JSON String Need
+	public static final String TAG_ID = "idCategoria";
+
+	//JSON array name
+	public static final String JSON_ARRAY = "result";
 
     //Keys for Fragments (MainPageAdapter)
     public static final int HOME = 0;

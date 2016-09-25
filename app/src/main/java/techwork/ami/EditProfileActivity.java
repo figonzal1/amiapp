@@ -1,5 +1,6 @@
 package techwork.ami;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -81,6 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	// id of the person;
 	String id;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -189,7 +191,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	// AsyncTask that send a request to the server
 	private void sendGetRequest(){
 		class GetProfile extends AsyncTask<Void,Void,String> {
-			ProgressDialog loading;
+			private ProgressDialog loading;
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -215,6 +217,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		gp.execute();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	// Fill the fields with the data from the JSON
 	private void showProfile(String json){
 		try {
@@ -462,6 +465,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		return true; //android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	// Send the new profile data to the server
 	private void sendUpdateRequest() {
 		final String name = editTextName.getText().toString().trim();
@@ -479,7 +483,7 @@ public class EditProfileActivity extends AppCompatActivity {
 				spinnerGenre.getSelectedItem().toString());
 
 		class UpdateProfile extends AsyncTask<Void,Void,String>{
-			ProgressDialog loading;
+			private ProgressDialog loading;
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -611,13 +615,5 @@ public class EditProfileActivity extends AppCompatActivity {
 					.show();
 		else
 			finish();
-	}
-
-	private void delay(long d) {
-		try {
-			Thread.sleep(d);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }

@@ -182,7 +182,7 @@ public class FragmentCategory extends Fragment {
 
             @Override
             public void onItemLongClick(View view) {
-                //No hara nada
+                
             }
         });
 
