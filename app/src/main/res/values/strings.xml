@@ -135,4 +135,12 @@
     <string name="MA_storeFormatPlural">En este local existen %s ofertas disponibles.</string>
     <string name="MA_go">Ver</string>
 
+    <!-- Contact Us Strings -->
+    <string name="titleActivityContactUs">Contáctanos</string>
+    <string name="contactUsTitle">Contáctanos</string>
+    <string name="contactUsLeyend">¿Tienes alguna duda? Estamos para ayudarte</string>
+    <string name="contactUsSubject">Asunto</string>
+    <string name="contactUsMessage">Mensaje</string>
+    <string name="contactUsButton">Enviar</string>
+
 </resources>

@@ -30,7 +30,7 @@
                 android:textStyle="bold"
                 android:textSize="30sp"
                 android:text="@string/editProfileTitle"
-                android:id="@+id/textViewWelcome"
+                android:id="@+id/EP_textViewWelcome"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:paddingTop="10dp"

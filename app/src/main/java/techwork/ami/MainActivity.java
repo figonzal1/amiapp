@@ -204,7 +204,8 @@ public class MainActivity extends AppCompatActivity
             Intent iEditProfile = new Intent(MainActivity.this, EditProfileActivity.class);
             startActivity(iEditProfile);
         } else if (id == R.id.nav_contact_us) {
-
+            Intent iContactUs = new Intent(MainActivity.this, ContactUsActivity.class);
+            startActivity(iContactUs);
         } else if (id == R.id.nav_logout) {
             logout();
             Intent iLogin = new Intent(MainActivity.this, LoginActivity.class);
