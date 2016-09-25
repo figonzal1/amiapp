@@ -168,14 +168,16 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(View view) {
                 final ReservationOffer ro = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
+                // Validate before rate
+                if (ro.getPaymentDate().equals("")){
+                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                }
                 // If has already validated but not rated
-                if (!ro.getPaymentDate().equals("") // validated
-                        && ro.getCalificacion().equals("") // not rated
-                 ){
-                    rateOffer(ro, false);
+                else if (!ro.getCalificacion().equals("")){
+                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                    rateOffer(ro, false);
                 }
             }
         });

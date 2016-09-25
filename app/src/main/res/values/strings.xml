@@ -113,4 +113,5 @@
     <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
+    <string name="my_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
 </resources>
