@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -35,11 +36,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback {
 
+    private HashMap<String, Store> stores;
     private Hashtable<String, String> markers;
     private Hashtable<String, Boolean> markerSet;
     private GoogleMap googleMap;
@@ -50,6 +53,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         markers = new Hashtable<>();
         markerSet = new Hashtable<>();
+        stores = new HashMap<>();
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager()
@@ -90,9 +94,7 @@ public class MapsActivity extends AppCompatActivity implements
                 latitude = Double.parseDouble(c.getString(Config.TAG_LATITUDE));
                 longitude = Double.parseDouble(c.getString(Config.TAG_LONGITUDE));
 
-                offerTitle = String.format("%s (%s)",
-                        c.getString(Config.TAG_NAME),
-                        c.getString(Config.TAG_OFFERS_QUANTITY));
+                offerTitle = c.getString(Config.TAG_NAME);
                 address = c.getString(Config.TAG_ADDRESS);
 
                 marker = new MarkerOptions()
@@ -100,10 +102,13 @@ public class MapsActivity extends AppCompatActivity implements
                         .title(offerTitle)
                         .snippet(address)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_loading_image));
 
                 if (googleMap != null) {
                     Marker m = googleMap.addMarker(marker);
+                    Store s = new Store(c.getString(Config.TAG_ID_STORE),
+                            c.getString(Config.TAG_NAME),
+                            c.getString(Config.TAG_OFFERS_QUANTITY));
+                    stores.put(m.getId(), s);
                     markers.put(m.getId(), c.getString(Config.TAG_IMAGE));
                     markerSet.put(m.getId(), false);
                 }
@@ -189,6 +194,14 @@ public class MapsActivity extends AppCompatActivity implements
 
         googleMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this));
 
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                showSnackbar(marker);
+                return false;
+            }
+        });
+
         googleMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
         // Enable the current user GPS location
@@ -230,8 +243,6 @@ public class MapsActivity extends AppCompatActivity implements
             tvSnippet.setText(marker.getSnippet());
 
             ImageView ivIcon = ((ImageView)myContentsView.findViewById(R.id.icon));
-            //ivIcon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_gallery));
-            //ivIcon.setImageResource(R.drawable.profile_icon_other);
 
             if (markerSet.get(marker.getId())) {
                 Picasso.with(context)
@@ -254,10 +265,10 @@ public class MapsActivity extends AppCompatActivity implements
             return null;
         }
 
-        public class InfoWindowRefresher implements Callback {
+        class InfoWindowRefresher implements Callback {
             private Marker markerToRefresh;
 
-            public InfoWindowRefresher(Marker markerToRefresh) {
+            InfoWindowRefresher(Marker markerToRefresh) {
                 this.markerToRefresh = markerToRefresh;
             }
 
@@ -272,13 +283,59 @@ public class MapsActivity extends AppCompatActivity implements
 
     }
 
+    private String makeSnackbarTitle(Store s) {
+        String format = (s.getnOffers().equals("1"))? getResources().getString(R.string.MA_storeFormatSingle)
+                : getResources().getString(R.string.MA_storeFormatSingle);
+
+        return String.format(format, s.getnOffers());
+    }
+
     GoogleMap.OnInfoWindowClickListener MyOnInfoWindowClickListener
             = new GoogleMap.OnInfoWindowClickListener(){
         @Override
         public void onInfoWindowClick(Marker marker) {
             // TODO: Show the corresponding offer
-            Snackbar.make(findViewById(android.R.id.content), marker.getTitle(), Snackbar.LENGTH_LONG)
-                    .show();
+            showSnackbar(marker);
         }
     };
+
+    private void showSnackbar(Marker marker) {
+        final Store s = stores.get(marker.getId());
+        Snackbar.make(findViewById(R.id.googleMap), makeSnackbarTitle(s), Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.MA_go, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        // TODO: call offers activity
+                        Intent i = new Intent(MapsActivity.this, MainActivity.class);
+                        i.putExtra("idLocal", s.getIdStore());
+                        startActivity(i);
+                    }
+                }).show();
+    }
+
+    class Store {
+        private String idStore;
+        private String name;
+        private String nOffers;
+
+        Store(String i, String n, String nO) {
+            this.idStore = i;
+            this.name = n;
+            this.nOffers = nO;
+        }
+
+        public String getIdStore() {
+            return idStore;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getnOffers() {
+            return nOffers;
+        }
+    }
+
 }

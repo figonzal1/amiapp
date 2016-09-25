@@ -99,6 +99,7 @@ public class Config {
 	public static final String TAG_FIRST_LOGIN ="primerInicio";
 	public static final String TAG_RESULT ="result";
 	public static final String TAG_TYPE ="type";
+	public static final String TAG_ID_STORE ="idLocal";
 	public static final String TAG_ID_OCCUPATION ="idOcupacion";
 	public static final String TAG_ID_GENRE ="idGenero";
 	public static final String TAG_ID_COUNTRY ="idPais";
