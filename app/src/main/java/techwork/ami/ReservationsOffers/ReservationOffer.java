@@ -8,6 +8,7 @@ public class ReservationOffer {
     private String title;
     private String description;
     private String promotionCode;
+    private String calificacion;
     private String initialDate;
     private String finalDate;
     private int price;
@@ -30,6 +31,9 @@ public class ReservationOffer {
     }
     public String getPromotionCode() {
         return promotionCode;
+    }
+    public String getCalificacion() {
+        return  calificacion;
     }
     public String getInitialDate() {
         return initialDate;
@@ -71,6 +75,9 @@ public class ReservationOffer {
     }
     public void setPromotionCode(String promotionCode) {
         this.promotionCode = promotionCode;
+    }
+    public void setCalificacion(String calificacion){
+        this.calificacion = calificacion;
     }
     public void setInitialDate(String initialDate) {
         this.initialDate = initialDate;

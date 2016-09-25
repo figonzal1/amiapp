@@ -90,7 +90,7 @@
     <string name="titleActivityExploreOffers">Explorar ofertas</string>
 
     <!-- Offer Strings -->
-    <string name="reserve_ok">Reserva realizada!</string>
+    <string name="reserve_ok">¡Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>
 
@@ -102,6 +102,8 @@
     <string name="my_reservations_offers_validate_positiveText">Validar</string>
     <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
     <string name="my_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
-    <string name="my_reservations_offers_validate_ok">Oferta validada!</string>
+    <string name="my_reservations_offers_validate_ok">¡Oferta validada!</string>
     <string name="my_reservations_offers_validate_processing">Validando oferta</string>
+    <string name="my_reservations_offers_rate_processing">Opinando</string>
+    <string name="my_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
 </resources>
