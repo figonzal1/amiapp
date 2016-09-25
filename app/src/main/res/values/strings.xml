@@ -114,4 +114,8 @@
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
     <string name="my_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
+
+    <!-- Fragment Home / Offers list Strings -->
+    <string name="offers_list_discard_question">¿Desea descartar esta oferta?</string>
+    <string name="offers_list_discard_processing">Descartando oferta</string>
 </resources>

@@ -67,6 +67,9 @@ public class Config {
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
 	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
 
+	// DO = Discard Offer URLs
+	public static final String URL_DO_DISCARD = "http://amiapp.cl/public/getData/DiscardOffer/discardOffer.php";
+
     // Keys that will be used to send the request to php scripts
 	public static final  String KEY_ID ="id"; // UP = Update Profile
 	public static final  String KEY_NAME ="nombre";
@@ -141,6 +144,10 @@ public class Config {
 	public static final String KEY_RESERVE_QUANTITY = "cantidad";
 	public static final String KEY_RESERVE_RESERVE_DATE = "fechaReserva";
 	public static final String KEY_RESERVE_RATE = "calificacion";
+
+	// Discard offer keys
+	public static final String KEY_DO_OFFER_ID = "idOferta";
+	public static final String KEY_DO_PERSON_ID = "idPersona";
 
 	// Date format
 	public static final String DATETIME_FORMAT_DB="yyyy-MM-dd HH:mm:ss";
