@@ -6,6 +6,7 @@
     <string name="error_invalid_email">Correo no válido</string>
     <string name="error_invalid_name">Nombre no válido</string>
     <string name="error_field_required">Campo requerido</string>
+    <string name="error_on_connection">Parece que no tienes conexión a Internet</string>
     <string name="retry">Volver a intentar</string>
     <string name="did_forget_your_pass">¿Olvidaste tu contraseña?</string>
     <string name="close_without_save">¿Estás seguro que quieres salir?</string>
@@ -84,12 +85,16 @@
     <string name="NeedUserTitle">Titulo del pedido</string>
     <string name="NeedWait">Enviando pedido</string>
     <string name="invalid_money">Ingresar solo dinero</string>
-    <string name="NeedCategoryTable">Categoria</string>
+    <string name="NeedCategorySpinner">Categoría</string>
+    <string name="NeedSubcategorySpinner">Subcategoría</string>
+    <string name="NeedCategoryTable">Categoría</string>
     <string name="NeedCompanyTable">Empresas Disponibles</string>
     <string name="NeedRegistered">¡Tu pedido ha sido enviado!</string>
     <string name="NeedError">Tus datos no se han podido guardar, inténtalo más tarde nuevamente</string>
     <string name="categoriesNoSelected">Seleccionar Categoría</string>
     <string name="subCategoriesNoSelected">Seleccionar Subcategoría</string>
+    <string name="NeedDaysTitle">Dias máximos de espera</string>
+    <string name="NeedButtonText">Enviar Pedido</string>
 
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>

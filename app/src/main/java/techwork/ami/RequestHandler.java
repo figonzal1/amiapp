@@ -77,48 +77,60 @@ public class RequestHandler {
 	}
 
 	// Methods for get
-		// To execute a get without params
-		public String sendGetRequest(String requestURL){
-			StringBuilder sb =new StringBuilder();
-			HttpURLConnection con = null;
-			try {
-				URL url = new URL(requestURL);
-				con = (HttpURLConnection) url.openConnection();
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
-				String s;
-				while((s=bufferedReader.readLine())!=null){
-					sb.append(s+"\n");
-				}
-			}catch(Exception e){
+	// To execute a get without params
+	public String sendGetRequest(String requestURL){
+		StringBuilder sb =new StringBuilder();
+		HttpURLConnection con = null;
+		try {
+			URL url = new URL(requestURL);
+			con = (HttpURLConnection) url.openConnection();
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
+			String s;
+			while((s=bufferedReader.readLine())!=null){
+				sb.append(s).append("\n");
 			}
-			// Close the connection
-			finally {
-				if (null != con) con.disconnect();
-			}
-			return sb.toString();
+		} catch(Exception ignored){
 		}
-
-		// To execute a get with id param
-		public String sendGetRequestParam(String requestURL, String id){
-			StringBuilder sb =new StringBuilder();
-			HttpURLConnection con = null;
-			try {
-				URL url = new URL(requestURL+id);
-
-				con = (HttpURLConnection) url.openConnection();
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
-				String s;
-				while((s=bufferedReader.readLine())!=null){
-					sb.append(s+"\n");
-				}
-			}catch(Exception e){
-			}
-			// Close the connection
-			finally {
-				if (null != con) con.disconnect();
-			}
-			return sb.toString();
+		// Close the connection
+		finally {
+			if (null != con) con.disconnect();
 		}
+		return sb.toString();
+	}
+
+	// To execute a get with id param
+	public String sendGetRequestParam(String requestURL, String id){
+		StringBuilder sb =new StringBuilder();
+		HttpURLConnection con = null;
+		try {
+			URL url = new URL(requestURL+id);
+
+			con = (HttpURLConnection) url.openConnection();
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
+			String s;
+			while((s=bufferedReader.readLine())!=null){
+				sb.append(s).append("\n");
+			}
+		}catch(Exception ignored){
+		}
+		// Close the connection
+		finally {
+			if (null != con) con.disconnect();
+		}
+		return sb.toString();
+	}
+
+	public boolean isConnectedToServer(int timeout) {
+		try{
+			URL myUrl = new URL(Config.URL_GENERAL_SERVER);
+			HttpURLConnection connection = (HttpURLConnection) myUrl.openConnection();
+			connection.setConnectTimeout(timeout);
+			connection.connect();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	// Internal method
 	private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {

@@ -26,7 +26,7 @@
         android:textStyle="italic"
         android:textSize="20sp"
         android:text="@string/NeedLeyend"
-        android:id="@+id/EP_textViewTitle"
+        android:id="@+id/NE_textViewTitle"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:gravity="center"/>
@@ -51,30 +51,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerCategory"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="10dp"
-                android:imeOptions="actionNext"
-                />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerSubcategory"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="10dp"
-                android:imeOptions="actionNext"/>
-
-            <Space
+            <!-- <Space
                 android:layout_width="1dp"
                 android:layout_height="30dp"/>
 
@@ -117,7 +94,7 @@
 
             <Space
                 android:layout_width="1dp"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"/> -->
 
 
             <android.support.design.widget.TextInputLayout
@@ -131,13 +108,12 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/NeedUserTitle"
                     android:ems="10"
-                    android:id="@+id/Need_editTextUserTitle"
+                    android:id="@+id/Need_editTextTitle"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="0dp"
                     android:maxLines="1"
-                    android:singleLine="true"
                     android:imeOptions="flagNoExtractUi"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -151,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/NeedData"
                     android:ems="10"
-                    android:id="@+id/Need_editTextData"
+                    android:id="@+id/Need_editTextDescription"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
@@ -159,11 +135,6 @@
                     android:imeOptions="flagNoExtractUi"/>
 
             </android.support.design.widget.TextInputLayout>
-
-
-
-
-
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -183,15 +154,75 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/NeedDaysTitle"
+                    android:ems="10"
+                    android:id="@+id/Need_editTextDays"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="0dp"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="number"/>
+
+            </android.support.design.widget.TextInputLayout>
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/NeedCategorySpinner"
+                android:id="@+id/NE_textViewCategory"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerCategory"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="10dp"
+                android:imeOptions="actionNext"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/NeedSubcategorySpinner"
+                android:id="@+id/NE_textViewSubcategory"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerSubcategory"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="10dp"
+                android:imeOptions="actionNext"/>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="30dp"/>
 
             <Button
                 android:id="@+id/buttonRegister"
-                android:text="Enviar pedido"
+                android:text="@string/NeedButtonText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
 
         </LinearLayout>
     </ScrollView>

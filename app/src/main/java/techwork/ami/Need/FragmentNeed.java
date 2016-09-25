@@ -83,11 +83,11 @@ public class FragmentNeed extends Fragment {
         refreshLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNeeds();
+                //getNeeds();
             }
         });
 
-        getNeeds();
+        //getNeeds();
 
         Button button = (Button) v.findViewById(R.id.btn_create_order);
         button.setOnClickListener(new View.OnClickListener()

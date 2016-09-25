@@ -14,13 +14,14 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,32 +35,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
 
-public class NeedActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
+public class NeedActivity extends AppCompatActivity implements LocationListener {
     // State Keys for saving activity's instance
     static final String KEY_FORM_STATE = "formState";
+    static final String KEY_CATEGORIES_NAMES = "categoriesNames";
+    static final String KEY_CATEGORIES_MAP = "categoriesMap";
+    static final String KEY_CATEGORIES_SELECTION = "categoriesSelection";
     static final String KEY_SUBCATEGORIES_STATE = "subCategoriesState";
     static final String KEY_SUBCATEGORIES_NAMES = "subCategoriesNames";
     static final String KEY_SUBCATEGORIES_MAP = "subCategoriesMap";
     static final String KEY_SUBCATEGORIES_SELECTION = "subCategoriesSelection";
-    static final String KEY_CATEGORIES_NAMES = "categoriesNames";
-    static final String KEY_CATEGORIES_MAP = "categoriesMap";
-    static final String KEY_CATEGORIES_SELECTION = "categoriesSelection";
 
     //Declaring an Spinner
     private Spinner spinnerCategory;
@@ -71,146 +63,98 @@ public class NeedActivity extends AppCompatActivity implements View.OnClickListe
     String[] subCategoriesNames;
     HashMap<String,String> subCategoriesMap;
 
-    //An ArrayList for Spinner Items
-    private ArrayList<String> categories;
-
-    //JSON Array
-    private JSONArray result;
-
     // Defines if the form is enable
     boolean formState;
 
-    //TextViews to display details
-    private TextView textViewName;
-    private TextView textViewId;
-    private TextView textViewTitle;
-
-    private LocationManager locationManager;
-    private EditText editTextData;
+    private EditText editTextDescription;
     private EditText editTextMoney;
-    private EditText editTextUserTitle;
+    private EditText editTextDays;
+    private EditText editTextTitle;
+
+    private Button buttonRegister;
 
     private String Lat;
     private String Lon;
     private String user_id;
     private String user_name;
-    private String user_commune;
-    private String NeedLeyend;
-    private String NeedRegistered;
-    private String NeedError;
-    Vibrator c;
-
-    private Button buttonRegister;
-
-    //url del php que inserta los datos de la necesidad en la BD
-    public static final String ROOT_URL = Config.URL_NEW_NEED;
+    private String commune_id;
+    private Vibrator c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_need);
 
+        // Prevent the keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         // UI references
         spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         spinnerSubcategory = (Spinner) findViewById(R.id.spinnerSubcategory);
-        editTextData = (EditText) findViewById(R.id.Need_editTextData);
+        editTextDescription = (EditText) findViewById(R.id.Need_editTextDescription);
         editTextMoney = (EditText) findViewById(R.id.Need_editTextMoney);
-        editTextUserTitle = (EditText) findViewById(R.id.Need_editTextUserTitle);
+        editTextTitle = (EditText) findViewById(R.id.Need_editTextTitle);
+        editTextDays = (EditText) findViewById(R.id.Need_editTextDays);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
-        textViewTitle = (TextView) findViewById(R.id.EP_textViewTitle);
-
-        //Nombre e id de la categoria
-        textViewName = (TextView) findViewById(R.id.textViewName);
-        textViewId = (TextView) findViewById(R.id.textViewId);
-
-        //Detalles y presupuesto de la necesidad
-        editTextData.setError(null);
-        editTextMoney.setError(null);
-        editTextUserTitle.setError(null);
 
         getProfileId();
 
-        buttonRegister.setOnClickListener(this);
+        TextView textViewTitle = (TextView) findViewById(R.id.NE_textViewTitle);
+        textViewTitle.setText(user_name + " " + getResources().getString(R.string.NeedLeyend));
+
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attemptSave();
+            }
+        });
 
         setLocationSettings();
 
-        NeedLeyend = getResources().getString(R.string.NeedLeyend);
-        textViewTitle.setText(user_name + " " + NeedLeyend);
+        SpinnerCategoryListener categoryListener = new SpinnerCategoryListener();
+        SpinnerSubcategoryListener subcategoryListener = new SpinnerSubcategoryListener();
 
-        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Empty dependent spinners
-                spinnerSubcategory.setAdapter(null);
-
-                // Set Enable if has been selected a valid option
-                spinnerSubcategory.setEnabled(position != 0);
-
-                // Set disable dependent button
-                buttonRegister.setEnabled(false);
-
-                // Get the options of the next spinner
-                if (position != 0)
-                    getData("2", categoriesMap.get(spinnerCategory.getSelectedItem().toString()));
-
-                textViewName.setText(spinnerCategory.getSelectedItem().toString());
-                textViewId.setText(categoriesMap.get(spinnerCategory.getSelectedItem().toString()));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinnerSubcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != 0) {
-                    buttonRegister.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        spinnerCategory.setOnTouchListener(categoryListener);
+        spinnerCategory.setOnItemSelectedListener(categoryListener);
+        spinnerSubcategory.setOnTouchListener(subcategoryListener);
+        spinnerSubcategory.setOnItemSelectedListener(subcategoryListener);
 
         // If the activity is restoring after screen rotation
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null)
             restoreState(savedInstanceState);
-        } else
-            // Disable the form until get the profile data
+        else
+            // Disable the form until get the categories data
             enableForm(false);
 
         // If the activity is on creation (not restore after rotation)
         if (savedInstanceState == null)
-            // Attempt to get the data
+            // Attempt to get the categories data
             getData("1", "1");
     }
 
     // Get the profile's id from the shared preferences
     private void getProfileId(){
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
-        user_id = sharedPref.getString(Config.KEY_SP_ID, null);
-        user_name = sharedPref.getString(Config.KEY_SP_NAME, null);
-        user_commune = sharedPref.getString(Config.KEY_SP_COMMUNE, null);
+        user_id = sharedPref.getString(Config.KEY_SP_ID, "-1");
+        user_name = sharedPref.getString(Config.KEY_SP_NAME, "");
+        commune_id = sharedPref.getString(Config.KEY_SP_COMMUNE, "");
     }
 
+    @SuppressWarnings("unchecked")
     private void restoreState(Bundle savedInstanceState) {// Set the previous state of the form
         enableForm(savedInstanceState.getBoolean(KEY_FORM_STATE));
 
         if (formState) {
             spinnerSubcategory.setEnabled(savedInstanceState.getBoolean(KEY_SUBCATEGORIES_STATE));
 
-            // Set the occupations arrays
+            // Set the categories arrays
             categoriesNames = savedInstanceState.getStringArray(KEY_CATEGORIES_NAMES);
             categoriesMap = (HashMap<String, String>) savedInstanceState.getSerializable(KEY_CATEGORIES_MAP);
             setSpinnerList(spinnerCategory, categoriesNames);
             spinnerCategory.setSelection(savedInstanceState.getInt(KEY_CATEGORIES_SELECTION));
 
             if (spinnerSubcategory.isEnabled()) {
-                // Set the regions arrays
+                // Set the subcategories arrays
                 subCategoriesNames = savedInstanceState.getStringArray(KEY_SUBCATEGORIES_NAMES);
                 subCategoriesMap = (HashMap<String, String>) savedInstanceState.getSerializable(KEY_SUBCATEGORIES_MAP);
                 setSpinnerList(spinnerSubcategory, subCategoriesNames);
@@ -225,8 +169,11 @@ public class NeedActivity extends AppCompatActivity implements View.OnClickListe
         formState = e;
 
         // Update the enable state of the views
-        buttonRegister.setEnabled(e);
-        spinnerSubcategory.setEnabled(e);
+        spinnerCategory.setEnabled(e);
+        editTextTitle.setEnabled(e);
+        editTextDescription.setEnabled(e);
+        editTextMoney.setEnabled(e);
+        editTextDays.setEnabled(e);
         if (!e) {
             spinnerSubcategory.setEnabled(false);
             buttonRegister.setEnabled(false);
@@ -234,7 +181,7 @@ public class NeedActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setLocationSettings() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         //La localizacion se actualiza cada 4 segundos, cada 0 metros de desplazamiento
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -256,7 +203,6 @@ public class NeedActivity extends AppCompatActivity implements View.OnClickListe
         Lon = "" + location.getLongitude();
     }
 
-
     @Override
     public void onLocationChanged(Location location) {
         Lat=""+location.getLatitude();
@@ -266,17 +212,14 @@ public class NeedActivity extends AppCompatActivity implements View.OnClickListe
     //En este caso se deberia usar la localizacion que predefinio la persona
     @Override
     public void onProviderDisabled(String provider) {
-
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent);
         Toast.makeText(getBaseContext(), "La localizacion esta desactivada",
                 Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onProviderEnabled(String provider) {
-
         Toast.makeText(getBaseContext(), "La localizacion ha sido activada",
                 Toast.LENGTH_SHORT).show();
     }
@@ -286,147 +229,122 @@ public class NeedActivity extends AppCompatActivity implements View.OnClickListe
         // TODO Auto-generated method stub
     }
 
-    private void insertData(){
-        //Here we will handle the http request to insert user to mysql db
-        //Creating a RestAdapter
+    // Send the new profile data to the server
+    private void sendSaveRequest() {
+        final String title = editTextTitle.getText().toString();
+        final String description = editTextDescription.getText().toString();
+        final String money = editTextMoney.getText().toString();
+        final String days = editTextDays.getText().toString();
+        final String subcategory_id = subCategoriesMap.get(spinnerSubcategory.getSelectedItem().toString());
 
-        NeedRegistered = getResources().getString(R.string.NeedRegistered);
-        NeedError = getResources().getString(R.string.NeedError);
+        class saveNeed extends AsyncTask<Void,Void,String> {
+            private ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(NeedActivity.this,
+                        getResources().getString(R.string.saving),
+                        getResources().getString(R.string.wait),false,false);
+            }
 
-        RestAdapter adapter = new RestAdapter.Builder()
-                .setEndpoint(ROOT_URL) //Setting the Root URL
-                .build(); //Finally building the adapter
+            @Override
+            protected String doInBackground(Void... params) {
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_NE_USER_ID, user_id);
+                hashMap.put(Config.KEY_NE_COMMUNE_ID, commune_id);
+                hashMap.put(Config.KEY_NE_SUBCATEGORY_ID, subcategory_id);
+                hashMap.put(Config.KEY_NE_LAT, Lat);
+                hashMap.put(Config.KEY_NE_LON, Lon);
+                hashMap.put(Config.KEY_NE_TITLE, title);
+                hashMap.put(Config.KEY_NE_DESCRIPTION, description);
+                hashMap.put(Config.KEY_NE_MONEY, money);
+                hashMap.put(Config.KEY_NE_DAYS, days);
 
-        //Creating object for our interface
-        NeedData obj = adapter.create(NeedData.class);
+                RequestHandler rh = new RequestHandler();
+                return rh.sendPostRequest(Config.URL_NEW_NEED, hashMap);
+            }
 
-        System.out.println("userTitle = " + editTextUserTitle.getText().toString());
-        System.out.println("Data = " + editTextData.getText().toString());
-        System.out.println("Money = " + editTextMoney.getText().toString());
-        System.out.println("Lat = " + Lat);
-        System.out.println("Lon = " + Lon);
-        System.out.println("user_id = " + user_id);
-        System.out.println("subCategoria = " + subCategoriesMap.get(spinnerSubcategory.getSelectedItem().toString()));
-        System.out.println("commune = " + user_commune);
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                if (s.equals("0")) {
+                    //Play a success sound
+                    MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arpeggio);
+                    mp.start();
 
-        //Defining the method insertuser of our interface
-        obj.insertData(
-            //Valores que usara NeedData para enviar a la BD
-            editTextUserTitle.getText().toString(),
-            editTextData.getText().toString(),
-            editTextMoney.getText().toString(),
-            Lat,
-            Lon,
-            user_id,
-            subCategoriesMap.get(spinnerSubcategory.getSelectedItem().toString()),
-            user_commune,
+                    // Vibrate for 500 milliseconds
+                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
 
-            //Creating an anonymous callback
-            new Callback<Response>() {
-                @Override
-                public void success(Response result, Response response) {
-                    //On success we will read the server's output using bufferedreader
-                    //Creating a bufferedreader object
-                    BufferedReader reader = null;
+                    Toast.makeText(NeedActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
 
-                    //An string to store output from the server
-                    String output = "";
+                    /* TODO: Check this
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
 
-                    try {
-                        //Initializing buffered reader
-                        reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+                        // Salir de la activity despues de que la necesidad haya sido registrada
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(NeedActivity.this, MainActivity.class));
+                        }
 
-                        //Reading the output in the string
-                        output = reader.readLine();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    //Analiza la respuesta del servidor
-                    if(output.equals("1")) {
-                        //Reproducir un sonido
-                        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arpeggio);
-                        mp.start();
-
-                        // Vibrar por 500 millisegundos
-                        c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                        c.vibrate(500);
-
-                        // Mensaje de respuesta del servidor
-                        Toast.makeText(NeedActivity.this, NeedRegistered, Toast.LENGTH_LONG).show();
-
-                        Handler mHandler = new Handler();
-                        mHandler.postDelayed(new Runnable() {
-
-                            // Salir de la activity despues de que la necesidad haya sido registrada
-                            @Override
-                            public void run() {
-                                startActivity(new Intent(NeedActivity.this, MainActivity.class));
-                            }
-
-                        }, 2500);
-
-                    } else  if(output.equals("2")) {
-
-                        Toast.makeText(NeedActivity.this, NeedError, Toast.LENGTH_LONG).show();
-                        c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                        c.vibrate(500);
-
-                    }
+                    }, 2500);
+                    */
                 }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    //If any error occured displaying the error as toast
-                    Toast.makeText(NeedActivity.this, error.toString(),Toast.LENGTH_LONG).show();
+                else {
+                    Toast.makeText(NeedActivity.this, getResources().getString(R.string.NeedError), Toast.LENGTH_LONG).show();
+                    c = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                 }
             }
-        );
+        }
+
+        saveNeed sn = new saveNeed();
+        sn.execute();
     }
 
-    @Override
-    public void onClick(View v) {
+    public void attemptSave() {
 
-        String TextData = editTextData.getText().toString();
+        String TextDescription = editTextDescription.getText().toString();
         String TextMoney = editTextMoney.getText().toString();
-        String TextUserTitle = editTextUserTitle.getText().toString();
-        View focusView = null;
+        String TextDays = editTextDays.getText().toString();
+        String TextTitle = editTextTitle.getText().toString();
+        View focusView;
 
-        //Validar si los campos no estan vacios
-        if(TextUtils.isEmpty(TextUserTitle)) {
-            editTextUserTitle.setError(getString(R.string.error_field_required));
-            focusView = editTextUserTitle;
+        //Check if the fields are empties
+        if(TextUtils.isEmpty(TextTitle)) {
+            editTextTitle.setError(getString(R.string.error_field_required));
+            focusView = editTextTitle;
             focusView.requestFocus();
-            return;
-        } else if(TextUtils.isEmpty(TextData)) {
-            editTextData.setError(getString(R.string.error_field_required));
-            focusView = editTextData;
+        } else if(TextUtils.isEmpty(TextDescription)) {
+            editTextDescription.setError(getString(R.string.error_field_required));
+            focusView = editTextDescription;
             focusView.requestFocus();
-            return;
         } else  if(TextUtils.isEmpty(TextMoney)) {
             editTextMoney.setError(getString(R.string.error_field_required));
             focusView = editTextMoney;
             focusView.requestFocus();
-            return;
+        } else  if(TextUtils.isEmpty(TextDays)) {
+            editTextDays.setError(getString(R.string.error_field_required));
+            focusView = editTextDays;
+            focusView.requestFocus();
         }
         else{
-
-            insertData();
+            sendSaveRequest();
 
             Toast.makeText(getApplicationContext(),
                 getResources().getString(R.string.NeedWait), Toast.LENGTH_SHORT).show();
 
-        //Ocultar el teclado virtual (Hide keyboard)
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editTextMoney.getWindowToken(), 0);
-
+            //Hide keyboard
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editTextMoney.getWindowToken(), 0);
         }
-
     }
 
     private void getData(String type, String id) {
         class GetProfile extends AsyncTask<String,Void,String> {
-            ProgressDialog loading;
+            private ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -539,5 +457,63 @@ public class NeedActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    class SpinnerCategoryListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+        private boolean userSelect = false;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            userSelect = true;
+            return false;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (userSelect) {
+                // Empty dependent spinners
+                spinnerSubcategory.setAdapter(null);
+
+                // Set Enable if has been selected a valid option
+                spinnerSubcategory.setEnabled(position != 0);
+
+                // Set disable dependent button
+                buttonRegister.setEnabled(false);
+
+                // Get the options of the next spinner
+                if (position != 0) {
+                    System.out.println("fuuuuuuuu");
+                    getData("2", categoriesMap.get(spinnerCategory.getSelectedItem().toString()));
+                }
+                userSelect = false;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
+    class SpinnerSubcategoryListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+        private boolean userSelect = false;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            userSelect = true;
+            return false;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+            if (i != 0) {
+                buttonRegister.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
     }
 }
