@@ -23,11 +23,11 @@ public class CategoryView extends AppCompatActivity {
         tvName = (TextView)findViewById(R.id.tv_category_name_view);
         tvId =(TextView)findViewById(R.id.tv_category_id_view);
 
-        Bundle bundle = getIntent().getExtras();
+        /*Bundle bundle = getIntent().getExtras();
         tvName.setText(String.format("Categoria: \n %s", bundle.getString(Config.TAG_GC_NAME)));
         tvId.setText(String.valueOf(bundle.getInt(Config.TAG_GC_ID)));
         Picasso.with(this).load(Config.URL_IMAGES_CATEGORY+bundle.getString(Config.TAG_GC_IMAGE))
-                .into(ivImage);
+                .into(ivImage);*/
 
     }
 }

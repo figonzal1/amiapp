@@ -1,4 +1,4 @@
-package techwork.ami.Need;
+package techwork.ami.Need.MyNeeds;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -35,6 +35,7 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Need.NeedOffer.NeedOfferActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -174,11 +175,10 @@ public class FragmentNeed extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                Intent intent = new Intent(getActivity(),NeedOffersList.class);
+                Intent intent = new Intent(getActivity(),NeedOfferActivity.class);
                 int position = rv.getChildAdapterPosition(view);
                 NeedModel n = needList.get(position);
                 intent.putExtra(Config.TAG_GN_IDNEED,n.getIdNeed());
-                intent.putExtra(Config.TAG_GN_TITTLE,n.getTittle());
                 startActivity(intent);
             }
 
