@@ -143,5 +143,8 @@
     <string name="contactUsSubject">Asunto</string>
     <string name="contactUsMessage">Mensaje</string>
     <string name="contactUsButton">Enviar</string>
+    <string name="attemptSend">Tu mensaje esta siendo enviado</string>
+    <string name="sendOK">Tu mensaje se ha registrado correctamente, pronto te contactaremos.</string>
+    <string name="sendFail">Tu mensaje no se ha podido registrar.</string>
 
 </resources>

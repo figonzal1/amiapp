@@ -517,7 +517,6 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
 
                 // Get the options of the next spinner
                 if (position != 0) {
-                    System.out.println("fuuuuuuuu");
                     getData("2", categoriesMap.get(spinnerCategory.getSelectedItem().toString()));
                 }
                 userSelect = false;

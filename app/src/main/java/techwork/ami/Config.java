@@ -31,6 +31,7 @@ public class Config {
     public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
 	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php";
+	public static final String URL_CONTACT_US = "http://amiapp.cl/public/getData/ContactUs/sendContactEmail.php";
 
     // GO = Get Offers
 	public static final String TAG_GO_OFFERS="offers";
@@ -143,6 +144,12 @@ public class Config {
 	public static final String TAG_GN_LONGITUDE="longitud";
 	public static final String TAG_GN_RADIO="radio";
 	public static final String TAG_GN_OFFERS_COMPANY = "ofertasEmpresas";
+
+	// Contact Us Keys
+	public static final String TAG_CU_NAME = "nombre";
+	public static final String TAG_CU_MAIL = "email";
+	public static final String TAG_CU_SUBJECT = "asunto";
+	public static final String TAG_CU_MESSAGE = "mensaje";
 
 	// Money format
 	public static final String CLP_FORMAT = "%,d";

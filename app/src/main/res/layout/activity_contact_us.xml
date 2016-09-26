@@ -2,7 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
+    android:id="@+id/CU_coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="techwork.ami.ContactUsActivity">
@@ -57,7 +57,7 @@
                     android:hint="@string/contactUsSubject"
                     android:inputType="text"
                     android:ems="10"
-                    android:id="@+id/CU_editTextName"
+                    android:id="@+id/CU_editTextSubject"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/contactUsButton"
-                android:id="@+id/CU_buttonSave"
+                android:id="@+id/CU_buttonSend"
                 android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
