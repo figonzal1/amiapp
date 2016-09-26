@@ -1,12 +1,18 @@
 package techwork.ami.Offer;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,14 +31,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
+import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
 
 public class FragmentHome extends Fragment {
@@ -159,13 +169,13 @@ public class FragmentHome extends Fragment {
             }
 
             @Override
-            public void onItemLongClick(View view) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("¿Desea descartar esta oferta?")
+            public void onItemLongClick(final View view) {
+                new CustomAlertDialogBuilder(getContext())
+                        .setTitle(R.string.offers_list_discard_question)
                         .setMessage("Confirme la acción")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with discard
+                                discardOffer(dialog, offerList.get(rv.getChildAdapterPosition(view)));
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -176,6 +186,53 @@ public class FragmentHome extends Fragment {
                         .show();
             }
         });
+    }
+
+    private void discardOffer(DialogInterface dialog, OfferModel offer) {
+        class DiscardOffer extends AsyncTask<String, Void, String> {
+            ProgressDialog loading;
+            DialogInterface dialog;
+
+            DiscardOffer (DialogInterface dialog) {
+                this.dialog = dialog;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getContext(),
+                        getString(R.string.offers_list_discard_processing),
+                        getString(R.string.wait), false, false);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_DO_PERSON_ID,
+                        getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                .getString(Config.KEY_SP_ID, "-1"));
+                hashMap.put(Config.KEY_DO_OFFER_ID, params[0]);
+                RequestHandler rh = new RequestHandler();
+                return rh.sendPostRequest(Config.URL_DO_DISCARD, hashMap);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                if (s.equals("0")) {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                }
+                this.dialog.dismiss();
+            }
+        }
+        System.out.println(offer.getId());
+        new DiscardOffer(dialog).execute(offer.getId());
+        //rateOffer(ro, true);
     }
 
     //Clase que itera sobre el json array para obtener datos de la BD.

@@ -119,8 +119,8 @@ public class OfferView extends AppCompatActivity {
                 loading.dismiss();
                 if (s.equals("0")) {
                     Toast.makeText(OfferView.this, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
-                    finish();
                     startActivity(new Intent(OfferView.this, MainActivity.class));
+                    finish();
                 } else if (!s.equals("-1")) {
                     Toast.makeText(OfferView.this, R.string.operation_fail, Toast.LENGTH_SHORT).show();
                 }

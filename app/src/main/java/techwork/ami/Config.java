@@ -1,7 +1,13 @@
 package techwork.ami;
 
+import android.text.InputType;
+
 @SuppressWarnings("WeakerAccess")
 public class Config {
+	// Input type constant
+	public static int inputNoVisiblePasswordType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+	public static int inputPromotionCodeType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
+
 	// Shared preferences keys
 	public static final String KEY_SHARED_PREF ="cl.usm.techwork.ami";
 	public static final String KEY_SP_ID="idPersona";
@@ -24,7 +30,7 @@ public class Config {
 	public static final String URL_LOGIN="http://amiapp.cl/public/getData/Login/login.php";
 	public static final String URL_REGISTER="http://amiapp.cl/public/getData/Register/register.php";
 	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php";
-	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers2.php";
+	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
 	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
@@ -63,6 +69,15 @@ public class Config {
     public static final String TAG_GRO_QUANTITY = "cantidad";
     public static final String TAG_GRO_RESERDATE = "fechaReserva";
     public static final String TAG_GRO_PAYDATE = "fechaCobro";
+	public static final String TAG_GRO_CALIFICATION = "calificacion";
+	public static final String TAG_GRO_LOCCODE = "codigoLocal";
+
+	//MRO = My Reservations Offers URLs
+	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
+	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
+
+	// DO = Discard Offer URLs
+	public static final String URL_DO_DISCARD = "http://amiapp.cl/public/getData/DiscardOffer/discardOffer.php";
 
     // Keys that will be used to send the request to php scripts
 	public static final  String KEY_ID ="id"; // UP = Update Profile
@@ -154,11 +169,16 @@ public class Config {
 	// Money format
 	public static final String CLP_FORMAT = "%,d";
 
-	// Reserve offers keys
+	// My Reservations offers keys
 	public static final String KEY_RESERVE_OFFER_ID = "idOferta";
 	public static final String KEY_RESERVE_PERSON_ID = "idPersona";
 	public static final String KEY_RESERVE_QUANTITY = "cantidad";
 	public static final String KEY_RESERVE_RESERVE_DATE = "fechaReserva";
+	public static final String KEY_RESERVE_RATE = "calificacion";
+
+	// Discard offer keys
+	public static final String KEY_DO_OFFER_ID = "idOferta";
+	public static final String KEY_DO_PERSON_ID = "idPersona";
 
 	// Date format
 	public static final String DATETIME_FORMAT_DB="yyyy-MM-dd HH:mm:ss";

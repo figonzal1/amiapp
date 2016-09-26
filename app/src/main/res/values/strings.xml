@@ -70,8 +70,8 @@
     <string name="editProfileGenre">Género</string>
     <string name="editProfileSave">Guardar</string>
     <string name="editProfilePhone">Teléfono (Opcional)</string>
-    <string name="fetching">Obteniendo los datos</string>
-    <string name="fetchingFail">No se han podido obtener tus datos correctamente</string>
+    <string name="gettingData">Obteniendo datos</string>
+    <string name="editProfileFetchingFail">No se han podido obtener tus datos correctamente</string>
     <string name="saving">Guardando los datos</string>
     <string name="saveOk">Tus datos se han guardado correctamente</string>
     <string name="restoreEmailSend">Se ha enviado un email de restauración</string>
@@ -126,10 +126,30 @@
     <string name="titleActivityExploreOffers">Explorar ofertas</string>
 
     <!-- Offer Strings -->
-    <string name="reserve_ok">Reserva realizada!</string>
+    <string name="reserve_ok">¡Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>
+
+    <!-- My Reservations Offers Strings -->
     <string name="title_activity_my_reservations">Mis reservas</string>
+    <string name="myReservationOfferDialog">Cobrar oferta</string>
+    <string name="my_reservations_offers_validate_message">Solicite a un empleado de %s que ingrese código del local</string>
+    <string name="my_reservations_offers_validate_title">Validar oferta</string>
+    <string name="my_reservations_offers_validate_positiveText">Validar</string>
+    <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
+    <string name="my_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
+    <string name="my_reservations_offers_validate_ok">¡Oferta validada!</string>
+    <string name="my_reservations_offers_validate_processing">Validando oferta</string>
+    <string name="my_reservations_offers_rate_processing">Opinando</string>
+    <string name="my_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
+    <string name="my_reservations_offers_validate_local">El código de la promoción es</string>
+    <string name="my_reservations_offers_already">Esta oferta ya ha sido cobrada</string>
+    <string name="my_reservations_offers_already_commented">¡Gracias, ya opinaste!</string>
+    <string name="my_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
+    <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
+    <string name="skip">Omitir</string>
+    <string name="my_reservations_offers_rate_positive">Calificar</string>
+    <string name="my_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
 
     <!-- Map Strings -->
     <string name="MA_storeFormatSingle">En este local existe %s oferta disponible.</string>
@@ -147,4 +167,7 @@
     <string name="sendOK">Tu mensaje se ha registrado correctamente, pronto te contactaremos.</string>
     <string name="sendFail">Tu mensaje no se ha podido registrar.</string>
 
+    <!-- Fragment Home / Offers list Strings -->
+    <string name="offers_list_discard_question">¿Desea descartar esta oferta?</string>
+    <string name="offers_list_discard_processing">Descartando oferta</string>
 </resources>
