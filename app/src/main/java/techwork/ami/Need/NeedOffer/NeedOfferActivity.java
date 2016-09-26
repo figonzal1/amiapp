@@ -1,13 +1,15 @@
-package techwork.ami.Need.MyNeeds;
+package techwork.ami.Need.NeedOffer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,13 +25,15 @@ import java.util.List;
 import java.util.Locale;
 
 import techwork.ami.Config;
+import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
 public class NeedOfferActivity extends AppCompatActivity {
 
-    private RecyclerView rv;
-    private List<NeedOfferModel> needOfferList;
+    Button btnNeedOfferInfo;
+    public RecyclerView rv;
+    public List<NeedOfferModel> needOfferList;
     private NeedOfferAdapter adapter;
     private GridLayoutManager layout;
     private String idNeedOffer;
@@ -90,6 +94,21 @@ public class NeedOfferActivity extends AppCompatActivity {
 
         adapter = new NeedOfferAdapter(getApplicationContext(),needOfferList);
         rv.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+            @Override
+            public void onItemClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), NeedOfferViewActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view) {
+
+            }
+        });
+
+
     }
 
 
@@ -114,7 +133,7 @@ public class NeedOfferActivity extends AppCompatActivity {
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GNO_DESCRIPTION));
                 item.setCodPromotion(jsonObjectItem.getString(Config.TAG_GNO_CODPROMOTION));
                 item.setStock(jsonObjectItem.getString(Config.TAG_GNO_STOCK));
-                item.setPrice(jsonObjectItem.getInt(Config.TAG_GNO_STOCK));
+                item.setPrice(jsonObjectItem.getInt(Config.TAG_GNO_PRICEOFFER));
                 item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GNO_MAXPPERSON));
 
                 dIni = jsonObjectItem.getString(Config.TAG_GNO_DATEINI);

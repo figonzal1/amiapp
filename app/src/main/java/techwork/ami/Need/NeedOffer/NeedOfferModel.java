@@ -1,4 +1,4 @@
-package techwork.ami.Need.MyNeeds;
+package techwork.ami.Need.NeedOffer;
 
 /**
  * Created by tataf on 25-09-2016.
