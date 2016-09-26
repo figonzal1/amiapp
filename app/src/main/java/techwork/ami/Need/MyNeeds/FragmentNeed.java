@@ -35,6 +35,7 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Need.NeedActivity;
 import techwork.ami.Need.NeedOffer.NeedOfferActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
