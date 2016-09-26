@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/need_offer_view_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="techwork.ami.Need.NeedOffer.NeedOfferViewActivity">
+
+    <TextView
+        android:id="@+id/tv_need_offer_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detalle de la Oferta:"
+        android:gravity="center_horizontal"
+        android:textSize="30sp"/>
+    <TextView
+        android:id="@+id/tv_need_offer_view_tittle"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Titulo Oferta Empresa"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:layout_below="@+id/tv_need_offer_view"/>
+
+    <TextView
+        android:id="@+id/tv_need_offer_view_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Precio Oferta: $XX.XX"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/tv_need_offer_view_tittle"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_need_offer_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tv_need_offer_view_price">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/recycler_view_need_offer_view">
+
+        <Button
+            android:id="@+id/btn_need_offer_view_accept"
+            android:layout_width="wrap_content"
+            android:text="Aceptar"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            />
+
+        <Button
+            android:id="@+id/btn_need_offer_view_discard"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Rechazar"/>
+    </LinearLayout>
+</RelativeLayout>

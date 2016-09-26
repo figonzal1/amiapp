@@ -1,0 +1,87 @@
+package techwork.ami.Need.NeedOffer;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
+
+import techwork.ami.Category.CategoryView;
+import techwork.ami.Config;
+import techwork.ami.MainActivity;
+import techwork.ami.Offer.OfferView;
+import techwork.ami.OnItemClickListenerRecyclerView;
+import techwork.ami.R;
+
+/**
+ * Created by tataf on 25-09-2016.
+ */
+
+public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.NeedOfferViewHolder> implements View.OnClickListener {
+
+    private OnItemClickListenerRecyclerView itemClick;
+
+    private List<NeedOfferModel> items;
+    private Context context;
+
+
+    //Constructor de la clase
+    public NeedOfferAdapter(Context context,List<NeedOfferModel> items){
+        this.context=context;
+        this.items=items;
+    }
+
+    //Holder de la clase
+    public static class NeedOfferViewHolder extends RecyclerView.ViewHolder{
+
+        public TextView tvTittle;
+        public TextView tvPrice;
+
+
+        public NeedOfferViewHolder(View itemView) {
+            super(itemView);
+            tvTittle = (TextView)itemView.findViewById(R.id.tv_need_offer_tittle);
+            tvPrice = (TextView)itemView.findViewById(R.id.tv_need_offer_price);
+
+        }
+    }
+
+    @Override
+    public NeedOfferAdapter.NeedOfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.need_offer_card_view,parent,false);
+        v.setOnClickListener(this);
+        NeedOfferViewHolder vh = new NeedOfferViewHolder(v);
+        return vh;
+    }
+
+
+    @Override
+    public void onBindViewHolder(NeedOfferAdapter.NeedOfferViewHolder holder, int position) {
+        NeedOfferModel model = items.get(position);
+        holder.tvTittle.setText(model.getTittle());
+        holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (itemClick!=null){
+            itemClick.onItemClick(v);
+        }
+
+    }
+    public void setOnItemClickListener(OnItemClickListenerRecyclerView listener){
+        this.itemClick=listener;
+    }
+}

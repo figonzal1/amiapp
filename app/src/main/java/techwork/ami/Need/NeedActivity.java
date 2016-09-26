@@ -206,23 +206,28 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
 
         Criteria criteria = new Criteria();
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-        Lat = "" + location.getLatitude();
-        Lon = "" + location.getLongitude();
+
+        if (location != null) {
+            Lat = "" + location.getLatitude();
+            Lon = "" + location.getLongitude();
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Lat=""+location.getLatitude();
-        Lon=""+location.getLongitude();
+        Lat ="" + location.getLatitude();
+        Lon = "" + location.getLongitude();
     }
 
     //En este caso se deberia usar la localizacion que predefinio la persona
     @Override
     public void onProviderDisabled(String provider) {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(intent);
-        Toast.makeText(getBaseContext(), "La localizacion esta desactivada",
-                Toast.LENGTH_SHORT).show();
+        //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        //startActivity(intent);
+        //Toast.makeText(getBaseContext(), "La localizacion esta desactivada",
+        //        Toast.LENGTH_SHORT).show();
+        Lat = "";
+        Lon = "";
     }
 
     @Override

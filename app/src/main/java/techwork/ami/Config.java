@@ -23,8 +23,7 @@ public class Config {
 
 	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php";
 	public static final String URL_GET_MAP_OFFERS="http://amiapp.cl/public/getData/Maps/getData.php";
-	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php";
-	public static final String URL_GET_CATEGORY="http://amiapp.cl/public/getData/CategoryList/getCategoryList.php";
+	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php?";
 	public static final String URL_UPDATE_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/updateAfterLogin.php";
 	public static final String URL_UPDATE_PROFILE="http://amiapp.cl/public/getData/Profile/updateProfile.php";
 	public static final String URL_LOGIN="http://amiapp.cl/public/getData/Login/login.php";
@@ -32,7 +31,6 @@ public class Config {
 	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php";
 	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
-	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
     public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
@@ -141,6 +139,7 @@ public class Config {
 	public static final String TAG_EXIST_EMAIL ="emailExiste";
 
 	//Tags and Url for CategoryFragments
+	public static final String URL_GET_CATEGORY="http://amiapp.cl/public/getData/CategoryList/getCategoryList.php";
 	public static final String URL_IMAGES_CATEGORY="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String TAG_GC_CATEGORY= "categorias";
 	public static final String TAG_GC_ID="idCategoria";
@@ -148,6 +147,7 @@ public class Config {
 	public static final String TAG_GC_IMAGE ="imagen";
 
 	//Tags and keys for NeedFragment
+	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
 	public static final String KEY_GN_ID="id";
 	public static final String TAG_GN_NEED= "needs";
 	public static final String TAG_GN_IDNEED ="idNecesidad";
@@ -159,6 +159,24 @@ public class Config {
 	public static final String TAG_GN_LONGITUDE="longitud";
 	public static final String TAG_GN_RADIO="radio";
 	public static final String TAG_GN_OFFERS_COMPANY = "ofertasEmpresas";
+
+	//Tags and keys for NeedOfferActivity
+	public static final String URL_GET_NEED_OFFER="http://amiapp.cl/public/getData/Need/getNeedOffer.php";
+	public static final String KEY_GNO_IDPERSON="idPer";
+	public static final String KEY_GNO_IDNEED="idNec";
+	public static final String TAG_GNO_NEED="needOffers";
+	public static final String TAG_GNO_IDNEED="idNecesidad";
+	public static final String TAG_GNO_IDOFFER="idOferta";
+	public static final String TAG_GNO_TITTLE="titulo";
+	public static final String TAG_GNO_DESCRIPTION="descripcion";
+	public static final String TAG_GNO_STOCK ="stock";
+	public static final String TAG_GNO_CODPROMOTION="codPromocion";
+	public static final String TAG_GNO_DATEINI="fechaInicio";
+	public static final String TAG_GNO_DATEFIN="fechaTermino";
+	public static final String TAG_GNO_PRICEOFFER="precioOferta";
+	public static final String TAG_GNO_MAXPPERSON="maxPPersona";
+	public static final String TAG_GNO_IMAGE="imagen";
+
 
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";
