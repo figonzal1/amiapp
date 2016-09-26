@@ -73,7 +73,6 @@ public class NeedOfferActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... voids) {
                 HashMap<String, String> hashmap = new HashMap<>();
-                hashmap.put(Config.KEY_GNO_IDPERSON,id);
                 hashmap.put(Config.KEY_GNO_IDNEED,idNeedOffer);
 
                 RequestHandler rh = new RequestHandler();

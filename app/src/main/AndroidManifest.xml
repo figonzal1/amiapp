@@ -76,4 +76,4 @@
         <activity android:name=".Need.NeedOffer.NeedOfferViewActivity"></activity>
     </application>
 
-</manifest>
+-</manifest>
