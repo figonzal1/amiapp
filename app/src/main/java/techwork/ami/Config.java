@@ -179,6 +179,15 @@ public class Config {
 	public static final String TAG_GNO_IMAGE="imagen";
 	public static final String TAG_GNO_COMPANY="empresa";
 
+	//Discard NeedOfferActivity
+	public static final String URL_DISCARD_NEED_OFFER="http://amiapp.cl/public/getData/Need/discardNeedOffer.php";
+	public static final String KEY_DNO_IDOFFER="idOferta";
+	public static final String KEY_DNO_IDPERSON="idPersona";
+	//Accept NeedOfferActivity
+	public static final String URL_ACCEPT_NEED_OFFER="http://amiapp.cl/public/getData/Need/acceptNeedOffer.php";
+	public static final String KEY_ANO_IDOFFER="idOferta";
+	public static final String KEY_ANO_IDPERSON="idPersona";
+
 
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";
