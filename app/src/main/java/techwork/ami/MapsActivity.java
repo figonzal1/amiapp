@@ -39,12 +39,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import techwork.ami.Offer.FilterOfferActivity;
+
 public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback {
 
     private HashMap<String, Store> stores;
     private Hashtable<String, String> markers;
     private Hashtable<String, Boolean> markerSet;
+    private String lastLatitude;
+    private String lastLongitude;
     private GoogleMap googleMap;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,13 +140,15 @@ public class MapsActivity extends AppCompatActivity implements
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
         if (location != null) {
             LatLng coordinate = new LatLng(location.getLatitude(), location.getLongitude());
+            lastLatitude = location.getLatitude()+"";
+            lastLongitude = location.getLongitude()+"";
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 12));
         }
     }
 
     // AsyncTask that send a request to the server
     private void sendGetRequest(){
-        class GetOffersLocations extends AsyncTask<Void,Void,String> {
+        class GetOffersLocations extends AsyncTask<String,Void,String> {
             private ProgressDialog loading;
             @Override
             protected void onPreExecute() {
@@ -153,7 +159,7 @@ public class MapsActivity extends AppCompatActivity implements
             }
 
             @Override
-            protected String doInBackground(Void... params) {
+            protected String doInBackground(String... params) {
                 RequestHandler rh = new RequestHandler();
 
                 Boolean connectionStatus = rh.isConnectedToServer(findViewById(R.id.googleMap), new View.OnClickListener() {
@@ -165,7 +171,7 @@ public class MapsActivity extends AppCompatActivity implements
                 });
 
                 if (connectionStatus)
-                    return rh.sendGetRequest(Config.URL_GET_MAP_OFFERS);
+                    return rh.sendGetRequestParam(Config.URL_GET_MAP_OFFERS, params[0]);
                 else
                     return "-1";
             }
@@ -178,8 +184,14 @@ public class MapsActivity extends AppCompatActivity implements
                     fillOffersLocations(s);
             }
         }
+
+        String params = "";
+        if ((lastLatitude != null) && (lastLongitude != null))
+            if ((!lastLatitude.equals("")) && (!lastLongitude.equals("")))
+                params = params + "lat=" + lastLatitude + "&lon=" + lastLongitude;
+
         GetOffersLocations go = new GetOffersLocations();
-        go.execute();
+        go.execute(params);
     }
 
     @Override
@@ -220,8 +232,8 @@ public class MapsActivity extends AppCompatActivity implements
         }
         googleMap.setMyLocationEnabled(true);
 
-        sendGetRequest();
         setCameraPosition();
+        sendGetRequest();
     }
 
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
@@ -294,7 +306,6 @@ public class MapsActivity extends AppCompatActivity implements
             = new GoogleMap.OnInfoWindowClickListener(){
         @Override
         public void onInfoWindowClick(Marker marker) {
-            // TODO: Show the corresponding offer
             showSnackbar(marker);
         }
     };
@@ -307,8 +318,8 @@ public class MapsActivity extends AppCompatActivity implements
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(View v) {
                         // TODO: call offers activity
-                        Intent i = new Intent(MapsActivity.this, MainActivity.class);
-                        i.putExtra("idLocal", s.getIdStore());
+                        Intent i = new Intent(MapsActivity.this, FilterOfferActivity.class);
+                        i.putExtra("idStore", s.getIdStore());
                         startActivity(i);
                     }
                 }).show();

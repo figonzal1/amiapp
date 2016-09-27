@@ -36,6 +36,7 @@ import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import techwork.ami.Config;
+import techwork.ami.Offer.FilterOfferActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -183,6 +184,7 @@ public class FragmentCategory extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
+                /*
                 Intent intent = new Intent(getActivity(),CategoryView.class);
                 int position = rv.getChildAdapterPosition(view);
                 CategoryModel c = categoryList.get(position);
@@ -190,6 +192,13 @@ public class FragmentCategory extends Fragment {
                 intent.putExtra(Config.TAG_GC_ID,c.getId());
                 intent.putExtra(Config.TAG_GC_NAME,c.getName());
                 intent.putExtra(Config.TAG_GC_IMAGE,c.getImage());
+                startActivity(intent);
+                */
+                int position = rv.getChildAdapterPosition(view);
+                CategoryModel c = categoryList.get(position);
+
+                Intent intent = new Intent(getActivity(),FilterOfferActivity.class);
+                intent.putExtra("idCategory", c.getId()+"");
                 startActivity(intent);
             }
 
