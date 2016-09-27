@@ -44,6 +44,7 @@ import techwork.ami.RequestHandler;
 
 public class FragmentNeed extends Fragment {
 
+    Button btnCreateOrder;
     private NeedAdapter adapter;
     private List<NeedModel> needList;
     private RecyclerView rv;
@@ -87,18 +88,16 @@ public class FragmentNeed extends Fragment {
 
         refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_need);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
-        refreshLayout.setOnClickListener(new View.OnClickListener() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
+            public void onRefresh() {
                 getNeeds();
             }
         });
 
         getNeeds();
-
-        Button button = (Button) v.findViewById(R.id.btn_create_order);
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        btnCreateOrder = (Button)v.findViewById(R.id.btn_create_order);
+        btnCreateOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -217,7 +216,7 @@ public class FragmentNeed extends Fragment {
                 c.setTime(dateExp);
                 item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
 
-                item.setPriceMin(jsonObjectItem.getString(Config.TAG_GN_PRICEMIN));
+                item.setPriceMin(jsonObjectItem.getInt(Config.TAG_GN_PRICEMIN));
                 item.setLat(jsonObjectItem.getString(Config.TAG_GN_LATITUDE));
                 item.setLon(jsonObjectItem.getString(Config.TAG_GN_LONGITUDE));
                 item.setRadio(jsonObjectItem.getString(Config.TAG_GN_RADIO));

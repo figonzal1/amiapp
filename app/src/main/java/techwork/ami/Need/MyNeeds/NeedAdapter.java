@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
@@ -34,18 +35,20 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
     public static class NeedViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tvTitle;
-        public TextView tvCompany;
-        public TextView tvpricemin;
+        public TextView tvNOffers;
+        public TextView tvPricemin;
         public TextView tvDateFin;
+        public TextView tvDescription;
 
 
         public NeedViewHolder(View itemView) {
             super(itemView);
 
             tvTitle = (TextView)itemView.findViewById(R.id.tv_need_tittle);
-            tvCompany = (TextView)itemView.findViewById(R.id.tv_need_company_needs);
-            tvpricemin = (TextView)itemView.findViewById(R.id.tv_need_price_min);
+            tvNOffers = (TextView)itemView.findViewById(R.id.tv_need_company_needs_number);
+            tvPricemin = (TextView)itemView.findViewById(R.id.tv_need_price_min);
             tvDateFin = (TextView)itemView.findViewById(R.id.tv_need_date_fin);
+            tvDescription= (TextView)itemView.findViewById(R.id.tv_need_description);
         }
     }
 
@@ -56,8 +59,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.need_card_view,parent,false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
-        NeedViewHolder vh = new NeedViewHolder(v);
-        return vh;
+        return new NeedViewHolder(v);
     }
 
     @Override
@@ -65,8 +67,9 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         NeedModel model = items.get(position);
         holder.tvTitle.setText(model.getTittle());
         holder.tvDateFin.setText(model.getDateFin());
-        holder.tvpricemin.setText(model.getPriceMin());
-        holder.tvCompany.setText("Ofertas recibidas: "+model.getOffersCompany());
+        holder.tvPricemin.setText("$"+String.format(Config.CLP_FORMAT,model.getPriceMin()));
+        holder.tvNOffers.setText(model.getOffersCompany());
+        holder.tvDescription.setText(model.getDescription());
 
     }
 

@@ -11,6 +11,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         android:background="?android:attr/selectableItemBackground"
         >
 
@@ -18,28 +22,60 @@
             android:id="@+id/tv_need_tittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="Titulo de necesidad"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"/>
+            android:textSize="18sp"
+            android:text="Título de necesidad"
+            android:layout_marginBottom="2dp"
+            />
+
+        <View
+            android:id="@+id/separetor"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_below="@id/tv_need_tittle"
+            />
+
+        <TextView
+            android:id="@+id/tv_need_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:text="Descripción del pedido"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_need_tittle"
+            />
 
         <TextView
             android:id="@+id/tv_need_company_needs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ofertas: N"
-            android:layout_below="@+id/tv_need_tittle"
-            android:layout_marginStart="10dp"
-             />
+            android:text="Ofertas recibidas:"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_need_description"
+            />
+
+        <TextView
+            android:id="@+id/tv_need_company_needs_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:textColor="@android:color/white"
+            android:text="N"
+            android:layout_below="@+id/tv_need_description"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/noffers_background"
+            android:layout_toEndOf="@+id/tv_need_company_needs"
+            />
 
         <TextView
             android:id="@+id/tv_need_price_min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Precio Mínimo"
-            android:layout_below="@+id/tv_need_tittle"
+            android:textColor="#f45151"
+            android:layout_below="@+id/tv_need_description"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"/>
+            />
 
         <TextView
             android:id="@+id/tv_need_date_fin"
@@ -48,8 +84,6 @@
             android:text="Fecha Exp"
             android:layout_below="@+id/tv_need_price_min"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             />
 
     </RelativeLayout>

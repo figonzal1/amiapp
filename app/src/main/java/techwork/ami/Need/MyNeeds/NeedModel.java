@@ -6,7 +6,7 @@ public class NeedModel {
     String tittle;
     String description;
     String dateFin;
-    String priceMin;
+    int priceMin;
     String lat;
     String lon;
     String radio;
@@ -35,7 +35,7 @@ public class NeedModel {
     public String getLon() {
         return lon;
     }
-    public String getPriceMin() {
+    public int getPriceMin() {
         return priceMin;
     }
     public String getOffersCompany(){
@@ -68,7 +68,7 @@ public class NeedModel {
         this.lon = lon;
     }
 
-    public void setPriceMin(String priceMin) {
+    public void setPriceMin(int priceMin) {
         this.priceMin = priceMin;
     }
 
