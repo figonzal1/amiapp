@@ -151,6 +151,9 @@
     <string name="my_reservations_offers_rate_positive">Calificar</string>
     <string name="my_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
 
+    <!-- Filter Offers Strings -->
+    <string name="title_activity_filter_offers">Filtrar Ofertas</string>
+
     <!-- Map Strings -->
     <string name="MA_storeFormatSingle">En este local existe %s oferta disponible.</string>
     <string name="MA_storeFormatPlural">En este local existen %s ofertas disponibles.</string>

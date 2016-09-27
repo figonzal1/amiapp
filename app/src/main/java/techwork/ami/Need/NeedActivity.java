@@ -40,6 +40,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
+import techwork.ami.ContactUsActivity;
+import techwork.ami.MainActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -305,19 +307,9 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
                     c.vibrate(500);
 
                     Toast.makeText(NeedActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
-
-                    /* TODO: Check this
-                    Handler mHandler = new Handler();
-                    mHandler.postDelayed(new Runnable() {
-
-                        // Salir de la activity despues de que la necesidad haya sido registrada
-                        @Override
-                        public void run() {
-                            startActivity(new Intent(NeedActivity.this, MainActivity.class));
-                        }
-
-                    }, 2500);
-                    */
+                    Intent i = new Intent(NeedActivity.this, MainActivity.class);
+                    finish();
+                    startActivity(i);
                 }
                 else if (!s.equals("-1")) {
                     Toast.makeText(NeedActivity.this, getResources().getString(R.string.NeedError), Toast.LENGTH_LONG).show();
@@ -359,9 +351,6 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
         }
         else{
             sendSaveRequest();
-
-            Toast.makeText(getApplicationContext(),
-                getResources().getString(R.string.NeedWait), Toast.LENGTH_SHORT).show();
 
             //Hide keyboard
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

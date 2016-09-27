@@ -31,6 +31,7 @@ public class Config {
 	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php";
 	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
+	public static final String URL_FILTER_OFFERS = "http://amiapp.cl/public/getData/Filter/filter.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
     public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
@@ -51,6 +52,10 @@ public class Config {
 	public static final String TAG_GO_MAXXPER="maxPPersona";
 	public static final String TAG_GO_COMPANY="empresa";
 	public static final String TAG_GO_IMAGE ="imagen" ;
+
+	// FO = Filter Offers
+	public static final String TAG_FO_ID_CATEGORY="idCategoria";
+	public static final String TAG_FO_ID_STORE="idLocal";
 
     //GRO = Get Reservations Offers (not same)
     public static final String TAG_GRO = "reservationsOffers";

@@ -36,28 +36,27 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/titleActivityRegister"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".RestorePassActivity"
             android:label="@string/titleActivityRestorePass"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/titleActivityEditProfile"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".AfterLoginActivity"
             android:label="@string/titleActivityAfterLogin"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -66,15 +65,15 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/titleActivityExploreOffers"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Need.NeedActivity"
             android:label="@string/titleActivityExploreOffers"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".Category.CategoryView"/>
-        <activity android:name=".Offer.OfferView"/>
-        <activity android:name=".Need.NeedOffer.NeedOfferActivity"/>
-        <activity android:name=".Need.NeedOffer.NeedOfferViewActivity"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Category.CategoryView" />
+        <activity android:name=".Offer.OfferView" />
+        <activity android:name=".Need.NeedOffer.NeedOfferActivity" />
+        <activity android:name=".Need.NeedOffer.NeedOfferViewActivity" />
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -82,9 +81,18 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ContactUsActivity"/>
+        <activity android:name=".ContactUsActivity" />
+        <activity
+            android:name=".Offer.FilterOfferActivity"
+            android:label="@string/title_activity_filter_offers"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

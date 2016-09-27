@@ -1,25 +1,20 @@
 package techwork.ami.Offer;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.SharedPreferencesCompat;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -41,95 +36,98 @@ import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
-import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
+public class FilterOfferActivity extends AppCompatActivity {
 
-public class FragmentHome extends Fragment {
-
-    // Required for fragment use
-    private OfferAdapter adapter;
-    private List<OfferModel> offerList;
-    private RecyclerView rv;
-    private LinearLayoutManager layout;
+    // UI references
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout refreshLayout;
-
-    // Empty constructor (default)
-    public FragmentHome() {
-        // Required empty public constructor
-    }
-
-    public static FragmentHome newInstance() {
-        FragmentHome fragment = new FragmentHome();
-        return fragment;
-    }
+    private List<OfferModel> offersList;
+    private OfferAdapter adapter;
+    private int page;
+    private String idCategory;
+    private String idStore;
+    Context context;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter= new OfferAdapter(getActivity(),offerList);
-    }
+        setContentView(R.layout.activity_filter_offer);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // Inflate view, find recycle view in layouts
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
-        rv = (RecyclerView) v.findViewById(R.id.recycler_view_offer);
-        rv.setHasFixedSize(true);
+        idCategory = "";
+        idStore = "";
 
-        //Evita el error de skipping layout
-        adapter= new OfferAdapter(getActivity(),offerList);
+        Bundle extras = getIntent().getExtras();
 
-        // Set the layout that will use recycle view
-        layout = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(layout);
+        if (extras != null) {
+            if (extras.containsKey("idCategory"))
+                idCategory = extras.getString("idCategory", "");
+            if (extras.containsKey("idStore"))
+                idStore = extras.getString("idStore", "");
+        }
+
+        // Recycler view
+        mRecyclerView = (RecyclerView) findViewById(R.id.filter_offers_list);
+
+        // Use this setting to improve performance if you know that change in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // Use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         //Refreshing layout
-        refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_offer);
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_filter_offers_list);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getOffers();
+                getFilterOffers();
             }
         });
 
-        getOffers();
-        return v;
+        // Set the initial page
+        page = 1;
+
+        //Get and show data
+        getFilterOffers();
     }
 
     // Call to DB
-    private void getOffers(){
-        sendGetRequest();
+    private void getFilterOffers(){
+        sendPostRequest();
     }
 
-    private void sendGetRequest(){
-        // Execute operations before, durign and after of data load
-        class MyAsyncTask extends AsyncTask<Void,Void,String> {
-
+    private void sendPostRequest(){
+        // Execute operations before, during and after of data load
+        class GetFilterOffers extends AsyncTask<String,Void,String> {
 
             // Execute before load data (user waiting)
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                refreshLayout.setRefreshing(true);
             }
 
             // Class that execute background task (get BD data).
             @Override
-            protected String doInBackground(Void... strings) {
+            protected String doInBackground(String... params) {
                 RequestHandler rh = new RequestHandler();
 
-                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                Boolean connectionStatus = rh.isConnectedToServer(mRecyclerView, new View.OnClickListener() {
                     @Override
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(View v) {
-                        sendGetRequest();
+                        sendPostRequest();
                     }
                 });
 
-                if (connectionStatus)
-                    return rh.sendGetRequest(Config.URL_GET_OFFERS);
+                if (connectionStatus) {
+                    return rh.sendGetRequestParam(Config.URL_FILTER_OFFERS, params[0]);
+                }
                 else
                     return "-1";
             }
@@ -141,25 +139,34 @@ public class FragmentHome extends Fragment {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
                 if (!s.equals("-1"))
-                    showOffers(s);
+                    showFilterOffers(s);
             }
         }
-        MyAsyncTask go = new MyAsyncTask();
-        go.execute();
+
+        String options = "page=" + page;
+        if (!idCategory.equals(""))
+            options = options + "&" + Config.TAG_FO_ID_CATEGORY + "=" + idCategory;
+        if (!idStore.equals(""))
+            options = options + "&" + Config.TAG_FO_ID_STORE + "=" + idStore;
+
+        GetFilterOffers gfo = new GetFilterOffers();
+        gfo.execute(options);
     }
 
-    private void showOffers(String s){
-        getData(s);
-        adapter = new OfferAdapter(getActivity(), offerList);
-        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
-        rv.setAdapter(scaleAdapter);
+    private void showFilterOffers(String json) {
+        getData(json);
 
+        adapter = new OfferAdapter(this, offersList);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        mRecyclerView.setAdapter(scaleAdapter);
+
+        // Set behavior to click in some item (offer validate)
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
-            public void onItemClick(View view) {
-                Intent intent = new Intent(getActivity(), OfferView.class);
-                int position = rv.getChildAdapterPosition(view);
-                OfferModel o = offerList.get(position);
+            public void onItemClick(final View view) {
+                Intent intent = new Intent(FilterOfferActivity.this, OfferView.class);
+                int position = mRecyclerView.getChildAdapterPosition(view);
+                OfferModel o = offersList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
@@ -170,12 +177,12 @@ public class FragmentHome extends Fragment {
 
             @Override
             public void onItemLongClick(final View view) {
-                new CustomAlertDialogBuilder(getContext())
+                new CustomAlertDialogBuilder(context)
                         .setTitle(R.string.offers_list_discard_question)
                         .setMessage("Confirme la acción")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                discardOffer(dialog, offerList.get(rv.getChildAdapterPosition(view)));
+                                discardOffer(dialog, offersList.get(mRecyclerView.getChildAdapterPosition(view)));
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -188,65 +195,17 @@ public class FragmentHome extends Fragment {
         });
     }
 
-    private void discardOffer(DialogInterface dialog, OfferModel offer) {
-        class DiscardOffer extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
-            DialogInterface dialog;
-
-            DiscardOffer (DialogInterface dialog) {
-                this.dialog = dialog;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(getContext(),
-                        getString(R.string.offers_list_discard_processing),
-                        getString(R.string.wait), false, false);
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_DO_PERSON_ID,
-                        getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
-                                .getString(Config.KEY_SP_ID, "-1"));
-                hashMap.put(Config.KEY_DO_OFFER_ID, params[0]);
-                RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_DO_DISCARD, hashMap);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                if (s.equals("0")) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            R.string.operation_fail, Toast.LENGTH_LONG).show();
-                }
-                this.dialog.dismiss();
-            }
-        }
-        new DiscardOffer(dialog).execute(offer.getId());
-        //rateOffer(ro, true);
-    }
-
-    //Clase que itera sobre el json array para obtener datos de la BD.
-    private void getData(String json){
+    private void getData(String json) {
         String dIni,dFin;
         Date dateIni,dateFin;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try{
-
             JSONObject jsonObject = new JSONObject(json);
 
             JSONArray jsonOffers = jsonObject.optJSONArray(Config.TAG_GO_OFFERS);
             Calendar c = Calendar.getInstance();
-            offerList = new ArrayList<>();
+            offersList = new ArrayList<>();
 
             for(int i=0;i<jsonOffers.length();i++){
 
@@ -275,17 +234,56 @@ public class FragmentHome extends Fragment {
                 item.setCompany(jsonObjectItem.getString(Config.TAG_GO_COMPANY));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GO_IMAGE));
 
-                offerList.add(item);
-
+                offersList.add(item);
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
     }
 
+    private void discardOffer(DialogInterface dialog, OfferModel offer) {
+        class DiscardOffer extends AsyncTask<String, Void, String> {
+            ProgressDialog loading;
+            DialogInterface dialog;
+
+            DiscardOffer (DialogInterface dialog) {
+                this.dialog = dialog;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(context,
+                        getString(R.string.offers_list_discard_processing),
+                        getString(R.string.wait), false, false);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_DO_PERSON_ID,
+                        getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                .getString(Config.KEY_SP_ID, "-1"));
+                hashMap.put(Config.KEY_DO_OFFER_ID, params[0]);
+                RequestHandler rh = new RequestHandler();
+                return rh.sendPostRequest(Config.URL_DO_DISCARD, hashMap);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                if (s.equals("0")) {
+                    Toast.makeText(getApplicationContext(),
+                            R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                }
+                this.dialog.dismiss();
+            }
+        }
+        new DiscardOffer(dialog).execute(offer.getId());
+    }
 
 }
-
