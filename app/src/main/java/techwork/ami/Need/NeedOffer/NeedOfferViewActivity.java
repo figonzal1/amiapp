@@ -2,9 +2,11 @@ package techwork.ami.Need.NeedOffer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.Timer;
 
 import techwork.ami.Config;
-import techwork.ami.Need.NeedActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -50,15 +52,14 @@ public class NeedOfferViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //Se realiza la aceptacion de la oferta en BD
                 class acceptNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
-                    private ProgressDialog loading;
+
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        loading = ProgressDialog.show(NeedOfferViewActivity.this,
-                                getResources().getString(R.string.saving),
-                                getResources().getString(R.string.wait),false,false);
+                        Toast.makeText(getApplicationContext(),"Aceptando oferta..",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -73,9 +74,22 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
-                        loading.dismiss();
                         if (s.equals("0")){
                             Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_SHORT).show();
+
+                            //Se redirije a la activity del detalle del local.
+                            Handler mHandler = new Handler();
+                            mHandler.postDelayed(new Runnable() {
+
+                                // Salir de la activity despues de que la necesidad haya sido registrada
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(NeedOfferViewActivity.this, ViewLocalDetails.class));
+                                }
+
+                            }, 2500);
+
+
                         }else{
                             Toast.makeText(getApplicationContext(),"No se ha podido realizar la reserva",Toast.LENGTH_SHORT).show();
                         }
@@ -83,6 +97,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                 }
                 acceptNeedOfferAsyncTask go = new acceptNeedOfferAsyncTask();
                 go.execute();
+
 
             }
         });
