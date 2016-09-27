@@ -6,12 +6,22 @@
     <string name="error_invalid_email">Correo no válido</string>
     <string name="error_invalid_name">Nombre no válido</string>
     <string name="error_field_required">Campo requerido</string>
+    <string name="error_on_connection">Parece que no tienes conexión a Internet</string>
     <string name="retry">Volver a intentar</string>
     <string name="did_forget_your_pass">¿Olvidaste tu contraseña?</string>
     <string name="close_without_save">¿Estás seguro que quieres salir?</string>
     <string name="close_without_save_title">Existen cambios sin guardar</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
+
+    <!-- Main Activity Strings -->
+    <string name="nav_edit_profile">Editar Perfil</string>
+    <string name="nav_my_preferences">Mis Gustos</string>
+    <string name="nav_reservations">Mis Reservas</string>
+    <string name="nav_settings">Configuración</string>
+    <string name="nav_logout">Cerrar Sesión</string>
+    <string name="nav_contact_us">Contáctanos</string>
+    <string name="nav_group_communication">Comunícate</string>
 
     <!-- Strings login -->
     <string name="title_activity_login">Inicio sesión</string>
@@ -20,7 +30,6 @@
     <string name="action_sign_in">Ingresar</string>
     <string name="email_dont_exist">No existe una cuenta con el correo ingresado</string>
     <string name="ask_new_account">¿Quieres registrarte?</string>
-
 
     <!-- Se muestra en el teclado del movil -->
     <string name="action_sign_in_short">Listo</string>
@@ -61,8 +70,8 @@
     <string name="editProfileGenre">Género</string>
     <string name="editProfileSave">Guardar</string>
     <string name="editProfilePhone">Teléfono (Opcional)</string>
-    <string name="fetching">Obteniendo los datos</string>
-    <string name="fetchingFail">No se han podido obtener tus datos correctamente</string>
+    <string name="gettingData">Obteniendo datos</string>
+    <string name="editProfileFetchingFail">No se han podido obtener tus datos correctamente</string>
     <string name="saving">Guardando los datos</string>
     <string name="saveOk">Tus datos se han guardado correctamente</string>
     <string name="restoreEmailSend">Se ha enviado un email de restauración</string>
@@ -74,6 +83,27 @@
     <string name="errorInvalidName">Este nombre parece ser inválido</string>
     <string name="defaultOccupation">Otro</string>
     <string name="defaultGenre">Otro</string>
+
+    <!-- Need Strings -->
+    <string name="CreateNeedTitle">Aqui podras ver y generar tus necesidades</string>
+    <string name="NeedTitle">Realiza tu pedido</string>
+    <string name="NeedLeyend">¿Qué Necesitas?</string>
+    <string name="NeedData">Detalles del pedido</string>
+    <string name="NeedMoney">¿Cuánto es tu presupuesto?</string>
+    <string name="NeedUserTitle">Titulo del pedido</string>
+    <string name="NeedWait">Enviando pedido</string>
+    <string name="invalid_money">Ingresar solo dinero</string>
+    <string name="NeedCategorySpinner">Categoría</string>
+    <string name="NeedSubcategorySpinner">Subcategoría</string>
+    <string name="NeedCategoryTable">Categoría</string>
+    <string name="NeedCompanyTable">Empresas Disponibles</string>
+    <string name="NeedRegistered">¡Tu pedido ha sido enviado!</string>
+    <string name="NeedError">Tus datos no se han podido guardar, inténtalo más tarde nuevamente</string>
+    <string name="categoriesNoSelected">Seleccionar Categoría</string>
+    <string name="subCategoriesNoSelected">Seleccionar Subcategoría</string>
+    <string name="NeedDaysTitle">Dias máximos de espera</string>
+    <string name="NeedButtonText">Enviar Pedido</string>
+    <string name="NeedUserLocation">Usar mi ubicación</string>
 
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
@@ -96,8 +126,48 @@
     <string name="titleActivityExploreOffers">Explorar ofertas</string>
 
     <!-- Offer Strings -->
-    <string name="reserve_ok">Reserva realizada!</string>
+    <string name="reserve_ok">¡Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>
+
+    <!-- My Reservations Offers Strings -->
     <string name="title_activity_my_reservations">Mis reservas</string>
+    <string name="myReservationOfferDialog">Cobrar oferta</string>
+    <string name="my_reservations_offers_validate_message">Solicite a un empleado de %s que ingrese código del local</string>
+    <string name="my_reservations_offers_validate_title">Validar oferta</string>
+    <string name="my_reservations_offers_validate_positiveText">Validar</string>
+    <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
+    <string name="my_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
+    <string name="my_reservations_offers_validate_ok">¡Oferta validada!</string>
+    <string name="my_reservations_offers_validate_processing">Validando oferta</string>
+    <string name="my_reservations_offers_rate_processing">Opinando</string>
+    <string name="my_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
+    <string name="my_reservations_offers_validate_local">El código de la promoción es</string>
+    <string name="my_reservations_offers_already">Esta oferta ya ha sido cobrada</string>
+    <string name="my_reservations_offers_already_commented">¡Gracias, ya opinaste!</string>
+    <string name="my_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
+    <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
+    <string name="skip">Omitir</string>
+    <string name="my_reservations_offers_rate_positive">Calificar</string>
+    <string name="my_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
+
+    <!-- Map Strings -->
+    <string name="MA_storeFormatSingle">En este local existe %s oferta disponible.</string>
+    <string name="MA_storeFormatPlural">En este local existen %s ofertas disponibles.</string>
+    <string name="MA_go">Ver</string>
+
+    <!-- Contact Us Strings -->
+    <string name="titleActivityContactUs">Contáctanos</string>
+    <string name="contactUsTitle">Contáctanos</string>
+    <string name="contactUsLeyend">¿Tienes alguna duda? Estamos para ayudarte</string>
+    <string name="contactUsSubject">Asunto</string>
+    <string name="contactUsMessage">Mensaje</string>
+    <string name="contactUsButton">Enviar</string>
+    <string name="attemptSend">Tu mensaje esta siendo enviado</string>
+    <string name="sendOK">Tu mensaje se ha registrado correctamente, pronto te contactaremos.</string>
+    <string name="sendFail">Tu mensaje no se ha podido registrar.</string>
+
+    <!-- Fragment Home / Offers list Strings -->
+    <string name="offers_list_discard_question">¿Desea descartar esta oferta?</string>
+    <string name="offers_list_discard_processing">Descartando oferta</string>
 </resources>

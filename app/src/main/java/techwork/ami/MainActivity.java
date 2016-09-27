@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity
 
     // Get the profile's data from the shared preferences
     private void getProfile() {
+        // TODO: revisar seguridad de sharedPreferences, onda si puede cambiar el id a la mala
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         id = sharedPref.getString(Config.KEY_SP_ID, "-1");
         name = sharedPref.getString(Config.KEY_SP_NAME, "");
@@ -103,10 +104,10 @@ public class MainActivity extends AppCompatActivity
         textViewNavHeaderEmail.setText(email);
 
         switch (genre) {
-            case "2":
+            case "1":
                 imageViewProfileIcon.setImageResource(R.drawable.profile_icon_woman);
                 break;
-            case "3":
+            case "2":
                 imageViewProfileIcon.setImageResource(R.drawable.profile_icon_man);
                 break;
             default:
@@ -193,8 +194,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_manage) {
-            // Handle the camera action
+        if (id == R.id.nav_settings) {
+
         } else if (id == R.id.nav_my_preferences) {
 
         } else if (id == R.id.nav_reservations) {
@@ -204,7 +205,8 @@ public class MainActivity extends AppCompatActivity
             Intent iEditProfile = new Intent(MainActivity.this, EditProfileActivity.class);
             startActivity(iEditProfile);
         } else if (id == R.id.nav_contact_us) {
-
+            Intent iContactUs = new Intent(MainActivity.this, ContactUsActivity.class);
+            startActivity(iContactUs);
         } else if (id == R.id.nav_logout) {
             logout();
             Intent iLogin = new Intent(MainActivity.this, LoginActivity.class);

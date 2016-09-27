@@ -1,5 +1,10 @@
 package techwork.ami;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -16,11 +21,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class RequestHandler {
 	// Method for write
-		//Method to send httpPostRequest
-		//This method is taking two arguments
-		//First argument is the URL of the script to which we will send the request
-		//Other is an HashMap with name value pairs containing the data to be send with the request
-		public String sendPostRequest(String requestURL,  HashMap<String, String> postDataParams) {
+	//Method to send httpPostRequest
+	//This method is taking two arguments
+	//First argument is the URL of the script to which we will send the request
+	//Other is an HashMap with name value pairs containing the data to be send with the request
+	public String sendPostRequest(String requestURL,  HashMap<String, String> postDataParams) {
 		//Creating a URL
 		URL url;
 		HttpURLConnection conn = null;
@@ -77,48 +82,62 @@ public class RequestHandler {
 	}
 
 	// Methods for get
-		// To execute a get without params
-		public String sendGetRequest(String requestURL){
-			StringBuilder sb =new StringBuilder();
-			HttpURLConnection con = null;
-			try {
-				URL url = new URL(requestURL);
-				con = (HttpURLConnection) url.openConnection();
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
-				String s;
-				while((s=bufferedReader.readLine())!=null){
-					sb.append(s+"\n");
-				}
-			}catch(Exception e){
+	// To execute a get without params
+	public String sendGetRequest(String requestURL){
+		StringBuilder sb =new StringBuilder();
+		HttpURLConnection con = null;
+		try {
+			URL url = new URL(requestURL);
+			con = (HttpURLConnection) url.openConnection();
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
+			String s;
+			while((s=bufferedReader.readLine())!=null){
+				sb.append(s).append("\n");
 			}
-			// Close the connection
-			finally {
-				if (null != con) con.disconnect();
-			}
-			return sb.toString();
+		} catch(Exception ignored){
 		}
-
-		// To execute a get with id param
-		public String sendGetRequestParam(String requestURL, String id){
-			StringBuilder sb =new StringBuilder();
-			HttpURLConnection con = null;
-			try {
-				URL url = new URL(requestURL+id);
-
-				con = (HttpURLConnection) url.openConnection();
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
-				String s;
-				while((s=bufferedReader.readLine())!=null){
-					sb.append(s+"\n");
-				}
-			}catch(Exception e){
-			}
-			// Close the connection
-			finally {
-				if (null != con) con.disconnect();
-			}
-			return sb.toString();
+		// Close the connection
+		finally {
+			if (null != con) con.disconnect();
 		}
+		return sb.toString();
+	}
+
+	// To execute a get with id param
+	public String sendGetRequestParam(String requestURL, String id){
+		StringBuilder sb =new StringBuilder();
+		HttpURLConnection con = null;
+		try {
+			URL url = new URL(requestURL+"?"+id);
+
+			con = (HttpURLConnection) url.openConnection();
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
+			String s;
+			while((s=bufferedReader.readLine())!=null){
+				sb.append(s).append("\n");
+			}
+		}catch(Exception ignored){
+		}
+		// Close the connection
+		finally {
+			if (null != con) con.disconnect();
+		}
+		return sb.toString();
+	}
+
+	public boolean isConnectedToServer(View v, View.OnClickListener listener) {
+		try{
+			URL myUrl = new URL(Config.URL_GENERAL_SERVER);
+			HttpURLConnection connection = (HttpURLConnection) myUrl.openConnection();
+			connection.setConnectTimeout(5000);
+			connection.connect();
+			return true;
+		} catch (Exception e) {
+			Snackbar.make(v, R.string.error_on_connection, Snackbar.LENGTH_INDEFINITE)
+					.setAction(R.string.retry, listener).show();
+			return false;
+		}
+	}
 
 	// Internal method
 	private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {

@@ -1,10 +1,12 @@
 package techwork.ami.Offer;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -83,19 +85,32 @@ public class OfferView extends AppCompatActivity {
 
             @Override
             protected String doInBackground(Bundle... params) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_RESERVE_OFFER_ID, bundle.getString(Config.TAG_GO_OFFER_ID));
-
-                hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
-
-                // TODO: OBTENER LA CANTIDAD DE MIERDAS QUE RESERVA
-                hashMap.put(Config.KEY_RESERVE_QUANTITY, "1");
-
-                // Date and time is getting directly for SQL, the next line is unnecessary
-                //hashMap.put(Config.KEY_RESERVE_RESERVE_DATE, date);
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_OFFER_RESERVE, hashMap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(offerTitle, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendGetRequest(bundle);
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_RESERVE_OFFER_ID, bundle.getString(Config.TAG_GO_OFFER_ID));
+
+                    hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+
+                    // TODO: OBTENER LA CANTIDAD DE MIERDAS QUE RESERVA
+                    hashMap.put(Config.KEY_RESERVE_QUANTITY, "1");
+
+                    // Date and time is getting directly for SQL, the next line is unnecessary
+                    //hashMap.put(Config.KEY_RESERVE_RESERVE_DATE, date);
+
+                    return rh.sendPostRequest(Config.URL_OFFER_RESERVE, hashMap);
+                }
+                else
+                    return "-1";
             }
 
             @Override
@@ -104,9 +119,9 @@ public class OfferView extends AppCompatActivity {
                 loading.dismiss();
                 if (s.equals("0")) {
                     Toast.makeText(OfferView.this, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
-                    finish();
                     startActivity(new Intent(OfferView.this, MainActivity.class));
-                } else {
+                    finish();
+                } else if (!s.equals("-1")) {
                     Toast.makeText(OfferView.this, R.string.operation_fail, Toast.LENGTH_SHORT).show();
                 }
             }

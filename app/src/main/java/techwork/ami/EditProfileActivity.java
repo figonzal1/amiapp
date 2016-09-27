@@ -1,5 +1,6 @@
 package techwork.ami;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -81,6 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	// id of the person;
 	String id;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -188,33 +190,47 @@ public class EditProfileActivity extends AppCompatActivity {
 
 	// AsyncTask that send a request to the server
 	private void sendGetRequest(){
-		class GetProfile extends AsyncTask<Void,Void,String> {
-			ProgressDialog loading;
+		class GetProfile extends AsyncTask<String,Void,String> {
+			private ProgressDialog loading;
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
 				loading = ProgressDialog.show(EditProfileActivity.this,
-						getResources().getString(R.string.fetching),
+						getResources().getString(R.string.gettingData),
 						getResources().getString(R.string.wait),false,false);
 			}
 
 			@Override
-			protected String doInBackground(Void... params) {
+			protected String doInBackground(String... params) {
 				RequestHandler rh = new RequestHandler();
-				return rh.sendGetRequestParam(Config.URL_GET_PROFILE,id);
+
+				Boolean connectionStatus = rh.isConnectedToServer(editProfileView, new View.OnClickListener() {
+					@Override
+					@TargetApi(Build.VERSION_CODES.M)
+					public void onClick(View v) {
+						sendGetRequest();
+					}
+				});
+
+				if (connectionStatus)
+					return rh.sendGetRequestParam(Config.URL_GET_PROFILE, params[0]);
+				else
+					return "-1";
 			}
 
 			@Override
 			protected void onPostExecute(String s) {
 				super.onPostExecute(s);
 				loading.dismiss();
-				showProfile(s);
+				if (!s.equals("-1"))
+					showProfile(s);
 			}
 		}
 		GetProfile gp = new GetProfile();
-		gp.execute();
+		gp.execute("id=" + id);
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	// Fill the fields with the data from the JSON
 	private void showProfile(String json){
 		try {
@@ -224,7 +240,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 			if (!id.equals(this.id)) {
 				Toast.makeText(getApplicationContext(),
-						getResources().getString(R.string.fetchingFail), Toast.LENGTH_LONG).show();
+						getResources().getString(R.string.editProfileFetchingFail), Toast.LENGTH_LONG).show();
 				return;
 			}
 
@@ -462,6 +478,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		return true; //android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	// Send the new profile data to the server
 	private void sendUpdateRequest() {
 		final String name = editTextName.getText().toString().trim();
@@ -479,7 +496,7 @@ public class EditProfileActivity extends AppCompatActivity {
 				spinnerGenre.getSelectedItem().toString());
 
 		class UpdateProfile extends AsyncTask<Void,Void,String>{
-			ProgressDialog loading;
+			private ProgressDialog loading;
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -490,19 +507,31 @@ public class EditProfileActivity extends AppCompatActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				HashMap<String,String> hashMap = new HashMap<>();
-				hashMap.put(Config.KEY_ID, id);
-				hashMap.put(Config.KEY_NAME, name);
-				hashMap.put(Config.KEY_LASTNAMES, lastnames);
-				hashMap.put(Config.KEY_EMAIL, email);
-				hashMap.put(Config.KEY_DATE, date);
-				hashMap.put(Config.KEY_PHONE, phone);
-				hashMap.put(Config.KEY_OCCUPATION, idOccupation);
-				hashMap.put(Config.KEY_GENRE, idGenre);
-
 				RequestHandler rh = new RequestHandler();
 
-				return rh.sendPostRequest(Config.URL_UPDATE_PROFILE, hashMap);
+				Boolean connectionStatus = rh.isConnectedToServer(editProfileView, new View.OnClickListener() {
+					@Override
+					@TargetApi(Build.VERSION_CODES.M)
+					public void onClick(View v) {
+						sendUpdateRequest();
+					}
+				});
+
+				if (connectionStatus) {
+					HashMap<String, String> hashMap = new HashMap<>();
+					hashMap.put(Config.KEY_ID, id);
+					hashMap.put(Config.KEY_NAME, name);
+					hashMap.put(Config.KEY_LASTNAMES, lastnames);
+					hashMap.put(Config.KEY_EMAIL, email);
+					hashMap.put(Config.KEY_DATE, date);
+					hashMap.put(Config.KEY_PHONE, phone);
+					hashMap.put(Config.KEY_OCCUPATION, idOccupation);
+					hashMap.put(Config.KEY_GENRE, idGenre);
+
+					return rh.sendPostRequest(Config.URL_UPDATE_PROFILE, hashMap);
+				}
+				else
+					return "-1";
 			}
 
 			@Override
@@ -524,7 +553,7 @@ public class EditProfileActivity extends AppCompatActivity {
 					editor.putString(Config.KEY_SP_GENRE, idGenre);
 					editor.apply();
 				}
-				else
+				else if (!s.equals("-1"))
 					Snackbar.make(findViewById(R.id.coordinatorLayout), R.string.saveFail, Snackbar.LENGTH_LONG)
 							.setAction(R.string.retry, new View.OnClickListener() {
 								@Override
@@ -611,13 +640,5 @@ public class EditProfileActivity extends AppCompatActivity {
 					.show();
 		else
 			finish();
-	}
-
-	private void delay(long d) {
-		try {
-			Thread.sleep(d);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }

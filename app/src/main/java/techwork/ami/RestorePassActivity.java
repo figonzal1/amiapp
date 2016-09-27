@@ -170,17 +170,8 @@ public class RestorePassActivity extends AppCompatActivity implements LoaderCall
     }
 
     private boolean isEmailValid(String email) {
-
         //AQUI Validar con expresión regular
-
-        //TODO: Replace this with your own logic
         return email.contains("@") && email.contains(".");
-    }
-
-        //AQUI Validar ambas contraseñas largas
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() >= 4;
     }
 
     /**
@@ -270,14 +261,13 @@ public class RestorePassActivity extends AppCompatActivity implements LoaderCall
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
     /**
      * Represents an asynchronous registration task used to authenticate
      * the user.
      */
-    public class UserRestorePassTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserRestorePassTask extends AsyncTask<Void, Void, String> {
 
         private final String mEmail;
 
@@ -286,24 +276,36 @@ public class RestorePassActivity extends AppCompatActivity implements LoaderCall
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
             // TODO: send restore pass email
-            HashMap<String,String> hashMap = new HashMap<>();
-            hashMap.put(Config.KEY_EMAIL, mEmail);
-
             RequestHandler rh = new RequestHandler();
-            return rh.sendPostRequest(Config.URL_RESTORE_PASS, hashMap).equals("0");
+
+            Boolean connectionStatus = rh.isConnectedToServer(mEmailView, new View.OnClickListener() {
+                @Override
+                @TargetApi(Build.VERSION_CODES.M)
+                public void onClick(View v) {
+                    attemptRestorePass();
+                }
+            });
+
+            if (connectionStatus) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_EMAIL, mEmail);
+                return rh.sendPostRequest(Config.URL_RESTORE_PASS, hashMap);
+            }
+            else
+                return "-1";
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final String s) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            if (s.equals("0")) {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.restoreEmailSend),
                         Toast.LENGTH_LONG).show();
-            } else {
+            } else if (!s.equals("-1")) {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.restoreEmailNotExists),
                         Toast.LENGTH_LONG).show();
             }

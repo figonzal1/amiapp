@@ -1,6 +1,13 @@
 package techwork.ami;
 
+import android.text.InputType;
+
+@SuppressWarnings("WeakerAccess")
 public class Config {
+	// Input type constant
+	public static int inputNoVisiblePasswordType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+	public static int inputPromotionCodeType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
+
 	// Shared preferences keys
 	public static final String KEY_SHARED_PREF ="cl.usm.techwork.ami";
 	public static final String KEY_SP_ID="idPersona";
@@ -8,20 +15,27 @@ public class Config {
 	public static final String KEY_SP_LASTNAMES="Persona.apellidos";
 	public static final String KEY_SP_EMAIL="Persona.email";
 	public static final String KEY_SP_GENRE="Persona.genero";
+	public static final String KEY_SP_COMMUNE="Persona.comuna";
+
 
 	// Request URLs
-	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php?id=";
+	public static final String URL_GENERAL_SERVER="http://amiapp.cl";
+
+	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php";
 	public static final String URL_GET_MAP_OFFERS="http://amiapp.cl/public/getData/Maps/getData.php";
 	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php?";
 	public static final String URL_UPDATE_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/updateAfterLogin.php";
 	public static final String URL_UPDATE_PROFILE="http://amiapp.cl/public/getData/Profile/updateProfile.php";
 	public static final String URL_LOGIN="http://amiapp.cl/public/getData/Login/login.php";
 	public static final String URL_REGISTER="http://amiapp.cl/public/getData/Register/register.php";
-	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php?email=";
-	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers2.php";
+	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php";
+	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
     public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
+	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
+	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php";
+	public static final String URL_CONTACT_US = "http://amiapp.cl/public/getData/ContactUs/sendContactEmail.php";
 
     // GO = Get Offers
 	public static final String TAG_GO_OFFERS="offers";
@@ -53,6 +67,15 @@ public class Config {
     public static final String TAG_GRO_QUANTITY = "cantidad";
     public static final String TAG_GRO_RESERDATE = "fechaReserva";
     public static final String TAG_GRO_PAYDATE = "fechaCobro";
+	public static final String TAG_GRO_CALIFICATION = "calificacion";
+	public static final String TAG_GRO_LOCCODE = "codigoLocal";
+
+	//MRO = My Reservations Offers URLs
+	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
+	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
+
+	// DO = Discard Offer URLs
+	public static final String URL_DO_DISCARD = "http://amiapp.cl/public/getData/DiscardOffer/discardOffer.php";
 
     // Keys that will be used to send the request to php scripts
 	public static final  String KEY_ID ="id"; // UP = Update Profile
@@ -65,6 +88,18 @@ public class Config {
 	public static final  String KEY_OCCUPATION ="idOcupacion";
 	public static final  String KEY_COMMUNE ="idComuna";
 	public static final  String KEY_GENRE ="idGenero";
+
+	// Need Keys
+	public static final  String KEY_NE_TITLE="Title";
+	public static final  String KEY_NE_DESCRIPTION="Description";
+	public static final  String KEY_NE_MONEY="Money";
+	public static final  String KEY_NE_DAYS="NeedDays";
+	public static final  String KEY_NE_LAT="Lat";
+	public static final  String KEY_NE_LON="Lon";
+	public static final  String KEY_NE_USER_ID="User_id";
+	public static final  String KEY_NE_SUBCATEGORY_ID="Subcategory_id";
+	public static final  String KEY_NE_COMMUNE_ID="Commune_id";
+	public static final  String KEY_NE_LOCATION="userlocation";
 
 	// login Keys
 	public static final  String KEY_LI_PASS="password";
@@ -79,12 +114,15 @@ public class Config {
 	public static final String TAG_FIRST_LOGIN ="primerInicio";
 	public static final String TAG_RESULT ="result";
 	public static final String TAG_TYPE ="type";
+	public static final String TAG_ID_STORE ="idLocal";
 	public static final String TAG_ID_OCCUPATION ="idOcupacion";
 	public static final String TAG_ID_GENRE ="idGenero";
 	public static final String TAG_ID_COUNTRY ="idPais";
 	public static final String TAG_ID_REGION ="idRegion";
 	public static final String TAG_ID_PROVINCE ="idProvincia";
 	public static final String TAG_ID_COMMUNE ="idComuna";
+	public static final String TAG_ID_CATEGORIES ="idCategoria";
+	public static final String TAG_ID_SUBCATEGORIES ="idSubcategoria";
 	public static final String TAG_OCCUPATION_NAME ="nombre";
 	public static final String TAG_PROFILE ="profile";
 	public static final String TAG_OCCUPATIONS ="occupations";
@@ -140,18 +178,35 @@ public class Config {
 	public static final String TAG_GNO_IMAGE="imagen";
 
 
+	// Contact Us Keys
+	public static final String TAG_CU_NAME = "nombre";
+	public static final String TAG_CU_MAIL = "email";
+	public static final String TAG_CU_SUBJECT = "asunto";
+	public static final String TAG_CU_MESSAGE = "mensaje";
+
 	// Money format
 	public static final String CLP_FORMAT = "%,d";
 
-	// Reserve offers keys
+	// My Reservations offers keys
 	public static final String KEY_RESERVE_OFFER_ID = "idOferta";
 	public static final String KEY_RESERVE_PERSON_ID = "idPersona";
 	public static final String KEY_RESERVE_QUANTITY = "cantidad";
 	public static final String KEY_RESERVE_RESERVE_DATE = "fechaReserva";
+	public static final String KEY_RESERVE_RATE = "calificacion";
+
+	// Discard offer keys
+	public static final String KEY_DO_OFFER_ID = "idOferta";
+	public static final String KEY_DO_PERSON_ID = "idPersona";
 
 	// Date format
 	public static final String DATETIME_FORMAT_DB="yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_FORMAT="%02d/%02d/%04d";
+
+	//Tags used in the JSON String Need
+	public static final String TAG_ID = "idCategoria";
+
+	//JSON array name
+	public static final String JSON_ARRAY = "result";
 
     //Keys for Fragments (MainPageAdapter)
     public static final int HOME = 0;

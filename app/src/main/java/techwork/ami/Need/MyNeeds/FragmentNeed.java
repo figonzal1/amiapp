@@ -1,17 +1,24 @@
 package techwork.ami.Need.MyNeeds;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +35,7 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Need.NeedActivity;
 import techwork.ami.Need.NeedOffer.NeedOfferActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -87,6 +95,18 @@ public class FragmentNeed extends Fragment {
         });
 
         getNeeds();
+
+        Button button = (Button) v.findViewById(R.id.btn_create_order);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getActivity(), NeedActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
         return v;
     }
 
@@ -111,18 +131,32 @@ public class FragmentNeed extends Fragment {
 
             @Override
             protected String doInBackground(Void... voids) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_GN_ID,id);
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_NEED,hashMap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_GN_ID, id);
+
+                    return rh.sendPostRequest(Config.URL_GET_NEED, hashMap);
+                }
+                else
+                    return "-1";
             }
 
             @Override
             protected  void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showNeeds(s);
+                if (!s.equals("-1"))
+                    showNeeds(s);
             }
         }
         NeedAsyncTask go = new NeedAsyncTask();

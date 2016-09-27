@@ -1,5 +1,7 @@
 package techwork.ami;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -8,9 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -156,98 +160,23 @@ public class AfterLoginActivity extends AppCompatActivity {
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
 
-		spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				// Empty dependent spinners
-				spinnerRegion.setAdapter(null);
-				spinnerProvince.setAdapter(null);
-				spinnerCommune.setAdapter(null);
+		SpinnerCountryListener countryListener = new SpinnerCountryListener();
+		SpinnerRegionListener regionListener = new SpinnerRegionListener();
+		SpinnerProvinceListener provinceListener = new SpinnerProvinceListener();
+		SpinnerCommuneListener communeListener = new SpinnerCommuneListener();
 
-				// Set Enable if has been selected a valid option
-				spinnerRegion.setEnabled(i != 0);
-
-				// Set disable dependent spinners and button
-				spinnerProvince.setEnabled(false);
-				spinnerCommune.setEnabled(false);
-				buttonContinue.setEnabled(false);
-
-				// Get the options of the next spinner
-				if (i != 0)
-					sendGetRequest("2", countryMap.get(spinnerCountry.getSelectedItem().toString()));
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-
-			}
-		});
-		spinnerRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				// Empty dependent spinners
-				spinnerProvince.setAdapter(null);
-				spinnerCommune.setAdapter(null);
-
-				// Set Enable if has been selected a valid option
-				spinnerProvince.setEnabled(i != 0);
-
-				// Set disable dependent spinners and button
-				spinnerCommune.setEnabled(false);
-				buttonContinue.setEnabled(false);
-
-				// Get the options of the next spinner
-				if (i != 0)
-					sendGetRequest("3", regionMap.get(spinnerRegion.getSelectedItem().toString()));
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-
-			}
-		});
-		spinnerProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				// Empty dependent spinners
-				spinnerCommune.setAdapter(null);
-
-				// Set Enable if has been selected a valid option
-				spinnerCommune.setEnabled(i != 0);
-
-				// Set disable dependent spinners and button
-				buttonContinue.setEnabled(false);
-
-				// Get the options of the next spinner
-				if (i != 0)
-					sendGetRequest("4", provinceMap.get(spinnerProvince.getSelectedItem().toString()));
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-
-			}
-		});
-		spinnerCommune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				if (i != 0) {
-					buttonContinue.setEnabled(true);
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-
-			}
-		});
+		spinnerCountry.setOnTouchListener(countryListener);
+		spinnerRegion.setOnTouchListener(regionListener);
+		spinnerProvince.setOnTouchListener(provinceListener);
+		spinnerCommune.setOnTouchListener(communeListener);
+		spinnerCountry.setOnItemSelectedListener(countryListener);
+		spinnerRegion.setOnItemSelectedListener(regionListener);
+		spinnerProvince.setOnItemSelectedListener(provinceListener);
+		spinnerCommune.setOnItemSelectedListener(communeListener);
 
 	}
 
-	private void disableFromProvince() {
-
-	}
-
+	@SuppressWarnings("unchecked")
 	private void restoreState(Bundle savedInstanceState) {// Set the previous state of the form
 		enableForm(savedInstanceState.getBoolean(KEY_FORM_STATE));
 
@@ -307,33 +236,45 @@ public class AfterLoginActivity extends AppCompatActivity {
 	}
 
 	// AsyncTask that send a request to the server
-	private void sendGetRequest(String type, String id){
-		class GetProfile extends AsyncTask<String,Void,String> {
-			ProgressDialog loading;
+	private void sendGetRequest(final String type, final String id){
+
+		class GetOptions extends AsyncTask<String,Void,String> {
+			private ProgressDialog loading;
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
 				loading = ProgressDialog.show(AfterLoginActivity.this,
-						getResources().getString(R.string.fetching),
+						getResources().getString(R.string.gettingData),
 						getResources().getString(R.string.wait),false,false);
 			}
 
 			@Override
 			protected String doInBackground(String... params) {
-
 				RequestHandler rh = new RequestHandler();
-				return rh.sendGetRequestParam(Config.URL_GET_AFTER_LOGIN_DATA, params[0]);
+				Boolean connectionStatus = rh.isConnectedToServer(textViewGenre, new View.OnClickListener() {
+					@Override
+					@TargetApi(Build.VERSION_CODES.M)
+					public void onClick(View v) {
+						sendGetRequest(type, id);
+					}
+				});
+
+				if (connectionStatus)
+					return rh.sendGetRequestParam(Config.URL_GET_AFTER_LOGIN_DATA, params[0]);
+				else
+					return "-1";
 			}
 
 			@Override
 			protected void onPostExecute(String s) {
 				super.onPostExecute(s);
 				loading.dismiss();
-				setOptions(s);
+				if (!s.equals("-1"))
+					setOptions(s);
 			}
 		}
-		GetProfile gp = new GetProfile();
-		gp.execute("type=" + type + "&id=" + id);
+		GetOptions go = new GetOptions();
+		go.execute("type=" + type + "&id=" + id);
 	}
 
 
@@ -526,6 +467,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 		return false;
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	// Send the new profile data to the server
 	private void sendSaveRequest() {
 		Calendar c = Calendar.getInstance();
@@ -541,7 +483,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 				spinnerCommune.getSelectedItem().toString());
 
 		class saveProfile extends AsyncTask<Void,Void,String> {
-			ProgressDialog loading;
+			private ProgressDialog loading;
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -552,16 +494,28 @@ public class AfterLoginActivity extends AppCompatActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				HashMap<String,String> hashMap = new HashMap<>();
-				hashMap.put(Config.KEY_ID, id);
-				hashMap.put(Config.KEY_DATE, date);
-				hashMap.put(Config.KEY_OCCUPATION, idOccupation);
-				hashMap.put(Config.KEY_COMMUNE, idCommune);
-				hashMap.put(Config.KEY_GENRE, idGenre);
-
 				RequestHandler rh = new RequestHandler();
 
-				return rh.sendPostRequest(Config.URL_UPDATE_AFTER_LOGIN_DATA, hashMap);
+				Boolean connectionStatus = rh.isConnectedToServer(textViewGenre, new View.OnClickListener() {
+					@Override
+					@TargetApi(Build.VERSION_CODES.M)
+					public void onClick(View v) {
+						sendSaveRequest();
+					}
+				});
+
+				if (connectionStatus) {
+					HashMap<String, String> hashMap = new HashMap<>();
+					hashMap.put(Config.KEY_ID, id);
+					hashMap.put(Config.KEY_DATE, date);
+					hashMap.put(Config.KEY_OCCUPATION, idOccupation);
+					hashMap.put(Config.KEY_COMMUNE, idCommune);
+					hashMap.put(Config.KEY_GENRE, idGenre);
+
+					return rh.sendPostRequest(Config.URL_UPDATE_AFTER_LOGIN_DATA, hashMap);
+				}
+				else
+					return "-1";
 			}
 
 			@Override
@@ -576,14 +530,14 @@ public class AfterLoginActivity extends AppCompatActivity {
 					SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString(Config.KEY_SP_GENRE, idGenre);
+					editor.putString(Config.KEY_SP_COMMUNE, idCommune);
 					editor.apply();
 
 					// Close this Activity
 					Intent iLogin = new Intent(AfterLoginActivity.this, MainActivity.class);
 					finish();
 					startActivity(iLogin);
-				}
-				else
+				} else if (!s.equals("-1"))
 					Toast.makeText(getApplicationContext(),
 							getResources().getString(R.string.saveFail) + " Error: " + s, Toast.LENGTH_LONG).show();
 			}
@@ -673,6 +627,139 @@ public class AfterLoginActivity extends AppCompatActivity {
 			}
 		}
 		super.onSaveInstanceState(savedInstanceState);
+	}
+
+	class SpinnerCountryListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+		private boolean userSelect = false;
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			userSelect = true;
+			return false;
+		}
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+			if (userSelect) {
+				// Empty dependent spinners
+				spinnerRegion.setAdapter(null);
+				spinnerProvince.setAdapter(null);
+				spinnerCommune.setAdapter(null);
+
+				// Set Enable if has been selected a valid option
+				spinnerRegion.setEnabled(i != 0);
+
+				// Set disable dependent spinners and button
+				spinnerProvince.setEnabled(false);
+				spinnerCommune.setEnabled(false);
+				buttonContinue.setEnabled(false);
+
+				// Get the options of the next spinner
+				if (i != 0)
+					sendGetRequest("2", countryMap.get(spinnerCountry.getSelectedItem().toString()));
+				userSelect = false;
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+
+		}
+	}
+
+	class SpinnerRegionListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+		private boolean userSelect = false;
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			userSelect = true;
+			return false;
+		}
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+			if (userSelect) {
+				// Empty dependent spinners
+				spinnerProvince.setAdapter(null);
+				spinnerCommune.setAdapter(null);
+
+				// Set Enable if has been selected a valid option
+				spinnerProvince.setEnabled(i != 0);
+
+				// Set disable dependent spinners and button
+				spinnerCommune.setEnabled(false);
+				buttonContinue.setEnabled(false);
+
+				// Get the options of the next spinner
+				if (i != 0)
+					sendGetRequest("3", regionMap.get(spinnerRegion.getSelectedItem().toString()));
+				userSelect = false;
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+
+		}
+	}
+
+	class SpinnerProvinceListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+		private boolean userSelect = false;
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			userSelect = true;
+			return false;
+		}
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+			if (userSelect) {
+				// Empty dependent spinners
+				spinnerCommune.setAdapter(null);
+
+				// Set Enable if has been selected a valid option
+				spinnerCommune.setEnabled(i != 0);
+
+				// Set disable dependent spinners and button
+				buttonContinue.setEnabled(false);
+
+				// Get the options of the next spinner
+				if (i != 0)
+					sendGetRequest("4", provinceMap.get(spinnerProvince.getSelectedItem().toString()));
+				userSelect = false;
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+
+		}
+	}
+
+	class SpinnerCommuneListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+		private boolean userSelect = false;
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			userSelect = true;
+			return false;
+		}
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+			if (userSelect) {
+				if (i != 0) {
+					buttonContinue.setEnabled(true);
+				}
+				userSelect = false;
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+
+		}
 	}
 
 }

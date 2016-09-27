@@ -8,6 +8,7 @@ public class ReservationOffer {
     private String title;
     private String description;
     private String promotionCode;
+    private String calification;
     private String initialDate;
     private String finalDate;
     private int price;
@@ -17,6 +18,7 @@ public class ReservationOffer {
     private String quantity;
     private String reservationDate;
     private String paymentDate;
+    private String localCode;
 
     //Getters
     public String getIdReservationOffer() {
@@ -30,6 +32,9 @@ public class ReservationOffer {
     }
     public String getPromotionCode() {
         return promotionCode;
+    }
+    public String getCalificacion() {
+        return  calification;
     }
     public String getInitialDate() {
         return initialDate;
@@ -58,6 +63,9 @@ public class ReservationOffer {
     public String getPaymentDate() {
         return paymentDate;
     }
+    public String getLocalCode(){
+        return localCode;
+    }
 
     //Setters
     public void setIdReservationOffer(String idReservationOffer) {
@@ -71,6 +79,9 @@ public class ReservationOffer {
     }
     public void setPromotionCode(String promotionCode) {
         this.promotionCode = promotionCode;
+    }
+    public void setCalificacion(String calification){
+        this.calification = calification;
     }
     public void setInitialDate(String initialDate) {
         this.initialDate = initialDate;
@@ -98,5 +109,8 @@ public class ReservationOffer {
     }
     public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
+    }
+    public void setLocalCode(String localCode){
+        this.localCode = localCode;
     }
 }
