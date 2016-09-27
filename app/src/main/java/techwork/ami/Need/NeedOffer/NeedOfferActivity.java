@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ConfigurationInfo;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.locks.Condition;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -38,6 +40,7 @@ public class NeedOfferActivity extends AppCompatActivity {
     public List<NeedOfferModel> needOfferList;
     private NeedOfferAdapter adapter;
     private GridLayoutManager layout;
+    private SwipeRefreshLayout refreshLayout;
     private String idNeedOffer;
 
     @Override
@@ -54,6 +57,15 @@ public class NeedOfferActivity extends AppCompatActivity {
         layout= new GridLayoutManager(this,1);
         rv.setLayoutManager(layout);
 
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_need_offer);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNeedOffers();
+            }
+        });
+
         getNeedOffers();
     }
 
@@ -68,6 +80,7 @@ public class NeedOfferActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute(){
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
             @Override
             protected String doInBackground(Void... voids) {
@@ -79,6 +92,7 @@ public class NeedOfferActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
+                refreshLayout.setRefreshing(false);
                 showNeedOffers(s);
             }
         }
@@ -90,7 +104,8 @@ public class NeedOfferActivity extends AppCompatActivity {
         getNeedOffersData(s);
 
         adapter = new NeedOfferAdapter(getApplicationContext(),needOfferList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override

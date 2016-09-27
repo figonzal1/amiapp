@@ -4,29 +4,42 @@
     android:id="@+id/need_offer_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     tools:context="techwork.ami.Need.NeedOffer.NeedOfferActivity">
-    <TextView
-        android:id="@+id/tv_need_offer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ofertas recibidas:"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
-        android:textSize="25sp"
-        />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_need_offer"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_need_offer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tv_need_offer"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_need_offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ofertas recibidas:"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:textSize="25sp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_need_offer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_need_offer"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

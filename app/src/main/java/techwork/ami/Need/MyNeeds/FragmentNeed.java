@@ -143,7 +143,7 @@ public class FragmentNeed extends Fragment {
 
                 if (connectionStatus) {
                     HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put(Config.KEY_GN_ID, id);
+                    hashMap.put(Config.KEY_GN_IDPERSON, id);
 
                     return rh.sendPostRequest(Config.URL_GET_NEED, hashMap);
                 }
@@ -170,7 +170,7 @@ public class FragmentNeed extends Fragment {
         getNeedsData(s);
 
         adapter = new NeedAdapter(getActivity(),needList);
-        AlphaInAnimationAdapter scaleAdapter = new AlphaInAnimationAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {

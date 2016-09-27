@@ -15,7 +15,7 @@ public class NeedOfferModel {
     String dateFin;
     int price;
     String maxPPerson;
-    String Company;
+    String company;
 
     //Getters
 
@@ -61,7 +61,7 @@ public class NeedOfferModel {
     }
 
     public String getCompany() {
-        return Company;
+        return company;
     }
     //Setters
 
@@ -106,6 +106,6 @@ public class NeedOfferModel {
     }
 
     public void setCompany(String company) {
-        Company = company;
+        this.company = company;
     }
 }

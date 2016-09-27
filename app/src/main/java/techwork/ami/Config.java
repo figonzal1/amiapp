@@ -148,7 +148,7 @@ public class Config {
 
 	//Tags and keys for NeedFragment
 	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
-	public static final String KEY_GN_ID="id";
+	public static final String KEY_GN_IDPERSON="idPersona";
 	public static final String TAG_GN_NEED= "needs";
 	public static final String TAG_GN_IDNEED ="idNecesidad";
 	public static final String TAG_GN_TITTLE ="titulo";
@@ -163,8 +163,7 @@ public class Config {
 
 	//Tags and keys for NeedOfferActivity
 	public static final String URL_GET_NEED_OFFER="http://amiapp.cl/public/getData/Need/getNeedOffer.php";
-	public static final String KEY_GNO_IDPERSON="idPer";
-	public static final String KEY_GNO_IDNEED="idNec";
+	public static final String KEY_GNO_IDNEED="idNecesidad";
 	public static final String TAG_GNO_NEED="needOffers";
 	public static final String TAG_GNO_IDNEED="idNecesidad";
 	public static final String TAG_GNO_IDOFFER="idOferta";
@@ -176,8 +175,7 @@ public class Config {
 	public static final String TAG_GNO_DATEFIN="fechaTermino";
 	public static final String TAG_GNO_PRICEOFFER="precioOferta";
 	public static final String TAG_GNO_MAXPPERSON="maxPPersona";
-	public static final String TAG_GNO_IMAGE="imagen";
-	public static final String TAG_GNO_COMPANY="empresa";
+	public static final String TAG_GNO_COMPANY="nombreEmpresa";
 
 	//Discard NeedOfferActivity
 	public static final String URL_DISCARD_NEED_OFFER="http://amiapp.cl/public/getData/Need/discardNeedOffer.php";

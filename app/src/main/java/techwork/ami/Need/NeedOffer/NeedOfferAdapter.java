@@ -68,7 +68,7 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
         NeedOfferModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
         holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
-        holder.tvCompany.setText(Config.TAG_GNO_COMPANY);
+        holder.tvCompany.setText(model.getCompany());
 
     }
 
