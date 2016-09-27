@@ -4,19 +4,29 @@
     android:id="@+id/need_offer_view_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     tools:context="techwork.ami.Need.NeedOffer.NeedOfferViewActivity">
 
     <TextView
         android:id="@+id/tv_need_offer_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Detalle de la Oferta:"
+        android:text="Oferta propuesta por XX:"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:textSize="30sp"/>
+
+    <View
+        android:id="@+id/separator_need_offer_view"
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:layout_height="1dp"
+        android:background="#afafaf"
+        android:layout_below="@id/tv_need_offer_view"
+        />
+
     <TextView
         android:id="@+id/tv_need_offer_view_tittle"
         android:layout_marginTop="20dp"
@@ -24,8 +34,21 @@
         android:layout_height="wrap_content"
         android:text="Titulo Oferta Empresa"
         android:gravity="center_horizontal"
-        android:textSize="20sp"
+        android:textSize="23sp"
         android:layout_below="@+id/tv_need_offer_view"/>
+
+    <TextView
+        android:id="@+id/tv_need_offer_view_desciption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="Esta es la descripcion de la oferta de la empresa XX"
+        android:textStyle="italic"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/tv_need_offer_view_tittle"
+        />
 
     <TextView
         android:id="@+id/tv_need_offer_view_price"
@@ -33,7 +56,21 @@
         android:layout_height="wrap_content"
         android:text="Precio Oferta: $XX.XX"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/tv_need_offer_view_tittle"/>
+        android:layout_below="@+id/tv_need_offer_view_desciption"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_below="@id/tv_need_offer_view_desciption">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de publicación:"/>
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_need_offer_view"
@@ -46,25 +83,27 @@
     </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/recycler_view_need_offer_view">
 
         <Button
             android:id="@+id/btn_need_offer_view_accept"
-            android:layout_width="wrap_content"
-            android:text="Aceptar"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/check"
             />
-
         <Button
             android:id="@+id/btn_need_offer_view_discard"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="15dp"
             android:layout_weight="1"
-            android:text="Rechazar"/>
+            android:background="@drawable/not_check"
+            />
     </LinearLayout>
 </RelativeLayout>

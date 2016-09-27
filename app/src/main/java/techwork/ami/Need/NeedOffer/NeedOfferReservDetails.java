@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import techwork.ami.R;
 
-public class ViewLocalDetails extends AppCompatActivity {
+public class NeedOfferReservDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_local_details_activity);
+        setContentView(R.layout.need_offer_view_details_activity);
     }
 }

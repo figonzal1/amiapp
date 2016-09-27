@@ -84,7 +84,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".ContactUsActivity" />
-        <activity android:name=".Need.NeedOffer.ViewLocalDetails" />
+        <activity android:name=".Need.NeedOffer.NeedOfferReservDetails" />
     </application>
 
 </manifest>

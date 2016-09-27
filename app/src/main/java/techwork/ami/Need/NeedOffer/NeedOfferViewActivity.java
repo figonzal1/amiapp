@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
-import java.util.Timer;
 
 import techwork.ami.Config;
 import techwork.ami.R;
@@ -84,7 +83,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                                 // Salir de la activity despues de que la necesidad haya sido registrada
                                 @Override
                                 public void run() {
-                                    startActivity(new Intent(NeedOfferViewActivity.this, ViewLocalDetails.class));
+                                    startActivity(new Intent(NeedOfferViewActivity.this, NeedOfferReservDetails.class));
                                 }
 
                             }, 2500);
