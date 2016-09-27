@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import techwork.ami.Category.CategoryView;
@@ -42,13 +44,14 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
 
         public TextView tvTittle;
         public TextView tvPrice;
+        public TextView tvCompany;
 
 
         public NeedOfferViewHolder(View itemView) {
             super(itemView);
             tvTittle = (TextView)itemView.findViewById(R.id.tv_need_offer_tittle);
             tvPrice = (TextView)itemView.findViewById(R.id.tv_need_offer_price);
-
+            tvCompany= (TextView)itemView.findViewById(R.id.tv_need_offer_company);
         }
     }
 
@@ -56,8 +59,7 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
     public NeedOfferAdapter.NeedOfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.need_offer_card_view,parent,false);
         v.setOnClickListener(this);
-        NeedOfferViewHolder vh = new NeedOfferViewHolder(v);
-        return vh;
+        return new NeedOfferViewHolder(v);
     }
 
 
@@ -66,6 +68,7 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
         NeedOfferModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
         holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
+        holder.tvCompany.setText(Config.TAG_GNO_COMPANY);
 
     }
 

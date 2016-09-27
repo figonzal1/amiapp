@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:background="?android:attr/selectableItemBackground">
 
         <TextView
@@ -17,9 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Titulo Oferta Empresa"
-            android:textSize="16sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"/>
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_need_offer_price"
@@ -27,9 +26,15 @@
             android:layout_height="wrap_content"
             android:text="Precio : $xx.xx"
             android:layout_below="@+id/tv_need_offer_tittle"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_need_offer_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empresa"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true"/>
 
 
 

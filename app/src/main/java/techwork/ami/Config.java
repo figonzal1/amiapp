@@ -159,6 +159,7 @@ public class Config {
 	public static final String TAG_GN_LONGITUDE="longitud";
 	public static final String TAG_GN_RADIO="radio";
 	public static final String TAG_GN_OFFERS_COMPANY = "ofertasEmpresas";
+	public static final String TAG_GN_NDISCARD_OFFERS="nDescartadas";
 
 	//Tags and keys for NeedOfferActivity
 	public static final String URL_GET_NEED_OFFER="http://amiapp.cl/public/getData/Need/getNeedOffer.php";
@@ -176,6 +177,7 @@ public class Config {
 	public static final String TAG_GNO_PRICEOFFER="precioOferta";
 	public static final String TAG_GNO_MAXPPERSON="maxPPersona";
 	public static final String TAG_GNO_IMAGE="imagen";
+	public static final String TAG_GNO_COMPANY="empresa";
 
 
 	// Contact Us Keys

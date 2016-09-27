@@ -11,6 +11,7 @@ public class NeedModel {
     String lon;
     String radio;
     String offersCompany;
+    String nDiscardOffers;
 
     //Getters
     public String getIdNeed() {
@@ -42,6 +43,9 @@ public class NeedModel {
         return offersCompany;
     }
 
+    public String getnDiscardOffers() {
+        return nDiscardOffers;
+    }
     //Setters
 
     public void setIdNeed(String idNeed) {
@@ -77,4 +81,8 @@ public class NeedModel {
     }
 
     public void setOffersCompany(String offersCompany){this.offersCompany=offersCompany;}
+
+    public void setnDiscardOffers(String nDiscardOffers) {
+        this.nDiscardOffers = nDiscardOffers;
+    }
 }

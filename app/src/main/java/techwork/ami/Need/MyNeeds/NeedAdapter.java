@@ -36,6 +36,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
 
         public TextView tvTitle;
         public TextView tvNOffers;
+        public TextView tvNOffersDiscard;
         public TextView tvPricemin;
         public TextView tvDateFin;
         public TextView tvDescription;
@@ -46,6 +47,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
 
             tvTitle = (TextView)itemView.findViewById(R.id.tv_need_tittle);
             tvNOffers = (TextView)itemView.findViewById(R.id.tv_need_company_needs_number);
+            tvNOffersDiscard =(TextView)itemView.findViewById(R.id.tv_need_company_needs_number_discard);
             tvPricemin = (TextView)itemView.findViewById(R.id.tv_need_price_min);
             tvDateFin = (TextView)itemView.findViewById(R.id.tv_need_date_fin);
             tvDescription= (TextView)itemView.findViewById(R.id.tv_need_description);
@@ -69,6 +71,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         holder.tvDateFin.setText(model.getDateFin());
         holder.tvPricemin.setText("$"+String.format(Config.CLP_FORMAT,model.getPriceMin()));
         holder.tvNOffers.setText(model.getOffersCompany());
+        holder.tvNOffersDiscard.setText(model.getnDiscardOffers());
         holder.tvDescription.setText(model.getDescription());
 
     }

@@ -3,6 +3,7 @@ package techwork.ami.Need.NeedOffer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ConfigurationInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.locks.Condition;
 
 import techwork.ami.Config;
 import techwork.ami.OnItemClickListenerRecyclerView;
@@ -31,7 +33,7 @@ import techwork.ami.RequestHandler;
 
 public class NeedOfferActivity extends AppCompatActivity {
 
-    Button btnNeedOfferInfo;
+
     public RecyclerView rv;
     public List<NeedOfferModel> needOfferList;
     private NeedOfferAdapter adapter;
@@ -61,9 +63,6 @@ public class NeedOfferActivity extends AppCompatActivity {
 
     private void sendPostRequest(){
 
-        SharedPreferences sharedPref= getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
-        final String id = sharedPref.getString(Config.KEY_SP_ID,"-1");
-
         class NeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
             @Override
@@ -74,7 +73,6 @@ public class NeedOfferActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 HashMap<String, String> hashmap = new HashMap<>();
                 hashmap.put(Config.KEY_GNO_IDNEED,idNeedOffer);
-
                 RequestHandler rh = new RequestHandler();
                 return rh.sendPostRequest(Config.URL_GET_NEED_OFFER,hashmap);
             }
@@ -98,12 +96,27 @@ public class NeedOfferActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NeedOfferViewActivity.class);
+                int position = rv.getChildAdapterPosition(view);
+                NeedOfferModel m = needOfferList.get(position);
+
+                //Send to NeedOfferView the details of each offer.
+                intent.putExtra(Config.TAG_GNO_IDOFFER,m.getIdOferta());
+                intent.putExtra(Config.TAG_GNO_TITTLE,m.getTittle());
+                intent.putExtra(Config.TAG_GNO_DESCRIPTION,m.getDescription());
+                intent.putExtra(Config.TAG_GNO_PRICEOFFER,m.getPrice());
+                intent.putExtra(Config.TAG_GNO_DESCRIPTION,m.getDescription());
+                intent.putExtra(Config.TAG_GNO_STOCK,m.getStock());
+                intent.putExtra(Config.TAG_GNO_MAXPPERSON,m.getMaxPPerson());
+                intent.putExtra(Config.TAG_GNO_CODPROMOTION,m.getCodPromotion());
+                intent.putExtra(Config.TAG_GNO_DATEFIN,m.getDateFin());
+                intent.putExtra(Config.TAG_GNO_DATEINI,m.getDateIni());
+                intent.putExtra(Config.TAG_GNO_COMPANY,m.getCompany());
                 startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(View view) {
-
+                //Nada
             }
         });
 
@@ -134,6 +147,7 @@ public class NeedOfferActivity extends AppCompatActivity {
                 item.setStock(jsonObjectItem.getString(Config.TAG_GNO_STOCK));
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GNO_PRICEOFFER));
                 item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GNO_MAXPPERSON));
+                item.setCompany(jsonObjectItem.getString(Config.TAG_GNO_COMPANY));
 
                 dIni = jsonObjectItem.getString(Config.TAG_GNO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GNO_DATEFIN);

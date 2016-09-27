@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Need.NeedActivity;
@@ -169,7 +170,7 @@ public class FragmentNeed extends Fragment {
         getNeedsData(s);
 
         adapter = new NeedAdapter(getActivity(),needList);
-        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        AlphaInAnimationAdapter scaleAdapter = new AlphaInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
@@ -178,6 +179,8 @@ public class FragmentNeed extends Fragment {
                 Intent intent = new Intent(getActivity(),NeedOfferActivity.class);
                 int position = rv.getChildAdapterPosition(view);
                 NeedModel n = needList.get(position);
+
+                //Send de idNecesidad to send post request for obtain each NeedOffer with this id.
                 intent.putExtra(Config.TAG_GN_IDNEED,n.getIdNeed());
                 startActivity(intent);
             }
@@ -221,6 +224,7 @@ public class FragmentNeed extends Fragment {
                 item.setLon(jsonObjectItem.getString(Config.TAG_GN_LONGITUDE));
                 item.setRadio(jsonObjectItem.getString(Config.TAG_GN_RADIO));
                 item.setOffersCompany(jsonObjectItem.getString(Config.TAG_GN_OFFERS_COMPANY));
+                item.setnDiscardOffers(jsonObjectItem.getString(Config.TAG_GN_NDISCARD_OFFERS));
 
                 needList.add(item);
             }

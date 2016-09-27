@@ -11,10 +11,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="10dp"
         android:background="?android:attr/selectableItemBackground"
         >
 
@@ -53,6 +53,14 @@
             android:layout_marginTop="7dp"
             android:layout_below="@+id/tv_need_description"
             />
+        <TextView
+            android:id="@+id/tv_need_company_needs_discard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ofertas descartadas:"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/tv_need_company_needs"
+            />
 
         <TextView
             android:id="@+id/tv_need_company_needs_number"
@@ -63,8 +71,20 @@
             android:text="N"
             android:layout_below="@+id/tv_need_description"
             android:layout_marginStart="5dp"
-            android:background="@drawable/noffers_background"
+            android:background="@drawable/price_square_background"
             android:layout_toEndOf="@+id/tv_need_company_needs"
+            />
+        <TextView
+            android:id="@+id/tv_need_company_needs_number_discard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:textColor="@android:color/white"
+            android:text="N"
+            android:layout_below="@+id/tv_need_company_needs_number"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/price_square_background"
+            android:layout_toEndOf="@+id/tv_need_company_needs_discard"
             />
 
         <TextView

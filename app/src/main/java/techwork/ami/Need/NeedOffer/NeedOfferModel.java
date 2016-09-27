@@ -15,7 +15,7 @@ public class NeedOfferModel {
     String dateFin;
     int price;
     String maxPPerson;
-    String image;
+    String Company;
 
     //Getters
 
@@ -60,10 +60,9 @@ public class NeedOfferModel {
         return maxPPerson;
     }
 
-    public String getImage() {
-        return image;
+    public String getCompany() {
+        return Company;
     }
-
     //Setters
 
     public void setIdNeed(String idNeed) {
@@ -98,15 +97,15 @@ public class NeedOfferModel {
         this.dateIni = dateIni;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public void setPrice(int price) {
         this.price = price;
     }
 
     public void setTittle(String tittle) {
         this.tittle = tittle;
+    }
+
+    public void setCompany(String company) {
+        Company = company;
     }
 }
