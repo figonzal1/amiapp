@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import techwork.ami.Config;
-import techwork.ami.Need.NeedOfferReservDetailsActivity;
+import techwork.ami.Need.NeedOfferViewLocal;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -117,7 +117,8 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                                 // Salir de la activity despues de que la necesidad haya sido registrada
                                 @Override
                                 public void run() {
-                                    startActivity(new Intent(NeedOfferViewActivity.this, NeedOfferReservDetailsActivity.class));
+                                    startActivity(new Intent(NeedOfferViewActivity.this, NeedOfferViewLocal.class));
+                                    finish();
                                 }
 
                             }, 2500);

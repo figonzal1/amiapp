@@ -159,7 +159,7 @@ public class Config {
 	public static final String TAG_GN_TITTLE ="titulo";
 	public static final String TAG_GN_DESCRIPTION="descripcion";
 	public static final String TAG_GN_EXPIRATIONDATE = "fechaExpiracion";
-	public static final String TAG_GN_PRICEMIN="precioMin";
+	public static final String TAG_GN_PRICEMAX="precioMax";
 	public static final String TAG_GN_LATITUDE = "latitud";
 	public static final String TAG_GN_LONGITUDE="longitud";
 	public static final String TAG_GN_RADIO="radio";

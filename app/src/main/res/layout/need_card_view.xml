@@ -88,10 +88,10 @@
             />
 
         <TextView
-            android:id="@+id/tv_need_price_min"
+            android:id="@+id/tv_need_price_max"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Precio Mínimo"
+            android:text="Precio Máximo"
             android:textColor="#f45151"
             android:layout_below="@+id/tv_need_description"
             android:layout_alignParentEnd="true"
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha Exp"
-            android:layout_below="@+id/tv_need_price_min"
+            android:layout_below="@+id/tv_need_price_max"
             android:layout_alignParentEnd="true"
             />
 

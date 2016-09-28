@@ -214,7 +214,7 @@ public class FragmentNeed extends Fragment {
                 c.setTime(dateExp);
                 item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
 
-                item.setPriceMin(jsonObjectItem.getInt(Config.TAG_GN_PRICEMIN));
+                item.setPriceMax(jsonObjectItem.getInt(Config.TAG_GN_PRICEMAX));
                 item.setLat(jsonObjectItem.getString(Config.TAG_GN_LATITUDE));
                 item.setLon(jsonObjectItem.getString(Config.TAG_GN_LONGITUDE));
                 item.setRadio(jsonObjectItem.getString(Config.TAG_GN_RADIO));
