@@ -190,6 +190,11 @@ public class MapsActivity extends AppCompatActivity implements
             if ((!lastLatitude.equals("")) && (!lastLongitude.equals("")))
                 params = params + "lat=" + lastLatitude + "&lon=" + lastLongitude;
 
+        String idPerson = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                .getString(Config.KEY_SP_ID, "-1");
+
+        params = params + "&idPersona=" +idPerson;
+
         GetOffersLocations go = new GetOffersLocations();
         go.execute(params);
     }

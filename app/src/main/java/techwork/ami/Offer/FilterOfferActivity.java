@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,14 +40,11 @@ public class FilterOfferActivity extends AppCompatActivity {
 
     // UI references
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout refreshLayout;
     private List<OfferModel> offersList;
-    private OfferAdapter adapter;
     private int page;
     private String idCategory;
     private String idStore;
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +78,7 @@ public class FilterOfferActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // Use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //Refreshing layout
@@ -154,6 +150,11 @@ public class FilterOfferActivity extends AppCompatActivity {
         if (!idStore.equals(""))
             options = options + "&" + Config.TAG_FO_ID_STORE + "=" + idStore;
 
+        String idPerson = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                .getString(Config.KEY_SP_ID, "-1");
+
+        options = options + "&idPersona=" +idPerson;
+
         GetFilterOffers gfo = new GetFilterOffers();
         gfo.execute(options);
     }
@@ -161,7 +162,7 @@ public class FilterOfferActivity extends AppCompatActivity {
     private void showFilterOffers(String json) {
         getData(json);
 
-        adapter = new OfferAdapter(this, offersList);
+        OfferAdapter adapter = new OfferAdapter(this, offersList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         mRecyclerView.setAdapter(scaleAdapter);
 
@@ -182,7 +183,7 @@ public class FilterOfferActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(final View view) {
-                new CustomAlertDialogBuilder(context)
+                new CustomAlertDialogBuilder(FilterOfferActivity.this)
                         .setTitle(R.string.offers_list_discard_question)
                         .setMessage("Confirme la acción")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -248,17 +249,17 @@ public class FilterOfferActivity extends AppCompatActivity {
 
     private void discardOffer(DialogInterface dialog, OfferModel offer) {
         class DiscardOffer extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
-            DialogInterface dialog;
+            private ProgressDialog loading;
+            private DialogInterface dialog;
 
-            DiscardOffer (DialogInterface dialog) {
+            private DiscardOffer(DialogInterface dialog) {
                 this.dialog = dialog;
             }
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(context,
+                loading = ProgressDialog.show(FilterOfferActivity.this,
                         getString(R.string.offers_list_discard_processing),
                         getString(R.string.wait), false, false);
             }
@@ -281,6 +282,7 @@ public class FilterOfferActivity extends AppCompatActivity {
                 if (s.equals("0")) {
                     Toast.makeText(getApplicationContext(),
                             R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+                    getFilterOffers();
                 } else {
                     Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
