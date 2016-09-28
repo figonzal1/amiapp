@@ -1,9 +1,6 @@
-package techwork.ami.Need.NeedOffer;
+package techwork.ami.Need.ListOfferCompanies;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ConfigurationInfo;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,10 +21,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.locks.Condition;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Need.NeedOfferDetails.NeedOfferViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -36,8 +32,8 @@ import techwork.ami.RequestHandler;
 public class NeedOfferActivity extends AppCompatActivity {
 
 
-    public RecyclerView rv;
-    public List<NeedOfferModel> needOfferList;
+    private RecyclerView rv;
+    private List<NeedOfferModel> needOfferList;
     private NeedOfferAdapter adapter;
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;

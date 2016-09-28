@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedOffer;
+package techwork.ami.Need.ListOfferCompanies;
 
 /**
  * Created by tataf on 25-09-2016.

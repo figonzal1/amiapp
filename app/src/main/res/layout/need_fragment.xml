@@ -5,7 +5,7 @@
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".Offer.FragmentHome">
+    tools:context=".Need.ListNeeds.FragmentNeed">
 
     <!-- Refresh fragment -->
     <android.support.v4.widget.SwipeRefreshLayout
@@ -15,8 +15,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground">
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/btn_create_order"

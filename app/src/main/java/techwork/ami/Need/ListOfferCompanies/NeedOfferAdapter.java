@@ -1,23 +1,15 @@
-package techwork.ami.Need.NeedOffer;
+package techwork.ami.Need.ListOfferCompanies;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
-import techwork.ami.Category.CategoryView;
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
-import techwork.ami.Offer.OfferView;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 

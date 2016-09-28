@@ -1,4 +1,4 @@
-package techwork.ami.Need.MyNeeds;
+package techwork.ami.Need.ListNeeds;
 
 
 public class NeedModel {
