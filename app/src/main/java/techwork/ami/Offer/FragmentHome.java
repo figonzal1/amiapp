@@ -233,8 +233,9 @@ public class FragmentHome extends Fragment {
                 this.dialog.dismiss();
             }
         }
-        System.out.println(offer.getId());
+        //TODO
         new DiscardOffer(dialog).execute(offer.getId());
+        getOffers();
         //rateOffer(ro, true);
     }
 
