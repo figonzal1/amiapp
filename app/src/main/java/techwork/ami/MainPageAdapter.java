@@ -11,7 +11,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import techwork.ami.Category.FragmentCategory;
-import techwork.ami.Need.MyNeeds.FragmentNeed;
+import techwork.ami.Need.ListNeeds.FragmentNeed;
 import techwork.ami.Offer.FragmentHome;
 
 public class MainPageAdapter extends FragmentPagerAdapter {

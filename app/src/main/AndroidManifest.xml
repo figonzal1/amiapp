@@ -72,8 +72,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".Category.CategoryView" />
         <activity android:name=".Offer.OfferView" />
-        <activity android:name=".Need.NeedOffer.NeedOfferActivity" />
-        <activity android:name=".Need.NeedOffer.NeedOfferViewActivity" />
+        <activity android:name=".Need.ListOfferCompanies.NeedOfferActivity" />
+        <activity android:name=".Need.NeedOfferDetails.NeedOfferViewActivity" />
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -84,7 +84,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".ContactUsActivity" />
-        <activity android:name=".Need.NeedOffer.NeedOfferReservDetails" />
+        <activity android:name=".Need.NeedOfferReservDetailsActivity" />
     </application>
 
 </manifest>

@@ -185,6 +185,11 @@ public class Config {
 	public static final String URL_ACCEPT_NEED_OFFER="http://amiapp.cl/public/getData/Need/acceptNeedOffer.php";
 	public static final String KEY_ANO_IDOFFER="idOferta";
 	public static final String KEY_ANO_IDPERSON="idPersona";
+	//Get Products for NeedOfferViewActivity
+	public static final String URL_GET_PRODUCT_OFFER="http://amiapp.cl/public/getData/Need/getProductNeedOffer.php";
+	public static final String KEY_PNO_IDOFFER="idOferta";
+	public static final String TAG_PNO_PRODUCT="products";
+	public static final String TAG_PNO_NAME="nombre";
 
 
 	// Contact Us Keys
