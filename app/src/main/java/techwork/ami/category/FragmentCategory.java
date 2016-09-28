@@ -199,6 +199,7 @@ public class FragmentCategory extends Fragment {
 
                 Intent intent = new Intent(getActivity(),FilterOfferActivity.class);
                 intent.putExtra("idCategory", c.getId()+"");
+                intent.putExtra("categoryName", c.getName());
                 startActivity(intent);
             }
 

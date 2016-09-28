@@ -55,6 +55,7 @@ public class FilterOfferActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_offer);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -64,10 +65,14 @@ public class FilterOfferActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            if (extras.containsKey("idCategory"))
+            if (extras.containsKey("idCategory")) {
                 idCategory = extras.getString("idCategory", "");
-            if (extras.containsKey("idStore"))
+                setTitle("Ofertas de " + extras.getString("categoryName", ""));
+            }
+            if (extras.containsKey("idStore")) {
                 idStore = extras.getString("idStore", "");
+                setTitle("Ofertas de " + extras.getString("companyName", ""));
+            }
         }
 
         // Recycler view

@@ -297,7 +297,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     private String makeSnackbarTitle(Store s) {
         String format = (s.getnOffers().equals("1"))? getResources().getString(R.string.MA_storeFormatSingle)
-                : getResources().getString(R.string.MA_storeFormatSingle);
+                : getResources().getString(R.string.MA_storeFormatPlural);
 
         return String.format(format, s.getnOffers());
     }
@@ -320,6 +320,7 @@ public class MapsActivity extends AppCompatActivity implements
                         // TODO: call offers activity
                         Intent i = new Intent(MapsActivity.this, FilterOfferActivity.class);
                         i.putExtra("idStore", s.getIdStore());
+                        i.putExtra("companyName", s.getName());
                         startActivity(i);
                     }
                 }).show();
