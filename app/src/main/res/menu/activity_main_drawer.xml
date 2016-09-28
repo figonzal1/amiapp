@@ -15,6 +15,10 @@
             android:icon="@drawable/nav_reservations"
             android:title="@string/nav_reservations" />
         <item
+            android:id="@+id/nav_reserve_needs"
+            android:icon="@drawable/nav_reserve_needs"
+            android:title="@string/nav_reserve_needs" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/nav_settings"
             android:title="@string/nav_settings" />

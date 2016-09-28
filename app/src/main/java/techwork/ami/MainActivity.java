@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import techwork.ami.Filter.FilterActivity;
 import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -198,6 +199,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_my_preferences) {
 
+        } else if (id == R.id.nav_reserve_needs) {
+            Intent iFilterActivity= new Intent(MainActivity.this, FilterActivity.class);
+            startActivity(iFilterActivity);
         } else if (id == R.id.nav_reservations) {
             Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);
             startActivity(iMyReservations);

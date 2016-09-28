@@ -17,6 +17,7 @@
     <!-- Main Activity Strings -->
     <string name="nav_edit_profile">Editar Perfil</string>
     <string name="nav_my_preferences">Mis Gustos</string>
+    <string name="nav_reserve_needs">Mis Pedidos Reservados</string>
     <string name="nav_reservations">Mis Reservas</string>
     <string name="nav_settings">Configuración</string>
     <string name="nav_logout">Cerrar Sesión</string>

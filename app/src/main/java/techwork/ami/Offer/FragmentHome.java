@@ -105,7 +105,7 @@ public class FragmentHome extends Fragment {
 
     private void sendGetRequest(){
         // Execute operations before, durign and after of data load
-        class MyAsyncTask extends AsyncTask<Void,Void,String> {
+        class MyAsyncTask extends AsyncTask<String,Void,String> {
 
 
             // Execute before load data (user waiting)
@@ -117,7 +117,7 @@ public class FragmentHome extends Fragment {
 
             // Class that execute background task (get BD data).
             @Override
-            protected String doInBackground(Void... strings) {
+            protected String doInBackground(String... params) {
                 RequestHandler rh = new RequestHandler();
 
                 Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
@@ -128,8 +128,9 @@ public class FragmentHome extends Fragment {
                     }
                 });
 
-                if (connectionStatus)
-                    return rh.sendGetRequest(Config.URL_GET_OFFERS);
+                if (connectionStatus) {
+                    return rh.sendGetRequestParam(Config.URL_GET_OFFERS,params[0]);
+                }
                 else
                     return "-1";
             }
@@ -145,7 +146,9 @@ public class FragmentHome extends Fragment {
             }
         }
         MyAsyncTask go = new MyAsyncTask();
-        go.execute();
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+        String id = sharedPref.getString(Config.KEY_SP_ID, "-1");
+        go.execute("idPersona=" + id);
     }
 
     private void showOffers(String s){

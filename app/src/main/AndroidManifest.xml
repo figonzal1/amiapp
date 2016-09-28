@@ -49,23 +49,23 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/titleActivityRegister"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".RestorePassActivity"
             android:label="@string/titleActivityRestorePass"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/titleActivityEditProfile"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".AfterLoginActivity"
             android:label="@string/titleActivityAfterLogin"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -74,11 +74,11 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/titleActivityExploreOffers"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Need.NeedActivity"
             android:label="@string/titleActivityExploreOffers"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".Category.CategoryView" />
         <activity android:name=".Offer.OfferView" />
         <activity android:name=".Need.NeedOffersList" />
@@ -91,7 +91,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="techwork.ami.MainActivity" />
         </activity>
-        <activity android:name=".ContactUsActivity"></activity>
+        <activity android:name=".ContactUsActivity" />
+        <activity android:name=".Filter.FilterActivity"></activity>
     </application>
 
 </manifest>
