@@ -81,7 +81,6 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".Category.CategoryView" />
         <activity android:name=".Offer.OfferView" />
-        <activity android:name=".Need.NeedOffersList" />
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -92,7 +91,6 @@
                 android:value="techwork.ami.MainActivity" />
         </activity>
         <activity android:name=".ContactUsActivity" />
-        <activity android:name=".Filter.FilterActivity"></activity>
     </application>
 
 </manifest>
