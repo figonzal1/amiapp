@@ -199,6 +199,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_my_preferences) {
 
+        } else if (id == R.id.nav_reserve_needs) {
+
         } else if (id == R.id.nav_reservations) {
             Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);
             startActivity(iMyReservations);
