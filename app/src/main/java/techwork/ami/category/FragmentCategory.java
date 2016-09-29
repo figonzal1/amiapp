@@ -83,7 +83,7 @@ public class FragmentCategory extends Fragment {
 
         // Category list in normal size screen. (Tablet Screen )
         if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            Toast.makeText(getContext(), "Large screen", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Large screen", Toast.LENGTH_LONG).show();
             //3 cardviews per row in portrait view
             if (getResources().getConfiguration().orientation==1){
                 layout = new GridLayoutManager(getActivity(), 3);
@@ -96,7 +96,7 @@ public class FragmentCategory extends Fragment {
 
         // Category list in normal size screen. (Phone Screen )
         else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            Toast.makeText(getContext(), "Normal sized screen", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Normal sized screen", Toast.LENGTH_LONG).show();
 
             //2 cardviews per row in portrait view
             if (getResources().getConfiguration().orientation==1){
