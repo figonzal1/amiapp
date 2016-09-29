@@ -422,7 +422,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
                     subCategoriesMap = new HashMap<>();
                     subCategoriesNames = new String[array.length() + 1];
                     getArraysFromJSON(array, subCategoriesNames, subCategoriesMap, Config.TAG_ID_SUBCATEGORIES,
-                            getResources().getString(R.string.categoriesNoSelected));
+                            getResources().getString(R.string.subCategoriesNoSelected));
                     setSpinnerList(spinnerSubcategory, subCategoriesNames);
                     spinnerSubcategory.setSelection(0);
                     spinnerCategory.setEnabled(true);
