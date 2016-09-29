@@ -116,6 +116,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             // Class that execute background task (get BD data).
@@ -340,6 +341,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Get reference to rating bar
+
+                // TODO: Set the minimun rate value to 1
                 RatingBar ratingBar = (RatingBar) dialogView.findViewById(R.id.my_reservations_offers_rate_bar);
                 doPositiveRate(dialog, ro, ratingBar.getRating()+"", isFirst);
             }
