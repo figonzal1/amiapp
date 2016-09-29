@@ -111,6 +111,7 @@ public class FilterOfferActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             // Class that execute background task (get BD data).
