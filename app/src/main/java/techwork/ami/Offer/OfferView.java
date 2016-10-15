@@ -32,6 +32,7 @@ public class OfferView extends AppCompatActivity {
     private ImageView offerImage;
     private NumberPicker numberPicker;
     private Button btnReserve;
+    private String idPersona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,9 @@ public class OfferView extends AppCompatActivity {
             offerTitle.setText(bundle.getString(Config.TAG_GO_TITLE));
             offerDescription.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
             offerPrice.setText("$" + String.format(Config.CLP_FORMAT, bundle.getInt(Config.TAG_GO_PRICE)));
+
+            SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+            idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
 
             // By default the min value to reserve is 1 (cause the offer only is displayed when exist at least one)
             numberPicker.setMinValue(1);
@@ -73,14 +77,35 @@ public class OfferView extends AppCompatActivity {
                     sendGetRequest(bundle);
                 }
             });
+            // Notify that the user saw the offer
+            (new OfertaVista()).execute(bundle);
+        }
+    }
+
+    // TODO: podría incorporarse un diálogo o algo que deje en espera o haga cargar
+    class OfertaVista extends AsyncTask<Bundle, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(final Bundle... params) {
+            RequestHandler rh = new RequestHandler();
+
+            // TODO: quité el connection status
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0].getString(Config.TAG_GO_OFFER_ID));
+            hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+            rh.sendPostRequest(Config.URL_OFFER_SAW, hashMap);
+            return null;
         }
     }
 
     // AsyncTask that send a request to the server
     private void sendGetRequest(final Bundle bundle) {
-        SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
 
-        final String idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
         final String quantity = Integer.toString(numberPicker.getValue());
 
         // First are params to doInBackground and last are params that returns
@@ -113,8 +138,6 @@ public class OfferView extends AppCompatActivity {
 
                     hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
 
-                    // TODO: OBTENER LA CANTIDAD DE MIERDAS QUE RESERVA
-                    //hashMap.put(Config.KEY_RESERVE_QUANTITY, "1");
                     hashMap.put(Config.KEY_RESERVE_QUANTITY, quantity);
 
                     // Date and time is getting directly for SQL, the next line is unnecessary
