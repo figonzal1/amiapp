@@ -74,7 +74,6 @@ public class OfferAdapter
         Picasso.with(context).load(Config.URL_IMAGES_OFFER+s)
                 .placeholder(R.drawable.image_default)
                 .into(holder.offerImage);
-
     }
     @Override
     public int getItemCount() {
