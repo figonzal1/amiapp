@@ -71,7 +71,6 @@
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
         <activity android:name=".Category.CategoryView" />
-        <activity android:name=".Offer.OfferDetail.OfferDetail" />
         <activity android:name=".Need.ListOfferCompanies.NeedOfferActivity" />
         <activity android:name=".Need.NeedOfferDetails.NeedOfferViewActivity" />
         <activity

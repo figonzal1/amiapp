@@ -32,7 +32,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Offer.OfferDetail.OfferDetail;
+import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
 import techwork.ami.Offer.OfferList.OfferAdapter;
 import techwork.ami.Offer.OfferList.OfferModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
@@ -174,7 +174,7 @@ public class FilterOfferActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
-                Intent intent = new Intent(FilterOfferActivity.this, OfferDetail.class);
+                Intent intent = new Intent(FilterOfferActivity.this, OfferDetailActivity.class);
                 int position = mRecyclerView.getChildAdapterPosition(view);
                 OfferModel o = offersList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());

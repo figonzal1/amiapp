@@ -1,6 +1,8 @@
 package techwork.ami.Offer.OfferDetail;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -38,11 +40,15 @@ public class OfferDetailActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private String idOffer;
+    private String idPersona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offer_detail_activity);
+
+        SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+        idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
 
         Bundle bundle = getIntent().getExtras();
         idOffer = bundle.getString(Config.TAG_GO_OFFER_ID);
@@ -78,9 +84,18 @@ public class OfferDetailActivity extends AppCompatActivity {
             }
             @Override
             protected String doInBackground(String... params) {
-                System.out.println(Config.URL_GOD+params[0]);
+                System.out.println(Config.URL_GOD+params[1]+params[0]);
                 RequestHandler rh = new RequestHandler();
-                return rh.sendGetRequest(Config.URL_GOD+params[0]);
+
+                // Notify that the user saw the offer
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
+                hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+                System.out.println(hashMap);
+                rh.sendPostRequest(Config.URL_OFFER_SAW, hashMap);
+
+                // Get offer detail
+                return rh.sendGetRequest(Config.URL_GOD+params[1]+params[0]);
             }
             @Override
             protected void onPostExecute(String s){
@@ -91,7 +106,7 @@ public class OfferDetailActivity extends AppCompatActivity {
             }
         }
         OfferDetailAsyncTask go = new OfferDetailAsyncTask();
-        go.execute("?idOferta=" + idOffer);
+        go.execute(idOffer, "?idOferta=");
     }
 
     private void showProducts(String s){

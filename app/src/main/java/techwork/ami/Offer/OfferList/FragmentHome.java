@@ -34,7 +34,6 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Offer.OfferDetail.OfferDetail;
 import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
