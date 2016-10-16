@@ -71,7 +71,7 @@
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
         <activity android:name=".Category.CategoryView" />
-        <activity android:name=".Offer.OfferView" />
+        <activity android:name=".Offer.OfferDetail.OfferDetail" />
         <activity android:name=".Need.ListOfferCompanies.NeedOfferActivity" />
         <activity android:name=".Need.NeedOfferDetails.NeedOfferViewActivity" />
         <activity
@@ -85,6 +85,7 @@
         </activity>
         <activity android:name=".ContactUsActivity" />
         <activity android:name=".Need.NeedOfferViewLocal" />
+        <activity android:name=".Offer.OfferDetail.OfferDetailActivity"/>
         <activity
             android:name=".Offer.FilterOfferActivity"
             android:label="@string/title_activity_filter_offers"

@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import techwork.ami.Config;
-import techwork.ami.Offer.OfferModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 

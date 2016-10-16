@@ -1,14 +1,12 @@
-package techwork.ami.Offer;
+package techwork.ami.Offer.OfferDetail;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,11 +20,10 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class OfferView extends AppCompatActivity {
+public class OfferDetailOld extends AppCompatActivity {
     // UI references
     private TextView offerTitle, offerDescription,offerPrice;
     private ImageView offerImage;
@@ -37,7 +34,7 @@ public class OfferView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.offer_view);
+        setContentView(R.layout.offer_detail_activity);
 
         // if activity is not create yet, get the references
         if (null == btnReserve) {
@@ -115,7 +112,7 @@ public class OfferView extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(OfferView.this,
+                loading = ProgressDialog.show(OfferDetailOld.this,
                         getResources().getString(R.string.reserving),
                         getResources().getString(R.string.wait), false, false);
             }
@@ -154,10 +151,10 @@ public class OfferView extends AppCompatActivity {
                 super.onPostExecute(s);
                 loading.dismiss();
                 if (s.equals("0")) {
-                    Toast.makeText(OfferView.this, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OfferDetailOld.this, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
                     finish();
                 } else if (!s.equals("-1")) {
-                    Toast.makeText(OfferView.this, R.string.operation_fail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OfferDetailOld.this, R.string.operation_fail, Toast.LENGTH_SHORT).show();
                 }
             }
         }

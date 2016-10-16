@@ -1,4 +1,4 @@
-package techwork.ami.Offer;
+package techwork.ami.Offer.OfferList;
 
 /**
  * Created by Daniel on 15-08-2016.

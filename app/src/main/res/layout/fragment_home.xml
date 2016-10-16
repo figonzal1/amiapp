@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/appBarTop"
     android:paddingBottom="@dimen/appBarBottom"
-    tools:context=".Offer.FragmentHome">
+    tools:context=".Offer.OfferList.FragmentHome">
 
     <!-- Permite realizar el refresh del fragment -->
     <android.support.v4.widget.SwipeRefreshLayout

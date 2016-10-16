@@ -1,4 +1,4 @@
-package techwork.ami.Offer;
+package techwork.ami.Offer.OfferList;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,12 +9,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,10 +34,11 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.Offer.OfferDetail.OfferDetail;
+import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
-import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
 
 public class FragmentHome extends Fragment {
@@ -160,7 +157,8 @@ public class FragmentHome extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                Intent intent = new Intent(getActivity(), OfferView.class);
+                //Intent intent = new Intent(getActivity(), OfferDetailOld.class);
+                Intent intent = new Intent(getActivity(), OfferDetailActivity.class);
                 int position = rv.getChildAdapterPosition(view);
                 OfferModel o = offerList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
@@ -170,6 +168,7 @@ public class FragmentHome extends Fragment {
                 intent.putExtra(Config.TAG_GO_OFFER_ID, o.getId());
                 intent.putExtra(Config.TAG_GO_MAXXPER, o.getMaxPPerson());
                 intent.putExtra(Config.TAG_GO_STOCK, o.getStock());
+                intent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
                 startActivity(intent);
             }
 

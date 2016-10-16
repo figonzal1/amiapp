@@ -59,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:descendantFocusability="blocksDescendants"
             android:layout_below="@+id/viewOfferPrice"/>
 
         <!-- Boton reserva -->
@@ -69,8 +70,6 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/viewOfferNumberPicker"
             android:text="Reservar"/>
-
-
 
     </RelativeLayout>
 </ScrollView>

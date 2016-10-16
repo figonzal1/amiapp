@@ -2,8 +2,11 @@ package techwork.ami;
 
 import android.text.InputType;
 
+import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
+
 @SuppressWarnings("WeakerAccess")
 public class Config {
+
 	// Input type constant
 	public static int inputNoVisiblePasswordType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
 	public static int inputPromotionCodeType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -32,6 +35,7 @@ public class Config {
 	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
 	public static final String URL_OFFER_SAW = "http://amiapp.cl/public/getData/Offers/sawOffer.php";
+	public static final String URL_GOD = "http://amiapp.cl/public/getData/Offers/offerDetails.php";
 	public static final String URL_FILTER_OFFERS = "http://amiapp.cl/public/getData/Filter/filter.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
     public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
@@ -53,6 +57,13 @@ public class Config {
 	public static final String TAG_GO_MAXXPER="maxPPersona";
 	public static final String TAG_GO_COMPANY="empresa";
 	public static final String TAG_GO_IMAGE ="imagen" ;
+
+	// GOD = Get Offer Details
+	public static final String TAG_GOD_PRODUCT = "products";
+	public static final String TAG_GOD_NAME = "nombre";
+	public static final String TAG_GOD_DESCRIPTION = "descripcion";
+	public static final String TAG_GOD_PRICE ="precio" ;
+	public static final String TAG_GOD_IMAGE = "imagen";
 
 	// FO = Filter Offers
 	public static final String TAG_FO_ID_CATEGORY="idCategoria";
@@ -197,7 +208,6 @@ public class Config {
 	public static final String TAG_PNO_PRODUCT="products";
 	public static final String TAG_PNO_NAME="nombre";
 
-
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";
 	public static final String TAG_CU_MAIL = "email";
@@ -217,6 +227,9 @@ public class Config {
 	// Discard offer keys
 	public static final String KEY_DO_OFFER_ID = "idOferta";
 	public static final String KEY_DO_PERSON_ID = "idPersona";
+
+	// Offer Detail keys
+	public static final String KEY_OD_OFFER_ID = "idOferta";
 
 	// Date format
 	public static final String DATETIME_FORMAT_DB="yyyy-MM-dd HH:mm:ss";
