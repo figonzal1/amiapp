@@ -78,7 +78,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
         //Get id of user
         SharedPreferences sharePref= getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
-        final String id = sharePref.getString(Config.KEY_SP_ID,"-1");
+        final String idPerson = sharePref.getString(Config.KEY_SP_ID,"-1");
 
 
         //Actions of Buttons
@@ -100,7 +100,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                     protected String doInBackground(Void... params) {
                         HashMap<String,String> hashMap = new HashMap<>();
                         hashMap.put(Config.KEY_ANO_IDOFFER,idOffer);
-                        hashMap.put(Config.KEY_ANO_IDPERSON,id);
+                        hashMap.put(Config.KEY_ANO_IDPERSON,idPerson);
 
                         RequestHandler rh = new RequestHandler();
                         return rh.sendPostRequest(Config.URL_ACCEPT_NEED_OFFER,hashMap);
@@ -153,7 +153,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                     protected String doInBackground(Void... params) {
                         HashMap<String,String> hashMap = new HashMap<>();
                         hashMap.put(Config.KEY_DNO_IDOFFER,idOffer);
-                        hashMap.put(Config.KEY_DNO_IDPERSON,id);
+                        hashMap.put(Config.KEY_DNO_IDPERSON,idPerson);
 
                         RequestHandler rh = new RequestHandler();
 
