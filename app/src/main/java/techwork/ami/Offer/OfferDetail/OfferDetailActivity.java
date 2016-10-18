@@ -1,15 +1,23 @@
 package techwork.ami.Offer.OfferDetail;
 
+import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +34,7 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -41,11 +50,16 @@ public class OfferDetailActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
     private String idOffer;
     private String idPersona;
+    private FloatingActionButton fab;
+    private Context context;
+    private NumberPicker numberPicker;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offer_detail_activity);
+
+        context = this;
 
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
@@ -65,6 +79,52 @@ public class OfferDetailActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 getProducts();
+            }
+        });
+
+        // Floating Action Button
+        fab = (FloatingActionButton)findViewById(R.id.fab_offer_detail);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create custom dialog.
+                final CustomAlertDialogBuilder dialogBuilder = new CustomAlertDialogBuilder(context);
+                dialogBuilder.setTitle(R.string.offer_detail_reserve);
+                dialogBuilder.setMessage(R.string.offer_detail_quantity);
+
+                // Create number picker (can be seek bar) into dialog
+                numberPicker = new NumberPicker(dialogBuilder.getContext());
+
+                final Bundle bundle = getIntent().getExtras();
+
+                // By default the min value to reserve is 1 (cause the offer only is displayed when exist at least one)
+                numberPicker.setMinValue(1);
+                // Verify if the stock is greater than max per person, otherwise stock is a upper bound
+                int quantity =
+                        (bundle.getInt(Config.TAG_GO_MAXXPER) <= bundle.getInt(Config.TAG_GO_STOCK))?
+                                bundle.getInt(Config.TAG_GO_MAXXPER) : bundle.getInt(Config.TAG_GO_STOCK);
+                numberPicker.setMaxValue(quantity);
+                numberPicker.setValue(1);
+
+                // TODO: Creao que no funciona esta opción :'(
+                numberPicker.setWrapSelectorWheel(true);
+
+                dialogBuilder.setView(numberPicker);
+                dialogBuilder.setPositiveButton(R.string.offer_detail_reserve, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Reservar
+                        sendGetRequest(bundle);
+                    }
+                });
+                // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+                dialogBuilder.setNegativeButton(R.string.my_reservations_offers_validate_negativeText, null);
+
+                // (optional) set whether to dismiss dialog when touching outside
+                dialogBuilder.setCanceledOnTouchOutside(false);
+
+                // Show the dialog
+                dialogBuilder.show();
             }
         });
         getProducts();
@@ -111,7 +171,7 @@ public class OfferDetailActivity extends AppCompatActivity {
 
     private void showProducts(String s){
         getProductsData(s);
-        adapter = new ProductAdapter(getApplicationContext(), productList);
+        adapter = new ProductAdapter(context, productList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
     }
@@ -137,4 +197,68 @@ public class OfferDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    // AsyncTask that send a request to the server
+    private void sendGetRequest(final Bundle bundle) {
+
+        final String quantity = Integer.toString(numberPicker.getValue());
+
+        // First are params to doInBackground and last are params that returns
+        class Reserve extends AsyncTask<Bundle, Void, String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(context,
+                        getResources().getString(R.string.reserving),
+                        getResources().getString(R.string.wait), false, false);
+            }
+
+            @Override
+            protected String doInBackground(Bundle... params) {
+                RequestHandler rh = new RequestHandler();
+
+                // TODO: no entiendo muy bien qué hace esta función
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendGetRequest(bundle);
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_RESERVE_OFFER_ID, bundle.getString(Config.TAG_GO_OFFER_ID));
+
+                    hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+
+                    hashMap.put(Config.KEY_RESERVE_QUANTITY, quantity);
+
+                    // Date and time is getting directly for SQL, the next line is unnecessary
+                    //hashMap.put(Config.KEY_RESERVE_RESERVE_DATE, date);
+
+                    return rh.sendPostRequest(Config.URL_OFFER_RESERVE, hashMap);
+                }
+                else
+                    return "-1";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                if (s.equals("0")) {
+                    Toast.makeText(context, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
+                    finish();
+                } else if (!s.equals("-1")) {
+                    Toast.makeText(context, R.string.operation_fail, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        Reserve r = new Reserve();
+        r.execute(bundle);
+    }
+
 }
