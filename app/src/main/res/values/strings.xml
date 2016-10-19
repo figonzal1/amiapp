@@ -76,7 +76,7 @@
     <string name="profileEmail">Correo</string>
     <string name="profileDate">Fecha de nacimiento</string>
     <string name="profileOccupation">Ocupación</string>
-    <string name="profileGenre">Género</string>
+    <string name="profileGender">Género</string>
     <string name="profileClosingAccount">Cerrando tu cuenta</string>
     <string name="profileCloseAccountSuccess">Tu cuenta ha sido cerrada exitosamente… ¡Esperamos verte otra vez!</string>
     <string name="profileCloseAccountFail">No se ha podido cerrar tu cuenta, inténtalo más tarde</string>
@@ -109,7 +109,7 @@
     <string name="dateDialog">Ingrese su cumpleaños</string>
     <string name="errorInvalidName">Este nombre parece ser inválido</string>
     <string name="defaultOccupation">Otro</string>
-    <string name="defaultGenre">Otro</string>
+    <string name="defaultGender">Otro</string>
 
     <!-- Need Strings -->
     <string name="CreateNeedTitle">Aqui podras ver y generar tus necesidades</string>
@@ -139,11 +139,11 @@
     <string name="afterLoginDate">Fecha de nacimiento</string>
     <string name="AL_textViewBirthDate">¿Cuándo naciste?</string>
     <string name="AL_textViewOccupation">¿A qué te dedicas?</string>
-    <string name="AL_textViewGenre">¿Cuál es tu género?</string>
+    <string name="AL_textViewGender">¿Cuál es tu género?</string>
     <string name="AL_textViewUbication">¿En dónde vives?</string>
     <string name="afterLoginContinue">Continuar</string>
     <string name="occupationNoSelected">Seleccionar Ocupación</string>
-    <string name="genreNoSelected">Seleccionar Género</string>
+    <string name="genderNoSelected">Seleccionar Género</string>
     <string name="countryNoSelected">Seleccionar País</string>
     <string name="regionNoSelected">Seleccionar Región</string>
     <string name="provinceNoSelected">Seleccionar Provincia</string>

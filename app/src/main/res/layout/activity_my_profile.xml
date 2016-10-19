@@ -163,8 +163,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/profileGenre"
-                    android:id="@+id/MP_textViewGenre"
+                    android:text="@string/profileGender"
+                    android:id="@+id/MP_textViewGender"
                     android:layout_marginStart="12dp"
                     android:textSize="12sp"/>
 
@@ -174,7 +174,7 @@
                     android:textStyle="italic"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldGenre"
+                    android:id="@+id/MP_textViewFieldGender"
                     android:layout_margin="10dp"
                     android:gravity="center"/>
 

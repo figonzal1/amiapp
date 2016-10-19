@@ -432,13 +432,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     editor.putString(Config.KEY_SP_NAME, jsonObject.getString(Config.TAG_NAME));
                     editor.putString(Config.KEY_SP_LASTNAMES, jsonObject.getString(Config.TAG_LASTNAMES));
                     editor.putString(Config.KEY_SP_EMAIL, email);
-                    editor.putString(Config.KEY_SP_GENRE, jsonObject.getString(Config.TAG_ID_GENRE));
+                    editor.putString(Config.KEY_SP_GENDER, jsonObject.getString(Config.TAG_ID_GENDER));
+                    editor.putString(Config.KEY_SP_FIRST_LOGIN, jsonObject.getString(Config.TAG_FIRST_LOGIN));
 
                     // Check if the user made the first login
                     if (jsonObject.getString(Config.TAG_FIRST_LOGIN).equals("1")) {
                         editor.apply();
                         Intent it = new Intent(LoginActivity.this, AfterLoginActivity.class);
-                        finish();
                         startActivity(it);
                     } else {
                         editor.putString(Config.KEY_SP_COMMUNE, jsonObject.getString(Config.TAG_ID_COMMUNE));

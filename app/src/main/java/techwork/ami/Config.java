@@ -17,9 +17,9 @@ public class Config {
 	public static final String KEY_SP_NAME="Persona.nombre";
 	public static final String KEY_SP_LASTNAMES="Persona.apellidos";
 	public static final String KEY_SP_EMAIL="Persona.email";
-	public static final String KEY_SP_GENRE="Persona.genero";
+	public static final String KEY_SP_GENDER ="Persona.genero";
 	public static final String KEY_SP_COMMUNE="Persona.comuna";
-
+	public static final String KEY_SP_FIRST_LOGIN ="Persona.primerInicio";
 
 	// Request URLs
 	public static final String URL_GENERAL_SERVER="http://amiapp.cl";
@@ -105,7 +105,7 @@ public class Config {
 	public static final  String KEY_PHONE ="telefono";
 	public static final  String KEY_OCCUPATION ="idOcupacion";
 	public static final  String KEY_COMMUNE ="idComuna";
-	public static final  String KEY_GENRE ="idGenero";
+	public static final  String KEY_GENDER ="idGenero";
 	public static final  String KEY_STATUS ="estado";
 
 	// Need Keys
@@ -135,7 +135,7 @@ public class Config {
 	public static final String TAG_TYPE ="type";
 	public static final String TAG_ID_STORE ="idLocal";
 	public static final String TAG_ID_OCCUPATION ="idOcupacion";
-	public static final String TAG_ID_GENRE ="idGenero";
+	public static final String TAG_ID_GENDER ="idGenero";
 	public static final String TAG_ID_COUNTRY ="idPais";
 	public static final String TAG_ID_REGION ="idRegion";
 	public static final String TAG_ID_PROVINCE ="idProvincia";
@@ -146,7 +146,7 @@ public class Config {
 	public static final String TAG_PROFILE ="profile";
 	public static final String TAG_OCCUPATIONS ="occupations";
 	public static final String TAG_COUNTRIES ="countries";
-	public static final String TAG_GENRES ="genres";
+	public static final String TAG_GENDERS ="genders";
 	public static final String TAG_NAME ="nombre";
 	public static final String TAG_LASTNAMES ="apellidos";
 	public static final String TAG_EMAIL ="email";
@@ -154,7 +154,7 @@ public class Config {
 	public static final String TAG_IMAGE ="imagen";
 	public static final String TAG_PHONE ="telefono";
 	public static final String TAG_OCCUPATION ="ocupacion";
-	public static final String TAG_GENRE ="genero";
+	public static final String TAG_GENDER ="genero";
 	public static final String TAG_POINTS ="puntos";
 	public static final String TAG_EXIST_EMAIL ="emailExiste";
 
@@ -247,6 +247,6 @@ public class Config {
     //Keys for Fragments (MainPageAdapter)
     public static final int HOME = 0;
     public static final int CATEGORY = 1;
-    public static final int NECESIDAD = 2;
+    public static final int NEED = 2;
     public static final int PAGE_COUNT = 3;
 }

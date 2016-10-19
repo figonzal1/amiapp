@@ -45,9 +45,9 @@ public class EditProfileActivity extends AppCompatActivity {
 	static final String KEY_OCCUPATIONS_NAMES = "occupationsNames";
 	static final String KEY_OCCUPATIONS_MAP = "occupationsMap";
 	static final String KEY_OCCUPATIONS_SELECTION = "occupationsSelection";
-	static final String KEY_GENRES_NAMES = "genresNames";
-	static final String KEY_GENRES_MAP = "genresMap";
-	static final String KEY_GENRES_SELECTION = "genresSelection";
+	static final String KEY_GENDERS_NAMES = "gendersNames";
+	static final String KEY_GENDERS_MAP = "gendersMap";
+	static final String KEY_GENDERS_SELECTION = "gendersSelection";
 	static final String KEY_UNSAVED_CHANGES = "unsavedChanges";
 
 	// UI references
@@ -57,7 +57,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	EditText editTextDate;
 	EditText editTextPhone;
 	Spinner spinnerOccupation;
-	Spinner spinnerGenre;
+	Spinner spinnerGender;
 	Button buttonSave;
 	DatePickerFragment datePickerFragment;
 	View editProfileView;
@@ -66,9 +66,9 @@ public class EditProfileActivity extends AppCompatActivity {
 	String[] occupationsNames;
 	HashMap<String,String> occupationsMap;
 
-	// Genres arrays
-	String[] genresNames;
-	HashMap<String,String> genresMap;
+	// Genders arrays
+	String[] gendersNames;
+	HashMap<String,String> gendersMap;
 
 	// Defines if the form is enable
 	boolean formState;
@@ -103,7 +103,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		editTextDate = (EditText) findViewById(R.id.EP_editTextDate);
 		editTextPhone = (EditText) findViewById(R.id.EP_editTextPhone);
 		spinnerOccupation = (Spinner) findViewById(R.id.EP_spinnerOccupation);
-		spinnerGenre = (Spinner) findViewById(R.id.EP_spinnerGenre);
+		spinnerGender = (Spinner) findViewById(R.id.EP_spinnerGender);
 		buttonSave = (Button) findViewById(R.id.EP_buttonSave);
 		editProfileView = findViewById(R.id.editProfile_form);
 
@@ -118,11 +118,11 @@ public class EditProfileActivity extends AppCompatActivity {
 				setOccupationsList();
 				spinnerOccupation.setSelection(savedInstanceState.getInt(KEY_OCCUPATIONS_SELECTION));
 
-				// Set the genre arrays
-				genresNames = savedInstanceState.getStringArray(KEY_GENRES_NAMES);
-				genresMap = (HashMap<String, String>) savedInstanceState.getSerializable(KEY_GENRES_MAP);
-				setGenresList();
-				spinnerGenre.setSelection(savedInstanceState.getInt(KEY_GENRES_SELECTION));
+				// Set the gender arrays
+				gendersNames = savedInstanceState.getStringArray(KEY_GENDERS_NAMES);
+				gendersMap = (HashMap<String, String>) savedInstanceState.getSerializable(KEY_GENDERS_MAP);
+				setGendersList();
+				spinnerGender.setSelection(savedInstanceState.getInt(KEY_GENDERS_SELECTION));
 
 				unsavedChanges = savedInstanceState.getBoolean(KEY_UNSAVED_CHANGES);
 			}
@@ -249,7 +249,7 @@ public class EditProfileActivity extends AppCompatActivity {
 			String date = profile.getString(Config.TAG_DATE);
 			String phone = profile.getString(Config.TAG_PHONE);
 			String occupation = profile.getString(Config.TAG_OCCUPATION);
-			String genre = profile.getString(Config.TAG_GENRE);
+			String gender = profile.getString(Config.TAG_GENDER);
 
 			// Fill the name field
 			editTextName.setText(name);
@@ -288,16 +288,16 @@ public class EditProfileActivity extends AppCompatActivity {
 			else
 				spinnerOccupation.setSelection(adapterOccupation.getPosition(getResources().getString(R.string.defaultOccupation)), false);
 
-			// Fill the genres spinner
-			getGenres(jsonObject);
+			// Fill the genders spinner
+			getGenders(jsonObject);
 
-			ArrayAdapter<String> adapterGenre = setGenresList();
+			ArrayAdapter<String> adapterGender = setGendersList();
 
-			// Select the current profile genre
-			if (!genre.isEmpty() && !genre.equals("null"))
-				spinnerGenre.setSelection(adapterGenre.getPosition(genre), false);
+			// Select the current profile gender
+			if (!gender.isEmpty() && !gender.equals("null"))
+				spinnerGender.setSelection(adapterGender.getPosition(gender), false);
 			else
-				spinnerGenre.setSelection(adapterGenre.getPosition(getResources().getString(R.string.defaultGenre)), false);
+				spinnerGender.setSelection(adapterGender.getPosition(getResources().getString(R.string.defaultGender)), false);
 
 			enableForm(true);
 
@@ -339,7 +339,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		editTextPhone.addTextChangedListener(tw);
 
 		spinnerOccupation.setOnItemSelectedListener(oisl);
-		spinnerGenre.setOnItemSelectedListener(oisl);
+		spinnerGender.setOnItemSelectedListener(oisl);
 	}
 
 	// Fill the occupation arrays with the data from the JSON
@@ -377,38 +377,38 @@ public class EditProfileActivity extends AppCompatActivity {
 		return adapter;
 	}
 
-	// Fill the genres arrays with the data from the JSON
-	private void getGenres(JSONObject jsonObject) {
+	// Fill the genders arrays with the data from the JSON
+	private void getGenders(JSONObject jsonObject) {
 		try {
-			JSONArray genres = jsonObject.getJSONArray(Config.TAG_GENRES);
+			JSONArray genders = jsonObject.getJSONArray(Config.TAG_GENDERS);
 
-			// Prepare the Map and the String array where to store the genres
-			if (genresMap != null)
-				genresMap = null;
-			genresMap = new HashMap<>();
+			// Prepare the Map and the String array where to store the genders
+			if (gendersMap != null)
+				gendersMap = null;
+			gendersMap = new HashMap<>();
 
-			if (genresNames != null)
-				genresNames = null;
-			genresNames = new String[genres.length()];
+			if (gendersNames != null)
+				gendersNames = null;
+			gendersNames = new String[genders.length()];
 
-			for(int i = 0; i < genres.length(); i++){
-				JSONObject jo = genres.getJSONObject(i);
-				String id = jo.getString(Config.TAG_ID_GENRE);
+			for(int i = 0; i < genders.length(); i++){
+				JSONObject jo = genders.getJSONObject(i);
+				String id = jo.getString(Config.TAG_ID_GENDER);
 				String name = jo.getString(Config.TAG_NAME);
 
-				genresMap.put(name, id);
-				genresNames[i] = name;
+				gendersMap.put(name, id);
+				gendersNames[i] = name;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Set the Spinner list with the data from the genre arrays
-	private ArrayAdapter<String> setGenresList() {
-		ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genresNames);
+	// Set the Spinner list with the data from the gender arrays
+	private ArrayAdapter<String> setGendersList() {
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gendersNames);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerGenre.setAdapter(adapter);
+		spinnerGender.setAdapter(adapter);
 		return adapter;
 	}
 
@@ -491,8 +491,8 @@ public class EditProfileActivity extends AppCompatActivity {
 		final String date = formatter.format(d);
 		final String idOccupation = occupationsMap.get(
 				spinnerOccupation.getSelectedItem().toString());
-		final String idGenre = genresMap.get(
-				spinnerGenre.getSelectedItem().toString());
+		final String idGender = gendersMap.get(
+				spinnerGender.getSelectedItem().toString());
 
 		class UpdateProfile extends AsyncTask<Void,Void,String>{
 			private ProgressDialog loading;
@@ -525,7 +525,7 @@ public class EditProfileActivity extends AppCompatActivity {
 					hashMap.put(Config.KEY_DATE, date);
 					hashMap.put(Config.KEY_PHONE, phone);
 					hashMap.put(Config.KEY_OCCUPATION, idOccupation);
-					hashMap.put(Config.KEY_GENRE, idGenre);
+					hashMap.put(Config.KEY_GENDER, idGender);
 
 					return rh.sendPostRequest(Config.URL_UPDATE_PROFILE, hashMap);
 				}
@@ -540,17 +540,17 @@ public class EditProfileActivity extends AppCompatActivity {
 				if (s.equals("0")) {
 					unsavedChanges = false;
 
-					Snackbar.make(findViewById(R.id.coordinatorLayout), R.string.saveOk, Snackbar.LENGTH_LONG)
-							.show();
-
 					// Save the new data of the profile on the application's shared preferences
 					SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString(Config.KEY_SP_NAME, name);
 					editor.putString(Config.KEY_SP_LASTNAMES, lastnames);
 					editor.putString(Config.KEY_SP_EMAIL, email);
-					editor.putString(Config.KEY_SP_GENRE, idGenre);
+					editor.putString(Config.KEY_SP_GENDER, idGender);
 					editor.apply();
+
+					Toast.makeText(EditProfileActivity.this, R.string.saveOk, Toast.LENGTH_LONG).show();
+					finish();
 				}
 				else if (!s.equals("-1"))
 					Snackbar.make(findViewById(R.id.coordinatorLayout), R.string.saveFail, Snackbar.LENGTH_LONG)
@@ -612,9 +612,9 @@ public class EditProfileActivity extends AppCompatActivity {
 			savedInstanceState.putInt(KEY_OCCUPATIONS_SELECTION, spinnerOccupation.getSelectedItemPosition());
 			savedInstanceState.putStringArray(KEY_OCCUPATIONS_NAMES, occupationsNames);
 			savedInstanceState.putSerializable(KEY_OCCUPATIONS_MAP, occupationsMap);
-			savedInstanceState.putInt(KEY_GENRES_SELECTION, spinnerGenre.getSelectedItemPosition());
-			savedInstanceState.putStringArray(KEY_GENRES_NAMES, genresNames);
-			savedInstanceState.putSerializable(KEY_GENRES_MAP, genresMap);
+			savedInstanceState.putInt(KEY_GENDERS_SELECTION, spinnerGender.getSelectedItemPosition());
+			savedInstanceState.putStringArray(KEY_GENDERS_NAMES, gendersNames);
+			savedInstanceState.putSerializable(KEY_GENDERS_MAP, gendersMap);
 			savedInstanceState.putBoolean(KEY_UNSAVED_CHANGES, unsavedChanges);
 		}
 		super.onSaveInstanceState(savedInstanceState);

@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import techwork.ami.Offer.FilterOfferActivity;
 import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -35,7 +34,8 @@ public class MainActivity extends AppCompatActivity
     private String lastnames;
     private String email;
     private String id;
-    private String genre;
+    private String gender;
+    private String firstLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,14 @@ public class MainActivity extends AppCompatActivity
             Intent iLogin = new Intent(MainActivity.this, LoginActivity.class);
             finish();
             startActivity(iLogin);
+        }
+
+        // Check if the user already made the first login
+        else if (firstLogin.equals("1")) {
+            // if not, show the after login activity
+            Intent iAfterLogin = new Intent(MainActivity.this, AfterLoginActivity.class);
+            finish();
+            startActivity(iAfterLogin);
         }
 
         requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,
@@ -87,7 +95,8 @@ public class MainActivity extends AppCompatActivity
         name = sharedPref.getString(Config.KEY_SP_NAME, "");
         lastnames = sharedPref.getString(Config.KEY_SP_LASTNAMES, "");
         email = sharedPref.getString(Config.KEY_SP_EMAIL, "");
-        genre = sharedPref.getString(Config.KEY_SP_GENRE, "0");
+        gender = sharedPref.getString(Config.KEY_SP_GENDER, "0");
+        firstLogin = sharedPref.getString(Config.KEY_SP_FIRST_LOGIN, "1");
     }
 
     // Update the profile data (from the SharedPreferences) showed on the nav bar
@@ -104,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         textViewNavHeaderName.setText(name + " " + lastnames);
         textViewNavHeaderEmail.setText(email);
 
-        switch (genre) {
+        switch (gender) {
             case "1":
                 imageViewProfileIcon.setImageResource(R.drawable.profile_icon_woman);
                 break;

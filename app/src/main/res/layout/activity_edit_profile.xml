@@ -142,15 +142,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/profileGenre"
-                android:id="@+id/EP_textViewGenre"
+                android:text="@string/profileGender"
+                android:id="@+id/EP_textViewGender"
                 android:layout_marginLeft="12dp"
                 android:textSize="12sp"/>
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/EP_spinnerGenre"
+                android:id="@+id/EP_spinnerGender"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="8dp"

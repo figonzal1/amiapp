@@ -43,7 +43,7 @@ public class MyProfileActivity extends AppCompatActivity {
     TextView textViewEmail;
     TextView textViewDate;
     TextView textViewOccupation;
-    TextView textViewGenre;
+    TextView textViewGender;
     TextView textViewPhone;
     Button buttonEdit;
     Button buttonCloseAccount;
@@ -69,7 +69,7 @@ public class MyProfileActivity extends AppCompatActivity {
         textViewEmail = (TextView) findViewById(R.id.MP_textViewFieldEmail);
         textViewDate = (TextView) findViewById(R.id.MP_textViewFieldDate);
         textViewOccupation = (TextView) findViewById(R.id.MP_textViewFieldOccupation);
-        textViewGenre = (TextView) findViewById(R.id.MP_textViewFieldGenre);
+        textViewGender = (TextView) findViewById(R.id.MP_textViewFieldGender);
         textViewPhone = (TextView) findViewById(R.id.MP_textViewFieldPhone);
         buttonEdit = (Button) findViewById(R.id.MP_buttonEdit);
         buttonCloseAccount = (Button) findViewById(R.id.MP_buttonCloseAccount);
@@ -186,7 +186,7 @@ public class MyProfileActivity extends AppCompatActivity {
             String date = profile.getString(Config.TAG_DATE);
             String phone = profile.getString(Config.TAG_PHONE);
             String occupation = profile.getString(Config.TAG_OCCUPATION);
-            String genre = profile.getString(Config.TAG_GENRE);
+            String gender = profile.getString(Config.TAG_GENDER);
             String points = profile.getString(Config.TAG_POINTS);
 
             // Fill the name field
@@ -201,8 +201,10 @@ public class MyProfileActivity extends AppCompatActivity {
             // Fill the points leyend
             textViewLeyend.setText(getString(R.string.myProfileLeyend).replace("%s", points));
 
-            if (!phone.equals("null"))
+            if (!phone.isEmpty() && !phone.equals("null"))
                 textViewPhone.setText(phone);
+            else
+                textViewPhone.setText("-");
 
             if (!date.isEmpty() && !date.equals("null")) {
                 // Read the date from the JSON
@@ -220,11 +222,11 @@ public class MyProfileActivity extends AppCompatActivity {
                 textViewOccupation.setText(occupation);
             }
 
-            if (!genre.isEmpty() && !genre.equals("null")) {
-                textViewGenre.setText(genre);
+            if (!gender.isEmpty() && !gender.equals("null")) {
+                textViewGender.setText(gender);
             }
 
-            switch (genre) {
+            switch (gender) {
                 case "Femenino":
                     imageViewProfileIcon.setImageResource(R.drawable.profile_icon_woman);
                     break;

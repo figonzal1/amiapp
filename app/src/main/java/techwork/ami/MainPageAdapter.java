@@ -45,7 +45,7 @@ public class MainPageAdapter extends FragmentPagerAdapter {
             case Config.CATEGORY:
                 f = FragmentCategory.newInstance();
                 break;
-            case Config.NECESIDAD:
+            case Config.NEED:
                 f = FragmentNeed.newInstance();
                 break;
         }
