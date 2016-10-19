@@ -173,9 +173,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private void showOffersReservations(String s){
         getData(s);
 
-        System.out.println("Tamaño list reserved = " + reservationsOffersListReserved.size());
-        System.out.println("Tamaño list charged = " + reservationOffersListCharged.size());
-
         adapterReserved = new MyReservationsOffersListAdapter(this, reservationsOffersListReserved);
         adapterCharged = new MyReservationsOffersListAdapter(this, reservationOffersListCharged);
 
