@@ -106,8 +106,11 @@ public class OfferDetailActivity extends AppCompatActivity {
                 numberPicker.setMaxValue(quantity);
                 numberPicker.setValue(1);
 
-                // TODO: Creao que no funciona esta opción :'(
-                numberPicker.setWrapSelectorWheel(true);
+                // Options will not be repeated infinitely
+                numberPicker.setWrapSelectorWheel(false);
+
+                // To no show number keys
+                numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
                 dialogBuilder.setView(numberPicker);
                 dialogBuilder.setPositiveButton(R.string.offer_detail_reserve, new DialogInterface.OnClickListener() {
