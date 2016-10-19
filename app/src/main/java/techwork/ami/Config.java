@@ -43,6 +43,7 @@ public class Config {
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
 	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php";
 	public static final String URL_CONTACT_US = "http://amiapp.cl/public/getData/ContactUs/sendContactEmail.php";
+	public static final String URL_DELETE_NEED = "http://amiapp.cl/public/getData/Need/ChangeStatusNeed.php";
 
     // GO = Get Offers
 	public static final String TAG_GO_OFFERS="offers";
@@ -119,6 +120,7 @@ public class Config {
 	public static final  String KEY_NE_SUBCATEGORY_ID="Subcategory_id";
 	public static final  String KEY_NE_COMMUNE_ID="Commune_id";
 	public static final  String KEY_NE_LOCATION="userlocation";
+	public static final  String KEY_NE_ID="NeedId";
 
 	// login Keys
 	public static final  String KEY_LI_PASS="password";

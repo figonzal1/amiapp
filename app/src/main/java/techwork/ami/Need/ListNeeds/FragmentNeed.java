@@ -1,7 +1,9 @@
 package techwork.ami.Need.ListNeeds;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +34,7 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.Need.NeedActivity;
 import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
@@ -181,11 +185,67 @@ public class FragmentNeed extends Fragment {
             }
 
             @Override
-            public void onItemLongClick(View view) {
-                //Nada
+            public void onItemLongClick(final View view) {
+                new CustomAlertDialogBuilder(getContext())
+                        .setTitle(R.string.NeedDeleteConfirm)
+                        .setMessage("Confirme la acción")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteNeed(dialog,  needList.get(rv.getChildAdapterPosition(view)));
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
             }
         });
+    }
 
+    private void deleteNeed(DialogInterface dialog, NeedModel need) {
+        class DeleteNeed extends AsyncTask<String, Void, String> {
+            private ProgressDialog loading;
+            private DialogInterface dialog;
+
+            private DeleteNeed(DialogInterface dialog) {
+                this.dialog = dialog;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getContext(),
+                        getString(R.string.Need_delete_processing),
+                        getString(R.string.wait), false, false);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_NE_ID, params[0]);
+                RequestHandler rh = new RequestHandler();
+
+                return rh.sendPostRequest(Config.URL_DELETE_NEED, hashMap);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                if (s.equals("0")) {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            R.string.Need_delete_ok, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                }
+                this.dialog.dismiss();
+            }
+        }
+        new DeleteNeed(dialog).execute(need.getIdNeed());
+        getNeeds();
     }
 
     //Clase que itera sobre el json array y llena el listado de necesidades.

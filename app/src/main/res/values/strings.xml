@@ -131,6 +131,12 @@
     <string name="NeedDaysTitle">Dias máximos de espera</string>
     <string name="NeedButtonText">Enviar Pedido</string>
     <string name="NeedUserLocation">Usar mi ubicación</string>
+    <string name="NeedButtonDelete">Eliminar pedido</string>
+    <string name="NeedDelete">El pedido ha sido eliminado</string>
+    <string name="NeedDeleteConfirm">¿Desea eliminar este pedido?</string>
+    <string name="NeedDeleteYes">Eliminar</string>
+    <string name="Need_delete_processing">Eliminando pedido</string>
+    <string name="Need_delete_ok">El pedido ha sido eliminado</string>
 
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
