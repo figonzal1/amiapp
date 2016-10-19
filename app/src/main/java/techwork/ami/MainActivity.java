@@ -205,8 +205,8 @@ public class MainActivity extends AppCompatActivity
             Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);
             startActivity(iMyReservations);
         } else if (id == R.id.nav_edit_profile) {
-            Intent iEditProfile = new Intent(MainActivity.this, EditProfileActivity.class);
-            startActivity(iEditProfile);
+            Intent iMyProfile = new Intent(MainActivity.this, MyProfileActivity.class);
+            startActivity(iMyProfile);
         } else if (id == R.id.nav_contact_us) {
             Intent iContactUs = new Intent(MainActivity.this, ContactUsActivity.class);
             startActivity(iContactUs);

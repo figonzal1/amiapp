@@ -25,8 +25,9 @@ public class Config {
 	public static final String URL_GENERAL_SERVER="http://amiapp.cl";
 
 	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php";
+	public static final String URL_CHANGE_ACCOUNT_STATUS ="http://amiapp.cl/public/getData/Profile/changeAccountStatus.php";
 	public static final String URL_GET_MAP_OFFERS="http://amiapp.cl/public/getData/Maps/getData.php";
-	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php?";
+	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php";
 	public static final String URL_UPDATE_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/updateAfterLogin.php";
 	public static final String URL_UPDATE_PROFILE="http://amiapp.cl/public/getData/Profile/updateProfile.php";
 	public static final String URL_LOGIN="http://amiapp.cl/public/getData/Login/login.php";
@@ -105,6 +106,7 @@ public class Config {
 	public static final  String KEY_OCCUPATION ="idOcupacion";
 	public static final  String KEY_COMMUNE ="idComuna";
 	public static final  String KEY_GENRE ="idGenero";
+	public static final  String KEY_STATUS ="estado";
 
 	// Need Keys
 	public static final  String KEY_NE_TITLE="Title";
@@ -153,6 +155,7 @@ public class Config {
 	public static final String TAG_PHONE ="telefono";
 	public static final String TAG_OCCUPATION ="ocupacion";
 	public static final String TAG_GENRE ="genero";
+	public static final String TAG_POINTS ="puntos";
 	public static final String TAG_EXIST_EMAIL ="emailExiste";
 
 	//Tags and Url for CategoryFragments

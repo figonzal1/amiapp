@@ -54,7 +54,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/editProfileName"
+                    android:hint="@string/profileName"
                     android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/EP_editTextName"
@@ -73,7 +73,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/editProfileLastnames"
+                    android:hint="@string/profileLastnames"
                     android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/EP_editTextLastnames"
@@ -91,7 +91,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/editProfileEmail"
+                    android:hint="@string/profileEmail"
                     android:inputType="textEmailAddress"
                     android:ems="10"
                     android:id="@+id/EP_editTextEmail"
@@ -110,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/EP_editTextDate"
-                    android:hint="@string/editProfileDate"
+                    android:hint="@string/profileDate"
                     android:layout_gravity="center_horizontal"
                     android:focusable="false"
                     android:layout_marginLeft="8dp"
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/editProfileOccupation"
+                android:text="@string/profileOccupation"
                 android:id="@+id/EP_textViewOccupation"
                 android:layout_marginLeft="12dp"
                 android:textSize="12sp"/>
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/editProfileGenre"
+                android:text="@string/profileGenre"
                 android:id="@+id/EP_textViewGenre"
                 android:layout_marginLeft="12dp"
                 android:textSize="12sp"/>
