@@ -126,14 +126,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
 				unsavedChanges = savedInstanceState.getBoolean(KEY_UNSAVED_CHANGES);
 			}
-		} else
+		} else {
 			// Disable the form until get the profile data
 			enableForm(false);
 
-		// If the activity is on creation (not restore after rotation)
-		if (savedInstanceState == null)
 			// Attempt to get the profile
 			getProfile();
+		}
 
 		editTextDate.setOnClickListener(new View.OnClickListener() {
 			@Override
