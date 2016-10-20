@@ -7,6 +7,7 @@ package techwork.ami.Need.ListOfferCompanies;
 public class NeedOfferModel {
     String idOffer;
     String idNeed;
+    String idLocal;
     String tittle;
     String description;
     String stock;
@@ -26,6 +27,10 @@ public class NeedOfferModel {
 
     public String getIdNeed() {
         return idNeed;
+    }
+
+    public String getIdLocal() {
+        return idLocal;
     }
 
     public String getTittle() {
@@ -63,6 +68,9 @@ public class NeedOfferModel {
     public String getCompany() {
         return company;
     }
+
+
+
     //Setters
 
     public void setIdNeed(String idNeed) {
@@ -71,6 +79,10 @@ public class NeedOfferModel {
 
     public void setIdOferta(String idOffer) {
         this.idOffer = idOffer;
+    }
+
+    public void setIdLocal(String idLocal) {
+        this.idLocal = idLocal;
     }
 
     public void setDescription(String description) {

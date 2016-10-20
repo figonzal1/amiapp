@@ -188,6 +188,7 @@ public class Config {
 	public static final String KEY_GNO_IDNEED="idNecesidad";
 	public static final String TAG_GNO_NEED="needOffers";
 	public static final String TAG_GNO_IDNEED="idNecesidad";
+	public static final String TAG_GNO_IDLOCAL="idLocal";
 	public static final String TAG_GNO_IDOFFER="idOferta";
 	public static final String TAG_GNO_TITTLE="titulo";
 	public static final String TAG_GNO_DESCRIPTION="descripcion";
@@ -212,6 +213,17 @@ public class Config {
 	public static final String KEY_PNO_IDOFFER="idOferta";
 	public static final String TAG_PNO_PRODUCT="products";
 	public static final String TAG_PNO_NAME="nombre";
+
+	//Get Local details of NeedOffer
+	public static final String URL_GET_LOCAL="http://amiapp.cl/public/getData/Need/getLocal.php";
+	public static final String KEY_GL_IDLOCAL="idLocal";
+	public static final String TAG_GL_LOCAL="local";
+	public static final String TAG_GL_LAT="latitud";
+	public static final String TAG_GL_LONG="longitud";
+	public static final String TAG_GL_ADDRESS="direccion";
+	public static final String TAG_GL_WEB="pagina";
+	public static final String TAG_GL_IMAGE="imagen";
+	public static final String TAG_GL_COMMUNE="comuna";
 
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";

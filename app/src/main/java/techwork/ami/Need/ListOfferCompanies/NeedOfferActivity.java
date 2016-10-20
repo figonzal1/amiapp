@@ -110,8 +110,9 @@ public class NeedOfferActivity extends AppCompatActivity {
                 int position = rv.getChildAdapterPosition(view);
                 NeedOfferModel m = needOfferList.get(position);
 
-                //Send to NeedOfferView the details of each offer.
+                //Send to NeedOfferDetails the details of each offer.
                 intent.putExtra(Config.TAG_GNO_IDOFFER,m.getIdOferta());
+                intent.putExtra(Config.TAG_GNO_IDLOCAL,m.getIdLocal());
                 intent.putExtra(Config.TAG_GNO_TITTLE,m.getTittle());
                 intent.putExtra(Config.TAG_GNO_DESCRIPTION,m.getDescription());
                 intent.putExtra(Config.TAG_GNO_PRICEOFFER,m.getPrice());
@@ -152,6 +153,7 @@ public class NeedOfferActivity extends AppCompatActivity {
 
                 item.setIdOferta(jsonObjectItem.getString(Config.TAG_GNO_IDOFFER));
                 item.setIdNeed(jsonObjectItem.getString(Config.TAG_GNO_IDNEED));
+                item.setIdLocal(jsonObjectItem.getString(Config.TAG_GNO_IDLOCAL));
                 item.setTittle(jsonObjectItem.getString(Config.TAG_GNO_TITTLE));
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GNO_DESCRIPTION));
                 item.setCodPromotion(jsonObjectItem.getString(Config.TAG_GNO_CODPROMOTION));

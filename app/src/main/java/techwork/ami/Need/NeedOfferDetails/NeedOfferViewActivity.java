@@ -23,8 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
-import techwork.ami.Need.NeedOfferViewLocal;
+import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -33,7 +32,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
     TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvStock,tvMaxPPerson;
     Button btnAccept;
     Button btnDiscard;
-    private String idOffer;
+    private String idOffer,idLocal;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
@@ -51,7 +50,6 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         tvDescription= (TextView)findViewById(R.id.tv_need_offer_view_description);
         tvDateIni = (TextView)findViewById(R.id.tv_need_offer_view_date_ini);
         tvDateFin = (TextView)findViewById(R.id.tv_need_offer_view_date_fin);
-        //tvStock = (TextView)findViewById(R.id.tv_need_offer_view_stock);
         tvMaxPPerson = (TextView)findViewById(R.id.tv_need_offer_view_max_person);
 
         //Init buttons
@@ -61,7 +59,11 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         //Get info from NeedOfferActivity
         Bundle bundle = getIntent().getExtras();
 
+        //Capture id's
         idOffer = bundle.getString(Config.TAG_GNO_IDOFFER);
+        idLocal = bundle.getString(Config.TAG_GNO_IDLOCAL);
+
+        //Set TextViews with the information of each NeedOffer.
         tvTittle.setText(bundle.getString(Config.TAG_GNO_TITTLE));
         tvDescription.setText(bundle.getString(Config.TAG_GNO_DESCRIPTION));
         tvPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GNO_PRICEOFFER)));
@@ -86,10 +88,11 @@ public class NeedOfferViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Se realiza la aceptacion de la oferta en BD
+                //Accept NeedOffer Task
                 class acceptNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
 
+                    //TODO: Reemplazar por un dialog.
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
@@ -98,7 +101,9 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
                     @Override
                     protected String doInBackground(Void... params) {
+
                         HashMap<String,String> hashMap = new HashMap<>();
+
                         hashMap.put(Config.KEY_ANO_IDOFFER,idOffer);
                         hashMap.put(Config.KEY_ANO_IDPERSON,idPerson);
 
@@ -111,15 +116,17 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                         if (s.equals("0")){
                             Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_SHORT).show();
 
-                            //Se redirije a la activity del detalle del local.
+                            //Offer acept go to LocalDetails.
                             Handler mHandler = new Handler();
                             mHandler.postDelayed(new Runnable() {
 
                                 // Salir de la activity despues de que la necesidad haya sido registrada
                                 @Override
                                 public void run() {
-                                    startActivity(new Intent(NeedOfferViewActivity.this, MainActivity.class));
+                                    Intent intent = new Intent(NeedOfferViewActivity.this,NeedOfferViewLocalActivity.class);
+                                    intent.putExtra(Config.TAG_GNO_IDLOCAL,idLocal);
                                     finish();
+                                    startActivity(intent);
                                 }
 
                             }, 2500);
@@ -192,8 +199,11 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(Void... voids) {
+
                 HashMap<String,String> hashmap = new HashMap<>();
+
                 hashmap.put(Config.KEY_PNO_IDOFFER,idOffer);
+
                 RequestHandler rh = new RequestHandler();
                 return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER,hashmap);
             }
