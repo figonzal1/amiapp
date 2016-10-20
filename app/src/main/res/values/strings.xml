@@ -11,11 +11,20 @@
     <string name="did_forget_your_pass">¿Olvidaste tu contraseña?</string>
     <string name="close_without_save">¿Estás seguro que quieres salir?</string>
     <string name="close_without_save_title">Existen cambios sin guardar</string>
+    <string name="gettingData">Obteniendo datos</string>
+    <string name="wait">Espere por favor…</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
+    <string name="continueDialog">Continuar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Reactivate Account Strings -->
+    <string name="reactivateAccountSuccess">Tu cuenta ha sido activada exitosamente… ¡Nos alegra verte otra vez!</string>
+    <string name="reactivateAccountFail">No se ha podido activar tu cuenta, inténtalo más tarde</string>
+    <string name="activatingAccount">Activando tu cuenta</string>
 
     <!-- Main Activity Strings -->
-    <string name="nav_edit_profile">Editar Perfil</string>
+    <string name="nav_edit_profile">Mi Perfil</string>
     <string name="nav_my_preferences">Mis Gustos</string>
     <string name="nav_reserve_needs">Mis Pedidos Reservados</string>
     <string name="nav_reservations">Mis Reservas</string>
@@ -47,6 +56,9 @@
     <string name="promptLastnames">Apellidos</string>
     <string name="registrateEnAMI">Regístrate en AMI</string>
     <string name="email_already_exist">"El email ingresado ya esta asociado a una cuenta"</string>
+    <string name="reactivate_account_closed_title">"Reactivar cuenta"</string>
+    <string name="reactivate_account_closed_message">"Introduce tu contraseña para activar tu cuenta"</string>
+    <string name="account_closed">"Esta cuenta ha sido cerrada previamente, ¿deseas volver a activarla?"</string>
     <string name="insert_another_email">"Ingresa otro correo"</string>
 
     <!-- String restablecerPass -->
@@ -58,20 +70,35 @@
     <string name="action_settings">Configuración</string>
     <string name="action_search">Buscar</string>
 
+    <!-- Profile Strings -->
+    <string name="profileName">Nombre</string>
+    <string name="profileLastnames">Apellidos</string>
+    <string name="profileEmail">Correo</string>
+    <string name="profileDate">Fecha de nacimiento</string>
+    <string name="profileOccupation">Ocupación</string>
+    <string name="profileGender">Género</string>
+    <string name="profileClosingAccount">Cerrando tu cuenta</string>
+    <string name="profileCloseAccountSuccess">Tu cuenta ha sido cerrada exitosamente… ¡Esperamos verte otra vez!</string>
+    <string name="profileCloseAccountFail">No se ha podido cerrar tu cuenta, inténtalo más tarde</string>
+
+    <!-- My Profile Strings -->
+    <string name="titleActivityMyProfile">Mi Perfil</string>
+    <string name="myProfileTitle">Mi perfil</string>
+    <string name="myProfileLeyend">Tus Puntos: %s</string>
+    <string name="myProfilePhone">Teléfono</string>
+    <string name="myProfileEdit">Editar</string>
+    <string name="myProfileCloseAccount">Cerrar mi cuenta</string>
+    <string name="myProfileCloseAccountAlertTitle">Cerrar cuenta</string>
+    <string name="myProfileCloseAccountAlertMessage">¿Estás seguro que quieres cerrar tu cuenta?</string>
+    <string name="myProfileCloseAccountAlertDialogMessage">Ingresa tu contraseña para confirmar</string>
+
     <!-- Edit Profile Strings -->
     <string name="titleActivityEditProfile">Editar Perfil</string>
     <string name="getProfileError">No se pudo obtener su perfil</string>
     <string name="editProfileTitle">Editar perfil</string>
     <string name="editProfileLeyend">Aquí puedes actualizar tus datos</string>
-    <string name="editProfileName">Nombre</string>
-    <string name="editProfileLastnames">Apellidos</string>
-    <string name="editProfileEmail">Correo</string>
-    <string name="editProfileDate">Fecha de nacimiento</string>
-    <string name="editProfileOccupation">Ocupación</string>
-    <string name="editProfileGenre">Género</string>
     <string name="editProfileSave">Guardar</string>
     <string name="editProfilePhone">Teléfono (Opcional)</string>
-    <string name="gettingData">Obteniendo datos</string>
     <string name="editProfileFetchingFail">No se han podido obtener tus datos correctamente</string>
     <string name="saving">Guardando los datos</string>
     <string name="saveOk">Tus datos se han guardado correctamente</string>
@@ -79,11 +106,10 @@
     <string name="restoreEmailNotExists">No se encuentra una cuenta con el email ingresado</string>
     <string name="saveFail">Tus datos no se han podido guardar, inténtalo más tarde nuevamente</string>
     <string name="duplicateUser">Ya existe una cuenta con el email ingresado</string>
-    <string name="wait">Espere por favor…</string>
     <string name="dateDialog">Ingrese su cumpleaños</string>
     <string name="errorInvalidName">Este nombre parece ser inválido</string>
     <string name="defaultOccupation">Otro</string>
-    <string name="defaultGenre">Otro</string>
+    <string name="defaultGender">Otro</string>
 
     <!-- Need Strings -->
     <string name="CreateNeedTitle">Aqui podras ver y generar tus necesidades</string>
@@ -105,6 +131,12 @@
     <string name="NeedDaysTitle">Dias máximos de espera</string>
     <string name="NeedButtonText">Enviar Pedido</string>
     <string name="NeedUserLocation">Usar mi ubicación</string>
+    <string name="NeedButtonDelete">Eliminar pedido</string>
+    <string name="NeedDelete">El pedido ha sido eliminado</string>
+    <string name="NeedDeleteConfirm">¿Desea eliminar este pedido?</string>
+    <string name="NeedDeleteYes">Eliminar</string>
+    <string name="Need_delete_processing">Eliminando pedido</string>
+    <string name="Need_delete_ok">El pedido ha sido eliminado</string>
 
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
@@ -113,11 +145,11 @@
     <string name="afterLoginDate">Fecha de nacimiento</string>
     <string name="AL_textViewBirthDate">¿Cuándo naciste?</string>
     <string name="AL_textViewOccupation">¿A qué te dedicas?</string>
-    <string name="AL_textViewGenre">¿Cuál es tu género?</string>
+    <string name="AL_textViewGender">¿Cuál es tu género?</string>
     <string name="AL_textViewUbication">¿En dónde vives?</string>
     <string name="afterLoginContinue">Continuar</string>
     <string name="occupationNoSelected">Seleccionar Ocupación</string>
-    <string name="genreNoSelected">Seleccionar Género</string>
+    <string name="genderNoSelected">Seleccionar Género</string>
     <string name="countryNoSelected">Seleccionar País</string>
     <string name="regionNoSelected">Seleccionar Región</string>
     <string name="provinceNoSelected">Seleccionar Provincia</string>
@@ -130,6 +162,8 @@
     <string name="reserve_ok">¡Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>
+    <string name="offer_detail_reserve">Reservar</string>
+    <string name="offer_detail_quantity">Seleccione cuántos desea.</string>
 
     <!-- My Reservations Offers Strings -->
     <string name="title_activity_my_reservations">Mis reservas</string>

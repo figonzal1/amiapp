@@ -1,12 +1,9 @@
-package techwork.ami.Offer;
+package techwork.ami.Offer.OfferList;
 
 
 import android.content.Context;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -74,7 +71,6 @@ public class OfferAdapter
         Picasso.with(context).load(Config.URL_IMAGES_OFFER+s)
                 .placeholder(R.drawable.image_default)
                 .into(holder.offerImage);
-
     }
     @Override
     public int getItemCount() {

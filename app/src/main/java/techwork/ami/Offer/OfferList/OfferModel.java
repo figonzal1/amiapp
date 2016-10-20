@@ -1,4 +1,4 @@
-package techwork.ami.Offer;
+package techwork.ami.Offer.OfferList;
 
 /**
  * Created by Daniel on 15-08-2016.
@@ -11,7 +11,7 @@ public class  OfferModel {
     private String finalDate;
     private int state;
     private int price;
-    private float maxPPerson;
+    private int maxPPerson;
     private int stock;
     private String promotionCode;
     private String image;
@@ -62,7 +62,7 @@ public class  OfferModel {
     public String getFinalDate(){return finalDate;}
     public int getState(){return state;}
     public int getPrice(){return price;}
-    public float getMaxPPerson(){return maxPPerson;}
+    public int getMaxPPerson(){return maxPPerson;}
     public int getStock(){return stock;}
     public String getPromotionCode(){return promotionCode;}
     public String getImage(){return image;}

@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -58,6 +62,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     private EditText mPassword2View;
     private View mProgressView;
     private View mRegisterFormView;
+
+    CustomAlertDialogBuilder dialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -400,7 +406,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                 case "0":
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.saveOk), Toast.LENGTH_LONG).show();
-                    finish();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("email", mEmailView.getText().toString());
+                    startActivity(intent);
                     break;
                 case "1":
                     Snackbar.make(mEmailView, R.string.email_already_exist, Snackbar.LENGTH_INDEFINITE)
@@ -417,6 +426,16 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                     mEmailView.requestFocus();
                     mPassword1View.setText("");
                     mPassword2View.setText("");
+                    break;
+                case "2":
+                    Snackbar.make(mEmailView, R.string.account_closed, Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.yes, new OnClickListener() {
+                                @Override
+                                @TargetApi(Build.VERSION_CODES.M)
+                                public void onClick(View v) {
+                                    dialogReactivateAccount(false);
+                                }
+                            }).show();
                     break;
                 case "-1":
                     break;
@@ -438,6 +457,122 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private void dialogReactivateAccount(boolean incorrectPassword) {
+        // Create the CustomAlertDialogBuilder
+        dialogBuilder = new CustomAlertDialogBuilder(this);
+
+        // Set the usual data, as you would do with AlertDialog.Builder
+        dialogBuilder.setTitle(R.string.reactivate_account_closed_title);
+        dialogBuilder.setMessage(getString(R.string.reactivate_account_closed_message));
+
+        // Create a EditText
+        final EditText edittext = new EditText(this);
+        // Type no visible password
+        edittext.setInputType(Config.inputNoVisiblePasswordType);
+
+        if (incorrectPassword)
+            edittext.setError(getString(R.string.error_incorrect_password));
+
+        dialogBuilder.setView(edittext);
+
+        // Set your buttons OnClickListeners
+        dialogBuilder.setPositiveButton(R.string.continueDialog,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Check if the password editText is empty
+                        if (TextUtils.isEmpty(edittext.getText().toString())) {
+                            edittext.setError(getString(R.string.error_field_required));
+                        }
+                        else {
+                            dialog.dismiss();
+                            attemptReactivateAccount(edittext.getText().toString());
+                        }
+                    }
+                });
+
+        // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+        dialogBuilder.setNegativeButton(R.string.cancel, null);
+
+        // (optional) set whether to dismiss dialog when touching outside
+        dialogBuilder.setCanceledOnTouchOutside(false);
+
+        // Show the dialog
+        dialogBuilder.show();
+    }
+
+    void attemptReactivateAccount(String pass) {
+        sendReactivateAccountRequest(pass);
+    }
+
+    // AsyncTask that send a request to the server
+    private void sendReactivateAccountRequest(String pass){
+        class ReactivateAccount extends AsyncTask<String,Void,String> {
+            private ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(RegisterActivity.this,
+                        getResources().getString(R.string.activatingAccount),
+                        getResources().getString(R.string.wait),false,false);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                RequestHandler rh = new RequestHandler();
+
+                Boolean connectionStatus = rh.isConnectedToServer(mEmailView, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        dialogReactivateAccount(false);
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String,String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_EMAIL, params[0]);
+                    hashMap.put(Config.KEY_PASS, params[1]);
+                    hashMap.put(Config.KEY_STATUS, "1");
+                    return rh.sendPostRequest(Config.URL_CHANGE_ACCOUNT_STATUS, hashMap);
+                } else
+                    return "-1";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                System.out.println("s: " + s);
+
+                // Success
+                if (s.equals("0")) {
+                    Toast.makeText(RegisterActivity.this, R.string.reactivateAccountSuccess, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("email", mEmailView.getText().toString());
+                    startActivity(intent);
+                }
+                // Incorrect password
+                else if (s.equals("1")) {
+                    dialogReactivateAccount(true);
+                }
+                // Failure
+                else if (!s.equals("-1"))
+                    Snackbar.make(findViewById(R.id.RE_coordinatorLayout), R.string.reactivateAccountFail, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.retry, new View.OnClickListener() {
+                                @Override
+                                @TargetApi(Build.VERSION_CODES.M)
+                                public void onClick(View v) {
+                                    dialogReactivateAccount(false);
+                                }
+                            }).show();
+            }
+        }
+        ReactivateAccount ra = new ReactivateAccount();
+        ra.execute(mEmailView.getText().toString(), pass);
     }
 }
 

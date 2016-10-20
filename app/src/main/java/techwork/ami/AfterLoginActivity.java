@@ -44,9 +44,9 @@ public class AfterLoginActivity extends AppCompatActivity {
 	static final String KEY_OCCUPATIONS_NAMES = "occupationsNames";
 	static final String KEY_OCCUPATIONS_MAP = "occupationsMap";
 	static final String KEY_OCCUPATIONS_SELECTION = "occupationsSelection";
-	static final String KEY_GENRES_NAMES = "genresNames";
-	static final String KEY_GENRES_MAP = "genresMap";
-	static final String KEY_GENRES_SELECTION = "genresSelection";
+	static final String KEY_GENDERS_NAMES = "gendersNames";
+	static final String KEY_GENDERS_MAP = "gendersMap";
+	static final String KEY_GENDERS_SELECTION = "gendersSelection";
 	static final String KEY_COUNTRIES_NAMES = "countriesNames";
 	static final String KEY_COUNTRIES_MAP = "countriesMap";
 	static final String KEY_COUNTRIES_SELECTION = "countriesSelection";
@@ -62,10 +62,10 @@ public class AfterLoginActivity extends AppCompatActivity {
 
 	// UI References
 	EditText editTextDate;
-	TextView textViewGenre;
+	TextView textViewGender;
 	TextView textViewOccupation;
 	TextView textViewUbication;
-	Spinner spinnerGenre;
+	Spinner spinnerGender;
 	Spinner spinnerOccupation;
 	Spinner spinnerCountry;
 	Spinner spinnerRegion;
@@ -77,8 +77,8 @@ public class AfterLoginActivity extends AppCompatActivity {
 	// Spinner arrays
 	String[] occupationsNames;
 	HashMap<String,String> occupationsMap;
-	String[] genreNames;
-	HashMap<String,String> genreMap;
+	String[] genderNames;
+	HashMap<String,String> genderMap;
 	String[] countryNames;
 	HashMap<String,String> countryMap;
 	String[] regionNames;
@@ -108,10 +108,10 @@ public class AfterLoginActivity extends AppCompatActivity {
 		id = getProfileId();
 
 		editTextDate = (EditText) findViewById(R.id.AL_editTextBirthDate);
-		textViewGenre = (TextView) findViewById(R.id.AL_textViewGenre);
+		textViewGender = (TextView) findViewById(R.id.AL_textViewGender);
 		textViewOccupation = (TextView) findViewById(R.id.AL_textViewOccupation);
 		textViewUbication = (TextView) findViewById(R.id.AL_textViewUbication);
-		spinnerGenre = (Spinner) findViewById(R.id.AL_spinnerGenre);
+		spinnerGender = (Spinner) findViewById(R.id.AL_spinnerGender);
 		spinnerOccupation = (Spinner) findViewById(R.id.AL_spinnerOccupation);
 		spinnerCountry = (Spinner) findViewById(R.id.AL_spinnerCountry);
 		spinnerRegion = (Spinner) findViewById(R.id.AL_spinnerRegion);
@@ -191,11 +191,11 @@ public class AfterLoginActivity extends AppCompatActivity {
 			setSpinnerList(spinnerOccupation, occupationsNames);
 			spinnerOccupation.setSelection(savedInstanceState.getInt(KEY_OCCUPATIONS_SELECTION));
 
-			// Set the genres arrays
-			genreNames = savedInstanceState.getStringArray(KEY_GENRES_NAMES);
-			genreMap = (HashMap<String, String>) savedInstanceState.getSerializable(KEY_GENRES_MAP);
-			setSpinnerList(spinnerGenre, genreNames);
-			spinnerGenre.setSelection(savedInstanceState.getInt(KEY_GENRES_SELECTION));
+			// Set the genders arrays
+			genderNames = savedInstanceState.getStringArray(KEY_GENDERS_NAMES);
+			genderMap = (HashMap<String, String>) savedInstanceState.getSerializable(KEY_GENDERS_MAP);
+			setSpinnerList(spinnerGender, genderNames);
+			spinnerGender.setSelection(savedInstanceState.getInt(KEY_GENDERS_SELECTION));
 
 			// Set the countries arrays
 			countryNames = savedInstanceState.getStringArray(KEY_COUNTRIES_NAMES);
@@ -251,7 +251,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 			@Override
 			protected String doInBackground(String... params) {
 				RequestHandler rh = new RequestHandler();
-				Boolean connectionStatus = rh.isConnectedToServer(textViewGenre, new View.OnClickListener() {
+				Boolean connectionStatus = rh.isConnectedToServer(textViewGender, new View.OnClickListener() {
 					@Override
 					@TargetApi(Build.VERSION_CODES.M)
 					public void onClick(View v) {
@@ -285,7 +285,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 
 		// Update the enable state of the views
 		editTextDate.setEnabled(e);
-		spinnerGenre.setEnabled(e);
+		spinnerGender.setEnabled(e);
 		spinnerOccupation.setEnabled(e);
 		spinnerCountry.setEnabled(e);
 		if (!e) {
@@ -304,7 +304,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 			JSONArray array;
 
 			switch (type) {
-				case "1":  // Genres, Occupations and Countries
+				case "1":  // Genders, Occupations and Countries
 					JSONObject jo = jsonObject.getJSONObject(Config.TAG_RESULT);
 					// Fill the occupation spinner
 					occupationsMap = new HashMap<>();
@@ -316,15 +316,15 @@ public class AfterLoginActivity extends AppCompatActivity {
 					spinnerOccupation.setSelection(0);
 					spinnerOccupation.setEnabled(true);
 
-					// Fill the genres spinner
-					genreMap = new HashMap<>();
-					array = jo.getJSONArray(Config.TAG_GENRES);
-					genreNames = new String[array.length() + 1];
-					getArraysFromJSON(array, genreNames, genreMap, Config.TAG_ID_GENRE,
-							getResources().getString(R.string.genreNoSelected));
-					setSpinnerList(spinnerGenre, genreNames);
-					spinnerGenre.setSelection(0);
-					spinnerGenre.setEnabled(true);
+					// Fill the genders spinner
+					genderMap = new HashMap<>();
+					array = jo.getJSONArray(Config.TAG_GENDERS);
+					genderNames = new String[array.length() + 1];
+					getArraysFromJSON(array, genderNames, genderMap, Config.TAG_ID_GENDER,
+							getResources().getString(R.string.genderNoSelected));
+					setSpinnerList(spinnerGender, genderNames);
+					spinnerGender.setSelection(0);
+					spinnerGender.setEnabled(true);
 
 					// Fill the countries spinner
 					countryMap = new HashMap<>();
@@ -415,7 +415,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 	// Validates the data and send it to the server
 	private boolean attemptSave() {
 		// Validate the data
-		textViewGenre.setError(null);
+		textViewGender.setError(null);
 		textViewOccupation.setError(null);
 		textViewUbication.setError(null);
 		editTextDate.setError(null);
@@ -443,10 +443,10 @@ public class AfterLoginActivity extends AppCompatActivity {
 			cancel = true;
 		}
 
-		// Check for a valid genre.
-		if (spinnerGenre.getSelectedItemPosition() == 0) {
-			textViewGenre.setError(getString(R.string.error_field_required));
-			focusView = textViewGenre;
+		// Check for a valid gender.
+		if (spinnerGender.getSelectedItemPosition() == 0) {
+			textViewGender.setError(getString(R.string.error_field_required));
+			focusView = textViewGender;
 			cancel = true;
 		}
 
@@ -475,8 +475,8 @@ public class AfterLoginActivity extends AppCompatActivity {
 		Date d = c.getTime();
 		SimpleDateFormat formatter = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
 		final String date = formatter.format(d);
-		final String idGenre = genreMap.get(
-				spinnerGenre.getSelectedItem().toString());
+		final String idGender = genderMap.get(
+				spinnerGender.getSelectedItem().toString());
 		final String idOccupation = occupationsMap.get(
 				spinnerOccupation.getSelectedItem().toString());
 		final String idCommune = communeMap.get(
@@ -496,7 +496,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 			protected String doInBackground(Void... params) {
 				RequestHandler rh = new RequestHandler();
 
-				Boolean connectionStatus = rh.isConnectedToServer(textViewGenre, new View.OnClickListener() {
+				Boolean connectionStatus = rh.isConnectedToServer(textViewGender, new View.OnClickListener() {
 					@Override
 					@TargetApi(Build.VERSION_CODES.M)
 					public void onClick(View v) {
@@ -510,7 +510,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 					hashMap.put(Config.KEY_DATE, date);
 					hashMap.put(Config.KEY_OCCUPATION, idOccupation);
 					hashMap.put(Config.KEY_COMMUNE, idCommune);
-					hashMap.put(Config.KEY_GENRE, idGenre);
+					hashMap.put(Config.KEY_GENDER, idGender);
 
 					return rh.sendPostRequest(Config.URL_UPDATE_AFTER_LOGIN_DATA, hashMap);
 				}
@@ -529,13 +529,14 @@ public class AfterLoginActivity extends AppCompatActivity {
 					// Save the data of the profile on the application's shared preferences
 					SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
-					editor.putString(Config.KEY_SP_GENRE, idGenre);
+					editor.putString(Config.KEY_SP_GENDER, idGender);
 					editor.putString(Config.KEY_SP_COMMUNE, idCommune);
+					editor.putString(Config.KEY_SP_FIRST_LOGIN, "0");
 					editor.apply();
 
 					// Close this Activity
 					Intent iLogin = new Intent(AfterLoginActivity.this, MainActivity.class);
-					finish();
+					iLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 					startActivity(iLogin);
 				} else if (!s.equals("-1"))
 					Toast.makeText(getApplicationContext(),
@@ -600,9 +601,9 @@ public class AfterLoginActivity extends AppCompatActivity {
 			savedInstanceState.putStringArray(KEY_OCCUPATIONS_NAMES, occupationsNames);
 			savedInstanceState.putSerializable(KEY_OCCUPATIONS_MAP, occupationsMap);
 
-			savedInstanceState.putInt(KEY_GENRES_SELECTION, spinnerGenre.getSelectedItemPosition());
-			savedInstanceState.putStringArray(KEY_GENRES_NAMES, genreNames);
-			savedInstanceState.putSerializable(KEY_GENRES_MAP, genreMap);
+			savedInstanceState.putInt(KEY_GENDERS_SELECTION, spinnerGender.getSelectedItemPosition());
+			savedInstanceState.putStringArray(KEY_GENDERS_NAMES, genderNames);
+			savedInstanceState.putSerializable(KEY_GENDERS_MAP, genderMap);
 
 			savedInstanceState.putInt(KEY_COUNTRIES_SELECTION, spinnerCountry.getSelectedItemPosition());
 			savedInstanceState.putStringArray(KEY_COUNTRIES_NAMES, countryNames);
@@ -760,6 +761,21 @@ public class AfterLoginActivity extends AppCompatActivity {
 		public void onNothingSelected(AdapterView<?> parent) {
 
 		}
+	}
+
+
+	@Override
+	public void onBackPressed() {
+		logout();
+		finish();
+	}
+
+	// logout the current session
+	private void logout(){
+		SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString(Config.KEY_SP_ID, "-1");
+		editor.apply();
 	}
 
 }

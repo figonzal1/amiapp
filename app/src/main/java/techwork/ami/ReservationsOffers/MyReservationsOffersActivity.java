@@ -49,12 +49,17 @@ import techwork.ami.RequestHandler;
 
 public class MyReservationsOffersActivity extends AppCompatActivity {
 
+    // Two recycle views in one layout by https://goo.gl/Iy5prs (natrio)
+
     // UI references
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerViewReserved;
+    private RecyclerView mRecyclerViewCharged;
+    private RecyclerView.LayoutManager mLayoutManagerResrved, mLayoutManagerCharged;
     private SwipeRefreshLayout refreshLayout;
-    private List<ReservationOffer> reservationsOffersList;
-    private MyReservationsOffersListAdapter adapter;
+    private List<ReservationOffer> reservationsOffersListReserved;
+    private List<ReservationOffer> reservationOffersListCharged;
+    private MyReservationsOffersListAdapter adapterReserved;
+    private MyReservationsOffersListAdapter adapterCharged;
     Context context;
     CustomAlertDialogBuilder dialogBuilder;
 
@@ -67,14 +72,19 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Recycler view
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_reservations_offers_list);
+        mRecyclerViewReserved = (RecyclerView) findViewById(R.id.my_reservations_offers_list_reserved);
+        mRecyclerViewCharged = (RecyclerView) findViewById(R.id.my_reservations_offers_list_charged);
 
         // Use this setting to improve performance if you know that change in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerViewReserved.setHasFixedSize(true);
+        mRecyclerViewCharged.setHasFixedSize(true);
 
         // Use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mLayoutManagerResrved = new LinearLayoutManager(this);
+        mLayoutManagerCharged = new LinearLayoutManager(this);
+
+        mRecyclerViewReserved.setLayoutManager(mLayoutManagerResrved);
+        mRecyclerViewCharged.setLayoutManager(mLayoutManagerCharged);
 
         //Refreshing layout
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_my_reservations_offers_list);
@@ -124,7 +134,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             protected String doInBackground(Void... strings) {
                 RequestHandler rh = new RequestHandler();
 
-                Boolean connectionStatus = rh.isConnectedToServer(mRecyclerView, new View.OnClickListener() {
+                Boolean connectionStatus = rh.isConnectedToServer(mRecyclerViewReserved, new View.OnClickListener() {
                     @Override
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(View v) {
@@ -163,19 +173,24 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private void showOffersReservations(String s){
         getData(s);
 
-        adapter = new MyReservationsOffersListAdapter(this, reservationsOffersList);
-        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
-        mRecyclerView.setAdapter(scaleAdapter);
+        adapterReserved = new MyReservationsOffersListAdapter(this, reservationsOffersListReserved);
+        adapterCharged = new MyReservationsOffersListAdapter(this, reservationOffersListCharged);
+
+        ScaleInAnimationAdapter scaleAdapterReserved = new ScaleInAnimationAdapter(adapterReserved);
+        ScaleInAnimationAdapter scaleAdapterCharged = new ScaleInAnimationAdapter(adapterCharged);
+
+        mRecyclerViewReserved.setAdapter(scaleAdapterReserved);
+        mRecyclerViewCharged.setAdapter(scaleAdapterCharged);
 
         // Set behavior to click in some item (offer validate)
-        adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+        adapterReserved.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
-                final ReservationOffer ro = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
+                final ReservationOffer ro = reservationsOffersListReserved.get(mRecyclerViewReserved.getChildAdapterPosition(view));
                 // If the offer was already charged
                 if(!ro.getPaymentDate().equals("")){
                     Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    Snackbar.make(mRecyclerView, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerViewReserved, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
                     dialogLocalCode(ro);
@@ -184,7 +199,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(View view) {
-                final ReservationOffer ro = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
+                final ReservationOffer ro = reservationsOffersListReserved.get(mRecyclerViewReserved.getChildAdapterPosition(view));
                 // Validate before rate
                 if (ro.getPaymentDate().equals("")){
                     Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
@@ -198,6 +213,38 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 }
             }
         });
+
+        adapterCharged.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+            @Override
+            public void onItemClick(final View view) {
+                final ReservationOffer ro = reservationOffersListCharged.get(mRecyclerViewCharged.getChildAdapterPosition(view));
+                // If the offer was already charged
+                if(!ro.getPaymentDate().equals("")){
+                    Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerViewCharged, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
+                }
+                else {
+                    dialogLocalCode(ro);
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View view) {
+                final ReservationOffer ro = reservationOffersListCharged .get(mRecyclerViewCharged.getChildAdapterPosition(view));
+                // Validate before rate
+                if (ro.getPaymentDate().equals("")){
+                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                }
+                // If has already validated but not rated
+                else if (!ro.getCalificacion().equals("")){
+                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    rateOffer(ro, false);
+                }
+            }
+        });
+
     }
 
     private void dialogLocalCode(final ReservationOffer ro) {
@@ -425,7 +472,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             JSONArray jsonOffers = jsonObject.optJSONArray(Config.TAG_GRO);
 
             Calendar c = Calendar.getInstance();
-            reservationsOffersList = new ArrayList<>();
+            reservationOffersListCharged = new ArrayList<>();
+            reservationsOffersListReserved = new ArrayList<>();
 
             for(int i=0;i<jsonOffers.length();i++){
 
@@ -456,7 +504,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
                 item.setPaymentDate(jsonObjectItem.getString(Config.TAG_GRO_PAYDATE));
 
-                reservationsOffersList.add(item);
+                if (item.getPaymentDate().compareTo("") == 0) reservationsOffersListReserved.add(item);
+                else reservationOffersListCharged.add(item);
             }
 
         } catch (JSONException e) {

@@ -212,12 +212,15 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
         if (location != null) {
             Lat = "" + location.getLatitude();
             Lon = "" + location.getLongitude();
+        } else {
+            Lat = "";
+            Lon = "";
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Lat ="" + location.getLatitude();
+        Lat = "" + location.getLatitude();
         Lon = "" + location.getLongitude();
     }
 
