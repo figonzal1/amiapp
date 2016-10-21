@@ -10,8 +10,64 @@
     tools:context="techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity">
 
     <TextView
+        android:id="@+id/tv_local"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="¡Felicitaciones! has realizado la reserva."/>
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:textSize="27sp"
+        android:text="¡Felicitaciones! \n has realizado la reserva."/>
 
+    <ImageView
+        android:id="@+id/iv_local"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/logo_ami"
+        android:layout_below="@id/tv_local" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_local"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tv_address1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Debes dirigirte a: "
+            />
+        <TextView
+            android:id="@+id/tv_address2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Dirección local, Comuna"
+            android:textStyle="italic"
+            android:textColor="@color/colorPrimary"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_web1"
+        android:layout_marginTop="30dp"
+        android:textSize="23sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mas información en"
+        android:layout_below="@+id/linear_layout"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/tv_web2"
+        android:textSize="23sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="wwww.webempresa.com"
+        android:layout_below="@+id/tv_web1"
+        android:gravity="center_horizontal"
+        android:autoLink="web"
+        />
 </RelativeLayout>

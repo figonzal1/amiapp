@@ -3,6 +3,11 @@ package techwork.ami.Need.NeedOfferLocalDetails;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +21,9 @@ import techwork.ami.RequestHandler;
 
 public class NeedOfferViewLocalActivity extends AppCompatActivity {
 
-    private String idLocal;
+    private String idLocal,lat,lon,address,web,image,commune;
+    TextView tvAddress,tvWeb;
+    ImageView ivImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +35,6 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity {
 
         //GetLocal info
         getLocal();
-
 
     }
 
@@ -68,12 +74,20 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(json);
             JSONObject local = jsonObject.getJSONArray(Config.TAG_GL_LOCAL).getJSONObject(0);
 
-            String lat = local.getString(Config.TAG_GL_LAT);
-            String lon= local.getString(Config.TAG_GL_LONG);
-            String address= local.getString(Config.TAG_GL_ADDRESS);
-            String web = local.getString(Config.TAG_GL_WEB);
-            String image= local.getString(Config.TAG_GL_IMAGE);
-            String commune=local.getString(Config.TAG_GL_LOCAL);
+            lat = local.getString(Config.TAG_GL_LAT);
+            lon= local.getString(Config.TAG_GL_LONG);
+            address= local.getString(Config.TAG_GL_ADDRESS);
+            web = local.getString(Config.TAG_GL_WEB);
+            image= local.getString(Config.TAG_GL_IMAGE);
+            commune=local.getString(Config.TAG_GL_COMMUNE);
+
+            tvAddress = (TextView)findViewById(R.id.tv_address2);
+            tvWeb = (TextView)findViewById(R.id.tv_web2);
+            ivImage = (ImageView)findViewById(R.id.iv_local);
+
+            tvAddress.setText(address+", "+commune);
+            tvWeb.setText(web);
+            Picasso.with(getApplicationContext()).load(image).into(ivImage);
 
 
         } catch (JSONException e) {

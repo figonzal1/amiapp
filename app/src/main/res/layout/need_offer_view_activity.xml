@@ -117,11 +117,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:text="Fecha de expiración: XX/XX/XX" />
-            <!--<TextView
-                android:id="@+id/tv_need_offer_view_stock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stock actual: XX" />-->
+
 
         </LinearLayout>
 

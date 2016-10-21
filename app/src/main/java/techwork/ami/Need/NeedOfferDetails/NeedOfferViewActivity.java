@@ -125,8 +125,8 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                                 public void run() {
                                     Intent intent = new Intent(NeedOfferViewActivity.this,NeedOfferViewLocalActivity.class);
                                     intent.putExtra(Config.TAG_GNO_IDLOCAL,idLocal);
-                                    finish();
                                     startActivity(intent);
+                                    finish();
                                 }
 
                             }, 2500);
