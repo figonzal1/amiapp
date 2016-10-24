@@ -90,7 +90,10 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         numberPicker.setMaxValue(Integer.parseInt(bundle.getString(Config.TAG_GNO_MAXPPERSON)));
         numberPicker.setWrapSelectorWheel(true);
         numberPicker.setValue(1);
+
         final String[] cantidad = new String[1];
+        cantidad[0]= String.valueOf(numberPicker.getValue());
+
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
