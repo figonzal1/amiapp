@@ -84,13 +84,22 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         SharedPreferences sharePref= getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         final String idPerson = sharePref.getString(Config.KEY_SP_ID,"-1");
 
-
-        //Actions of Buttons
+        //Settings of number picker
         final NumberPicker numberPicker = (NumberPicker)findViewById(R.id.number_picker);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(Integer.parseInt(bundle.getString(Config.TAG_GNO_MAXPPERSON)));
         numberPicker.setWrapSelectorWheel(true);
-        final String cantidad = String.valueOf(numberPicker.getValue());
+        numberPicker.setValue(1);
+        final String[] cantidad = new String[1];
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                 cantidad[0] = ""+ newVal;
+            }
+        });
+
+
+        //Actions of Buttons
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +122,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
                         hashMap.put(Config.KEY_ANO_IDOFFER,idOffer);
                         hashMap.put(Config.KEY_ANO_IDPERSON,idPerson);
-                        hashMap.put(Config.KEY_ANO_MAXPPERSON, cantidad);
+                        hashMap.put(Config.KEY_ANO_MAXPPERSON, cantidad[0]);
 
                         RequestHandler rh = new RequestHandler();
                         return rh.sendPostRequest(Config.URL_ACCEPT_NEED_OFFER,hashMap);

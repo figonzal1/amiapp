@@ -1,6 +1,7 @@
 package techwork.ami.Need.NeedOfferLocalDetails;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +45,12 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
         btnStreetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Funciona",Toast.LENGTH_LONG).show();
+                //Intent streetView = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.streetview:cbll="+ lat+","+lon+""));
+                //startActivity(streetView);
+                Intent intent = new Intent(NeedOfferViewLocalActivity.this,StreetViewPanoramaActivity.class);
+                intent.putExtra(Config.TAG_GL_LAT,lat);
+                intent.putExtra(Config.TAG_GL_LONG,lon);
+                startActivity(intent);
             }
         });
 
