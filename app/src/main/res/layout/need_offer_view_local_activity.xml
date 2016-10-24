@@ -70,4 +70,20 @@
         android:gravity="center_horizontal"
         android:autoLink="web"
         />
+
+    <Button
+        android:id="@+id/btn_local_street_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver StreetView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_web2"/>
+
+    <Button
+        android:id="@+id/btn_mis_pedidos_reservados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mis pedidos reservados"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btn_local_street_view"/>
 </RelativeLayout>

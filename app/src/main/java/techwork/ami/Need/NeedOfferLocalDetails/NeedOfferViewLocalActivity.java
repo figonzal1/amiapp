@@ -1,27 +1,31 @@
 package techwork.ami.Need.NeedOfferLocalDetails;
 
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
 import techwork.ami.Config;
+import techwork.ami.MainActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class NeedOfferViewLocalActivity extends AppCompatActivity {
+public class NeedOfferViewLocalActivity extends AppCompatActivity{
 
     private String idLocal,lat,lon,address,web,image,commune;
+    Button btnStreetView,btnNeedOfferReserv;
     TextView tvAddress,tvWeb;
     ImageView ivImage;
 
@@ -36,7 +40,26 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity {
         //GetLocal info
         getLocal();
 
+        btnStreetView = (Button)findViewById(R.id.btn_local_street_view);
+        btnStreetView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Funciona",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnNeedOfferReserv = (Button)findViewById(R.id.btn_mis_pedidos_reservados);
+        btnNeedOfferReserv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NeedOfferViewLocalActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
+
 
     private void getLocal(){ sendPostRequest();}
 
@@ -87,7 +110,16 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity {
 
             tvAddress.setText(address+", "+commune);
             tvWeb.setText(web);
-            Picasso.with(getApplicationContext()).load(image).into(ivImage);
+
+            if (image.isEmpty()){
+                Picasso.with(getApplicationContext())
+                        .load(R.drawable.not_check)
+                        .into(ivImage);
+            }else {
+                Picasso.with(getApplicationContext())
+                        .load(image)
+                        .into(ivImage);
+            }
 
 
         } catch (JSONException e) {

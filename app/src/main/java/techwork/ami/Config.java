@@ -208,6 +208,7 @@ public class Config {
 	public static final String URL_ACCEPT_NEED_OFFER="http://amiapp.cl/public/getData/Need/acceptNeedOffer.php";
 	public static final String KEY_ANO_IDOFFER="idOferta";
 	public static final String KEY_ANO_IDPERSON="idPersona";
+	public static final String KEY_ANO_MAXPPERSON="cantidad";
 	//Get Products for NeedOfferViewActivity
 	public static final String URL_GET_PRODUCT_OFFER="http://amiapp.cl/public/getData/Need/getProductNeedOffer.php";
 	public static final String KEY_PNO_IDOFFER="idOferta";

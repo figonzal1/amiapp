@@ -34,4 +34,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.4.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.4'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile 'com.shawnlin:number-picker:2.0.1'
 }

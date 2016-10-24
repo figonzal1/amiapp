@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.shawnlin.numberpicker.NumberPicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,9 +30,8 @@ import techwork.ami.RequestHandler;
 
 public class NeedOfferViewActivity extends AppCompatActivity {
 
-    TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvStock,tvMaxPPerson;
-    Button btnAccept;
-    Button btnDiscard;
+    TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvMaxPPerson;
+    Button btnAccept, btnDiscard;
     private String idOffer,idLocal;
     private List<ProductModel> productList;
     private RecyclerView rv;
@@ -52,12 +52,14 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         tvDateFin = (TextView)findViewById(R.id.tv_need_offer_view_date_fin);
         tvMaxPPerson = (TextView)findViewById(R.id.tv_need_offer_view_max_person);
 
+
         //Init buttons
         btnAccept = (Button)findViewById(R.id.btn_need_offer_view_accept);
         btnDiscard= (Button)findViewById(R.id.btn_need_offer_view_discard);
 
+
         //Get info from NeedOfferActivity
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
 
         //Capture id's
         idOffer = bundle.getString(Config.TAG_GNO_IDOFFER);
@@ -84,6 +86,11 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
 
         //Actions of Buttons
+        final NumberPicker numberPicker = (NumberPicker)findViewById(R.id.number_picker);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(Integer.parseInt(bundle.getString(Config.TAG_GNO_MAXPPERSON)));
+        numberPicker.setWrapSelectorWheel(true);
+        final String cantidad = String.valueOf(numberPicker.getValue());
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +113,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
                         hashMap.put(Config.KEY_ANO_IDOFFER,idOffer);
                         hashMap.put(Config.KEY_ANO_IDPERSON,idPerson);
+                        hashMap.put(Config.KEY_ANO_MAXPPERSON, cantidad);
 
                         RequestHandler rh = new RequestHandler();
                         return rh.sendPostRequest(Config.URL_ACCEPT_NEED_OFFER,hashMap);
@@ -180,6 +188,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                 go.execute();
             }
         });
+
         getNeedOfferProducts();
 
     }
