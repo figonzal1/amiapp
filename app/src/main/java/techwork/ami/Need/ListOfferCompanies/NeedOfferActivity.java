@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.json.JSONArray;
@@ -44,6 +45,9 @@ public class NeedOfferActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.need_offer_activity);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         Bundle bundle = getIntent().getExtras();
         idNeedOffer = bundle.getString(Config.TAG_GNO_IDNEED);
 
@@ -61,6 +65,8 @@ public class NeedOfferActivity extends AppCompatActivity {
                 getNeedOffers();
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getNeedOffers();
     }

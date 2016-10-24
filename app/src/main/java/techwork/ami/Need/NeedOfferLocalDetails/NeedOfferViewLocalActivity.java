@@ -117,16 +117,10 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
 
             tvAddress.setText(address+", "+commune);
             tvWeb.setText(web);
-
-            if (image.isEmpty()){
-                Picasso.with(getApplicationContext())
-                        .load(R.drawable.not_check)
+            Toast.makeText(this,image,Toast.LENGTH_LONG).show();
+            Picasso.with(getApplicationContext())
+                        .load("http://amiapp.cl/encargado/uploads/"+image)
                         .into(ivImage);
-            }else {
-                Picasso.with(getApplicationContext())
-                        .load(image)
-                        .into(ivImage);
-            }
 
 
         } catch (JSONException e) {
