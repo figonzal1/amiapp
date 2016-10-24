@@ -200,6 +200,27 @@ public class Config {
 	public static final String TAG_GNO_MAXPPERSON="maxPPersona";
 	public static final String TAG_GNO_COMPANY="nombreEmpresa";
 
+	//Tags and Keys for NeedreservationsActivity
+	public static final String URL_GET_NEED_RESERVATIONS="http://amiapp.cl/public/getData/Need/getNeedReservations.php";
+	public static final String KEY_GNR_IDPERSON="idPersona";
+	public static final String TAG_GNR_NEED="needReservations";
+	public static final String TAG_GNR_IDNEED="idNecesidad";
+	public static final String TAG_GNR_IDLOCAL="idLocal";
+	public static final String TAG_GNR_IDOFFER="idOferta";
+	public static final String TAG_GNR_TITTLE="titulo";
+	public static final String TAG_GNR_DESCRIPTION="descripcion";
+	public static final String TAG_GNR_STOCK ="stock";
+	public static final String TAG_GNR_CODPROMOTION="codPromocion";
+	public static final String TAG_GNR_QUANTITY="cantidad";
+	public static final String TAG_GNR_CASHED="cobrado";
+	public static final String TAG_GNR_CALIFICATION="calificacion";
+	public static final String TAG_GNR_DATERESERV="fechaReserva";
+	public static final String TAG_GNR_DATECASHED="fechaCobro";
+	public static final String TAG_GNR_DATEINI="fechaInicio";
+	public static final String TAG_GNR_DATEFIN="fechaTermino";
+	public static final String TAG_GNR_PRICEOFFER="precioOferta";
+
+
 	//Discard NeedOfferActivity
 	public static final String URL_DISCARD_NEED_OFFER="http://amiapp.cl/public/getData/Need/discardNeedOffer.php";
 	public static final String KEY_DNO_IDOFFER="idOferta";

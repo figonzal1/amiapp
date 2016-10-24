@@ -96,7 +96,8 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".MyProfileActivity" />
-        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity"></activity>
+        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity" />
+        <activity android:name=".Need.NeedReservations.NeedReservationsActivity"></activity>
     </application>
 
 </manifest>

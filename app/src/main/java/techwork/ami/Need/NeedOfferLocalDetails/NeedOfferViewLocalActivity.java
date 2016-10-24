@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
+import techwork.ami.Need.NeedReservations.NeedReservationsActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -58,7 +59,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
         btnNeedOfferReserv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NeedOfferViewLocalActivity.this, MainActivity.class);
+                Intent intent = new Intent(NeedOfferViewLocalActivity.this, NeedReservationsActivity.class);
                 startActivity(intent);
             }
         });
