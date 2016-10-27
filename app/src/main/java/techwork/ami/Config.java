@@ -32,6 +32,7 @@ public class Config {
 	public static final String URL_UPDATE_PROFILE="http://amiapp.cl/public/getData/Profile/updateProfile.php";
 	public static final String URL_LOGIN="http://amiapp.cl/public/getData/Login/login.php";
 	public static final String URL_REGISTER="http://amiapp.cl/public/getData/Register/register.php";
+	public static final String URL_REGISTER_EMAIL = "http://amiapp.cl/public/getData/Register/sendWelcomeEmail.php";
 	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php";
 	public static final String URL_GET_OFFERS="http://amiapp.cl/public/getData/Offers/getOffers.php";
 	public static final String URL_OFFER_RESERVE="http://amiapp.cl/public/getData/Offers/reserveOffers.php";
