@@ -66,7 +66,20 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
 
 
     }
+    @Override
+    public void onBackPressed() {
 
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            Intent intent = new Intent(NeedOfferViewLocalActivity.this,NeedReservationsActivity.class);
+            startActivity(intent);
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
 
     private void getLocal(){ sendPostRequest();}
 

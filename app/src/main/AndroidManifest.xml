@@ -87,8 +87,21 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Need.ListOfferCompanies.NeedOfferActivity"/>
-
         </activity>
+
+        <activity android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
+
+        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity" />
+
+        <activity
+            android:name=".Need.NeedReservations.NeedReservationsActivity"
+            android:label="Mis pedidos reservados"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -98,8 +111,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity android:name=".ContactUsActivity" />
-        <activity android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
         <activity android:name=".Offer.OfferDetail.OfferDetailActivity" />
         <activity
             android:name=".Offer.FilterOfferActivity"
@@ -111,8 +124,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".MyProfileActivity" />
-        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity" />
-        <activity android:name=".Need.NeedReservations.NeedReservationsActivity"></activity>
-    </application>
 
+    </application>
 </manifest>

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import techwork.ami.Config;
+import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
 import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -143,6 +144,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                         if (s.equals("0")){
                             Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_SHORT).show();
 
+
                             //Offer acept go to LocalDetails.
                             Handler mHandler = new Handler();
                             mHandler.postDelayed(new Runnable() {
@@ -150,6 +152,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                                 // Salir de la activity despues de que la necesidad haya sido registrada
                                 @Override
                                 public void run() {
+                                    NeedOfferActivity.fa.finish();
                                     Intent intent = new Intent(NeedOfferViewActivity.this,NeedOfferViewLocalActivity.class);
                                     intent.putExtra(Config.TAG_GNO_IDLOCAL,idLocal);
                                     startActivity(intent);
@@ -208,10 +211,10 @@ public class NeedOfferViewActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getNeedOfferProducts();
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

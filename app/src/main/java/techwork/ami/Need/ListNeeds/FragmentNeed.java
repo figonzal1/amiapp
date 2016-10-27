@@ -67,6 +67,7 @@ public class FragmentNeed extends Fragment {
         adapter= new NeedAdapter(getActivity(),needList);
     }
 
+
     //Listo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,6 +46,9 @@ public class NeedReservationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.need_reservations_activity);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         rv = (RecyclerView) findViewById(R.id.recycler_view_need_reservations);
         rv.setHasFixedSize(true);
 
@@ -59,8 +64,20 @@ public class NeedReservationsActivity extends AppCompatActivity {
             }
         });
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getNeedReservs();
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getNeedReservs() {

@@ -1,13 +1,16 @@
 package techwork.ami.Need.ListOfferCompanies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import org.json.JSONArray;
@@ -39,11 +42,13 @@ public class NeedOfferActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private String idNeedOffer;
+    public static Activity fa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.need_offer_activity);
+        fa=this;
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,6 +73,18 @@ public class NeedOfferActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getNeedOffers();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getNeedOffers(){
@@ -186,4 +203,5 @@ public class NeedOfferActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }
