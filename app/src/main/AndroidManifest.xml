@@ -77,12 +77,16 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".Need.NeedOfferDetails.NeedOfferViewActivity"
             android:label="@string/NeedOfferDetails"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Need.ListOfferCompanies.NeedOfferActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Need.ListOfferCompanies.NeedOfferActivity"/>
 
         </activity>
         <activity
