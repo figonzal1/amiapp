@@ -71,9 +71,8 @@
             android:name=".Need.NeedActivity"
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Category.CategoryView" />
         <activity android:name=".Need.ListOfferCompanies.NeedOfferActivity"
-            android:label="Ofertas Recibidas"
+            android:label="@string/NeedOfferCompanies"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -81,7 +80,11 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Need.NeedOfferDetails.NeedOfferViewActivity"/>
+            android:name=".Need.NeedOfferDetails.NeedOfferViewActivity"
+            android:label="@string/NeedOfferDetails"
+            android:theme="@style/AppTheme">
+
+        </activity>
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"

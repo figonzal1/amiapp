@@ -67,7 +67,6 @@ public class NeedOfferActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getNeedOffers();
     }
 
