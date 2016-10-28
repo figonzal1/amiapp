@@ -131,7 +131,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
 
             tvAddress.setText(address+", "+commune);
             tvWeb.setText(web);
-            Toast.makeText(this,image,Toast.LENGTH_LONG).show();
+
             Picasso.with(getApplicationContext())
                         .load("http://amiapp.cl/encargado/uploads/"+image)
                         .into(ivImage);

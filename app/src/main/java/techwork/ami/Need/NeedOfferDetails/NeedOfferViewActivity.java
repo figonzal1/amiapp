@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import techwork.ami.Config;
+import techwork.ami.MainActivity;
 import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
 import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
 import techwork.ami.R;
@@ -117,7 +118,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         int quantity =
                 (Integer.valueOf(bundle.getString(Config.TAG_GNO_MAXPPERSON)) <= Integer.valueOf(bundle.getString(Config.TAG_GNO_STOCK)))?
                         Integer.valueOf(bundle.getString(Config.TAG_GNO_MAXPPERSON)) : Integer.valueOf(bundle.getString(Config.TAG_GNO_STOCK));
-        Toast.makeText(getApplicationContext(),String.valueOf(quantity),Toast.LENGTH_LONG).show();
+
         numberPicker.setMaxValue(quantity);
         numberPicker.setWrapSelectorWheel(false);
         numberPicker.setValue(1);
@@ -146,7 +147,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        Toast.makeText(getApplicationContext(),"Aceptando oferta..",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Aceptando oferta..",Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -165,24 +166,30 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
                         if (s.equals("0")){
-                            Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_LONG).show();
 
 
-                            //Offer accept go to LocalDetails.
+
+                            //NeedOfferActivity (List offer companies) is finish.
+                            NeedOfferActivity.fa.finish();
+
+                            //NeedOffer accept go to LocalDetails.
                             Handler mHandler = new Handler();
                             mHandler.postDelayed(new Runnable() {
 
                                 // Salir de la activity despues de que la necesidad haya sido registrada
                                 @Override
                                 public void run() {
-                                    // Vibrate for 500 milliseconds
+
                                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                                     c.vibrate(500);
-                                    NeedOfferActivity.fa.finish();
+
                                     Intent intent = new Intent(NeedOfferViewActivity.this,NeedOfferViewLocalActivity.class);
                                     intent.putExtra(Config.TAG_GNO_IDLOCAL,idLocal);
-                                    startActivity(intent);
                                     finish();
+                                    startActivity(intent);
+
                                 }
 
                             }, 2500);
@@ -227,6 +234,26 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                         super.onPostExecute(s);
                         if (s.equals("0")){
                             Toast.makeText(getApplicationContext(), "Oferta rechazada", Toast.LENGTH_SHORT).show();
+
+
+                            //NeedOffer declined go to Main activity refreshed
+                            Handler mHandler = new Handler();
+                            mHandler.postDelayed(new Runnable() {
+
+                                // Salir de la activity despues de que la necesidad haya sido registrada
+                                @Override
+                                public void run() {
+
+                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                    c.vibrate(500);
+                                    Intent intent = new Intent(NeedOfferViewActivity.this,MainActivity.class);
+                                    finish();
+                                    startActivity(intent);
+
+                                }
+
+                            }, 2500);
+
                         }else{
                             Toast.makeText(getApplicationContext(),"No se ha podido rechazar",Toast.LENGTH_SHORT).show();
                         }
