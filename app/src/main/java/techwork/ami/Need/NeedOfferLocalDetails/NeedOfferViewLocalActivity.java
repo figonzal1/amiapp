@@ -66,6 +66,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
 
 
     }
+    //When de button back is pressed main activity is refreshed.
     @Override
     public void onBackPressed() {
 
@@ -73,7 +74,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
 
         if (count == 0) {
             super.onBackPressed();
-            Intent intent = new Intent(NeedOfferViewLocalActivity.this,NeedReservationsActivity.class);
+            Intent intent = new Intent(NeedOfferViewLocalActivity.this,MainActivity.class);
             startActivity(intent);
         } else {
             getFragmentManager().popBackStack();
