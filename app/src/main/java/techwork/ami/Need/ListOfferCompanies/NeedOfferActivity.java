@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,13 +43,14 @@ public class NeedOfferActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private String idNeedOffer;
-    public static Activity fa;
+    public static Activity activity;
+    TextView tvNeedOfferEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.need_offer_activity);
-        fa=this;
+        activity=this;
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,8 +75,14 @@ public class NeedOfferActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getNeedOffers();
+
+        tvNeedOfferEmpty = (TextView)findViewById(R.id.tv_need_company_empty);
+
+
+
     }
 
+    //Permit go to back activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -124,6 +132,12 @@ public class NeedOfferActivity extends AppCompatActivity {
         adapter = new NeedOfferAdapter(getApplicationContext(),needOfferList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
+
+        if (needOfferList.size()==0){
+            tvNeedOfferEmpty.setText("¡Oops! \n No tienes ofertas recientes :(");
+        }else {
+            tvNeedOfferEmpty.setText("");
+        }
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override

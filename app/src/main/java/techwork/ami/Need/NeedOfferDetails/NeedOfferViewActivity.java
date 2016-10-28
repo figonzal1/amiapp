@@ -172,7 +172,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
 
                             //NeedOfferActivity (List offer companies) is finish.
-                            NeedOfferActivity.fa.finish();
+                            NeedOfferActivity.activity.finish();
 
                             //NeedOffer accept go to LocalDetails.
                             Handler mHandler = new Handler();

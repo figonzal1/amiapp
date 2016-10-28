@@ -35,6 +35,15 @@
             android:paddingRight="10dp"
             >
 
+            <TextView
+                android:id="@+id/tv_need_company_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:gravity="center_horizontal"/>
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_need_offer"
