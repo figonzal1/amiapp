@@ -139,6 +139,8 @@
     <string name="Need_delete_ok">El pedido ha sido eliminado</string>
     <string name="NeedOfferDetails">Detalle oferta</string>
     <string name="NeedOfferCompanies">Ofertas recibidas</string>
+    <string name="NeedOfferLocalDetails">Información local</string>
+    <string name="NeedOfferLocalStreetView">StreetView local</string>
 
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>

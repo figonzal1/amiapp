@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,6 +36,9 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.need_offer_view_local_activity);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
         idLocal= bundle.getString(Config.TAG_GNO_IDLOCAL);
@@ -125,7 +129,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
             image= local.getString(Config.TAG_GL_IMAGE);
             commune=local.getString(Config.TAG_GL_COMMUNE);
 
-            tvAddress = (TextView)findViewById(R.id.tv_address2);
+            tvAddress = (TextView)findViewById(R.id.tv_address);
             tvWeb = (TextView)findViewById(R.id.tv_web2);
             ivImage = (ImageView)findViewById(R.id.iv_local);
 

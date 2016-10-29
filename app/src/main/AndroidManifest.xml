@@ -89,8 +89,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Need.ListOfferCompanies.NeedOfferActivity" />
         </activity>
-        <activity android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
-        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity" />
+        <activity
+            android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity"
+            android:label="@string/NeedOfferLocalDetails"
+            android:theme="@style/AppTheme">
+
+        </activity>
+
+        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity"
+            android:label="@string/NeedOfferLocalStreetView"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
+        </activity>
+
         <activity
             android:name=".Need.NeedReservations.NeedReservationsActivity"
             android:label="Mis pedidos reservados"
@@ -99,6 +113,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -108,8 +123,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity android:name=".ContactUsActivity" />
+
         <activity android:name=".Offer.OfferDetail.OfferDetailActivity" />
+
         <activity
             android:name=".Offer.FilterOfferActivity"
             android:label="@string/title_activity_filter_offers"
@@ -120,6 +138,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".MyProfileActivity" />
+
     </application>
 
 </manifest>

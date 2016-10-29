@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -40,7 +41,7 @@ public class NeedReservationsActivity extends AppCompatActivity {
     private LinearLayoutManager layout;
     private NeedReservationsAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
-
+    private TextView tvNeedReservationEmpty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,8 @@ public class NeedReservationsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        tvNeedReservationEmpty = (TextView)findViewById(R.id.tv_need_reservations_empty);
 
         rv = (RecyclerView) findViewById(R.id.recycler_view_need_reservations);
         rv.setHasFixedSize(true);
@@ -124,6 +127,13 @@ public class NeedReservationsActivity extends AppCompatActivity {
         adapter = new NeedReservationsAdapter(getApplicationContext(), needReservationsList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
+
+        if (needReservationsList.size()==0){
+            tvNeedReservationEmpty.setText("¡Oops! \n No tienes pedidos reservados :(");
+        }else {
+            tvNeedReservationEmpty.setText("");
+        }
+
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override

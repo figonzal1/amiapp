@@ -2,6 +2,8 @@ package techwork.ami.Need.NeedOfferLocalDetails;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
@@ -18,6 +20,9 @@ public class StreetViewPanoramaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.street_view_panorama_activity);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         Bundle bundle = getIntent().getExtras();
         double lat = Double.parseDouble(bundle.getString(Config.TAG_GL_LAT));
         double lon = Double.parseDouble(bundle.getString(Config.TAG_GL_LONG));
@@ -32,5 +37,18 @@ public class StreetViewPanoramaActivity extends AppCompatActivity {
                 }
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
+
