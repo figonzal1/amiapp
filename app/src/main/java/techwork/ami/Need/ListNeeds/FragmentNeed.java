@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class FragmentNeed extends Fragment {
         super.onCreate(savedInstanceState);
         adapter= new NeedAdapter(getActivity(),needList);
     }
+
 
     //Listo
     @Override
@@ -272,7 +274,9 @@ public class FragmentNeed extends Fragment {
                 dExp = jsonObjectItem.getString(Config.TAG_GN_EXPIRATIONDATE);
                 dateExp = format.parse(dExp);
                 c.setTime(dateExp);
+
                 item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+                item.setDateTimeFin(String.format(Locale.US,Config.DATETIME_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
 
                 item.setPriceMax(jsonObjectItem.getInt(Config.TAG_GN_PRICEMAX));
                 item.setLat(jsonObjectItem.getString(Config.TAG_GN_LATITUDE));

@@ -184,16 +184,7 @@ public class FragmentCategory extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                /*
-                Intent intent = new Intent(getActivity(),CategoryView.class);
-                int position = rv.getChildAdapterPosition(view);
-                CategoryModel c = categoryList.get(position);
 
-                intent.putExtra(Config.TAG_GC_ID,c.getId());
-                intent.putExtra(Config.TAG_GC_NAME,c.getName());
-                intent.putExtra(Config.TAG_GC_IMAGE,c.getImage());
-                startActivity(intent);
-                */
                 int position = rv.getChildAdapterPosition(view);
                 CategoryModel c = categoryList.get(position);
 

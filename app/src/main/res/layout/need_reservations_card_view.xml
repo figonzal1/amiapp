@@ -1,0 +1,34 @@
+<android.support.v7.widget.CardView
+    android:id="@+id/need_reservations_card_view"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="2dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="?android:selectableItemBackground">
+
+        <TextView
+            android:id="@+id/tv_need_reservations_tittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo Oferta empresa"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_need_reservations_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio : $xx.xx"
+            android:layout_below="@+id/tv_need_reservations_tittle"
+            android:layout_marginTop="10dp"/>
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -71,9 +71,49 @@
             android:name=".Need.NeedActivity"
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Category.CategoryView" />
-        <activity android:name=".Need.ListOfferCompanies.NeedOfferActivity" />
-        <activity android:name=".Need.NeedOfferDetails.NeedOfferViewActivity" />
+        <activity
+            android:name=".Need.ListOfferCompanies.NeedOfferActivity"
+            android:label="@string/NeedOfferCompanies"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".Need.NeedOfferDetails.NeedOfferViewActivity"
+            android:label="@string/NeedOfferDetails"
+            android:parentActivityName=".Need.ListOfferCompanies.NeedOfferActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Need.ListOfferCompanies.NeedOfferActivity" />
+        </activity>
+        <activity
+            android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity"
+            android:label="@string/NeedOfferLocalDetails"
+            android:theme="@style/AppTheme">
+
+        </activity>
+
+        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity"
+            android:label="@string/NeedOfferLocalStreetView"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
+        </activity>
+
+        <activity
+            android:name=".Need.NeedReservations.NeedReservationsActivity"
+            android:label="Mis pedidos reservados"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -83,9 +123,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity android:name=".ContactUsActivity" />
-        <activity android:name=".Need.NeedOfferViewLocal" />
-        <activity android:name=".Offer.OfferDetail.OfferDetailActivity"/>
+
+        <activity android:name=".Offer.OfferDetail.OfferDetailActivity" />
+
         <activity
             android:name=".Offer.FilterOfferActivity"
             android:label="@string/title_activity_filter_offers"
@@ -95,7 +137,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MyProfileActivity"></activity>
+        <activity android:name=".MyProfileActivity" />
+
     </application>
 
 </manifest>
