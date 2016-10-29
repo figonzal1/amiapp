@@ -77,8 +77,6 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_ANDROID);
 
         try {
-
-            Log.d("hola",model.getDateTimeFin());
             Date future = format.parse(model.getDateTimeFin());
 
             Date today = new Date();
@@ -92,12 +90,12 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
                     long minutes = seconds / 60;
                     long hours = minutes / 60;
                     long days = hours / 24;
-                    String time = days + " " + "days" + "  " + hours % 24 + "h:" + minutes % 60 + "m:" + seconds % 60+"s";
+                    String time = days + " " + "days" + " " + hours % 24 + "h:" + minutes % 60 + "m:" + seconds % 60+"s";
 
                     if (days==0){
                         time= hours % 24 + "h:" + minutes % 60 + "m:" + seconds % 60+"s";
                         if (hours==0){
-                            time= minutes % 60 + "m :" + seconds % 60+"s";
+                            time= minutes % 60 + "m:" + seconds % 60+"s";
                         }
                         holder.tvTime.setText(time);
                         holder.tvTime.setTextColor(Color.parseColor("#FF0000"));

@@ -196,7 +196,7 @@ public class Config {
 	public static final String TAG_GNO_CODPROMOTION="codPromocion";
 	public static final String TAG_GNO_DATEINI="fechaInicio";
 	public static final String TAG_GNO_DATEFIN="fechaTermino";
-	public static final String TAG_GNO_DATETIMEFIN="fechaTermino";
+	public static final String TAG_GNO_DATETIME_FIN="fechaTermino";
 	public static final String TAG_GNO_PRICEOFFER="precioOferta";
 	public static final String TAG_GNO_MAXPPERSON="maxPPersona";
 	public static final String TAG_GNO_COMPANY="nombreEmpresa";

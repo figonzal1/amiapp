@@ -56,7 +56,6 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         //Init textviews
         tvTittle = (TextView)findViewById(R.id.tv_need_offer_view_tittle);
         tvPrice = (TextView)findViewById(R.id.tv_need_offer_view_price);
@@ -66,11 +65,9 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         tvDateFin = (TextView)findViewById(R.id.tv_need_offer_view_date_fin);
         tvMaxPPerson = (TextView)findViewById(R.id.tv_need_offer_view_max_person);
 
-
         //Init buttons
         btnAccept = (Button)findViewById(R.id.btn_need_offer_view_accept);
         btnDiscard= (Button)findViewById(R.id.btn_need_offer_view_discard);
-
 
         //Get info from NeedOfferActivity
         final Bundle bundle = getIntent().getExtras();
@@ -78,7 +75,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         //Capture id's
         idOffer = bundle.getString(Config.TAG_GNO_IDOFFER);
         idLocal = bundle.getString(Config.TAG_GNO_IDLOCAL);
-        dateTimeFin=bundle.getString(Config.TAG_GNO_DATETIMEFIN);
+
 
         //Set TextViews with the information of each NeedOffer.
         tvTittle.setText(bundle.getString(Config.TAG_GNO_TITTLE));
@@ -172,8 +169,6 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                         if (s.equals("0")){
 
                             Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_LONG).show();
-
-
 
                             //NeedOfferActivity (List offer companies) is finish.
                             NeedOfferActivity.activity.finish();

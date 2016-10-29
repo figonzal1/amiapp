@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -78,10 +79,6 @@ public class NeedOfferActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getNeedOffers();
-
-
-
-
 
     }
 
@@ -167,7 +164,6 @@ public class NeedOfferActivity extends AppCompatActivity {
                         intent.putExtra(Config.TAG_GNO_MAXPPERSON, m.getMaxPPerson());
                         intent.putExtra(Config.TAG_GNO_CODPROMOTION, m.getCodPromotion());
                         intent.putExtra(Config.TAG_GNO_DATEFIN, m.getDateFin());
-                        intent.putExtra(Config.TAG_GNO_DATETIMEFIN,m.getDateTimeFin());
                         intent.putExtra(Config.TAG_GNO_DATEINI, m.getDateIni());
                         intent.putExtra(Config.TAG_GNO_COMPANY, m.getCompany());
                         startActivity(intent);
@@ -218,7 +214,7 @@ public class NeedOfferActivity extends AppCompatActivity {
 
                 dIni = jsonObjectItem.getString(Config.TAG_GNO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GNO_DATEFIN);
-                dTimeFin= jsonObjectItem.getString(Config.TAG_GNO_DATETIMEFIN);
+                dTimeFin= jsonObjectItem.getString(Config.TAG_GNO_DATETIME_FIN);
                 dateIni= format.parse(dIni);
                 dateFin = format.parse(dFin);
                 dateTimeFin=format.parse(dTimeFin);
