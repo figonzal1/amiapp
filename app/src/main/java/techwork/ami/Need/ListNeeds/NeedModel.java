@@ -6,6 +6,7 @@ public class NeedModel {
     String tittle;
     String description;
     String dateFin;
+    String dateTimeFin;
     int priceMax;
     String lat;
     String lon;
@@ -46,6 +47,10 @@ public class NeedModel {
     public String getnDiscardOffers() {
         return nDiscardOffers;
     }
+
+    public String getDateTimeFin() {
+        return dateTimeFin;
+    }
     //Setters
 
     public void setIdNeed(String idNeed) {
@@ -84,5 +89,9 @@ public class NeedModel {
 
     public void setnDiscardOffers(String nDiscardOffers) {
         this.nDiscardOffers = nDiscardOffers;
+    }
+
+    public void setDateTimeFin(String dateTime) {
+        this.dateTimeFin = dateTime;
     }
 }

@@ -13,6 +13,7 @@ public class NeedOfferModel {
     String stock;
     String codPromotion;
     String dateIni;
+    String dateTimeFin;
     String dateFin;
     int price;
     String maxPPerson;
@@ -69,7 +70,9 @@ public class NeedOfferModel {
         return company;
     }
 
-
+    public String getDateTimeFin() {
+        return dateTimeFin;
+    }
 
     //Setters
 
@@ -119,5 +122,9 @@ public class NeedOfferModel {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public void setDateTimeFin(String dateTimeFin) {
+        this.dateTimeFin = dateTimeFin;
     }
 }

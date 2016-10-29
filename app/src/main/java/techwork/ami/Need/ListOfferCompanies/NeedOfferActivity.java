@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +59,8 @@ public class NeedOfferActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         idNeedOffer = bundle.getString(Config.TAG_GNO_IDNEED);
 
+        tvNeedOfferEmpty = (TextView)findViewById(R.id.tv_need_company_empty);
+
         rv = (RecyclerView)findViewById(R.id.recycler_view_need_offer);
         rv.setHasFixedSize(true);
 
@@ -76,7 +79,7 @@ public class NeedOfferActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getNeedOffers();
 
-        tvNeedOfferEmpty = (TextView)findViewById(R.id.tv_need_company_empty);
+
 
 
 
@@ -146,20 +149,35 @@ public class NeedOfferActivity extends AppCompatActivity {
                 int position = rv.getChildAdapterPosition(view);
                 NeedOfferModel m = needOfferList.get(position);
 
-                //Send to NeedOfferDetails the details of each offer.
-                intent.putExtra(Config.TAG_GNO_IDOFFER,m.getIdOferta());
-                intent.putExtra(Config.TAG_GNO_IDLOCAL,m.getIdLocal());
-                intent.putExtra(Config.TAG_GNO_TITTLE,m.getTittle());
-                intent.putExtra(Config.TAG_GNO_DESCRIPTION,m.getDescription());
-                intent.putExtra(Config.TAG_GNO_PRICEOFFER,m.getPrice());
-                intent.putExtra(Config.TAG_GNO_DESCRIPTION,m.getDescription());
-                intent.putExtra(Config.TAG_GNO_STOCK,m.getStock());
-                intent.putExtra(Config.TAG_GNO_MAXPPERSON,m.getMaxPPerson());
-                intent.putExtra(Config.TAG_GNO_CODPROMOTION,m.getCodPromotion());
-                intent.putExtra(Config.TAG_GNO_DATEFIN,m.getDateFin());
-                intent.putExtra(Config.TAG_GNO_DATEINI,m.getDateIni());
-                intent.putExtra(Config.TAG_GNO_COMPANY,m.getCompany());
-                startActivity(intent);
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat format2 = new SimpleDateFormat(Config.DATETIME_FORMAT_ANDROID);
+
+                try {
+                    //If needoffer date is end you not open the offer.
+                    if (format2.parse(m.getDateTimeFin()).after(c.getTime())) {
+
+                        //Send to NeedOfferDetails the details of each offer.
+                        intent.putExtra(Config.TAG_GNO_IDOFFER, m.getIdOferta());
+                        intent.putExtra(Config.TAG_GNO_IDLOCAL, m.getIdLocal());
+                        intent.putExtra(Config.TAG_GNO_TITTLE, m.getTittle());
+                        intent.putExtra(Config.TAG_GNO_DESCRIPTION, m.getDescription());
+                        intent.putExtra(Config.TAG_GNO_PRICEOFFER, m.getPrice());
+                        intent.putExtra(Config.TAG_GNO_DESCRIPTION, m.getDescription());
+                        intent.putExtra(Config.TAG_GNO_STOCK, m.getStock());
+                        intent.putExtra(Config.TAG_GNO_MAXPPERSON, m.getMaxPPerson());
+                        intent.putExtra(Config.TAG_GNO_CODPROMOTION, m.getCodPromotion());
+                        intent.putExtra(Config.TAG_GNO_DATEFIN, m.getDateFin());
+                        intent.putExtra(Config.TAG_GNO_DATETIMEFIN,m.getDateTimeFin());
+                        intent.putExtra(Config.TAG_GNO_DATEINI, m.getDateIni());
+                        intent.putExtra(Config.TAG_GNO_COMPANY, m.getCompany());
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(),"Oferta expirada",Toast.LENGTH_LONG).show();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -173,8 +191,8 @@ public class NeedOfferActivity extends AppCompatActivity {
 
 
     private void getNeedOffersData(String json){
-        String dIni,dFin;
-        Date dateIni,dateFin;
+        String dIni,dFin,dTimeFin;
+        Date dateIni,dateFin,dateTimeFin;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try{
@@ -200,13 +218,19 @@ public class NeedOfferActivity extends AppCompatActivity {
 
                 dIni = jsonObjectItem.getString(Config.TAG_GNO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GNO_DATEFIN);
+                dTimeFin= jsonObjectItem.getString(Config.TAG_GNO_DATETIMEFIN);
                 dateIni= format.parse(dIni);
                 dateFin = format.parse(dFin);
+                dateTimeFin=format.parse(dTimeFin);
 
                 c.setTime(dateIni);
                 item.setDateIni(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+
                 c.setTime(dateFin);
                 item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+
+                c.setTime(dateTimeFin);
+                item.setDateTimeFin(String.format(Locale.US,Config.DATETIME_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
 
                 needOfferList.add(item);
             }

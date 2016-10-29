@@ -23,7 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
     TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvMaxPPerson;
     Button btnAccept, btnDiscard;
-    private String idOffer,idLocal;
+    private String idOffer,idLocal,dateTimeFin;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
@@ -75,6 +78,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         //Capture id's
         idOffer = bundle.getString(Config.TAG_GNO_IDOFFER);
         idLocal = bundle.getString(Config.TAG_GNO_IDLOCAL);
+        dateTimeFin=bundle.getString(Config.TAG_GNO_DATETIMEFIN);
 
         //Set TextViews with the information of each NeedOffer.
         tvTittle.setText(bundle.getString(Config.TAG_GNO_TITTLE));

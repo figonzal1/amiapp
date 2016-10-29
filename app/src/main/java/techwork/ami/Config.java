@@ -196,6 +196,7 @@ public class Config {
 	public static final String TAG_GNO_CODPROMOTION="codPromocion";
 	public static final String TAG_GNO_DATEINI="fechaInicio";
 	public static final String TAG_GNO_DATEFIN="fechaTermino";
+	public static final String TAG_GNO_DATETIMEFIN="fechaTermino";
 	public static final String TAG_GNO_PRICEOFFER="precioOferta";
 	public static final String TAG_GNO_MAXPPERSON="maxPPersona";
 	public static final String TAG_GNO_COMPANY="nombreEmpresa";
@@ -273,6 +274,9 @@ public class Config {
 	// Date format
 	public static final String DATETIME_FORMAT_DB="yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_FORMAT="%02d/%02d/%04d";
+	public static final String DATETIME_FORMAT="%02d/%02d/%04d %02d:%02d:%02d";
+	public static final String DATETIME_FORMAT_ANDROID="dd/MM/yyyy HH:mm:ss";
+
 
 	//Tags used in the JSON String Need
 	public static final String TAG_ID = "idCategoria";

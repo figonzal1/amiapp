@@ -71,37 +71,34 @@
             android:name=".Need.NeedActivity"
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Need.ListOfferCompanies.NeedOfferActivity"
+        <activity
+            android:name=".Need.ListOfferCompanies.NeedOfferActivity"
             android:label="@string/NeedOfferCompanies"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".Need.NeedOfferDetails.NeedOfferViewActivity"
             android:label="@string/NeedOfferDetails"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".Need.ListOfferCompanies.NeedOfferActivity">
+            android:parentActivityName=".Need.ListOfferCompanies.NeedOfferActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.ListOfferCompanies.NeedOfferActivity"/>
+                android:value=".Need.ListOfferCompanies.NeedOfferActivity" />
         </activity>
-
         <activity android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
-
         <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity" />
-
         <activity
             android:name=".Need.NeedReservations.NeedReservationsActivity"
             android:label="Mis pedidos reservados"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -111,7 +108,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity android:name=".ContactUsActivity" />
         <activity android:name=".Offer.OfferDetail.OfferDetailActivity" />
         <activity
@@ -124,6 +120,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".MyProfileActivity" />
-
     </application>
+
 </manifest>
