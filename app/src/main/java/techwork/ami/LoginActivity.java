@@ -541,8 +541,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 super.onPostExecute(s);
                 loading.dismiss();
 
-                System.out.println("s: " + s);
-
                 // Success
                 if (s.equals("0")) {
                     Toast.makeText(LoginActivity.this, R.string.reactivateAccountSuccess, Toast.LENGTH_LONG).show();

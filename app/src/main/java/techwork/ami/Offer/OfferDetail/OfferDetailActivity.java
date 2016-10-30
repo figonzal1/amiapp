@@ -15,8 +15,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -48,16 +50,21 @@ public class OfferDetailActivity extends AppCompatActivity {
     private ProductAdapter adapter;
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
+    private NumberPicker numberPicker;
+    private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsct, priceTxt, price, remainingDays;
+    private FloatingActionButton fab;
+
     private String idOffer;
     private String idPersona;
-    private FloatingActionButton fab;
     private Context context;
-    private NumberPicker numberPicker;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offer_detail_activity);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.od_toolbar);
+        setSupportActionBar(toolbar);
 
         context = this;
 
@@ -82,6 +89,35 @@ public class OfferDetailActivity extends AppCompatActivity {
             }
         });
 
+        // References
+        title = (TextView)findViewById(R.id.od_tv_title);
+        company = (TextView)findViewById(R.id.od_tv_company);
+        description = (TextView)findViewById(R.id.od_tv_description);
+        tPrice = (TextView)findViewById(R.id.od_tv_tprice);
+        tPriceTxt = (TextView)findViewById(R.id.od_tv_tprice_txt);
+        dsct = (TextView)findViewById(R.id.od_tv_dsct);
+        dsctTxt = (TextView)findViewById(R.id.od_tv_dsct_txt);
+        price = (TextView)findViewById(R.id.od_tv_price);
+        priceTxt = (TextView)findViewById(R.id.od_tv_price_txt);
+        remainingDays = (TextView)findViewById(R.id.od_tv_rd);
+
+        // Text
+        dsctTxt.setText(bundle.getString(getResources().getString(R.string.od_tv_dsct_txt)));
+        priceTxt.setText(bundle.getString(getResources().getString(R.string.od_tv_price_txt)));
+        tPriceTxt.setText(bundle.getString(getResources().getString(R.string.od_tv_tprice_txt)));
+
+        // From offer
+        title.setText(bundle.getString(Config.TAG_GO_TITLE));
+        company.setText(bundle.getString(Config.TAG_GO_COMPANY));
+        description.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
+        //tPrice.setText(bundle.getString(Config.TAG_GO_TOTALPRICE));
+        //price.setText(bundle.getString(Config.TAG_GO_PRICE));
+        System.out.println("Precio = " + bundle.get(Config.TAG_GO_TOTALPRICE));
+        /*int perc = (Integer.valueOf(bundle.getString(Config.TAG_GO_TOTALPRICE)) != 0)?
+                Integer.valueOf(bundle.getString(Config.TAG_GO_PRICE))*100/Integer.valueOf(bundle.getString(Config.TAG_GO_TOTALPRICE)):
+                0;*/
+        int perc = 0;
+        dsct.setText(String.valueOf(perc));
         // Floating Action Button
         fab = (FloatingActionButton)findViewById(R.id.fab_offer_detail);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -147,14 +183,12 @@ public class OfferDetailActivity extends AppCompatActivity {
             }
             @Override
             protected String doInBackground(String... params) {
-                System.out.println(Config.URL_GOD+params[1]+params[0]);
                 RequestHandler rh = new RequestHandler();
 
                 // Notify that the user saw the offer
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
                 hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
-                System.out.println(hashMap);
                 rh.sendPostRequest(Config.URL_OFFER_SAW, hashMap);
 
                 // Get offer detail
@@ -162,7 +196,6 @@ public class OfferDetailActivity extends AppCompatActivity {
             }
             @Override
             protected void onPostExecute(String s){
-                System.out.println(s);
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
                 showProducts(s);

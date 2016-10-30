@@ -163,11 +163,13 @@ public class FragmentHome extends Fragment {
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
+                intent.putExtra(Config.TAG_GO_COMPANY, o.getCompany());
                 intent.putExtra(Config.TAG_GO_PRICE, o.getPrice());
                 intent.putExtra(Config.TAG_GO_OFFER_ID, o.getId());
                 intent.putExtra(Config.TAG_GO_MAXXPER, o.getMaxPPerson());
                 intent.putExtra(Config.TAG_GO_STOCK, o.getStock());
                 intent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
+                intent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
                 startActivity(intent);
             }
 

@@ -9,4 +9,5 @@
     <dimen name="cardCornerRadius">2dp</dimen>
     <dimen name="appBarTop">5dp</dimen>
     <dimen name="appBarBottom">5dp</dimen>
+    <dimen name="activity_padding">16dp</dimen>
 </resources>

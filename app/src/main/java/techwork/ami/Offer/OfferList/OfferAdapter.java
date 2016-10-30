@@ -76,7 +76,6 @@ public class OfferAdapter
         holder.offerPrice.setText("$"+String.format(Config.CLP_FORMAT,offer.getPrice()));
         holder.offerCompany.setText(offer.getCompany());
         int perc = (offer.getTotalPrice() != 0)? (offer.getPrice()*100)/offer.getTotalPrice() : 100;
-        System.out.println(perc);
         // If offer price is greater than total price
         String s = "-";
         if (perc == 100){
