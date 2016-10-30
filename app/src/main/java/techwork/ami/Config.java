@@ -57,6 +57,7 @@ public class Config {
 	public static final String TAG_GO_DATEFIN="fechaTermino";
 	public static final String TAG_GO_STATE="estado";
 	public static final String TAG_GO_PRICE="precio";
+	public static final String TAG_GO_TOTALPRICE="precioTotal";
 	public static final String TAG_GO_MAXXPER="maxPPersona";
 	public static final String TAG_GO_COMPANY="empresa";
 	public static final String TAG_GO_IMAGE ="imagen" ;
