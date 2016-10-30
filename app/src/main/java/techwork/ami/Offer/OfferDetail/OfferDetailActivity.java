@@ -102,21 +102,19 @@ public class OfferDetailActivity extends AppCompatActivity {
         remainingDays = (TextView)findViewById(R.id.od_tv_rd);
 
         // Text
-        dsctTxt.setText(bundle.getString(getResources().getString(R.string.od_tv_dsct_txt)));
-        priceTxt.setText(bundle.getString(getResources().getString(R.string.od_tv_price_txt)));
-        tPriceTxt.setText(bundle.getString(getResources().getString(R.string.od_tv_tprice_txt)));
+        dsctTxt.setText(getResources().getString(R.string.od_tv_dsct_txt));
+        priceTxt.setText(getResources().getString(R.string.od_tv_price_txt));
+        tPriceTxt.setText(getResources().getString(R.string.od_tv_tprice_txt));
 
         // From offer
         title.setText(bundle.getString(Config.TAG_GO_TITLE));
         company.setText(bundle.getString(Config.TAG_GO_COMPANY));
         description.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
-        //tPrice.setText(bundle.getString(Config.TAG_GO_TOTALPRICE));
-        //price.setText(bundle.getString(Config.TAG_GO_PRICE));
-        System.out.println("Precio = " + bundle.get(Config.TAG_GO_TOTALPRICE));
-        /*int perc = (Integer.valueOf(bundle.getString(Config.TAG_GO_TOTALPRICE)) != 0)?
-                Integer.valueOf(bundle.getString(Config.TAG_GO_PRICE))*100/Integer.valueOf(bundle.getString(Config.TAG_GO_TOTALPRICE)):
-                0;*/
-        int perc = 0;
+        tPrice.setText(String.valueOf(bundle.getInt(Config.TAG_GO_TOTALPRICE)));
+        price.setText(String.valueOf(bundle.getInt(Config.TAG_GO_PRICE)));
+        int perc = (bundle.getInt(Config.TAG_GO_TOTALPRICE) != 0) ?
+                bundle.getInt(Config.TAG_GO_PRICE)*100/bundle.getInt(Config.TAG_GO_TOTALPRICE):
+                0;
         dsct.setText(String.valueOf(perc));
         // Floating Action Button
         fab = (FloatingActionButton)findViewById(R.id.fab_offer_detail);
