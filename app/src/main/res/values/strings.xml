@@ -163,6 +163,13 @@
     <string name="titleActivityExploreOffers">Explorar ofertas</string>
 
     <!-- Offer Strings -->
+    <string name="offer_cv_company">Compañía</string>
+    <string name="offer_cv_price">Precio</string>
+    <string name="offer_cv_description">Descripción</string>
+    <string name="offer_cv_title">Título oferta</string>
+    <string name="offer_cv_dsct">Descuento</string>
+    <string name="offer_cv_dsct_sy">%</string>
+    <string name="offer_cv_image_desciption">Imagen</string>
     <string name="reserve_ok">¡Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>

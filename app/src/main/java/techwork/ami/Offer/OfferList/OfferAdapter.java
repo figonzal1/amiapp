@@ -43,16 +43,18 @@ public class OfferAdapter
         public TextView offerCompany;
         public TextView offerDescription;
         public TextView offerDsct;
+        public TextView offerDsctSy;
         public ImageView offerImage;
 
         public OfferViewHolder(View itemView) {
             super(itemView);
-            offerTitle = (TextView)itemView.findViewById(R.id.offer_tittle);
-            offerPrice = (TextView)itemView.findViewById(R.id.offer_price);
-            offerDsct = (TextView)itemView.findViewById(R.id.offer_dsct);
-            offerCompany = (TextView)itemView.findViewById(R.id.offer_company);
-            offerDescription= (TextView)itemView.findViewById(R.id.offer_description);
-            offerImage = (ImageView)itemView.findViewById(R.id.offer_photo);
+            offerTitle = (TextView)itemView.findViewById(R.id.offer_cv_tittle);
+            offerPrice = (TextView)itemView.findViewById(R.id.offer_cv_price);
+            offerDsct = (TextView)itemView.findViewById(R.id.offer_cv_dsct);
+            offerDsctSy = (TextView)itemView.findViewById(R.id.offer_cv_dsct_sy) ;
+            offerCompany = (TextView)itemView.findViewById(R.id.offer_cv_company);
+            offerDescription= (TextView)itemView.findViewById(R.id.offer_cv_description);
+            offerImage = (ImageView)itemView.findViewById(R.id.offer_cv_photo);
         }
     }
 
@@ -76,21 +78,19 @@ public class OfferAdapter
         int perc = (offer.getTotalPrice() != 0)? (offer.getPrice()*100)/offer.getTotalPrice() : 100;
         System.out.println(perc);
         // If offer price is greater than total price
-        String s;
-        if (perc < 100){
-            // Red color
-            holder.offerDsct.setTextColor(ContextCompat.getColor(context, R.color.red));
-            s = "-";
-        }
-        else{
-            // Green color
-            holder.offerDsct.setTextColor(ContextCompat.getColor(context, R.color.green));
-            s = "+";
-        }
+        String s = "-";
         if (perc == 100){
             holder.offerDsct.setText("");
+            holder.offerDsctSy.setText("");
+            s = "";
         }
-        else holder.offerDsct.setText(s+String.valueOf(Math.abs(100-perc)+"%"));
+        else if (perc > 100){
+            // Red color
+            holder.offerDsct.setTextColor(ContextCompat.getColor(context, R.color.red));
+            holder.offerDsctSy.setTextColor(ContextCompat.getColor(context, R.color.red));
+            s = "+";
+        }
+        if (!s.equals("")) holder.offerDsct.setText(s+String.valueOf(Math.abs(100-perc)));
         holder.offerDescription.setText(offer.getDescription());
         s = offer.getImage();
         Picasso.with(context).load(Config.URL_IMAGES_OFFER+s)
