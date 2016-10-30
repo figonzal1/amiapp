@@ -4,22 +4,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
-import android.util.Log;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import techwork.ami.Config;
-import techwork.ami.DateDifference;
+import techwork.ami.ExpiryTime;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
@@ -74,31 +71,34 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
         holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
         holder.tvCompany.setText(model.getCompany());
 
-        SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_ANDROID);
-
+        ExpiryTime expt = new ExpiryTime();
+        long expiryTime = 0;
         try {
-            Date future = format.parse(model.getDateTimeFin());
+            expiryTime = expt.getTimeDiference(model.getDateTimeFin());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-            Date today = new Date();
-            final long currentTime = today.getTime();
-            long futureTime = future.getTime();
-            long expiryTime = futureTime - currentTime;
-
-            holder.countDownTimer = new CountDownTimer(expiryTime, 500) {
+        holder.countDownTimer = new CountDownTimer(expiryTime, 500) {
                 public void onTick(long millisUntilFinished) {
                     long seconds = millisUntilFinished / 1000;
                     long minutes = seconds / 60;
                     long hours = minutes / 60;
                     long days = hours / 24;
-                    String time = days + " " + "days" + " " + hours % 24 + "h:" + minutes % 60 + "m:" + seconds % 60+"s";
+
+                    String time =days + " " + "días" + " " + hours % 24 + "h:" + (minutes % 60) + "m:" + seconds % 60+"s";
 
                     if (days==0){
                         time= hours % 24 + "h:" + minutes % 60 + "m:" + seconds % 60+"s";
-                        if (hours==0){
+                        if (hours<1){
                             time= minutes % 60 + "m:" + seconds % 60+"s";
+                            holder.tvTime.setTextColor(Color.parseColor("#FF0000"));
                         }
                         holder.tvTime.setText(time);
-                        holder.tvTime.setTextColor(Color.parseColor("#FF0000"));
+
+                    }
+                    else if (days==1){
+                        time =days + " " + "día" + " " + hours % 24 + "h:" + (minutes % 60) + "m:" + seconds % 60+"s";
                     }
                     holder.tvTime.setText(time);
                 }
@@ -106,10 +106,7 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
                 public void onFinish() {
                     holder.tvTime.setText("Expirada");
                 }
-            }.start();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        }.start();
     }
 
     @Override
