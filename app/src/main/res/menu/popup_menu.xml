@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/discard_need"
-        android:title="Descartar Oferta">
+        android:id="@+id/popup_menu_view_need"
+        android:title="Ver ofertas">
+    </item>
+
+    <item
+        android:id="@+id/popup_menu_discard_order"
+        android:title="Descartar pedido">
     </item>
 
 </menu>

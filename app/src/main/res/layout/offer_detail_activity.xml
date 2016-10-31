@@ -165,7 +165,7 @@
                             android:textAlignment="center"
                             android:textColor="@color/green"
                             android:layout_alignParentTop="true"
-                            android:layout_toStartOf="@+id/od_tv_dsct_sy" />
+                            />
 
                     </RelativeLayout>
 

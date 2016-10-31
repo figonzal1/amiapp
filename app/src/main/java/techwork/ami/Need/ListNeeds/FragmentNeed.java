@@ -14,7 +14,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -55,6 +54,7 @@ public class FragmentNeed extends Fragment {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
 
+
     public FragmentNeed() {
         // Required empty public constructor
     }
@@ -68,7 +68,7 @@ public class FragmentNeed extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter= new NeedAdapter(getActivity(),needList);
+        adapter= new NeedAdapter(getActivity(),needList, FragmentNeed.this);
     }
 
 
@@ -112,6 +112,49 @@ public class FragmentNeed extends Fragment {
         });
 
         return v;
+    }
+
+    //Show menu in cardview
+    public void showPopupMenu(final View view, final NeedModel model){
+
+        PopupMenu popup= new PopupMenu(view.getContext(),view);
+        MenuInflater inflater = popup.getMenuInflater();
+
+        inflater.inflate(R.menu.popup_menu,popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+
+                    case R.id.popup_menu_view_need:
+                        Intent intent = new Intent(view.getContext(),NeedOfferActivity.class);
+                        //Send de idNecesidad to send post request for obtain each NeedOffer with this id.
+                        intent.putExtra(Config.TAG_GN_IDNEED,model.getIdNeed());
+                        view.getContext().startActivity(intent);
+                        return true;
+
+                    case R.id.popup_menu_discard_order:
+
+                        new CustomAlertDialogBuilder(view.getContext())
+                                .setTitle(R.string.NeedDeleteConfirm)
+                                .setMessage("Confirme la acción")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        deleteNeed(view,dialog,model);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                })
+                                .show();
+                        return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
     }
 
     private void getNeeds(){
@@ -173,7 +216,7 @@ public class FragmentNeed extends Fragment {
     private void showNeeds(String s) {
         getNeedsData(s);
 
-        adapter = new NeedAdapter(getActivity(),needList);
+        adapter = new NeedAdapter(getActivity(),needList,FragmentNeed.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
@@ -196,7 +239,7 @@ public class FragmentNeed extends Fragment {
                         .setMessage("Confirme la acción")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteNeed(dialog,  needList.get(rv.getChildAdapterPosition(view)));
+                                deleteNeed(view,dialog, needList.get(rv.getChildAdapterPosition(view)));
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -209,7 +252,7 @@ public class FragmentNeed extends Fragment {
         });
     }
 
-    private void deleteNeed(DialogInterface dialog, NeedModel need) {
+    private void deleteNeed(final View view, DialogInterface dialog, final NeedModel model) {
         class DeleteNeed extends AsyncTask<String, Void, String> {
             private ProgressDialog loading;
             private DialogInterface dialog;
@@ -221,7 +264,7 @@ public class FragmentNeed extends Fragment {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getContext(),
+                loading = ProgressDialog.show(view.getContext(),
                         getString(R.string.Need_delete_processing),
                         getString(R.string.wait), false, false);
             }
@@ -229,7 +272,7 @@ public class FragmentNeed extends Fragment {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_NE_ID, params[0]);
+                hashMap.put(Config.KEY_NE_ID, model.getIdNeed());
                 RequestHandler rh = new RequestHandler();
 
                 return rh.sendPostRequest(Config.URL_DELETE_NEED, hashMap);
@@ -240,16 +283,17 @@ public class FragmentNeed extends Fragment {
                 super.onPostExecute(s);
                 loading.dismiss();
                 if (s.equals("0")) {
-                    Toast.makeText(getActivity().getApplicationContext(),
+                    Toast.makeText(view.getContext(),
                             R.string.Need_delete_ok, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(),
+                    Toast.makeText(view.getContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
                 this.dialog.dismiss();
             }
         }
-        new DeleteNeed(dialog).execute(need.getIdNeed());
+        DeleteNeed go = new DeleteNeed(dialog);
+        go.execute();
         getNeeds();
     }
 
@@ -298,23 +342,4 @@ public class FragmentNeed extends Fragment {
         }
     }
 
-    public static void showPopupMenu(final View view, int position){
-
-        PopupMenu popup= new PopupMenu(view.getContext(),view);
-        MenuInflater inflater = popup.getMenuInflater();
-
-        inflater.inflate(R.menu.popup_menu,popup.getMenu());
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-
-                    case R.id.discard_need:
-                        Toast.makeText(view.getContext(),"El click del menu",Toast.LENGTH_LONG).show();
-                        return true;
-                }
-                return false;
-            }
-        });
-    }
 }

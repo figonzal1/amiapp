@@ -2,16 +2,13 @@ package techwork.ami.Need.ListNeeds;
 
 
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -29,11 +26,13 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
     private List<NeedModel> items;
     private OnItemClickListenerRecyclerView itemClick;
     private Context context;
+    private FragmentNeed fragmentNeed;
 
     //Construct
-    public NeedAdapter(Context context, List<NeedModel> items){
+    public NeedAdapter(Context context, List<NeedModel> items, FragmentNeed fragmentNeed){
         this.context=context;
         this.items=items;
+        this.fragmentNeed=fragmentNeed;
     }
 
     //holder of class
@@ -73,21 +72,24 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
 
     @Override
     public void onBindViewHolder(final NeedAdapter.NeedViewHolder holder, final int position) {
-        NeedModel model = items.get(position);
+        final NeedModel model = items.get(position);
         holder.tvTitle.setText(model.getTittle());
         holder.tvDateFin.setText(model.getDateFin());
         holder.tvPricemax.setText("$"+String.format(Config.CLP_FORMAT,model.getPriceMax()));
         holder.tvNOffers.setText(model.getOffersCompany());
         holder.tvNOffersDiscard.setText(model.getnDiscardOffers());
         holder.tvDescription.setText(model.getDescription());
+
+        //display popupMenu on listNeeds
         holder.popupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"CLick",Toast.LENGTH_LONG).show();
+                fragmentNeed.showPopupMenu(v,model);
             }
         });
 
     }
+
 
 
 
