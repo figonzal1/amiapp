@@ -55,6 +55,7 @@ public class Config {
 	public static final String TAG_GO_PROMCOD="codPromocion";
 	public static final String TAG_GO_DATEINI="fechaInicio";
 	public static final String TAG_GO_DATEFIN="fechaTermino";
+	public static final String TAG_GO_DATETIMEFIN="fechaTermino";
 	public static final String TAG_GO_STATE="estado";
 	public static final String TAG_GO_PRICE="precio";
 	public static final String TAG_GO_TOTALPRICE="precioTotal";

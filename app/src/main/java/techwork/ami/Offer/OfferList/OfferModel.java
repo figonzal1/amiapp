@@ -9,6 +9,7 @@ public class  OfferModel {
     private String description;
     private String initialDate;
     private String finalDate;
+    private String finalDateTime;
     private int state;
     private int price;
     private int totalPrice;
@@ -58,6 +59,10 @@ public class  OfferModel {
     }
     public void setCompany(String company){this.company=company;}
 
+    public String getFinalDateTime() {
+        return finalDateTime;
+    }
+
     //Getters
     public String getId(){return id;}
     public String getTitle(){return title;}
@@ -73,4 +78,7 @@ public class  OfferModel {
     public String getImage(){return image;}
     public String getCompany(){return company;}
 
+    public void setFinalDateTime(String finalDateTime) {
+        this.finalDateTime = finalDateTime;
+    }
 }

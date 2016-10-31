@@ -72,14 +72,9 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
         holder.tvCompany.setText(model.getCompany());
 
         ExpiryTime expt = new ExpiryTime();
-        long expiryTime = 0;
-        try {
-            expiryTime = expt.getTimeDiference(model.getDateTimeFin());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        long expiryTime = expt.getTimeDiference(model.getDateTimeFin());
 
-        holder.countDownTimer = new CountDownTimer(expiryTime, 500) {
+        holder.countDownTimer = new CountDownTimer(expiryTime, 1000) {
                 public void onTick(long millisUntilFinished) {
                     long seconds = millisUntilFinished / 1000;
                     long minutes = seconds / 60;
@@ -105,6 +100,7 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
 
                 public void onFinish() {
                     holder.tvTime.setText("Expirada");
+                    holder.tvTime.setTextColor(Color.parseColor("#FF0000"));
                 }
         }.start();
     }

@@ -170,6 +170,7 @@ public class FragmentHome extends Fragment {
                 intent.putExtra(Config.TAG_GO_STOCK, o.getStock());
                 intent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
                 intent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
+                intent.putExtra(Config.TAG_GO_DATETIMEFIN,o.getFinalDateTime());
                 startActivity(intent);
             }
 
@@ -242,8 +243,8 @@ public class FragmentHome extends Fragment {
 
     //Clase que itera sobre el json array para obtener datos de la BD.
     private void getData(String json){
-        String dIni,dFin;
-        Date dateIni,dateFin;
+        String dIni,dFin,dTimeFin;
+        Date dateIni,dateFin,dateTimeFin;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try{
@@ -261,8 +262,11 @@ public class FragmentHome extends Fragment {
 
                 dIni =jsonObjectItem.getString(Config.TAG_GO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
+                dTimeFin = jsonObjectItem.getString(Config.TAG_GO_DATETIMEFIN);
                 dateIni= format.parse(dIni);
                 dateFin =format.parse(dFin);
+                dateTimeFin=format.parse(dTimeFin);
+
 
                 item.setId(jsonObjectItem.getString(Config.TAG_GO_OFFER_ID));
                 item.setTitle(jsonObjectItem.getString(Config.TAG_GO_TITLE));
@@ -283,6 +287,9 @@ public class FragmentHome extends Fragment {
 
                 c.setTime(dateFin);
                 item.setFinalDate(String.format(Locale.US, Config.DATE_FORMAT, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH)+1, c.get(Calendar.YEAR)));
+
+                c.setTime(dateTimeFin);
+                item.setFinalDateTime(String.format(Locale.US,Config.DATETIME_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
 
                 item.setMaxPPerson(jsonObjectItem.getInt(Config.TAG_GO_MAXXPER));
                 item.setCompany(jsonObjectItem.getString(Config.TAG_GO_COMPANY));

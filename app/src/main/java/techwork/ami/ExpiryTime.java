@@ -15,16 +15,23 @@ public class ExpiryTime {
     public ExpiryTime(){
 
     }
-    public long getTimeDiference(String futureDate) throws ParseException {
+    public long getTimeDiference(String futureDate) {
 
-        SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_ANDROID);
-        Date futureTime = format.parse(futureDate);
-        Date currentTime = new Date();
 
-        long fTime = futureTime.getTime();
-        long cTime = currentTime.getTime();
+        long diff = 0;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_ANDROID);
+            Date futureTime = format.parse(futureDate);
+            Date currentTime = new Date();
 
-        return fTime-cTime;
+            long fTime = futureTime.getTime();
+            long cTime = currentTime.getTime();
+            diff = fTime - cTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return diff;
 
     }
 

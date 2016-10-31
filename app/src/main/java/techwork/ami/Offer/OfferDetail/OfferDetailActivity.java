@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -40,6 +41,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.ExpiryTime;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -60,6 +62,7 @@ public class OfferDetailActivity extends AppCompatActivity {
     private String idOffer;
     private String idPersona;
     private Context context;
+    public CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -103,6 +106,43 @@ public class OfferDetailActivity extends AppCompatActivity {
         price = (TextView)findViewById(R.id.od_tv_price);
         priceTxt = (TextView)findViewById(R.id.od_tv_price_txt);
         remainingDays = (TextView)findViewById(R.id.od_tv_rd);
+
+        //Calculate remainigDays
+        ExpiryTime expt= new ExpiryTime();
+        long expiryTime = expt.getTimeDiference(bundle.getString(Config.TAG_GO_DATETIMEFIN));
+        countDownTimer = new CountDownTimer(expiryTime,1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    long seconds = millisUntilFinished/1000;
+                    long minutes = seconds/60;
+                    long hours = minutes/60;
+                    long days= hours/24;
+
+                    String time= days + " " + "días" + " " + hours % 24 + "h:" + (minutes % 60) + "m:" + seconds % 60+"s";
+
+                    if (days==0){
+                        time= hours % 24 + "h:" + minutes % 60 + "m:" + seconds % 60+"s";
+                        if (hours<1){
+                            time= minutes % 60 + "m:" + seconds % 60+"s";
+                            remainingDays.setTextColor(Color.parseColor("#FF0000"));
+                        }
+                        remainingDays.setText(time);
+
+                    }
+                    else if (days==1){
+                        time =days + " " + "día" + " " + hours % 24 + "h:" + (minutes % 60) + "m:" + seconds % 60+"s";
+                    }
+                    remainingDays.setText(time);
+
+                }
+
+                @Override
+                public void onFinish() {
+                    remainingDays.setText("Expirada");
+                    remainingDays.setTextColor(Color.parseColor("#FF0000"));
+                }
+        }.start();
+
 
         // Text
         priceTxt.setText(getResources().getString(R.string.od_tv_price_txt));
