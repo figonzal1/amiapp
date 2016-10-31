@@ -19,6 +19,8 @@ public class NeedReservationsModel {
     String dateCashed;
     String dateIni;
     String dateFin;
+    String company;
+    String localCode;
     int price;
 
 
@@ -85,9 +87,13 @@ public class NeedReservationsModel {
         return price;
     }
 
+    public String getCompany() {
+        return company;
+    }
 
-
-
+    public String getLocalCode() {
+        return localCode;
+    }
 
     //Setters
 
@@ -152,4 +158,11 @@ public class NeedReservationsModel {
         this.tittle = tittle;
     }
 
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setLocalCode(String localCode) {
+        this.localCode = localCode;
+    }
 }

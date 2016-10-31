@@ -1,16 +1,24 @@
 package techwork.ami.Need.NeedReservations;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +34,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.locks.Condition;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import retrofit.http.GET;
 import techwork.ami.Config;
+import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.Need.ListOfferCompanies.NeedOfferModel;
+import techwork.ami.Need.NeedOfferDetails.NeedOfferViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
+import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
+import techwork.ami.ReservationsOffers.ReservationOffer;
 
 public class NeedReservationsActivity extends AppCompatActivity {
 
@@ -42,9 +56,13 @@ public class NeedReservationsActivity extends AppCompatActivity {
     private NeedReservationsAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
     private TextView tvNeedReservationEmpty;
+    CustomAlertDialogBuilder dialogBuilder;
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=this;
         setContentView(R.layout.need_reservations_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -69,6 +87,7 @@ public class NeedReservationsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getNeedReservs();
+
 
     }
     @Override
@@ -136,16 +155,260 @@ public class NeedReservationsActivity extends AppCompatActivity {
 
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+
             @Override
-            public void onItemClick(View view) {
-                Toast.makeText(getApplicationContext(), "Normal click", Toast.LENGTH_LONG).show();
+            public void onItemClick(final View view) {
+
+                final NeedReservationsModel model = needReservationsList.get(rv.getChildAdapterPosition(view));
+
+                //If the needOffer was already cashed
+                if (model.getCashed().equals("1")){
+                    Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
+                    Snackbar.make(view,R.string.need_reservations_offers_already,Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    dialogLocalCode(model);
+                }
+
             }
 
             @Override
-            public void onItemLongClick(View view) {
+            public void onItemLongClick(final View view) {
+                final NeedReservationsModel model = needReservationsList.get(rv.getChildAdapterPosition(view));
+
+                if (model.getCashed().equals("0")){
+                    Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                }
+                //If has already validated and rated.
+                else if (!model.getCalification().equals("")){
+                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    rateNeedOffer(model,false);
+                }
 
             }
         });
+
+    }
+    private void dialogLocalCode(final NeedReservationsModel model){
+
+        //Create the CustomAlertDialogBuilder
+        dialogBuilder = new CustomAlertDialogBuilder(context);
+
+        // Set the usual data, as you would do with AlertDialog.Builder
+        dialogBuilder.setTitle(R.string.my_reservations_offers_validate_title);
+        dialogBuilder.setMessage(getString(R.string.need_reservations_validate_message).replace("%s", model.getCompany()));
+
+        // Create a EditText
+        final EditText edittext = new EditText(this);
+        // Type no visible password
+        edittext.setInputType(Config.inputPromotionCodeType);
+        dialogBuilder.setView(edittext);
+
+        // Set your buttons OnClickListeners
+        dialogBuilder.setPositiveButton(R.string.need_reservations_offers_validate_positiveText,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Dialog will not dismiss when the button is clicked
+                        // Call dialog.dismiss() to actually dismiss it.
+                        // If promotion code from edittext is equals to the object promotion code
+                        if (!model.getLocalCode().equals(edittext.getText().toString())) {
+                            edittext.setError(getString(R.string.need_reservations_offers_validate_errorPromotionCode));
+                        }
+                        // Else
+                        else {
+                            // First validate for the local operator
+                            dialog.dismiss();
+                            dialogPromotionCode(model);
+                        }
+                    }
+                });
+
+        // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+        dialogBuilder.setNegativeButton(R.string.need_reservations_offers_validate_negativeText, null);
+
+        // (optional) set whether to dismiss dialog when touching outside
+        dialogBuilder.setCanceledOnTouchOutside(false);
+
+        // Show the dialog
+        dialogBuilder.show();
+
+    }
+
+    private void dialogPromotionCode(final NeedReservationsModel model){
+
+        //Get idOffer
+        final String idOffer = model.getIdOffer();
+
+        // Create the CustomAlertDialogBuilder
+        dialogBuilder = new CustomAlertDialogBuilder(context);
+
+        // Set the usual data, as you would do with AlertDialog.Builder
+        dialogBuilder.setTitle(R.string.need_reservations_offers_validate_local);
+        dialogBuilder.setMessage(model.getCodPromotion());
+
+        // Set your buttons OnClickListeners
+        dialogBuilder.setPositiveButton(R.string.need_reservations_offers_validate_positiveText,
+                new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                    // Write in the DB that offer has been hired
+                    class ValidateNeedReservation extends AsyncTask<String, Void, String> {
+                        ProgressDialog loading;
+                        DialogInterface dialog;
+
+                        ValidateNeedReservation(DialogInterface dialog) {
+                            this.dialog = dialog;
+                        }
+
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            loading = ProgressDialog.show(NeedReservationsActivity.this,
+                                    getString(R.string.need_reservations_offers_validate_processing),
+                                    getString(R.string.wait), false, false);
+                        }
+
+                        @Override
+                        protected String doInBackground(String... params) {
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put(Config.KEY_GNR_IDPERSON,
+                                    getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                            .getString(Config.KEY_SP_ID, "-1"));
+
+
+                            hashMap.put(Config.KEY_GNR_IDOFFER, idOffer);
+                            RequestHandler rh = new RequestHandler();
+                            return rh.sendPostRequest(Config.URL_VALIDATE_NEED_RESERV, hashMap);
+                        }
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            loading.dismiss();
+                            if (s.equals("0")) {
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.need_reservations_offers_validate_ok, Toast.LENGTH_LONG).show();
+                                //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
+                                this.dialog.dismiss();
+                                getNeedReservs(); //Refresh activity.
+                            } else {
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.operation_fail, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    ValidateNeedReservation go = new ValidateNeedReservation(dialog);
+                    go.execute();
+                    //rateOffer(ro, true);
+                }
+        });
+
+        // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+        dialogBuilder.setNegativeButton(R.string.need_reservations_offers_validate_negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        // (optional) set whether to dismiss dialog when touching outside
+        dialogBuilder.setCanceledOnTouchOutside(false);
+        // Show the dialog
+        dialogBuilder.show();
+    }
+
+    private void rateNeedOffer(final NeedReservationsModel model, final boolean isFirst) {
+        // Rate the Offer
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.rank_dialog, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setMessage(R.string.need_reservations_offers_rate_title);
+        dialogBuilder.setTitle(R.string.need_reservations_offers_rate_message);
+        // Back button no close the dialog
+        //dialogBuilder.setCancelable(false);
+        dialogBuilder.setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                if(isFirst) getNeedReservs();
+            }
+        });
+
+        dialogBuilder.setPositiveButton(R.string.need_reservations_offers_rate_positive, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Get reference to rating bar
+
+                // TODO: Set the minimun rate value to 1
+                RatingBar ratingBar = (RatingBar) dialogView.findViewById(R.id.my_reservations_offers_rate_bar);
+                doPositiveRate(dialog, model, ratingBar.getRating()+"", isFirst);
+            }
+        });
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+    }
+
+    // Actions to rate Offer
+    private void doPositiveRate(DialogInterface dialog, NeedReservationsModel model, final String rate, boolean isFirst) {
+
+        final String idOffer = model.getIdOffer();
+
+        class RateNeedReservation extends AsyncTask<String, Void, String> {
+            ProgressDialog loading;
+            DialogInterface dialog;
+
+            RateNeedReservation(DialogInterface dialog) {
+                this.dialog = dialog;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(NeedReservationsActivity.this,
+                        getString(R.string.need_reservations_offers_rate_processing),
+                        getString(R.string.wait), false, false);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_GNR_IDPERSON,
+                        getSharedPreferences(Config.KEY_SHARED_PREF,Context.MODE_PRIVATE)
+                                .getString(Config.KEY_SP_ID, "-1"));
+                hashMap.put(Config.KEY_GNR_IDOFFER, idOffer);
+                hashMap.put(Config.KEY_GNR_RATE, rate);
+                RequestHandler rh = new RequestHandler();
+                return rh.sendPostRequest(Config.URL_NEED_RATE, hashMap);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                if (s.equals("0")) {
+                    Toast.makeText(getApplicationContext(),
+                            R.string.need_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+                    //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    getNeedReservs();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        RateNeedReservation go = new RateNeedReservation(dialog);
+        go.execute();
+
     }
 
     private void getNeedReservationsData(String json) {
@@ -174,16 +437,26 @@ public class NeedReservationsActivity extends AppCompatActivity {
                 item.setCashed(jsonObjectItem.getString(Config.TAG_GNR_CASHED));
                 item.setCalification(jsonObjectItem.getString(Config.TAG_GNR_CALIFICATION));
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GNR_PRICEOFFER));
+                item.setCompany(jsonObjectItem.getString(Config.TAG_GNR_COMPANY));
+                item.setLocalCode(jsonObjectItem.getString(Config.TAG_GNR_LOCALCODE));
+                item.setDateCashed(jsonObjectItem.getString(Config.TAG_GNR_CASHED));
 
+                //If dateChashed is != null, save variables.
+                if (!jsonObjectItem.getString(Config.TAG_GNR_DATECASHED).equals("")){
+
+                    dCashed= jsonObjectItem.getString(Config.TAG_GNR_DATECASHED);
+                    dateCashed=format.parse(dCashed);
+                    c.setTime(dateCashed);
+                    item.setDateCashed(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+                }
 
                 dIni = jsonObjectItem.getString(Config.TAG_GNR_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GNR_DATEFIN);
                 dReserv= jsonObjectItem.getString(Config.TAG_GNR_DATERESERV);
-                //dCashed= jsonObjectItem.getString(Config.TAG_GNR_DATECASHED);
+
                 dateIni= format.parse(dIni);
                 dateFin = format.parse(dFin);
                 dateReserv=format.parse(dReserv);
-                //dateCashed=format.parse(dCashed);
 
                 c.setTime(dateIni);
                 item.setDateIni(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
@@ -191,8 +464,6 @@ public class NeedReservationsActivity extends AppCompatActivity {
                 item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
                 c.setTime(dateReserv);
                 item.setDateReserv(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
-                //c.setTime(dateCashed);
-                //item.setDateCashed(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
 
                 needReservationsList.add(item);
             }
@@ -203,4 +474,5 @@ public class NeedReservationsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }

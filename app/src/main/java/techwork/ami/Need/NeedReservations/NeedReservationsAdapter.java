@@ -19,7 +19,7 @@ import techwork.ami.R;
  * Created by tataf on 24-10-2016.
  */
 
-public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservationsAdapter.NeedReservationsViewHolder> implements View.OnClickListener {
+public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservationsAdapter.NeedReservationsViewHolder> implements View.OnClickListener,View.OnLongClickListener {
 
     private Context context;
     private List<NeedReservationsModel> items;
@@ -49,6 +49,7 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
     public NeedReservationsAdapter.NeedReservationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.need_reservations_card_view,parent,false);
         v.setOnClickListener(this);
+        v.setOnLongClickListener(this);
         return new NeedReservationsViewHolder(v);
     }
 
@@ -69,6 +70,14 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
         if (itemClick!=null){
             itemClick.onItemClick(v);
         }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if(itemClick!=null){
+            itemClick.onItemLongClick(v);
+        }
+        return true;
     }
 
     public void setOnItemClickListener(OnItemClickListenerRecyclerView listener){

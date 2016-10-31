@@ -202,8 +202,14 @@ public class Config {
 	public static final String TAG_GNO_COMPANY="nombreEmpresa";
 
 	//Tags and Keys for NeedreservationsActivity
-	public static final String URL_GET_NEED_RESERVATIONS="http://amiapp.cl/public/getData/Need/getNeedReservations.php";
+	public static final String URL_GET_NEED_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getNeedReservations.php";
+	public static final String URL_VALIDATE_NEED_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateNeedReservation.php";
+	public static final String URL_NEED_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateNeed.php";
 	public static final String KEY_GNR_IDPERSON="idPersona";
+	public static final String KEY_GNR_IDOFFER = "idOferta";
+	public static final String KEY_GNR_QUANTITY = "cantidad";
+	public static final String KEY_GNR_DATE_RESERV = "fechaReserva";
+	public static final String KEY_GNR_RATE = "calificacion";
 	public static final String TAG_GNR_NEED="needReservations";
 	public static final String TAG_GNR_IDNEED="idNecesidad";
 	public static final String TAG_GNR_IDLOCAL="idLocal";
@@ -220,6 +226,8 @@ public class Config {
 	public static final String TAG_GNR_DATEINI="fechaInicio";
 	public static final String TAG_GNR_DATEFIN="fechaTermino";
 	public static final String TAG_GNR_PRICEOFFER="precioOferta";
+	public static final String TAG_GNR_COMPANY="empresa";
+	public static final String TAG_GNR_LOCALCODE="codigoLocal";
 
 
 	//Discard NeedOfferActivity

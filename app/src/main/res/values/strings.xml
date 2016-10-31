@@ -142,6 +142,26 @@
     <string name="NeedOfferLocalDetails">Información local</string>
     <string name="NeedOfferLocalStreetView">StreetView local</string>
 
+    <!-- NeedReservations Strings -->
+    <string name="need_reservations_offer_dialog">Cobrar oferta</string>
+    <string name="need_reservations_validate_message">Solicite a un empleado de %s que ingrese código del local</string>
+    <string name="need_reservations_offers_validate_title">Validar oferta</string>
+    <string name="need_reservations_offers_validate_positiveText">Validar</string>
+    <string name="need_reservations_offers_validate_negativeText">Cancelar</string>
+    <string name="need_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
+    <string name="need_reservations_offers_validate_ok">¡Oferta validada!</string>
+    <string name="need_reservations_offers_validate_processing">Validando oferta</string>
+    <string name="need_reservations_offers_rate_processing">Opinando</string>
+    <string name="need_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
+    <string name="need_reservations_offers_validate_local">El código de la promoción es</string>
+    <string name="need_reservations_offers_already">Esta oferta ya ha sido cobrada</string>
+    <string name="need_reservations_offers_already_commented">¡Gracias, ya opinaste!</string>
+    <string name="need_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
+    <string name="need_reservations_offers_rate_message">Tu opinión nos interesa</string>
+    <string name="need_reservations_offers_rate_positive">Calificar</string>
+    <string name="need_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
+
+
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
     <string name="afterLoginTitle">¡Bienvenido a AMI!</string>
