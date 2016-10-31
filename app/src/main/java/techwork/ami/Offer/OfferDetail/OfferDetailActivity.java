@@ -54,7 +54,7 @@ public class OfferDetailActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private NumberPicker numberPicker;
-    private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsctSyTxt, dsct, priceTxt, price, remainingDays;
+    private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsct, priceTxt, price, remainingDays;
     private FloatingActionButton fab;
 
     private String idOffer;
@@ -100,7 +100,6 @@ public class OfferDetailActivity extends AppCompatActivity {
         tPriceTxt = (TextView)findViewById(R.id.od_tv_tprice_txt);
         dsct = (TextView)findViewById(R.id.od_tv_dsct);
         dsctTxt = (TextView)findViewById(R.id.od_tv_dsct_txt);
-        dsctSyTxt = (TextView)findViewById(R.id.od_tv_dsct_sy);
         price = (TextView)findViewById(R.id.od_tv_price);
         priceTxt = (TextView)findViewById(R.id.od_tv_price_txt);
         remainingDays = (TextView)findViewById(R.id.od_tv_rd);
@@ -123,7 +122,6 @@ public class OfferDetailActivity extends AppCompatActivity {
         String s = "";
         if (perc == 100){
             dsctTxt.setText("");
-            dsctSyTxt.setText("");
         }
         else if (perc > 100){
             // Red color
@@ -131,13 +129,12 @@ public class OfferDetailActivity extends AppCompatActivity {
             dsctTxt.setTextColor(ContextCompat.getColor(context, R.color.red));
             s = "+";
             dsct.setTextColor(ContextCompat.getColor(context, R.color.red));
-            dsctSyTxt.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
         else{
             s = "-";
         }
         if(!s.equals("")){
-            dsct.setText(s+String.valueOf(Math.abs(100-perc)));
+            dsct.setText(s+String.valueOf(Math.abs(100-perc))+"%");
         }
         else dsct.setText("");
         // Floating Action Button
