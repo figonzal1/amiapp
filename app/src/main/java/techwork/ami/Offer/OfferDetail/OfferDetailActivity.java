@@ -106,7 +106,6 @@ public class OfferDetailActivity extends AppCompatActivity {
         remainingDays = (TextView)findViewById(R.id.od_tv_rd);
 
         // Text
-        dsctTxt.setText(getResources().getString(R.string.od_tv_dsct_txt));
         priceTxt.setText(getResources().getString(R.string.od_tv_price_txt));
         tPriceTxt.setText(getResources().getString(R.string.od_tv_tprice_txt));
 
@@ -135,10 +134,12 @@ public class OfferDetailActivity extends AppCompatActivity {
             dsctSyTxt.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
         else{
-            dsctTxt.setText(getResources().getString(R.string.od_tv_dsct_txt));
             s = "-";
         }
-        if (!s.equals("")) dsct.setText(s+String.valueOf(Math.abs(100-perc)));
+        if(!s.equals("")){
+            dsct.setText(s+String.valueOf(Math.abs(100-perc)));
+        }
+        else dsct.setText("");
         // Floating Action Button
         fab = (FloatingActionButton)findViewById(R.id.fab_offer_detail);
         fab.setOnClickListener(new View.OnClickListener() {

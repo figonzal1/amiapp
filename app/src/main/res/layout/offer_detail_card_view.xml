@@ -31,7 +31,19 @@
             android:text="Título Producto"
             android:textSize="15sp"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/offer_detail_photo"/>
+            android:layout_toEndOf="@+id/offer_detail_photo"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/offer_detail_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Precio"
+            android:layout_alignBottom="@+id/offer_detail_photo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:id="@+id/offer_detail_description"
@@ -39,21 +51,11 @@
             android:layout_height="wrap_content"
             android:text="Descripción"
             android:textSize="13sp"
-            android:layout_marginStart="10dp"
+            android:layout_alignStart="@+id/offer_detail_tittle"
             android:layout_below="@+id/offer_detail_tittle"
-            android:layout_toEndOf="@+id/offer_detail_photo"/>
-
-        <TextView
-            android:id="@+id/offer_detail_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="#99ff0000"
-            android:text="Precio"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@+id/offer_detail_photo"
-            android:layout_alignParentBottom="true"/>
+            android:layout_above="@+id/offer_detail_price"
+            android:layout_alignEnd="@+id/offer_detail_price"
+            android:textStyle="normal|italic" />
 
         <!--<TextView
             android:id="@+id/offer_detail_company"
