@@ -129,7 +129,7 @@
     <string name="NeedError">Tus datos no se han podido guardar, inténtalo más tarde nuevamente</string>
     <string name="categoriesNoSelected">Seleccionar Categoría</string>
     <string name="subCategoriesNoSelected">Seleccionar Subcategoría</string>
-    <string name="NeedDaysTitle">Dias máximos de espera</string>
+    <string name="NeedDaysTitle">¿Cuántos días puedes esperar?</string>
     <string name="NeedButtonText">Enviar Pedido</string>
     <string name="NeedUserLocation">Usar mi ubicación</string>
     <string name="NeedButtonDelete">Eliminar pedido</string>
