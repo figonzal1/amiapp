@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login_login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.login_login || id == EditorInfo.IME_ACTION_SEND) {
                     attemptLogin();
                     return true;
                 }
@@ -540,8 +540,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-
-                System.out.println("s: " + s);
 
                 // Success
                 if (s.equals("0")) {

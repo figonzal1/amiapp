@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         mPassword2View.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.register_login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.register_login || id == EditorInfo.IME_ACTION_SEND) {
                     attemptRegister();
                     return true;
                 }
@@ -404,12 +404,9 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
             switch (result) {
                 case "0":
-                    Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.saveOk), Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("email", mEmailView.getText().toString());
-                    startActivity(intent);
+                    showProgress(true);
+                    SendWelcomeEmailTask swe = new SendWelcomeEmailTask(mEmail);
+                    swe.execute();
                     break;
                 case "1":
                     Snackbar.make(mEmailView, R.string.email_already_exist, Snackbar.LENGTH_INDEFINITE)
@@ -450,6 +447,45 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                             }).show();
                     break;
             }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+    }
+
+    public class SendWelcomeEmailTask extends AsyncTask<Void, Void, Void> {
+
+
+        private final String mEmail;
+
+        SendWelcomeEmailTask(String email) {
+            mEmail = email;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            RequestHandler rh = new RequestHandler();
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put(Config.KEY_EMAIL, mEmail);
+
+            rh.sendPostRequest(Config.URL_REGISTER_EMAIL, hashMap);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            mAuthTask = null;
+            showProgress(false);
+            Toast.makeText(getApplicationContext(),
+                    getResources().getString(R.string.saveOk), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("email", mEmailView.getText().toString());
+            startActivity(intent);
         }
 
         @Override
@@ -544,8 +580,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-
-                System.out.println("s: " + s);
 
                 // Success
                 if (s.equals("0")) {

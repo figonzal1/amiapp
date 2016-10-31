@@ -11,6 +11,7 @@ public class  OfferModel {
     private String finalDate;
     private int state;
     private int price;
+    private int totalPrice;
     private int maxPPerson;
     private int stock;
     private String promotionCode;
@@ -40,6 +41,9 @@ public class  OfferModel {
     public void setPrice(int price){
         this.price=price;
     }
+    public void setTotal(int totalPrice){
+        this.totalPrice=totalPrice;
+    }
     public void setMaxPPerson(int maxPPerson){
         this.maxPPerson=maxPPerson;
     }
@@ -62,6 +66,7 @@ public class  OfferModel {
     public String getFinalDate(){return finalDate;}
     public int getState(){return state;}
     public int getPrice(){return price;}
+    public int getTotalPrice(){return totalPrice;}
     public int getMaxPPerson(){return maxPPerson;}
     public int getStock(){return stock;}
     public String getPromotionCode(){return promotionCode;}

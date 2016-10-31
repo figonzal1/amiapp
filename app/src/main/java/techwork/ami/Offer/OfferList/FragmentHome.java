@@ -163,11 +163,13 @@ public class FragmentHome extends Fragment {
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
+                intent.putExtra(Config.TAG_GO_COMPANY, o.getCompany());
                 intent.putExtra(Config.TAG_GO_PRICE, o.getPrice());
                 intent.putExtra(Config.TAG_GO_OFFER_ID, o.getId());
                 intent.putExtra(Config.TAG_GO_MAXXPER, o.getMaxPPerson());
                 intent.putExtra(Config.TAG_GO_STOCK, o.getStock());
                 intent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
+                intent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
                 startActivity(intent);
             }
 
@@ -268,6 +270,13 @@ public class FragmentHome extends Fragment {
                 item.setStock(jsonObjectItem.getInt(Config.TAG_GO_STOCK));
                 item.setPromotionCode(Config.TAG_GO_PROMCOD);
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GO_PRICE));
+                //TODO: en teoría se debería poder borrar, puesto que el precio siempre exisitrá (tendrán al menos un producto asociado)
+                try {
+                    item.setTotal(jsonObjectItem.getInt(Config.TAG_GO_TOTALPRICE));
+                }catch (Exception e){
+                    item.setTotal(0);
+                }
+
 
                 c.setTime(dateIni);
                 item.setInitialDate(String.format(Locale.US, Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
