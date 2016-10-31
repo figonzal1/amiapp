@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -20,6 +21,8 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.vision.text.Text;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +54,7 @@ public class OfferDetailActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private NumberPicker numberPicker;
-    private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsct, priceTxt, price, remainingDays;
+    private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsctSyTxt, dsct, priceTxt, price, remainingDays;
     private FloatingActionButton fab;
 
     private String idOffer;
@@ -97,6 +100,7 @@ public class OfferDetailActivity extends AppCompatActivity {
         tPriceTxt = (TextView)findViewById(R.id.od_tv_tprice_txt);
         dsct = (TextView)findViewById(R.id.od_tv_dsct);
         dsctTxt = (TextView)findViewById(R.id.od_tv_dsct_txt);
+        dsctSyTxt = (TextView)findViewById(R.id.od_tv_dsct_sy);
         price = (TextView)findViewById(R.id.od_tv_price);
         priceTxt = (TextView)findViewById(R.id.od_tv_price_txt);
         remainingDays = (TextView)findViewById(R.id.od_tv_rd);
@@ -110,12 +114,31 @@ public class OfferDetailActivity extends AppCompatActivity {
         title.setText(bundle.getString(Config.TAG_GO_TITLE));
         company.setText(bundle.getString(Config.TAG_GO_COMPANY));
         description.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
-        tPrice.setText(String.valueOf(bundle.getInt(Config.TAG_GO_TOTALPRICE)));
-        price.setText(String.valueOf(bundle.getInt(Config.TAG_GO_PRICE)));
+        System.out.println("Aqui");
+        tPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_TOTALPRICE)));
+        price.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_PRICE)));
         int perc = (bundle.getInt(Config.TAG_GO_TOTALPRICE) != 0) ?
                 bundle.getInt(Config.TAG_GO_PRICE)*100/bundle.getInt(Config.TAG_GO_TOTALPRICE):
-                0;
-        dsct.setText(String.valueOf(perc));
+                100;
+        // If offer price is greater than total price
+        String s = "";
+        if (perc == 100){
+            dsctTxt.setText("");
+            dsctSyTxt.setText("");
+        }
+        else if (perc > 100){
+            // Red color
+            dsctTxt.setText(getResources().getString(R.string.od_tv_increase_txt));
+            dsctTxt.setTextColor(ContextCompat.getColor(context, R.color.red));
+            s = "+";
+            dsct.setTextColor(ContextCompat.getColor(context, R.color.red));
+            dsctSyTxt.setTextColor(ContextCompat.getColor(context, R.color.red));
+        }
+        else{
+            dsctTxt.setText(getResources().getString(R.string.od_tv_dsct_txt));
+            s = "-";
+        }
+        if (!s.equals("")) dsct.setText(s+String.valueOf(Math.abs(100-perc)));
         // Floating Action Button
         fab = (FloatingActionButton)findViewById(R.id.fab_offer_detail);
         fab.setOnClickListener(new View.OnClickListener() {
