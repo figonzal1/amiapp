@@ -2,11 +2,16 @@ package techwork.ami.Need.ListNeeds;
 
 
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -40,6 +45,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         public TextView tvPricemax;
         public TextView tvDateFin;
         public TextView tvDescription;
+        public Button popupMenu;
 
 
         public NeedViewHolder(View itemView) {
@@ -51,6 +57,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
             tvPricemax = (TextView)itemView.findViewById(R.id.tv_need_price_max);
             tvDateFin = (TextView)itemView.findViewById(R.id.tv_need_date_fin);
             tvDescription= (TextView)itemView.findViewById(R.id.tv_need_description);
+            popupMenu= (Button)itemView.findViewById(R.id.popup_menu);
         }
     }
 
@@ -65,7 +72,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
     }
 
     @Override
-    public void onBindViewHolder(NeedAdapter.NeedViewHolder holder, int position) {
+    public void onBindViewHolder(final NeedAdapter.NeedViewHolder holder, final int position) {
         NeedModel model = items.get(position);
         holder.tvTitle.setText(model.getTittle());
         holder.tvDateFin.setText(model.getDateFin());
@@ -73,8 +80,16 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         holder.tvNOffers.setText(model.getOffersCompany());
         holder.tvNOffersDiscard.setText(model.getnDiscardOffers());
         holder.tvDescription.setText(model.getDescription());
+        holder.popupMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"CLick",Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
+
+
 
     @Override
     public int getItemCount() {

@@ -2,6 +2,7 @@
     <string name="app_name">AMI</string>
     <string name="navigation_drawer_open">Abrir menú</string>
     <string name="navigation_drawer_close">Cerrar menú</string>
+    <string name="vertical_ellipsis">&#8942;</string>
     <!-- General -->
     <string name="error_invalid_email">Correo no válido</string>
     <string name="error_invalid_name">Nombre no válido</string>

@@ -12,9 +12,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -295,4 +298,23 @@ public class FragmentNeed extends Fragment {
         }
     }
 
+    public static void showPopupMenu(final View view, int position){
+
+        PopupMenu popup= new PopupMenu(view.getContext(),view);
+        MenuInflater inflater = popup.getMenuInflater();
+
+        inflater.inflate(R.menu.popup_menu,popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+
+                    case R.id.discard_need:
+                        Toast.makeText(view.getContext(),"El click del menu",Toast.LENGTH_LONG).show();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
 }
