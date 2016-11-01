@@ -31,7 +31,7 @@
         <TextView
             android:id="@+id/tv_need_popup_menu"
             android:layout_width="40dp"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:text="@string/vertical_ellipsis"
             android:gravity="center"
             android:textStyle="bold"

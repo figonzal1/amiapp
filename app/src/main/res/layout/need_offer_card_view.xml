@@ -42,7 +42,7 @@
             android:id="@+id/separator"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_toEndOf="@+id/need_offer_linear"
             android:background="#afafaf"
             android:layout_alignTop="@+id/need_offer_linear"
