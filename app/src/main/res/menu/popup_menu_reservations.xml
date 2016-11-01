@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_popup_menu_reservations_details"
+        android:title="Ver detalles">
+    </item>
+    <item
+        android:id="@+id/item_popup_menu_reservations_charge"
+        android:title="Cobrar"
+        >
+    </item>
+    <item
+        android:id="@+id/item_popup_menu_reservations_calificate"
+        android:title="Calificar">
+    </item>
+
+</menu>

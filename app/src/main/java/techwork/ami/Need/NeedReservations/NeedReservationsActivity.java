@@ -3,6 +3,7 @@ package techwork.ami.Need.NeedReservations;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
@@ -11,14 +12,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +45,8 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import retrofit.http.GET;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.Need.ListNeeds.NeedModel;
+import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
 import techwork.ami.Need.ListOfferCompanies.NeedOfferModel;
 import techwork.ami.Need.NeedOfferDetails.NeedOfferViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
@@ -102,6 +109,62 @@ public class NeedReservationsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void showPopupMenu(final View view, final NeedReservationsModel model){
+
+        final PopupMenu popup= new PopupMenu(view.getContext(),view);
+        MenuInflater inflater = popup.getMenuInflater();
+
+        final Menu popumenu = popup.getMenu();
+        inflater.inflate(R.menu.popup_menu_reservations,popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch(item.getItemId()){
+
+
+                    case R.id.item_popup_menu_reservations_details:
+                        Toast.makeText(view.getContext(),"Ver detalles de oferta",Toast.LENGTH_LONG).show();
+                        return true;
+
+                    case R.id.item_popup_menu_reservations_charge:
+                        item.setEnabled(true);
+                        //If needOffer is charge, not charged permitted.
+                        if (model.getCashed().equals("1")){
+                            popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                            Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
+                            Snackbar.make(view,R.string.need_reservations_offers_already,Snackbar.LENGTH_SHORT).show();
+                        }
+                        //Do charge
+                        else {
+                            dialogLocalCode(model);
+                        }
+                        return true;
+
+                    case R.id.item_popup_menu_reservations_calificate:
+
+                        //If needOffer is not charge, not calificate.
+                        if (model.getCashed().equals("0")){
+
+                            Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                        }
+                        //If has already validated and rated.
+                        else if (!model.getCalification().equals("")){
+                            item.setEnabled(false);
+                            Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            rateNeedOffer(model,false);
+                        }
+
+                }
+
+                return false;
+            }
+        });
+        popup.show();
+    }
+
     private void getNeedReservs() {
         sendPostRequest();
     }
@@ -143,7 +206,7 @@ public class NeedReservationsActivity extends AppCompatActivity {
     private void showNeedReservations(String s) {
         getNeedReservationsData(s);
 
-        adapter = new NeedReservationsAdapter(getApplicationContext(), needReservationsList);
+        adapter = new NeedReservationsAdapter(getApplicationContext(), needReservationsList,NeedReservationsActivity.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
@@ -161,6 +224,7 @@ public class NeedReservationsActivity extends AppCompatActivity {
 
                 final NeedReservationsModel model = needReservationsList.get(rv.getChildAdapterPosition(view));
 
+                //TODO: Realizar un "ver mi reserva" donde muestre los detalles de la misma.
                 //If the needOffer was already cashed
                 if (model.getCashed().equals("1")){
                     Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();

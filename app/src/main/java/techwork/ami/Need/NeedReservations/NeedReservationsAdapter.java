@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,16 +25,19 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
     private Context context;
     private List<NeedReservationsModel> items;
     private OnItemClickListenerRecyclerView itemClick;
+    private NeedReservationsActivity needReservationsActivity;
 
-    public NeedReservationsAdapter(Context context, List<NeedReservationsModel> items){
+    public NeedReservationsAdapter(Context context, List<NeedReservationsModel> items,NeedReservationsActivity needReservationsActivity){
         this.context=context;
         this.items=items;
+        this.needReservationsActivity = needReservationsActivity;
     }
 
     public static class NeedReservationsViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tvTittle;
         public TextView tvPrice;
+        public Button popupMenu;
 
 
         public NeedReservationsViewHolder(View itemView) {
@@ -42,6 +46,7 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
 
             tvTittle=(TextView)itemView.findViewById(R.id.tv_need_reservations_tittle);
             tvPrice=(TextView)itemView.findViewById(R.id.tv_need_reservations_price);
+            popupMenu=(Button)itemView.findViewById(R.id.btn_need_reservations_popup_menu);
         }
     }
 
@@ -55,9 +60,16 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
 
     @Override
     public void onBindViewHolder(NeedReservationsAdapter.NeedReservationsViewHolder holder, int position) {
-        NeedReservationsModel model = items.get(position);
+        final NeedReservationsModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
         holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
+
+        holder.popupMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                needReservationsActivity.showPopupMenu(v,model);
+            }
+        });
     }
 
     @Override

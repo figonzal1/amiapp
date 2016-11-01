@@ -170,14 +170,14 @@ public class FragmentNeed extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
 
-                    case R.id.popup_menu_view_need:
+                    case R.id.item_popup_menu_need_view:
                         Intent intent = new Intent(view.getContext(),NeedOfferActivity.class);
                         //Send de idNecesidad to send post request for obtain each NeedOffer with this id.
                         intent.putExtra(Config.TAG_GN_IDNEED,model.getIdNeed());
                         view.getContext().startActivity(intent);
                         return true;
 
-                    case R.id.popup_menu_discard_order:
+                    case R.id.item_popup_menu_discard_order:
 
                         new CustomAlertDialogBuilder(view.getContext())
                                 .setTitle(R.string.NeedDeleteConfirm)

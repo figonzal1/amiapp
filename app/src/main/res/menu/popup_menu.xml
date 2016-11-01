@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/popup_menu_view_need"
+        android:id="@+id/item_popup_menu_need_view"
         android:title="Ver ofertas">
     </item>
 
     <item
-        android:id="@+id/popup_menu_discard_order"
+        android:id="@+id/item_popup_menu_discard_order"
         android:title="Descartar pedido">
     </item>
 
