@@ -52,8 +52,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         ProductModel product = items.get(position);
         holder.productName.setText(product.getName());
+        //TODO BORRAR
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(("$"+String.format(Config.CLP_FORMAT,Integer.valueOf(product.getPrice()))));
+        //holder.productPrice.setText(("$"+"1"));
         Picasso.with(context).load(Config.URL_IMAGES_OFFER + product.getImage())
                 .placeholder(R.drawable.image_default)
                 .into(holder.productImage);

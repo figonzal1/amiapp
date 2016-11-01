@@ -76,6 +76,8 @@ public class OfferDetailActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         idOffer = bundle.getString(Config.TAG_GO_OFFER_ID);
+        // TODO BORRAR
+        System.out.println("IdOffer = "+idOffer);
 
         rv = (RecyclerView)findViewById(R.id.recycler_view_offer_detail);
         rv.setHasFixedSize(true);
@@ -240,6 +242,8 @@ public class OfferDetailActivity extends AppCompatActivity {
                 JSONObject jsonObjectItem = jsonProductsOffer.getJSONObject(i);
                 ProductModel item = new ProductModel();
 
+                //TODO BORRAR
+                System.out.println(jsonObjectItem);
                 item.setName(jsonObjectItem.getString(Config.TAG_GOD_NAME));
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GOD_DESCRIPTION));
                 item.setPrice(jsonObjectItem.getString(Config.TAG_GOD_PRICE));

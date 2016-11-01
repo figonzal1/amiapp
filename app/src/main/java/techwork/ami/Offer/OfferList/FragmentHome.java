@@ -56,6 +56,10 @@ public class FragmentHome extends Fragment {
     private LinearLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
 
+    //android.support.v4.app.NotificationCompat.Builder mBuilder;
+    static int NOTIFY = 0;
+    NotificationManager mNotificationManager;
+
     // Empty constructor (default)
     public FragmentHome() {
         // Required empty public constructor
@@ -96,6 +100,8 @@ public class FragmentHome extends Fragment {
                 getOffers();
             }
         });
+
+        mNotificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         getOffers();
         return v;
@@ -297,6 +303,12 @@ public class FragmentHome extends Fragment {
                 item.setImage(jsonObjectItem.getString(Config.TAG_GO_IMAGE));
 
                 offerList.add(item);
+
+                // Se calcula la diferencia de tiempo acutal con cuando se publica la oferta, si son menor a una cierta holgura entonces se muestra la notificación
+                long d = (new Date()).getTime() - dateIni.getTime();
+                if(d/(1000*60) < Config.NOTIFICATION_SLACK_TIME){
+                    myNotification(item);
+                }
             }
 
         } catch (JSONException e) {
@@ -306,5 +318,50 @@ public class FragmentHome extends Fragment {
         }
     }
 
-}
+    void myNotification(OfferModel o){
+        Intent nintent = new Intent(getActivity(), OfferDetailActivity.class);
+        nintent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
+        nintent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
+        nintent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
+        nintent.putExtra(Config.TAG_GO_COMPANY, o.getCompany());
+        nintent.putExtra(Config.TAG_GO_PRICE, o.getPrice());
+        nintent.putExtra(Config.TAG_GO_OFFER_ID, o.getId());
+        nintent.putExtra(Config.TAG_GO_MAXXPER, o.getMaxPPerson());
+        nintent.putExtra(Config.TAG_GO_STOCK, o.getStock());
+        nintent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
+        nintent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
 
+        // TODO aquí hay problemas (en las líneas antes de mBuilder), puesto que el pending intent es como decir "se hará esto" cuando algo pase, pero lo que sucede es que se confunden los intent y se envían idOffer distintos, provocando que se caiga la app (y obviamente eso no ha de ocurrir, si veo una notificación de "oferta x" y la pincho y entro a "oferta y" no tiene sentido.
+        // Siguiendo https://goo.gl/UGDo7n
+        PendingIntent contIntent =
+                PendingIntent.getActivity(
+                        getContext(), NOTIFY, nintent, PendingIntent.FLAG_ONE_SHOT);
+
+        // context, icon that show in notification bar, icon that show in notification (when expand it), title, description, info below time, i dont know xD, autoCancel, pendingintent
+        android.support.v4.app.NotificationCompat.Builder mBuilder = creteNotificationBuilder(getContext(), R.mipmap.ic_launcher,
+                BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
+                o.getTitle(), o.getDescription(), o.getCompany(), "Ticker", true, contIntent);
+
+        mNotificationManager.notify(NOTIFY, mBuilder.build());
+        NOTIFY++;
+    }
+
+    private android.support.v4.app.NotificationCompat.Builder creteNotificationBuilder(
+            Context context, int smallIcon, Bitmap largeIcon, String title, String content, String info, String ticker, boolean autoCancel,
+            PendingIntent contIntent) {
+        Notification n = new Notification();
+        n.defaults |= Notification.DEFAULT_VIBRATE;
+        return new NotificationCompat.Builder(context)
+                .setDefaults(n.defaults)
+                .setSmallIcon(smallIcon)
+                .setLargeIcon(largeIcon)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setContentInfo(info)
+                .setTicker(ticker)
+                .setAutoCancel(autoCancel)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setContentIntent(contIntent);
+    }
+
+}
