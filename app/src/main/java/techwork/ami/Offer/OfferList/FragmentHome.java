@@ -1,16 +1,23 @@
 package techwork.ami.Offer.OfferList;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -279,6 +286,7 @@ public class FragmentHome extends Fragment {
 
 
                 c.setTime(dateIni);
+
                 item.setInitialDate(String.format(Locale.US, Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
 
                 c.setTime(dateFin);
@@ -289,7 +297,6 @@ public class FragmentHome extends Fragment {
                 item.setImage(jsonObjectItem.getString(Config.TAG_GO_IMAGE));
 
                 offerList.add(item);
-
             }
 
         } catch (JSONException e) {
@@ -298,7 +305,6 @@ public class FragmentHome extends Fragment {
             e.printStackTrace();
         }
     }
-
 
 }
 
