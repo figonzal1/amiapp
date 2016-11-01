@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import techwork.ami.Need.NeedReservations.NeedReservationsActivity;
+import techwork.ami.Need.NeedReservations.NeedReservationsList.NeedReservationsActivity;
 import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
 public class MainActivity extends AppCompatActivity

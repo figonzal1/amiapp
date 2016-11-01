@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedReservations;
+package techwork.ami.Need.NeedReservations.NeedReservationsList;
 
 /**
  * Created by tataf on 24-10-2016.

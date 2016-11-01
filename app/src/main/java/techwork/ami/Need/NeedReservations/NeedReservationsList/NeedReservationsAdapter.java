@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedReservations;
+package techwork.ami.Need.NeedReservations.NeedReservationsList;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import techwork.ami.Config;
-import techwork.ami.Need.ListOfferCompanies.NeedOfferAdapter;
-import techwork.ami.Need.ListOfferCompanies.NeedOfferModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 

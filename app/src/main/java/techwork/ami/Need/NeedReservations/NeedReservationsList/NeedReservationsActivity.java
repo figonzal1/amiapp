@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedReservations;
+package techwork.ami.Need.NeedReservations.NeedReservationsList;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,21 +37,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.locks.Condition;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import retrofit.http.GET;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Need.ListNeeds.NeedModel;
-import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
-import techwork.ami.Need.ListOfferCompanies.NeedOfferModel;
-import techwork.ami.Need.NeedOfferDetails.NeedOfferViewActivity;
+import techwork.ami.Need.NeedReservations.NeedReservationsDetails.NeedReservationsDetailsActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
-import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
-import techwork.ami.ReservationsOffers.ReservationOffer;
 
 public class NeedReservationsActivity extends AppCompatActivity {
 
@@ -125,6 +116,9 @@ public class NeedReservationsActivity extends AppCompatActivity {
 
                     case R.id.item_popup_menu_reservations_details:
                         Toast.makeText(view.getContext(),"Ver detalles de oferta",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(NeedReservationsActivity.this,NeedReservationsDetailsActivity.class);
+                        intent.putExtra(Config.TAG_GNR_IDOFFER,model.getIdOffer());
+                        startActivity(intent);
                         return true;
 
                     case R.id.item_popup_menu_reservations_charge:

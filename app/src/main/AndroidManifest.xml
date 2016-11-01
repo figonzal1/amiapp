@@ -92,28 +92,24 @@
         <activity
             android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity"
             android:label="@string/NeedOfferLocalDetails"
-            android:theme="@style/AppTheme">
-
-        </activity>
-
-        <activity android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity"
             android:label="@string/NeedOfferLocalStreetView"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity">
+            android:parentActivityName=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
         </activity>
-
         <activity
-            android:name=".Need.NeedReservations.NeedReservationsActivity"
+            android:name=".Need.NeedReservations.NeedReservationsList.NeedReservationsActivity"
             android:label="Mis pedidos reservados"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".ReservationsOffers.MyReservationsOffersActivity"
             android:label="@string/title_activity_my_reservations"
@@ -123,11 +119,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".Need.NeedReservations.NeedReservationsDetails.NeedReservationsDetailsActivity"
+            android:label="Detalle Oferta"
+            android:parentActivityName=".Need.NeedReservations.NeedReservationsList.NeedReservationsActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Need.NeedReservations.NeedReservationsList.NeedReservationsActivity"/>
+
+        </activity>
 
         <activity android:name=".ContactUsActivity" />
-
         <activity android:name=".Offer.OfferDetail.OfferDetailActivity" />
-
         <activity
             android:name=".Offer.FilterOfferActivity"
             android:label="@string/title_activity_filter_offers"
