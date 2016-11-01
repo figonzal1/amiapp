@@ -330,9 +330,9 @@ public class FragmentHome extends Fragment {
         nintent.putExtra(Config.TAG_GO_STOCK, o.getStock());
         nintent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
         nintent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
+        nintent.setAction(Long.toString(System.currentTimeMillis()));
 
-        // TODO aquí hay problemas (en las líneas antes de mBuilder), puesto que el pending intent es como decir "se hará esto" cuando algo pase, pero lo que sucede es que se confunden los intent y se envían idOffer distintos, provocando que se caiga la app (y obviamente eso no ha de ocurrir, si veo una notificación de "oferta x" y la pincho y entro a "oferta y" no tiene sentido.
-        // Siguiendo https://goo.gl/UGDo7n
+        // Siguiendo https://goo.gl/UGDo7n y https://goo.gl/C25HYF
         PendingIntent contIntent =
                 PendingIntent.getActivity(
                         getContext(), NOTIFY, nintent, PendingIntent.FLAG_ONE_SHOT);
