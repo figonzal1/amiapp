@@ -66,7 +66,7 @@ public class OfferDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offer_detail_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.od_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.offer_detail_toolbar);
         setSupportActionBar(toolbar);
 
         context = this;
@@ -112,7 +112,6 @@ public class OfferDetailActivity extends AppCompatActivity {
         title.setText(bundle.getString(Config.TAG_GO_TITLE));
         company.setText(bundle.getString(Config.TAG_GO_COMPANY));
         description.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
-        System.out.println("Aqui");
         tPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_TOTALPRICE)));
         price.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_PRICE)));
         int perc = (bundle.getInt(Config.TAG_GO_TOTALPRICE) != 0) ?

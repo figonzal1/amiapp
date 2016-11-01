@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="140dp"
     card_view:cardUseCompatPadding="true"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
     card_view:cardCornerRadius="2dp"
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,37 +20,6 @@
 
         <!-- Width y height dan el tamaño de la foto (ImageView)-->
 
-        <ImageView
-            android:id="@+id/offer_cv_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_menu_camera"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/offer_cv_image_desciption" />
-
-        <TextView
-            android:id="@+id/offer_cv_tittle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/offer_cv_title"
-            android:textSize="15sp"
-            android:textAlignment="textStart"
-            android:layout_alignTop="@+id/offer_cv_photo"
-            android:layout_toEndOf="@+id/offer_cv_photo"
-            android:layout_marginStart="11dp"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/offer_cv_company"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/offer_cv_company"
-            android:textSize="15sp"
-            android:layout_alignBottom="@+id/offer_cv_photo"
-            android:layout_alignStart="@+id/offer_cv_description" />
-
         <TextView
             android:id="@+id/offer_cv_description"
             android:layout_width="wrap_content"
@@ -56,11 +27,11 @@
             android:textSize="14sp"
             android:layout_height="wrap_content"
             android:textStyle="normal|italic"
-            android:layout_below="@+id/offer_cv_tittle"
             android:layout_alignStart="@+id/offer_cv_tittle"
             android:layout_above="@+id/offer_cv_company"
             android:textAlignment="textStart"
-            android:layout_alignEnd="@+id/offer_cv_price" />
+            android:layout_alignEnd="@+id/offer_cv_price"
+            android:layout_below="@+id/offer_cv_tittle" />
 
         <TextView
             android:id="@+id/offer_cv_dsct_sy"
@@ -74,17 +45,6 @@
             android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/offer_cv_dsct"
-            android:text="@string/offer_cv_dsct"
-            android:textColor="@color/green"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/offer_cv_description"
-            android:layout_toStartOf="@+id/offer_cv_dsct_sy"
-            android:textStyle="normal|bold" />
-
-        <TextView
             android:id="@+id/offer_cv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,6 +54,47 @@
             android:textStyle="normal|bold"
             android:layout_below="@+id/offer_cv_description"
             android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/offer_cv_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/offer_cv_company"
+            android:textSize="15sp"
+            android:layout_below="@+id/offer_cv_photo"
+            android:layout_alignStart="@+id/offer_cv_description" />
+
+        <ImageView
+            android:id="@+id/offer_cv_photo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_menu_camera"
+            android:contentDescription="@string/offer_cv_image_desciption"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/offer_cv_tittle"
+            android:layout_height="wrap_content"
+            android:text="@string/offer_cv_title"
+            android:textSize="15sp"
+            android:textAlignment="textStart"
+            android:layout_marginStart="11dp"
+            android:textStyle="normal|bold"
+            android:layout_width="wrap_content"
+            android:layout_alignTop="@+id/offer_cv_photo"
+            android:layout_toEndOf="@+id/offer_cv_photo" />
+
+        <TextView
+            android:id="@+id/offer_cv_dsct"
+            android:text="@string/offer_cv_dsct"
+            android:textColor="@color/green"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/offer_cv_tittle"
+            android:layout_toStartOf="@+id/offer_cv_dsct_sy" />
 
     </RelativeLayout>
 

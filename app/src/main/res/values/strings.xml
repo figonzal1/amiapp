@@ -203,6 +203,7 @@
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
     <string name="my_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
+    <string name="mrolcvReserved">Reservada</string>
 
     <!-- Filter Offers Strings -->
     <string name="title_activity_filter_offers">Filtrar Ofertas</string>
@@ -226,4 +227,6 @@
     <!-- Fragment Home / Offers list Strings -->
     <string name="offers_list_discard_question">¿Desea descartar esta oferta?</string>
     <string name="offers_list_discard_processing">Descartando oferta</string>
+    <string name="title_activity_offer_detail">Detalles</string>
+
 </resources>

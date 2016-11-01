@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -62,6 +63,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private MyReservationsOffersListAdapter adapterCharged;
     Context context;
     CustomAlertDialogBuilder dialogBuilder;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +99,14 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         });
 
         // Floating button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Close the Activity
                 finish();
                 // Call to FragmentHome and show available offers
-                startActivity(new Intent(MyReservationsOffersActivity.this, MainActivity.class) );
+                //startActivity(new Intent(MyReservationsOffersActivity.this, MainActivity.class) );
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -190,7 +192,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 // If the offer was already charged
                 if(!ro.getPaymentDate().equals("")){
                     Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    Snackbar.make(mRecyclerViewReserved, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
+                    System.out.println("Aqui");
+                    Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
                     dialogLocalCode(ro);
@@ -221,7 +224,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 // If the offer was already charged
                 if(!ro.getPaymentDate().equals("")){
                     Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    Snackbar.make(mRecyclerViewCharged, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
                     dialogLocalCode(ro);
