@@ -1,5 +1,6 @@
 package techwork.ami.Need.ListNeeds;
 
+import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -47,12 +51,12 @@ import techwork.ami.RequestHandler;
 
 public class FragmentNeed extends Fragment {
 
-    Button btnCreateOrder;
     private NeedAdapter adapter;
     private List<NeedModel> needList;
     private RecyclerView rv;
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
+    private FloatingActionButton floatingButton;
 
 
     public FragmentNeed() {
@@ -101,11 +105,51 @@ public class FragmentNeed extends Fragment {
         });
 
         getNeeds();
-        btnCreateOrder = (Button)v.findViewById(R.id.btn_create_order);
-        btnCreateOrder.setOnClickListener(new View.OnClickListener() {
+
+        floatingButton=(FloatingActionButton)v.findViewById(R.id.floating_button);
+        floatingButton.setScaleX(0);
+        floatingButton.setScaleY(0);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            final Interpolator interpolador = AnimationUtils.loadInterpolator(getContext(),
+                    android.R.interpolator.fast_out_slow_in);
+
+            floatingButton.animate()
+                    .scaleX((float) 1.5)
+                    .scaleY((float) 1.5)
+                    .setInterpolator(interpolador)
+                    .setDuration(600)
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            floatingButton.animate()
+                                    .scaleY(1)
+                                    .scaleX(1)
+                                    .setInterpolator(interpolador)
+                                    .setDuration(1000)
+                                    .start();
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+        }
+
+        floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), NeedActivity.class);
                 getActivity().startActivity(intent);
             }

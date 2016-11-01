@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "21.1.2" //Para generar APK usar 21.1.2
+    buildToolsVersion "24.0.1" //Para generar APK usar 21.1.2
 
     defaultConfig {
         applicationId "techwork.ami"
@@ -18,9 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
+    /*lintOptions {
         checkReleaseBuilds false
-    }
+    }*/
 }
 
 dependencies {

@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
@@ -15,24 +16,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
 
-            <Button
-                android:id="@+id/btn_create_order"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Realizar Pedido"
-                android:padding="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:id="@+id/tv_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tus pedidos"
-                android:layout_below="@+id/btn_create_order"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:textSize="25sp"/>
@@ -46,5 +38,20 @@
 
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
+
+
     </android.support.v4.widget.SwipeRefreshLayout>
-</FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_add_white_48dp"
+        app:layout_behavior="techwork.ami.ScrollAwareFABBehavior"
+        android:background="@color/colorAccent">
+    </android.support.design.widget.FloatingActionButton>
+
+</android.support.design.widget.CoordinatorLayout>
