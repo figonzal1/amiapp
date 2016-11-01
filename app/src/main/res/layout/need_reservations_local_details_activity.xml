@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/view_local_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity">
@@ -36,14 +35,6 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
-                android:id="@+id/tv_local"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center_horizontal"
-                android:textSize="27sp"
-                android:text="¡Felicitaciones! \n Has realizado la reserva"/>
 
             <ImageView
                 android:id="@+id/iv_local"
@@ -96,16 +87,6 @@
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/tv_web2"/>
 
-            <Button
-                android:id="@+id/btn_mis_pedidos_reservados"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mis pedidos reservados"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/btn_local_street_view"/>
         </RelativeLayout>
-
     </ScrollView>
-
 </RelativeLayout>

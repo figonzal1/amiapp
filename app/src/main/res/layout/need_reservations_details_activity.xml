@@ -154,6 +154,15 @@
 
                 </android.support.v7.widget.RecyclerView>
 
+                <Button
+                    android:id="@+id/btn_need_reservations_view_local_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver información local"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/recycler_view_need_reservations_view"/>
+
 
             </RelativeLayout>
 

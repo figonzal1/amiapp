@@ -1,15 +1,15 @@
-package techwork.ami.Need.NeedOfferLocalDetails;
+package techwork.ami.Need.NeedReservations.NeedReservationsDetails;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,71 +20,64 @@ import java.util.HashMap;
 
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
-import techwork.ami.Need.NeedReservations.NeedReservationsDetails.NeedReservationsDetailsActivity;
-import techwork.ami.Need.NeedReservations.NeedReservationsList.NeedReservationsActivity;
+import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
+import techwork.ami.Need.NeedOfferLocalDetails.StreetViewPanoramaActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class NeedOfferViewLocalActivity extends AppCompatActivity{
+public class NeedReservationsLocalDetails extends AppCompatActivity {
 
     private String idLocal,lat,lon,address,web,image,commune;
-    Button btnStreetView,btnNeedOfferReserv;
+    Button btnStreetView;
     TextView tvAddress,tvWeb;
     ImageView ivImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.need_offer_view_local_activity);
+        setContentView(R.layout.need_reservations_local_details_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        idLocal= bundle.getString(Config.TAG_GNO_IDLOCAL);
 
-        //GetLocal info
+        //Get local info
+        idLocal= bundle.getString(Config.TAG_GNR_IDLOCAL);
+
+        tvAddress=(TextView)findViewById(R.id.tv_address);
+        tvWeb=(TextView)findViewById(R.id.tv_web2);
+        ivImage=(ImageView)findViewById(R.id.iv_local);
+        btnStreetView = (Button)findViewById(R.id.btn_local_street_view);
+
         getLocal();
 
-
-        btnStreetView = (Button)findViewById(R.id.btn_local_street_view);
         btnStreetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent streetView = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.streetview:cbll="+ lat+","+lon+""));
-                //startActivity(streetView);
-                Intent intent = new Intent(NeedOfferViewLocalActivity.this,StreetViewPanoramaActivity.class);
+
+                Intent intent= new Intent(NeedReservationsLocalDetails.this, StreetViewPanoramaActivity.class);
                 intent.putExtra(Config.TAG_GL_LAT,lat);
                 intent.putExtra(Config.TAG_GL_LONG,lon);
                 startActivity(intent);
             }
         });
 
-        btnNeedOfferReserv = (Button)findViewById(R.id.btn_mis_pedidos_reservados);
-        btnNeedOfferReserv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NeedOfferViewLocalActivity.this, NeedReservationsActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    //When de button back is pressed main activity is refreshed.
+
     @Override
-    public void onBackPressed() {
-
-        int count = getFragmentManager().getBackStackEntryCount();
-
-        if (count == 0) {
-            super.onBackPressed();
-            Intent intent = new Intent(NeedOfferViewLocalActivity.this,MainActivity.class);
-            startActivity(intent);
-        } else {
-            getFragmentManager().popBackStack();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
         }
-
+        return super.onOptionsItemSelected(item);
     }
 
     private void getLocal(){ sendPostRequest();}
@@ -119,6 +112,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
     }
 
     private void showLocal(String json) {
+
         try{
             JSONObject jsonObject = new JSONObject(json);
             JSONObject local = jsonObject.getJSONArray(Config.TAG_GL_LOCAL).getJSONObject(0);
@@ -138,8 +132,8 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
             tvWeb.setText(web);
 
             Picasso.with(getApplicationContext())
-                        .load("http://amiapp.cl/encargado/uploads/"+image)
-                        .into(ivImage);
+                    .load("http://amiapp.cl/encargado/uploads/"+image)
+                    .into(ivImage);
 
 
         } catch (JSONException e) {
@@ -147,3 +141,4 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
         }
     }
 }
+

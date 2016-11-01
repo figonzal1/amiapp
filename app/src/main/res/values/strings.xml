@@ -142,6 +142,7 @@
     <string name="NeedOfferCompanies">Ofertas recibidas</string>
     <string name="NeedOfferLocalDetails">Información local</string>
     <string name="NeedOfferLocalStreetView">StreetView local</string>
+    <string name="NeedReservations">Mis pedidos reservados</string>
 
     <!-- NeedReservations Strings -->
     <string name="need_reservations_offer_dialog">Cobrar oferta</string>
