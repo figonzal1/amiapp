@@ -21,30 +21,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
+            android:layout_toStartOf="@+id/tv_need_popup_menu"
+            android:layout_alignStart="@+id/separator"
             android:text="Título de necesidad"
             />
 
-        <Button
-            android:id="@+id/popup_menu"
-            android:layout_width="30dp"
-            android:layout_height="40dp"
+        <TextView
+            android:id="@+id/tv_need_popup_menu"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
             android:text="@string/vertical_ellipsis"
-            android:layout_alignParentEnd="true"
+            android:gravity="center"
             android:textStyle="bold"
+            android:layout_alignParentEnd="true"
             android:textSize="25sp"
-            android:background="@null"
-
             />
 
         <View
-            android:id="@+id/separetor"
+            android:id="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#afafaf"
             android:layout_marginBottom="3dp"
-            android:layout_below="@id/popup_menu"
+            android:layout_below="@id/tv_need_popup_menu"
             />
 
         <TextView
@@ -53,8 +54,8 @@
             android:layout_height="wrap_content"
             android:textStyle="italic"
             android:text="Descripción del pedido"
-            android:layout_marginTop="7dp"
-            android:layout_below="@+id/separetor"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/separator"
             />
 
         <TextView
@@ -78,14 +79,12 @@
             android:id="@+id/tv_need_company_needs_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
             android:textColor="@android:color/white"
             android:text="N"
-            android:layout_below="@+id/tv_need_description"
-            android:layout_marginStart="5dp"
             android:background="@drawable/offer_square_background"
-            android:layout_toEndOf="@+id/tv_need_company_needs"
-            />
+            android:layout_above="@+id/tv_need_company_needs_discard"
+            android:layout_alignStart="@+id/tv_need_company_needs_number_discard" />
+
         <TextView
             android:id="@+id/tv_need_company_needs_number_discard"
             android:layout_width="wrap_content"
@@ -104,8 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Precio Máximo"
-            android:textColor="#f45151"
-            android:layout_below="@+id/tv_need_description"
+            android:layout_alignTop="@+id/tv_need_company_needs_number_discard"
             android:layout_alignParentEnd="true"
             />
 
@@ -114,9 +112,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha Exp"
-            android:layout_below="@+id/tv_need_price_max"
+            android:layout_above="@+id/tv_need_price_max"
             android:layout_alignParentEnd="true"
             />
+
+
 
 
     </RelativeLayout>

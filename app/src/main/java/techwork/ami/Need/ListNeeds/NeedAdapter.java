@@ -44,7 +44,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
         public TextView tvPricemax;
         public TextView tvDateFin;
         public TextView tvDescription;
-        public Button popupMenu;
+        public TextView popupMenu;
 
 
         public NeedViewHolder(View itemView) {
@@ -56,7 +56,7 @@ public class NeedAdapter extends RecyclerView.Adapter<NeedAdapter.NeedViewHolder
             tvPricemax = (TextView)itemView.findViewById(R.id.tv_need_price_max);
             tvDateFin = (TextView)itemView.findViewById(R.id.tv_need_date_fin);
             tvDescription= (TextView)itemView.findViewById(R.id.tv_need_description);
-            popupMenu= (Button)itemView.findViewById(R.id.popup_menu);
+            popupMenu= (TextView)itemView.findViewById(R.id.tv_need_popup_menu);
         }
     }
 
