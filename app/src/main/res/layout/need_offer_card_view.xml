@@ -14,38 +14,80 @@
         android:padding="10dp"
         android:background="?android:attr/selectableItemBackground">
 
+
+        <LinearLayout
+            android:id="@+id/need_offer_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_need_offer_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+
+                android:src="@drawable/ic_loading_image"
+                />
+
+            <TextView
+                android:id="@+id/tv_need_offer_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tiempo disponible"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="1dp"
+            android:layout_height="145dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/need_offer_linear"
+            android:background="#afafaf"
+            />
+
         <TextView
             android:id="@+id/tv_need_offer_tittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Titulo Oferta Empresa"
+            android:textStyle="bold"
+            android:layout_toEndOf="@+id/separator"
+            android:layout_marginStart="10dp"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_need_offer_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:layout_marginTop="10dp"
+            android:text="Descripcion del pedido"
+            android:layout_alignStart="@+id/tv_need_offer_tittle"
+            android:layout_below="@+id/tv_need_offer_tittle"/>
+
 
         <TextView
             android:id="@+id/tv_need_offer_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Precio : $xx.xx"
-            android:layout_below="@+id/tv_need_offer_tittle"
-            android:layout_marginTop="10dp"/>
+            android:text="$xx.xx"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/tv_need_offer_company"
+            />
+
 
         <TextView
             android:id="@+id/tv_need_offer_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Empresa"
-            android:textSize="16sp"
-            android:layout_alignParentEnd="true"/>
-
-        <TextView
-            android:id="@+id/tv_need_offer_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_need_offer_company"
-            android:text="Tiempo disponible"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"/>
-
+            android:gravity="center"
+            android:layout_toEndOf="@+id/separator"
+            android:layout_alignStart="@+id/tv_need_offer_tittle"
+            android:layout_alignBottom="@+id/need_offer_linear" />
 
 
     </RelativeLayout>

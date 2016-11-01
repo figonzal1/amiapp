@@ -211,6 +211,7 @@ public class NeedOfferActivity extends AppCompatActivity {
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GNO_PRICEOFFER));
                 item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GNO_MAXPPERSON));
                 item.setCompany(jsonObjectItem.getString(Config.TAG_GNO_COMPANY));
+                item.setImage(jsonObjectItem.getString(Config.TAG_GNO_IMAGE));
 
                 dIni = jsonObjectItem.getString(Config.TAG_GNO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GNO_DATEFIN);

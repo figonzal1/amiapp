@@ -8,7 +8,10 @@ import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,17 +45,22 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
     public static class NeedOfferViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tvTittle;
+        public TextView tvDescription;
         public TextView tvPrice;
         public TextView tvCompany;
         public TextView tvTime;
+        public ImageView ivImage;
+
         public CountDownTimer countDownTimer;
 
         public NeedOfferViewHolder(View itemView) {
             super(itemView);
             tvTittle = (TextView)itemView.findViewById(R.id.tv_need_offer_tittle);
+            tvDescription=(TextView)itemView.findViewById(R.id.tv_need_offer_description);
             tvPrice = (TextView)itemView.findViewById(R.id.tv_need_offer_price);
             tvCompany= (TextView)itemView.findViewById(R.id.tv_need_offer_company);
             tvTime= (TextView)itemView.findViewById(R.id.tv_need_offer_time);
+            ivImage=(ImageView)itemView.findViewById(R.id.iv_need_offer_image);
         }
     }
 
@@ -68,8 +76,15 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
     public void onBindViewHolder(final NeedOfferAdapter.NeedOfferViewHolder holder, int position) {
         NeedOfferModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
+        holder.tvDescription.setText(model.getDescription());
         holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
         holder.tvCompany.setText(model.getCompany());
+
+        //TODO: Cambiar el path de las imagenes
+        Picasso.with(context)
+                .load(Config.URL_IMAGES_NEED_OFFER+model.getImage())
+                .placeholder(R.drawable.image_default)
+                .into(holder.ivImage);
 
         ExpiryTime expt = new ExpiryTime();
         long expiryTime = expt.getTimeDiference(model.getDateTimeFin());

@@ -18,6 +18,7 @@ public class NeedOfferModel {
     int price;
     String maxPPerson;
     String company;
+    String image;
 
     //Getters
 
@@ -74,6 +75,10 @@ public class NeedOfferModel {
         return dateTimeFin;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     //Setters
 
     public void setIdNeed(String idNeed) {
@@ -126,5 +131,9 @@ public class NeedOfferModel {
 
     public void setDateTimeFin(String dateTimeFin) {
         this.dateTimeFin = dateTimeFin;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

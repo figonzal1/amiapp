@@ -28,6 +28,7 @@
             android:layout_marginStart="10dp"
             android:contentDescription="@string/offer_cv_image_desciption" />
 
+
         <TextView
             android:id="@+id/offer_cv_tittle"
             android:layout_width="wrap_content"
