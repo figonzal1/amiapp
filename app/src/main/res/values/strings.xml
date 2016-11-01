@@ -153,7 +153,6 @@
     <string name="need_reservations_offers_validate_negativeText">Cancelar</string>
     <string name="need_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
     <string name="need_reservations_offers_validate_ok">¡Oferta validada!</string>
-    <string name="need_reservations_offers_validate_processing">Validando oferta</string>
     <string name="need_reservations_offers_rate_processing">Opinando</string>
     <string name="need_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
     <string name="need_reservations_offers_validate_local">El código de la promoción es</string>
@@ -163,6 +162,9 @@
     <string name="need_reservations_offers_rate_message">Tu opinión nos interesa</string>
     <string name="need_reservations_offers_rate_positive">Calificar</string>
     <string name="need_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
+    <string name="need_reservations_offers_validate_processing">Validando oferta</string>
+    <string name="need_reservations_offers_acept_processing">Aceptando oferta</string>
+    <string name="need_reservations_offers_nonacept_processing">Rechazando oferta</string>
 
 
     <!-- After Login Strings -->
@@ -181,6 +183,7 @@
     <string name="regionNoSelected">Seleccionar Región</string>
     <string name="provinceNoSelected">Seleccionar Provincia</string>
     <string name="communeNoSelected">Seleccionar Comuna</string>
+
 
     <!-- Explore Offers Strings -->
     <string name="titleActivityExploreOffers">Explorar ofertas</string>

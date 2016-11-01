@@ -1,5 +1,6 @@
 package techwork.ami.Need.NeedOfferDetails;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,6 +48,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private ProductAdapter adapter;
     private Vibrator c;
+    private ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,18 +139,22 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
         //Actions of Buttons
         btnAccept.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
 
                 //Accept NeedOffer Task
                 class acceptNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
 
-                    //TODO: Reemplazar por un dialog.
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        Toast.makeText(getApplicationContext(),"Aceptando oferta..",Toast.LENGTH_LONG).show();
+                        loading = ProgressDialog.show(NeedOfferViewActivity.this,
+                                getString(R.string.need_reservations_offers_acept_processing),
+                                getString(R.string.wait), false, false);
+                        //Toast.makeText(getApplicationContext(),"Aceptando oferta..",Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -166,6 +172,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
+                        loading.dismiss();
                         if (s.equals("0")){
 
                             Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_LONG).show();
@@ -195,7 +202,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
 
                         }else{
-                            Toast.makeText(getApplicationContext(),"No se ha podido realizar la reserva",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"No se ha podido realizar la reserva",Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -207,15 +214,20 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         });
 
         btnDiscard.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
 
                 class discardNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        Toast.makeText(getApplicationContext(),"Rechazando oferta..",Toast.LENGTH_SHORT).show();
+                        loading = ProgressDialog.show(NeedOfferViewActivity.this,
+                                getString(R.string.need_reservations_offers_nonacept_processing),
+                                getString(R.string.wait), false, false);
+                        //Toast.makeText(getApplicationContext(),"Rechazando oferta..",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -231,8 +243,9 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
+                        loading.dismiss();
                         if (s.equals("0")){
-                            Toast.makeText(getApplicationContext(), "Oferta rechazada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Oferta rechazada", Toast.LENGTH_LONG).show();
 
 
                             //NeedOffer declined go to Main activity refreshed
@@ -254,7 +267,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                             }, 2500);
 
                         }else{
-                            Toast.makeText(getApplicationContext(),"No se ha podido rechazar",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"No se ha podido rechazar",Toast.LENGTH_LONG).show();
                         }
                     }
                 }
