@@ -518,6 +518,7 @@ public class NeedReservationsActivity extends AppCompatActivity {
                 item.setCompany(jsonObjectItem.getString(Config.TAG_GNR_COMPANY));
                 item.setLocalCode(jsonObjectItem.getString(Config.TAG_GNR_LOCALCODE));
                 item.setDateCashed(jsonObjectItem.getString(Config.TAG_GNR_CASHED));
+                item.setImage(jsonObjectItem.getString(Config.TAG_GNR_IMAGE));
 
                 //If dateChashed is != null, save variables.
                 if (!jsonObjectItem.getString(Config.TAG_GNR_DATECASHED).equals("")){

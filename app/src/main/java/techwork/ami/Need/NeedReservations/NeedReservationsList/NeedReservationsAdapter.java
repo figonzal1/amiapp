@@ -1,12 +1,21 @@
 package techwork.ami.Need.NeedReservations.NeedReservationsList;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,12 +40,17 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
         this.needReservationsActivity = needReservationsActivity;
     }
 
+
+
     public static class NeedReservationsViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tvTittle;
+        public TextView tvDescription;
+        public TextView tvCompany;
         public TextView tvPrice;
         public TextView tvStatus;
-        public Button popupMenu;
+        public TextView popupMenu;
+        public ImageView ivImage;
 
 
         public NeedReservationsViewHolder(View itemView) {
@@ -44,9 +58,12 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
 
 
             tvTittle=(TextView)itemView.findViewById(R.id.tv_need_reservations_tittle);
-            tvPrice=(TextView)itemView.findViewById(R.id.tv_need_reservations_price);
+            tvDescription=(TextView)itemView.findViewById(R.id.tv_need_reservations_description);
+            tvCompany=(TextView)itemView.findViewById(R.id.tv_need_reservations_company);
+            tvPrice=(TextView)itemView.findViewById(R.id.tv_need_reservations_quantity_price);
             tvStatus=(TextView)itemView.findViewById(R.id.tv_need_reservations_status);
-            popupMenu=(Button)itemView.findViewById(R.id.btn_need_reservations_popup_menu);
+            popupMenu=(TextView)itemView.findViewById(R.id.tv_need_reservations_popup_menu);
+            ivImage=(ImageView)itemView.findViewById(R.id.iv_need_reservations_image);
         }
     }
 
@@ -62,19 +79,33 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
     public void onBindViewHolder(NeedReservationsAdapter.NeedReservationsViewHolder holder, int position) {
         final NeedReservationsModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
-        holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
+        holder.tvDescription.setText(model.getDescription());
+        holder.tvCompany.setText(model.getCompany());
+        holder.tvPrice.setText(model.getQuantity()+"x $"+String.format(Config.CLP_FORMAT,model.getPrice()));
+
+        Picasso.with(context)
+                .load(Config.URL_IMAGES_NEED_OFFER+model.getImage())
+                .placeholder(R.drawable.image_default)
+                .into(holder.ivImage);
 
         //Si no esta cobrada
+
+
+
         if (model.getCashed().equals("0")){
-            holder.tvStatus.setText("Esperando cobro");
+            ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
+
+            holder.tvStatus.setText("Reservada");
 
 
         }else{
             //
             if (model.getCalification().equals("")){
-                holder.tvStatus.setText("Esperando opinion");
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.orange));
+                holder.tvStatus.setText("Cobrada");
             }
             else {
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
                 holder.tvStatus.setText("Calificada");
             }
         }
@@ -83,7 +114,7 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
             @Override
             public void onClick(View v) {
                 needReservationsActivity.showPopupMenu(v,model);
-            }
+          }
         });
     }
 

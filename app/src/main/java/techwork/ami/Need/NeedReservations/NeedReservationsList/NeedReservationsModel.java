@@ -21,6 +21,7 @@ public class NeedReservationsModel {
     String dateFin;
     String company;
     String localCode;
+    String image;
     int price;
 
 
@@ -95,6 +96,10 @@ public class NeedReservationsModel {
         return localCode;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     //Setters
 
 
@@ -164,5 +169,9 @@ public class NeedReservationsModel {
 
     public void setLocalCode(String localCode) {
         this.localCode = localCode;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

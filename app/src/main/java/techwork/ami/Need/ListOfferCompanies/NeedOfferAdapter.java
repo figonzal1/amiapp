@@ -110,7 +110,7 @@ public class NeedOfferAdapter extends RecyclerView.Adapter<NeedOfferAdapter.Need
                     else if (days==1){
                         time =days + " " + "día" + " " + hours % 24 + "h:" + (minutes % 60) + "m:" + seconds % 60+"s";
                     }
-                    holder.tvTime.setText(time);
+                    holder.tvTime.setText("Expira en \n"+time);
                 }
 
                 public void onFinish() {

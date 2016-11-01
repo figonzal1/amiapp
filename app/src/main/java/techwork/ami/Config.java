@@ -207,6 +207,7 @@ public class Config {
 	public static final String TAG_GNO_IMAGE="imagen";
 
 	//Tags and Keys for NeedreservationsActivity
+	public static final String URL_IMAGES_NEED_RESERVATIONS="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String URL_GET_NEED_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getNeedReservations.php";
 	public static final String URL_VALIDATE_NEED_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateNeedReservation.php";
 	public static final String URL_NEED_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateNeed.php";
@@ -233,6 +234,7 @@ public class Config {
 	public static final String TAG_GNR_PRICEOFFER="precioOferta";
 	public static final String TAG_GNR_COMPANY="empresa";
 	public static final String TAG_GNR_LOCALCODE="codigoLocal";
+	public static final String TAG_GNR_IMAGE="imagen";
 
 
 	//Discard NeedOfferActivity
