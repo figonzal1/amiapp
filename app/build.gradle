@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1" //Para generar APK usar 21.1.2
+    buildToolsVersion "24.0.1" //Para generar APK usar 21.1.2 / 22.0.1  (Ultima 24.0.1)
 
     defaultConfig {
         applicationId "techwork.ami"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         multiDexEnabled true
     }
     buildTypes {

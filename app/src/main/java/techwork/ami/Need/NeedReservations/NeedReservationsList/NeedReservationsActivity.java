@@ -103,7 +103,7 @@ public class NeedReservationsActivity extends AppCompatActivity {
     public void showPopupMenu(final View view, final NeedReservationsModel model){
 
         final PopupMenu popup= new PopupMenu(view.getContext(),view);
-        MenuInflater inflater = popup.getMenuInflater();
+        final MenuInflater inflater = popup.getMenuInflater();
 
         final Menu popumenu = popup.getMenu();
         inflater.inflate(R.menu.popup_menu_reservations,popup.getMenu());
@@ -115,9 +115,26 @@ public class NeedReservationsActivity extends AppCompatActivity {
 
 
                     case R.id.item_popup_menu_reservations_details:
-                        Toast.makeText(view.getContext(),"Ver detalles de oferta",Toast.LENGTH_LONG).show();
+
+                        //Go to see details of each needOffer reserved.
                         Intent intent = new Intent(NeedReservationsActivity.this,NeedReservationsDetailsActivity.class);
                         intent.putExtra(Config.TAG_GNR_IDOFFER,model.getIdOffer());
+                        intent.putExtra(Config.TAG_GNR_IDLOCAL,model.getIdLocal());
+                        intent.putExtra(Config.TAG_GNR_IDNEED,model.getIdNeed());
+                        intent.putExtra(Config.TAG_GNR_TITTLE,model.getTittle());
+                        intent.putExtra(Config.TAG_GNR_DESCRIPTION,model.getDescription());
+                        intent.putExtra(Config.TAG_GNR_PRICEOFFER,model.getPrice());
+                        intent.putExtra(Config.TAG_GNR_CASHED,model.getDescription());
+                        intent.putExtra(Config.TAG_GNR_DATECASHED,model.getDateCashed());
+                        intent.putExtra(Config.TAG_GNR_CALIFICATION,model.getCalification());
+                        intent.putExtra(Config.TAG_GNR_CODPROMOTION,model.getCodPromotion());
+                        intent.putExtra(Config.TAG_GNR_QUANTITY,model.getQuantity());
+                        intent.putExtra(Config.TAG_GNR_LOCALCODE,model.getLocalCode());
+                        intent.putExtra(Config.TAG_GNR_COMPANY,model.getCompany());
+                        intent.putExtra(Config.TAG_GNR_DATEINI,model.getDateIni());
+                        intent.putExtra(Config.TAG_GNR_DATEFIN,model.getDateFin());
+                        intent.putExtra(Config.TAG_GNR_DATERESERV,model.getDateReserv());
+
                         startActivity(intent);
                         return true;
 

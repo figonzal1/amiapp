@@ -28,7 +28,134 @@
         android:layout_height="match_parent"
         android:layout_below="@id/appbar">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                >
 
+
+                <LinearLayout
+                    android:id="@+id/need_reservations_view_linear_layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/tv_need_reservations_view_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Oferta enviada por: "
+                        android:layout_weight="5"
+                        android:textStyle="italic"
+                        android:gravity="center_horizontal"
+                        android:textSize="19sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_need_reservations_view_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Empresa"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:textSize="18dp"
+                        android:gravity="center_horizontal"
+                        android:background="@drawable/need_offer_company_square_background"
+                        />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_need_reservations_view_tittle"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Titulo Oferta Empresa"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:textSize="23sp"
+                    android:layout_below="@+id/need_reservations_view_linear_layout1"/>
+
+                <TextView
+                    android:id="@+id/tv_need_reservations_view_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Esta es la descripcion de la oferta de la empresa XX"
+                    android:textStyle="italic"
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:layout_below="@+id/tv_need_reservations_view_tittle"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/need_reservations_view_linear_layout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_below="@id/tv_need_reservations_view_description">
+
+                    <TextView
+                        android:id="@+id/tv_need_reservations_view_date_ini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:text="Fecha de publicación: XX/XX/XX" />
+                    <TextView
+                        android:id="@+id/tv_need_reservations_view_date_fin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:text="Fecha de expiración: XX/XX/XX" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_need_reservations_view_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$XX.XX"
+                    android:gravity="center_horizontal"
+                    android:textSize="23sp"
+                    android:textColor="#ff6565"
+                    android:layout_toEndOf="@+id/need_reservations_view_linear_layout2"
+                    android:layout_below="@+id/tv_need_reservations_view_description"/>
+
+                <TextView
+                    android:id="@+id/tv_need_reservations_view_3"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Esta oferta contiene: "
+                    android:textSize="16sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_below="@id/tv_need_reservations_view_price"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_need_reservations_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="140dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_need_reservations_view_3"
+                    android:scrollbars="vertical">
+
+                </android.support.v7.widget.RecyclerView>
+
+
+            </RelativeLayout>
 
     </ScrollView>
 
