@@ -40,7 +40,7 @@ public class Config {
 	public static final String URL_GOD = "http://amiapp.cl/public/getData/Offers/offerDetails.php";
 	public static final String URL_FILTER_OFFERS = "http://amiapp.cl/public/getData/Filter/filter.php";
     public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
-    public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
+    public static final String URL_IMAGES_OFFER ="http://amiapp.cl/encargado/uploads/";
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
 	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php";
 	public static final String URL_CONTACT_US = "http://amiapp.cl/public/getData/ContactUs/sendContactEmail.php";

@@ -18,74 +18,121 @@
         <!-- Width y height dan el tamaño de la foto (ImageView)-->
         <ImageView
             android:id="@+id/my_reservations_offers_list_photo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/ic_menu_camera"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"/>
 
         <TextView
-            android:id="@+id/my_reservations_offers_list_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Titulo Oferta"
-            android:textSize="15sp"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/my_reservations_offers_list_photo"/>
-
-        <TextView
-            android:id="@+id/my_reservations_offers_list_final_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fecha término"
-            android:textSize="13sp"
-            android:layout_marginStart="10dp"
-            android:layout_below="@+id/my_reservations_offers_list_title"
-            android:layout_toEndOf="@+id/my_reservations_offers_list_photo"/>
-
-        <TextView
             android:id="@+id/my_reservations_offers_list_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="#99ff0000"
-            android:text="Precio"
-            android:layout_marginStart="10dp"
-            android:layout_below="@+id/my_reservations_offers_list_final_date"
-            android:layout_toEndOf="@+id/my_reservations_offers_list_photo"/>
+            android:textSize="14sp"
+            android:text="@string/offer_cv_price"
+            android:textStyle="normal|bold"
+            android:layout_alignBottom="@+id/my_reservations_offers_list_photo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="11dp" />
 
         <TextView
             android:id="@+id/my_reservations_offers_list_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Compañía"
-            android:textSize="16sp"
-            android:layout_below="@+id/my_reservations_offers_list_price"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/my_reservations_offers_list_photo"/>
-
-        <TextView
-            android:id="@+id/my_reservations_offers_list_reservation_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Compañía"
-            android:textSize="16sp"
-            android:layout_below="@+id/my_reservations_offers_list_company"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/my_reservations_offers_list_photo"/>
+            android:textSize="14sp"
+            android:layout_alignBottom="@+id/my_reservations_offers_list_photo"
+            android:layout_toEndOf="@+id/my_reservations_offers_list_photo" />
 
         <TextView
             android:id="@+id/my_reservations_offers_list_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Cantidad"
-            android:textSize="16sp"
-            android:layout_below="@+id/my_reservations_offers_list_reservation_date"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/my_reservations_offers_list_photo"/>
+            android:text="XXXX"
+            android:textSize="14sp"
+            android:layout_alignBottom="@+id/my_reservations_offers_list_title"
+            android:layout_alignEnd="@+id/my_reservations_offers_list_price"
+            android:textAlignment="textStart" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/my_reservations_offers_list_photo">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:text="Reservado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/my_reservations_offers_list_photo"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/my_reservations_offers_list_reservation_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reservado"
+                    android:textSize="14sp"
+                    android:layout_below="@+id/textView"
+                    android:layout_toEndOf="@+id/my_reservations_offers_list_photo"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:text="Termina el"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:layout_centerVertical="true"
+                    android:layout_alignStart="@+id/my_reservations_offers_list_final_date" />
+
+                <TextView
+                    android:id="@+id/my_reservations_offers_list_final_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Termina en"
+                    android:textSize="14sp"
+                    android:layout_below="@+id/textView3"
+                    android:layout_alignEnd="@+id/my_reservations_offers_list_price" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/my_reservations_offers_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo Oferta"
+            android:textSize="15sp"
+            android:textStyle="normal|bold"
+            android:layout_alignTop="@+id/my_reservations_offers_list_photo"
+            android:layout_above="@+id/linearLayout"
+            android:layout_toEndOf="@+id/my_reservations_offers_list_photo" />
+
+        <TextView
+            android:text="Reservas:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/my_reservations_offers_list_quantity_txt"
+            android:layout_alignBaseline="@+id/my_reservations_offers_list_quantity"
+            android:layout_alignBottom="@+id/my_reservations_offers_list_quantity"
+            android:layout_toStartOf="@+id/my_reservations_offers_list_quantity" />
 
     </RelativeLayout>
 

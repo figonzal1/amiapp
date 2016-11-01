@@ -50,18 +50,6 @@
             android:layout_alignStart="@+id/offer_cv_description" />
 
         <TextView
-            android:id="@+id/offer_cv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/offer_cv_price"
-            android:layout_marginEnd="11dp"
-            android:layout_alignBaseline="@+id/offer_cv_company"
-            android:layout_alignBottom="@+id/offer_cv_company"
-            android:layout_alignParentEnd="true"
-            android:textStyle="normal|bold" />
-
-        <TextView
             android:id="@+id/offer_cv_description"
             android:layout_width="wrap_content"
             android:text="@string/offer_cv_description"
@@ -71,8 +59,8 @@
             android:layout_below="@+id/offer_cv_tittle"
             android:layout_alignStart="@+id/offer_cv_tittle"
             android:layout_above="@+id/offer_cv_company"
-            android:layout_alignEnd="@+id/offer_cv_dsct"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"
+            android:layout_alignEnd="@+id/offer_cv_price" />
 
         <TextView
             android:id="@+id/offer_cv_dsct_sy"
@@ -95,6 +83,17 @@
             android:layout_above="@+id/offer_cv_description"
             android:layout_toStartOf="@+id/offer_cv_dsct_sy"
             android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/offer_cv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/offer_cv_price"
+            android:layout_marginEnd="11dp"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/offer_cv_description"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
