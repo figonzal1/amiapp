@@ -37,6 +37,7 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
 
         public TextView tvTittle;
         public TextView tvPrice;
+        public TextView tvStatus;
         public Button popupMenu;
 
 
@@ -46,6 +47,7 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
 
             tvTittle=(TextView)itemView.findViewById(R.id.tv_need_reservations_tittle);
             tvPrice=(TextView)itemView.findViewById(R.id.tv_need_reservations_price);
+            tvStatus=(TextView)itemView.findViewById(R.id.tv_need_reservations_status);
             popupMenu=(Button)itemView.findViewById(R.id.btn_need_reservations_popup_menu);
         }
     }
@@ -63,6 +65,21 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
         final NeedReservationsModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
         holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
+
+        //Si no esta cobrada
+        if (model.getCashed().equals("0")){
+            holder.tvStatus.setText("Esperando cobro");
+
+
+        }else{
+            //
+            if (model.getCalification().equals("")){
+                holder.tvStatus.setText("Esperando opinion");
+            }
+            else {
+                holder.tvStatus.setText("Calificada");
+            }
+        }
 
         holder.popupMenu.setOnClickListener(new View.OnClickListener() {
             @Override

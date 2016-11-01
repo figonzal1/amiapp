@@ -29,6 +29,14 @@
             android:layout_below="@+id/tv_need_reservations_tittle"
             android:layout_marginTop="10dp"/>
 
+        <TextView
+            android:id="@+id/tv_need_reservations_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado"
+            android:textColor="#ff0000"
+            android:layout_below="@id/tv_need_reservations_price"
+            />
         <Button
             android:id="@+id/btn_need_reservations_popup_menu"
             android:layout_width="30dp"
