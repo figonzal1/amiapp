@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import java.util.Date;
 
-import techwork.ami.Need.NeedReservations.NeedReservationsActivity;
 import techwork.ami.Need.NeedReservations.NeedReservationsList.NeedReservationsActivity;
 import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
