@@ -1,6 +1,8 @@
 package techwork.ami.ReservationsOffers;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +29,13 @@ public class MyReservationsOffersListAdapter
     private OnItemClickListenerRecyclerView itemClick;
     private List<ReservationOffer> items;
     private Context context;
+    private MyReservationsOffersActivity offersReservationsActivity;
 
     // Class constructor
-    public MyReservationsOffersListAdapter(Context context, List<ReservationOffer> items) {
+    public MyReservationsOffersListAdapter(Context context, List<ReservationOffer> items, MyReservationsOffersActivity offersReservationsActivity) {
         this.context = context;
         this.items = items;
+        this.offersReservationsActivity=offersReservationsActivity;
     }
 
     // Class Holder
@@ -41,18 +45,20 @@ public class MyReservationsOffersListAdapter
         public TextView reservationPrice;
         public TextView reservationCompany;
         public TextView reservationReservationDate;
-        public TextView reservationQuantity;
         public ImageView reservationImage;
+        public TextView tvStatus;
+        public TextView popupMenu;
 
         public MyReservationsListViewHolder(View itemView) {
             super(itemView);
             reservationTitle = (TextView) itemView.findViewById(R.id.my_reservations_offers_list_title);
             reservationFinalDate = (TextView) itemView.findViewById(R.id.my_reservations_offers_list_final_date);
-            reservationPrice = (TextView) itemView.findViewById(R.id.my_reservations_offers_list_price);
+            reservationPrice = (TextView) itemView.findViewById(R.id.my_reservations_offers_list_quantity);
             reservationCompany = (TextView) itemView.findViewById(R.id.my_reservations_offers_list_company);
             reservationReservationDate = (TextView) itemView.findViewById(R.id.my_reservations_offers_list_reservation_date);
-            reservationQuantity = (TextView) itemView.findViewById(R.id.my_reservations_offers_list_quantity);
             reservationImage = (ImageView) itemView.findViewById(R.id.my_reservations_offers_list_photo);
+            popupMenu=(TextView)itemView.findViewById(R.id.tv_offers_popup_menu);
+            tvStatus =(TextView)itemView.findViewById(R.id.tv_offers_status);
         }
     }
 
@@ -69,18 +75,43 @@ public class MyReservationsOffersListAdapter
     // Set data into view reservations (list)
     @Override
     public void onBindViewHolder(MyReservationsOffersListAdapter.MyReservationsListViewHolder holder, int position) {
-        ReservationOffer reservation = items.get(position);
+        final ReservationOffer model = items.get(position);
 
-        holder.reservationTitle.setText(reservation.getTitle());
-        holder.reservationFinalDate.setText(reservation.getFinalDate());
-        holder.reservationPrice.setText("$" + String.format(Config.CLP_FORMAT, reservation.getPrice()));
-        holder.reservationCompany.setText(reservation.getCompany());
-        holder.reservationReservationDate.setText(reservation.getReservationDate());
-        holder.reservationQuantity.setText(reservation.getQuantity());
-        String s = reservation.getImage();
+        holder.reservationTitle.setText(model.getTitle());
+        holder.reservationFinalDate.setText(model.getFinalDate());
+        holder.reservationPrice.setText(model.getQuantity()+"x $"+ String.format(Config.CLP_FORMAT, model.getPrice()));
+        holder.reservationCompany.setText(model.getCompany());
+        holder.reservationReservationDate.setText(model.getReservationDate());
+
+        String s = model.getImage();
         Picasso.with(context).load(Config.URL_IMAGES_OFFER + s)
                 .placeholder(R.drawable.image_default)
                 .into(holder.reservationImage);
+
+        if (model.getCashed().equals("0")){
+            ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
+
+            holder.tvStatus.setText("Reservada");
+
+
+        }else{
+            //
+            if (model.getCalification().equals("")){
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.orange));
+                holder.tvStatus.setText("Cobrada");
+            }
+            else {
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
+                holder.tvStatus.setText("Calificada");
+            }
+        }
+
+        holder.popupMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offersReservationsActivity.showPopupMenu(v,model);
+            }
+        });
     }
 
     @Override

@@ -1,5 +1,6 @@
 package techwork.ami.ReservationsOffers;
 
+import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -18,10 +19,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -53,14 +60,11 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     // Two recycle views in one layout by https://goo.gl/Iy5prs (natrio)
 
     // UI references
-    private RecyclerView mRecyclerViewReserved;
-    private RecyclerView mRecyclerViewCharged;
-    private RecyclerView.LayoutManager mLayoutManagerResrved, mLayoutManagerCharged;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout refreshLayout;
-    private List<ReservationOffer> reservationsOffersListReserved;
-    private List<ReservationOffer> reservationOffersListCharged;
-    private MyReservationsOffersListAdapter adapterReserved;
-    private MyReservationsOffersListAdapter adapterCharged;
+    private List<ReservationOffer> reservationsOffersList;
+    private MyReservationsOffersListAdapter adapter;
     Context context;
     CustomAlertDialogBuilder dialogBuilder;
     FloatingActionButton fab;
@@ -74,19 +78,19 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Recycler view
-        mRecyclerViewReserved = (RecyclerView) findViewById(R.id.my_reservations_offers_list_reserved);
-        mRecyclerViewCharged = (RecyclerView) findViewById(R.id.my_reservations_offers_list_charged);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_reservations_offers_list_reserved);
+
 
         // Use this setting to improve performance if you know that change in content do not change the layout size of the RecyclerView
-        mRecyclerViewReserved.setHasFixedSize(true);
-        mRecyclerViewCharged.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(true);
+
 
         // Use a linear layout manager
-        mLayoutManagerResrved = new LinearLayoutManager(this);
-        mLayoutManagerCharged = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(this);
 
-        mRecyclerViewReserved.setLayoutManager(mLayoutManagerResrved);
-        mRecyclerViewCharged.setLayoutManager(mLayoutManagerCharged);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
 
         //Refreshing layout
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_my_reservations_offers_list);
@@ -100,6 +104,46 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
         // Floating button
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setScaleX(0);
+        fab.setScaleY(0);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            final Interpolator interpolador = AnimationUtils.loadInterpolator(getApplicationContext(),
+                    android.R.interpolator.fast_out_slow_in);
+
+            fab.animate()
+                    .scaleX((float) 1.5)
+                    .scaleY((float) 1.5)
+                    .setInterpolator(interpolador)
+                    .setDuration(600)
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            fab.animate()
+                                    .scaleY(1)
+                                    .scaleX(1)
+                                    .setInterpolator(interpolador)
+                                    .setDuration(1000)
+                                    .start();
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +157,82 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
         //Get and show data
         getReservations();
+    }
+
+    public void showPopupMenu(final View view, final ReservationOffer model){
+
+        final PopupMenu popup= new PopupMenu(view.getContext(),view);
+        final MenuInflater inflater = popup.getMenuInflater();
+
+        final Menu popumenu = popup.getMenu();
+        inflater.inflate(R.menu.popup_menu_reservations,popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch(item.getItemId()){
+
+
+                    /*case R.id.item_popup_menu_reservations_details:
+
+                        //Go to see details of each needOffer reserved.
+                        Intent intent = new Intent(MyReservationsOffersActivity.this,NeedReservationsDetailsActivity.class);
+                        intent.putExtra(Config.TAG_GNR_IDOFFER,model.getIdOffer());
+                        intent.putExtra(Config.TAG_GNR_IDLOCAL,model.getIdLocal());
+                        intent.putExtra(Config.TAG_GNR_IDNEED,model.getIdNeed());
+                        intent.putExtra(Config.TAG_GNR_TITTLE,model.getTittle());
+                        intent.putExtra(Config.TAG_GNR_DESCRIPTION,model.getDescription());
+                        intent.putExtra(Config.TAG_GNR_PRICEOFFER,model.getPrice());
+                        intent.putExtra(Config.TAG_GNR_CASHED,model.getDescription());
+                        intent.putExtra(Config.TAG_GNR_DATECASHED,model.getDateCashed());
+                        intent.putExtra(Config.TAG_GNR_CALIFICATION,model.getCalification());
+                        intent.putExtra(Config.TAG_GNR_CODPROMOTION,model.getCodPromotion());
+                        intent.putExtra(Config.TAG_GNR_QUANTITY,model.getQuantity());
+                        intent.putExtra(Config.TAG_GNR_LOCALCODE,model.getLocalCode());
+                        intent.putExtra(Config.TAG_GNR_COMPANY,model.getCompany());
+                        intent.putExtra(Config.TAG_GNR_DATEINI,model.getDateIni());
+                        intent.putExtra(Config.TAG_GNR_DATEFIN,model.getDateFin());
+                        intent.putExtra(Config.TAG_GNR_DATERESERV,model.getDateReserv());
+
+                        startActivity(intent);
+                        return true;*/
+
+                    case R.id.item_popup_menu_reservations_charge:
+                        item.setEnabled(true);
+                        //If needOffer is charge, not charged permitted.
+                        if (model.getCashed().equals("1")){
+                            popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                            Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
+                            Snackbar.make(view,R.string.need_reservations_offers_already,Snackbar.LENGTH_SHORT).show();
+                        }
+                        //Do charge
+                        else {
+                            dialogLocalCode(model);
+                        }
+                        return true;
+
+                    case R.id.item_popup_menu_reservations_calificate:
+
+                        //If needOffer is not charge, not calificate.
+                        if (model.getCashed().equals("0")){
+
+                            Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                        }
+                        //If has already validated and rated.
+                        else if (!model.getCalification().equals("")){
+                            item.setEnabled(false);
+                            Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            rateOffer(model,false);
+                        }
+
+                }
+
+                return false;
+            }
+        });
+        popup.show();
     }
 
     // Call to DB
@@ -136,7 +256,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             protected String doInBackground(Void... strings) {
                 RequestHandler rh = new RequestHandler();
 
-                Boolean connectionStatus = rh.isConnectedToServer(mRecyclerViewReserved, new View.OnClickListener() {
+                Boolean connectionStatus = rh.isConnectedToServer(mRecyclerView, new View.OnClickListener() {
                     @Override
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(View v) {
@@ -175,78 +295,44 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private void showOffersReservations(String s){
         getData(s);
 
-        adapterReserved = new MyReservationsOffersListAdapter(this, reservationsOffersListReserved);
-        adapterCharged = new MyReservationsOffersListAdapter(this, reservationOffersListCharged);
+        adapter = new MyReservationsOffersListAdapter(this, reservationsOffersList,MyReservationsOffersActivity.this);
+        ScaleInAnimationAdapter scaleAdapterReserved = new ScaleInAnimationAdapter(adapter);
 
-        ScaleInAnimationAdapter scaleAdapterReserved = new ScaleInAnimationAdapter(adapterReserved);
-        ScaleInAnimationAdapter scaleAdapterCharged = new ScaleInAnimationAdapter(adapterCharged);
-
-        mRecyclerViewReserved.setAdapter(scaleAdapterReserved);
-        mRecyclerViewCharged.setAdapter(scaleAdapterCharged);
+        mRecyclerView.setAdapter(scaleAdapterReserved);
 
         // Set behavior to click in some item (offer validate)
-        adapterReserved.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
+        adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
-                final ReservationOffer ro = reservationsOffersListReserved.get(mRecyclerViewReserved.getChildAdapterPosition(view));
+                final ReservationOffer model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
                 // If the offer was already charged
-                if(!ro.getPaymentDate().equals("")){
+                if(model.getCashed().equals("1")){
                     Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
                     System.out.println("Aqui");
                     Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
-                    dialogLocalCode(ro);
+                    dialogLocalCode(model);
                 }
             }
 
             @Override
             public void onItemLongClick(View view) {
-                final ReservationOffer ro = reservationsOffersListReserved.get(mRecyclerViewReserved.getChildAdapterPosition(view));
+                final ReservationOffer model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
                 // Validate before rate
-                if (ro.getPaymentDate().equals("")){
+                if (model.getCashed().equals("0")){
                     Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
                 }
                 // If has already validated but not rated
-                else if (!ro.getCalificacion().equals("")){
+                else if (!model.getCalification().equals("")){
                     Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    rateOffer(ro, false);
+                    rateOffer(model, false);
                 }
             }
         });
 
-        adapterCharged.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
-            @Override
-            public void onItemClick(final View view) {
-                final ReservationOffer ro = reservationOffersListCharged.get(mRecyclerViewCharged.getChildAdapterPosition(view));
-                // If the offer was already charged
-                if(!ro.getPaymentDate().equals("")){
-                    Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
-                }
-                else {
-                    dialogLocalCode(ro);
-                }
-            }
-
-            @Override
-            public void onItemLongClick(View view) {
-                final ReservationOffer ro = reservationOffersListCharged .get(mRecyclerViewCharged.getChildAdapterPosition(view));
-                // Validate before rate
-                if (ro.getPaymentDate().equals("")){
-                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
-                }
-                // If has already validated but not rated
-                else if (!ro.getCalificacion().equals("")){
-                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    rateOffer(ro, false);
-                }
-            }
-        });
 
     }
 
@@ -475,8 +561,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             JSONArray jsonOffers = jsonObject.optJSONArray(Config.TAG_GRO);
 
             Calendar c = Calendar.getInstance();
-            reservationOffersListCharged = new ArrayList<>();
-            reservationsOffersListReserved = new ArrayList<>();
+            reservationsOffersList = new ArrayList<>();
 
             for(int i=0;i<jsonOffers.length();i++){
 
@@ -502,13 +587,13 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 item.setQuantity(jsonObjectItem.getString(Config.TAG_GRO_QUANTITY));
                 item.setPromotionCode(jsonObjectItem.getString(Config.TAG_GRO_PROMOCOD));
                 item.setLocalCode(jsonObjectItem.getString(Config.TAG_GRO_LOCCODE));
-                item.setCalificacion(jsonObjectItem.getString(Config.TAG_GRO_CALIFICATION));
+                item.setCalification(jsonObjectItem.getString(Config.TAG_GRO_CALIFICATION));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GRO_IMAGE));
+                item.setCashed(jsonObjectItem.getString(Config.TAG_GRO_CASHED));
 
                 item.setPaymentDate(jsonObjectItem.getString(Config.TAG_GRO_PAYDATE));
 
-                if (item.getPaymentDate().compareTo("") == 0) reservationsOffersListReserved.add(item);
-                else reservationOffersListCharged.add(item);
+                reservationsOffersList.add(item);
             }
 
         } catch (JSONException e) {
