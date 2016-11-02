@@ -140,6 +140,16 @@
         </activity>
         <activity android:name=".ContactUsActivity" />
         <activity android:name=".Offer.OfferDetail.OfferDetailActivity" />
+
+        <activity android:name=".Offer.OfferDetail.OfferDetailActivity"
+            android:label="@string/title_activity_offer_detail"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <activity
             android:name=".Offer.FilterOfferActivity"
             android:label="@string/title_activity_filter_offers"

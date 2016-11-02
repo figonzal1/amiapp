@@ -23,6 +23,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
+
+import techwork.ami.Need.NeedReservations.NeedReservationsActivity;
 import techwork.ami.Need.NeedReservations.NeedReservationsList.NeedReservationsActivity;
 import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int LOCATION_REQUEST_CODE = 101;
+
+    public static boolean notificate = true;
+    public static Date now = new Date();
 
     private String name;
     private String lastnames;

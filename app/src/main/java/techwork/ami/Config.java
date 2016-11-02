@@ -7,6 +7,11 @@ import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
 @SuppressWarnings("WeakerAccess")
 public class Config {
 
+	public static final long MILIS_TO_MIN = 1 / (1000 * 60);
+
+	// Slack time (in minutes, change only first number) that define if the notification is shown or not (if greater than this, no show).
+	public static final long NOTIFICATION_SLACK_TIME= 5;
+
 	// Input type constant
 	public static int inputNoVisiblePasswordType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
 	public static int inputPromotionCodeType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -39,14 +44,14 @@ public class Config {
 	public static final String URL_OFFER_SAW = "http://amiapp.cl/public/getData/Offers/sawOffer.php";
 	public static final String URL_GOD = "http://amiapp.cl/public/getData/Offers/offerDetails.php";
 	public static final String URL_FILTER_OFFERS = "http://amiapp.cl/public/getData/Filter/filter.php";
-    public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
-    public static final String URL_IMAGES_OFFER ="http://amiapp.cl/public/getData/Imagenes/";
+	public static final String URL_GET_RESERVATIONS_OFFERS = "http://amiapp.cl/public/getData/ReservationsOffers/getReservationsOffers.php";
+	public static final String URL_IMAGES_OFFER ="http://amiapp.cl/encargado/uploads/";
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
 	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php";
 	public static final String URL_CONTACT_US = "http://amiapp.cl/public/getData/ContactUs/sendContactEmail.php";
 	public static final String URL_DELETE_NEED = "http://amiapp.cl/public/getData/Need/ChangeStatusNeed.php";
 
-    // GO = Get Offers
+	// GO = Get Offers
 	public static final String TAG_GO_OFFERS="offers";
 	public static final String TAG_GO_OFFER_ID="id";
 	public static final String TAG_GO_TITLE="titulo";
@@ -74,21 +79,21 @@ public class Config {
 	public static final String TAG_FO_ID_CATEGORY="idCategoria";
 	public static final String TAG_FO_ID_STORE="idLocal";
 
-    //GRO = Get Reservations Offers (not same)
-    public static final String TAG_GRO = "reservationsOffers";
-    public static final String TAG_GRO_ID_OFFER = "idOferta";
-    public static final String TAG_GRO_TITLE = "titulo";
-    public static final String TAG_GRO_DESCRIPTION = "descripcion";
-    public static final String TAG_GRO_PROMOCOD = "codPromocion";
-    public static final String TAG_GRO_DATEINI = "fechaInicio";
-    public static final String TAG_GRO_DATEFIN = "fechaTermino";
-    public static final String TAG_GRO_PRICE = "precio";
-    public static final String TAG_GRO_STATE = "estado";
-    public static final String TAG_GRO_IMAGE = "imagen";
-    public static final String TAG_GRO_COMPANY = "empresa";
-    public static final String TAG_GRO_QUANTITY = "cantidad";
-    public static final String TAG_GRO_RESERDATE = "fechaReserva";
-    public static final String TAG_GRO_PAYDATE = "fechaCobro";
+	//GRO = Get Reservations Offers (not same)
+	public static final String TAG_GRO = "reservationsOffers";
+	public static final String TAG_GRO_ID_OFFER = "idOferta";
+	public static final String TAG_GRO_TITLE = "titulo";
+	public static final String TAG_GRO_DESCRIPTION = "descripcion";
+	public static final String TAG_GRO_PROMOCOD = "codPromocion";
+	public static final String TAG_GRO_DATEINI = "fechaInicio";
+	public static final String TAG_GRO_DATEFIN = "fechaTermino";
+	public static final String TAG_GRO_PRICE = "precio";
+	public static final String TAG_GRO_STATE = "estado";
+	public static final String TAG_GRO_IMAGE = "imagen";
+	public static final String TAG_GRO_COMPANY = "empresa";
+	public static final String TAG_GRO_QUANTITY = "cantidad";
+	public static final String TAG_GRO_RESERDATE = "fechaReserva";
+	public static final String TAG_GRO_PAYDATE = "fechaCobro";
 	public static final String TAG_GRO_CALIFICATION = "calificacion";
 	public static final String TAG_GRO_LOCCODE = "codigoLocal";
 
@@ -99,7 +104,7 @@ public class Config {
 	// DO = Discard Offer URLs
 	public static final String URL_DO_DISCARD = "http://amiapp.cl/public/getData/DiscardOffer/discardOffer.php";
 
-    // Keys that will be used to send the request to php scripts
+	// Keys that will be used to send the request to php scripts
 	public static final  String KEY_ID ="id"; // UP = Update Profile
 	public static final  String KEY_NAME ="nombre";
 	public static final  String KEY_LASTNAMES ="apellidos";
@@ -299,9 +304,9 @@ public class Config {
 	//JSON array name
 	public static final String JSON_ARRAY = "result";
 
-    //Keys for Fragments (MainPageAdapter)
-    public static final int HOME = 0;
-    public static final int CATEGORY = 1;
-    public static final int NEED = 2;
-    public static final int PAGE_COUNT = 3;
+	//Keys for Fragments (MainPageAdapter)
+	public static final int HOME = 0;
+	public static final int CATEGORY = 1;
+	public static final int NEED = 2;
+	public static final int PAGE_COUNT = 3;
 }

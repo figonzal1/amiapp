@@ -1,16 +1,23 @@
 package techwork.ami.Offer.OfferList;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +41,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.MainActivity;
 import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -48,6 +56,11 @@ public class FragmentHome extends Fragment {
     private RecyclerView rv;
     private LinearLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
+
+    //android.support.v4.app.NotificationCompat.Builder mBuilder;
+    static int NOTIFY = 0;
+    NotificationManager mNotificationManager;
+    static boolean notificado = false;
 
     // Empty constructor (default)
     public FragmentHome() {
@@ -90,6 +103,8 @@ public class FragmentHome extends Fragment {
             }
         });
 
+        mNotificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
         getOffers();
         return v;
     }
@@ -97,6 +112,22 @@ public class FragmentHome extends Fragment {
     // Call to DB
     private void getOffers(){
         sendGetRequest();
+        System.out.println("Notificado antes = "+notificado);
+        System.out.println("Notificate antes = "+MainActivity.notificate);
+        System.out.println("Now antes = "+MainActivity.now);
+
+        if(notificado){
+            MainActivity.notificate = false;
+        }
+        if(notificado && !MainActivity.notificate &&
+                ((new Date()).getTime() - MainActivity.now.getTime())*Config.MILIS_TO_MIN > Config.NOTIFICATION_SLACK_TIME){
+            MainActivity.now = new Date();
+            MainActivity.notificate = true;
+            notificado = false;
+        }
+        System.out.println("Notificado = "+notificado);
+        System.out.println("Notificate = "+MainActivity.notificate);
+        System.out.println("Now= "+MainActivity.now);
     }
 
     private void sendGetRequest(){
@@ -283,6 +314,7 @@ public class FragmentHome extends Fragment {
 
 
                 c.setTime(dateIni);
+
                 item.setInitialDate(String.format(Locale.US, Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
 
                 c.setTime(dateFin);
@@ -297,6 +329,12 @@ public class FragmentHome extends Fragment {
 
                 offerList.add(item);
 
+                // Se calcula la diferencia de tiempo acutal con cuando se publica la oferta, si son menor a una cierta holgura entonces se muestra la notificación
+                long d = (new Date()).getTime() - dateIni.getTime();
+                if(MainActivity.notificate && d * Config.MILIS_TO_MIN < Config.NOTIFICATION_SLACK_TIME){
+                    notificado = true;
+                    myNotification(item);
+                }
             }
 
         } catch (JSONException e) {
@@ -306,6 +344,50 @@ public class FragmentHome extends Fragment {
         }
     }
 
+    void myNotification(OfferModel o){
+        Intent nintent = new Intent(getActivity(), OfferDetailActivity.class);
+        nintent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
+        nintent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
+        nintent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
+        nintent.putExtra(Config.TAG_GO_COMPANY, o.getCompany());
+        nintent.putExtra(Config.TAG_GO_PRICE, o.getPrice());
+        nintent.putExtra(Config.TAG_GO_OFFER_ID, o.getId());
+        nintent.putExtra(Config.TAG_GO_MAXXPER, o.getMaxPPerson());
+        nintent.putExtra(Config.TAG_GO_STOCK, o.getStock());
+        nintent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
+        nintent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
+        nintent.setAction(Long.toString(System.currentTimeMillis()));
+
+        // Siguiendo https://goo.gl/UGDo7n y https://goo.gl/C25HYF
+        PendingIntent contIntent =
+                PendingIntent.getActivity(
+                        getContext(), NOTIFY, nintent, PendingIntent.FLAG_ONE_SHOT);
+
+        // context, icon that show in notification bar, icon that show in notification (when expand it), title, description, info below time, i dont know xD, autoCancel, pendingintent
+        android.support.v4.app.NotificationCompat.Builder mBuilder = creteNotificationBuilder(getContext(), R.mipmap.ic_launcher,
+                BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
+                o.getTitle(), o.getDescription(), o.getCompany(), "Ticker", true, contIntent);
+
+        mNotificationManager.notify(NOTIFY, mBuilder.build());
+        NOTIFY++;
+    }
+
+    private android.support.v4.app.NotificationCompat.Builder creteNotificationBuilder(
+            Context context, int smallIcon, Bitmap largeIcon, String title, String content, String info, String ticker, boolean autoCancel,
+            PendingIntent contIntent) {
+        Notification n = new Notification();
+        n.defaults |= Notification.DEFAULT_VIBRATE;
+        return new NotificationCompat.Builder(context)
+                .setDefaults(n.defaults)
+                .setSmallIcon(smallIcon)
+                .setLargeIcon(largeIcon)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setContentInfo(info)
+                .setTicker(ticker)
+                .setAutoCancel(autoCancel)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setContentIntent(contIntent);
+    }
 
 }
-
