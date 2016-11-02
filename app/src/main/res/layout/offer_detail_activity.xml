@@ -87,23 +87,22 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="10"
-                    >
-
-                     <TextView
-                         android:text="@string/od_tv_price_txt"
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:id="@+id/od_tv_price_txt"
-                         android:gravity="center"/>
+                    android:layout_weight="10">
 
                     <TextView
-                        android:text="@string/od_tv_price_txt"
+                        android:text="@string/od_tv_tprice_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/od_tv_price"
-                        android:gravity="center"
-                        android:textStyle="normal|bold" />
+                        android:id="@+id/od_tv_tprice_txt"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:text="@string/od_tv_tprice_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/od_tv_tprice"
+                        android:textAlignment="center"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
@@ -138,23 +137,25 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="10">
+                    android:layout_weight="10"
+                    >
+
+                     <TextView
+                         android:text="@string/od_tv_price_txt"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:id="@+id/od_tv_price_txt"
+                         android:gravity="center"/>
 
                     <TextView
-                        android:text="@string/od_tv_tprice_txt"
+                        android:text="@string/od_tv_price_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/od_tv_tprice_txt"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:text="@string/od_tv_tprice_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/od_tv_tprice"
-                        android:textAlignment="center"
-                         />
+                        android:id="@+id/od_tv_price"
+                        android:gravity="center"
+                        android:textStyle="normal|bold" />
                 </LinearLayout>
+
 
             </LinearLayout>
 
@@ -180,7 +181,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
         android:src="@drawable/image_default"
-        app:layout_behavior="techwork.ami.ScrollAwareFABBehavior"
         android:background="@color/colorAccent">
     </android.support.design.widget.FloatingActionButton>
     
