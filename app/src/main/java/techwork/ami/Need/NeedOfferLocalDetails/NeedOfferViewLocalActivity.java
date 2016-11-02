@@ -138,7 +138,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
             tvWeb.setText(web);
 
             Picasso.with(getApplicationContext())
-                        .load("http://amiapp.cl/encargado/uploads/"+image)
+                        .load("http://amiapp.cl/admin/uploads/"+image)
                         .into(ivImage);
 
 
