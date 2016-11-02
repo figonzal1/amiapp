@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -48,13 +49,14 @@ public class FilterOfferActivity extends AppCompatActivity {
     private int page;
     private String idCategory;
     private String idStore;
+    private TextView tvFilterOffersEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_offer);
 
-
+        tvFilterOffersEmpty = (TextView)findViewById(R.id.tv_filter_offers_empty);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -170,6 +172,12 @@ public class FilterOfferActivity extends AppCompatActivity {
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         mRecyclerView.setAdapter(scaleAdapter);
 
+        if (offersList.size()==0){
+            tvFilterOffersEmpty.setText("¡Oops! \n No encontramos ninguna promoción :( \n Inténtalo nuevamente más tarde...");
+        }else {
+            tvFilterOffersEmpty.setText("");
+        }
+
         // Set behavior to click in some item (offer validate)
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
@@ -180,8 +188,14 @@ public class FilterOfferActivity extends AppCompatActivity {
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
+                intent.putExtra(Config.TAG_GO_COMPANY, o.getCompany());
                 intent.putExtra(Config.TAG_GO_PRICE, o.getPrice());
                 intent.putExtra(Config.TAG_GO_OFFER_ID, o.getId());
+                intent.putExtra(Config.TAG_GO_MAXXPER, o.getMaxPPerson());
+                intent.putExtra(Config.TAG_GO_STOCK, o.getStock());
+                intent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
+                intent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
+                intent.putExtra(Config.TAG_GO_DATETIMEFIN,o.getFinalDateTime());
                 startActivity(intent);
             }
 
@@ -206,8 +220,8 @@ public class FilterOfferActivity extends AppCompatActivity {
     }
 
     private void getData(String json) {
-        String dIni,dFin;
-        Date dateIni,dateFin;
+        String dIni,dFin,dTimeFin;
+        Date dateIni,dateFin,dateTimeFin;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try{
@@ -224,8 +238,10 @@ public class FilterOfferActivity extends AppCompatActivity {
 
                 dIni =jsonObjectItem.getString(Config.TAG_GO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
+                dTimeFin = jsonObjectItem.getString(Config.TAG_GO_DATETIMEFIN);
                 dateIni= format.parse(dIni);
                 dateFin =format.parse(dFin);
+                dateTimeFin=format.parse(dTimeFin);
 
                 item.setId(jsonObjectItem.getString(Config.TAG_GO_OFFER_ID));
                 item.setTitle(jsonObjectItem.getString(Config.TAG_GO_TITLE));
@@ -233,12 +249,22 @@ public class FilterOfferActivity extends AppCompatActivity {
                 item.setStock(jsonObjectItem.getInt(Config.TAG_GO_STOCK));
                 item.setPromotionCode(Config.TAG_GO_PROMCOD);
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GO_PRICE));
+                //TODO: en teoría se debería poder borrar, puesto que el precio siempre exisitrá (tendrán al menos un producto asociado)
+                try {
+                    item.setTotal(jsonObjectItem.getInt(Config.TAG_GO_TOTALPRICE));
+                }catch (Exception e){
+                    item.setTotal(0);
+                }
 
                 c.setTime(dateIni);
                 item.setInitialDate(String.format(Locale.US, Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
 
                 c.setTime(dateFin);
                 item.setFinalDate(String.format(Locale.US, Config.DATE_FORMAT, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH)+1, c.get(Calendar.YEAR)));
+
+                c.setTime(dateTimeFin);
+                item.setFinalDateTime(String.format(Locale.US,Config.DATETIME_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
+
 
                 item.setMaxPPerson(jsonObjectItem.getInt(Config.TAG_GO_MAXXPER));
                 item.setCompany(jsonObjectItem.getString(Config.TAG_GO_COMPANY));

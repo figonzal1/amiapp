@@ -98,6 +98,9 @@ public class Config {
 	public static final String TAG_GRO_LOCCODE = "codigoLocal";
 	public static final String TAG_GRO_CASHED="cobrado";
 
+	//URL MapsActivity
+	public static final String URL_ENTERPRISE_IMAGE="http://amiapp.cl/admin/uploads/";
+
 	//MRO = My Reservations Offers URLs
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
 	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";

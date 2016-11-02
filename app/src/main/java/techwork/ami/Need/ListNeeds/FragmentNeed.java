@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -57,6 +58,7 @@ public class FragmentNeed extends Fragment {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private FloatingActionButton floatingButton;
+    private TextView tvNeedsEmpty;
 
 
     public FragmentNeed() {
@@ -82,6 +84,7 @@ public class FragmentNeed extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.need_fragment,container,false);
+        tvNeedsEmpty = (TextView)v.findViewById(R.id.tv_need);
         rv = (RecyclerView)v.findViewById(R.id.recycler_view_need);
         rv.setHasFixedSize(true);
 
@@ -263,6 +266,12 @@ public class FragmentNeed extends Fragment {
         adapter = new NeedAdapter(getActivity(),needList,FragmentNeed.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
+
+        if (needList.size()==0){
+            tvNeedsEmpty.setText(R.string.NeedListTitleEmpty);
+        }else {
+            tvNeedsEmpty.setText(R.string.NeedListTitle);
+        }
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override

@@ -6,15 +6,25 @@
     android:paddingBottom="@dimen/appBarBottom"
     tools:context=".Offer.OfferList.FragmentHome">
 
+    <TextView
+        android:id="@+id/tv_offers_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"/>
+
     <!-- Permite realizar el refresh del fragment -->
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_offer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_offer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_offer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

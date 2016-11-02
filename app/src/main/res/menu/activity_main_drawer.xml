@@ -7,10 +7,6 @@
             android:icon="@drawable/nav_edit_profile"
             android:title="@string/nav_edit_profile" />
         <item
-            android:id="@+id/nav_my_preferences"
-            android:icon="@drawable/nav_my_preferences"
-            android:title="@string/nav_my_preferences" />
-        <item
             android:id="@+id/nav_reservations"
             android:icon="@drawable/nav_reservations"
             android:title="@string/nav_reservations" />
@@ -18,10 +14,6 @@
             android:id="@+id/nav_reserve_needs"
             android:icon="@drawable/nav_reserve_needs"
             android:title="@string/nav_reserve_needs" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/nav_settings"
-            android:title="@string/nav_settings" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_logout"
