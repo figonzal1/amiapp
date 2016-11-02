@@ -227,6 +227,8 @@ public class OfferDetailActivity extends AppCompatActivity {
             }
         });
         getProducts();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void getProducts(){

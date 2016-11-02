@@ -356,6 +356,7 @@ public class FragmentHome extends Fragment {
         nintent.putExtra(Config.TAG_GO_STOCK, o.getStock());
         nintent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
         nintent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
+        nintent.putExtra(Config.TAG_GNO_DATETIME_FIN,o.getFinalDateTime());
         nintent.setAction(Long.toString(System.currentTimeMillis()));
 
         // Siguiendo https://goo.gl/UGDo7n y https://goo.gl/C25HYF
