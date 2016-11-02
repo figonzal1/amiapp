@@ -7,8 +7,10 @@ import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
 @SuppressWarnings("WeakerAccess")
 public class Config {
 
-	// Slack time (in minutes) that define if the notification is shown or not (if greater than this, no show).
-	public static final long NOTIFICATION_SLACK_TIME= 999999999;
+	public static final long MILIS_TO_MIN = 1 / (1000 * 60);
+
+	// Slack time (in minutes, change only first number) that define if the notification is shown or not (if greater than this, no show).
+	public static final long NOTIFICATION_SLACK_TIME= 5;
 
 	// Input type constant
 	public static int inputNoVisiblePasswordType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;

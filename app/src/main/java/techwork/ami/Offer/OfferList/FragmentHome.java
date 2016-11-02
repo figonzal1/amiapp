@@ -41,6 +41,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.MainActivity;
 import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -59,6 +60,7 @@ public class FragmentHome extends Fragment {
     //android.support.v4.app.NotificationCompat.Builder mBuilder;
     static int NOTIFY = 0;
     NotificationManager mNotificationManager;
+    static boolean notificado = false;
 
     // Empty constructor (default)
     public FragmentHome() {
@@ -110,6 +112,22 @@ public class FragmentHome extends Fragment {
     // Call to DB
     private void getOffers(){
         sendGetRequest();
+        System.out.println("Notificado antes = "+notificado);
+        System.out.println("Notificate antes = "+MainActivity.notificate);
+        System.out.println("Now antes = "+MainActivity.now);
+
+        if(notificado){
+            MainActivity.notificate = false;
+        }
+        if(notificado && !MainActivity.notificate &&
+                ((new Date()).getTime() - MainActivity.now.getTime())*Config.MILIS_TO_MIN > Config.NOTIFICATION_SLACK_TIME){
+            MainActivity.now = new Date();
+            MainActivity.notificate = true;
+            notificado = false;
+        }
+        System.out.println("Notificado = "+notificado);
+        System.out.println("Notificate = "+MainActivity.notificate);
+        System.out.println("Now= "+MainActivity.now);
     }
 
     private void sendGetRequest(){
@@ -306,7 +324,8 @@ public class FragmentHome extends Fragment {
 
                 // Se calcula la diferencia de tiempo acutal con cuando se publica la oferta, si son menor a una cierta holgura entonces se muestra la notificación
                 long d = (new Date()).getTime() - dateIni.getTime();
-                if(d/(1000*60) < Config.NOTIFICATION_SLACK_TIME){
+                if(MainActivity.notificate && d * Config.MILIS_TO_MIN < Config.NOTIFICATION_SLACK_TIME){
+                    notificado = true;
                     myNotification(item);
                 }
             }
