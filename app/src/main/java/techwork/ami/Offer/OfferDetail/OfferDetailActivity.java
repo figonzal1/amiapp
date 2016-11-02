@@ -246,7 +246,7 @@ public class OfferDetailActivity extends AppCompatActivity {
                 System.out.println(jsonObjectItem);
                 item.setName(jsonObjectItem.getString(Config.TAG_GOD_NAME));
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GOD_DESCRIPTION));
-                item.setPrice(jsonObjectItem.getString(Config.TAG_GOD_PRICE));
+                item.setPrice(jsonObjectItem.getInt(Config.TAG_GOD_PRICE));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GOD_IMAGE));
                 productList.add(item);
             }

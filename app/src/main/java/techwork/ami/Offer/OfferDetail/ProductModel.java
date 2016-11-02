@@ -6,12 +6,12 @@ package techwork.ami.Offer.OfferDetail;
 public class ProductModel {
     private String name;
     private String description;
-    private String price;
+    private int price;
     private String image;
 
     // Constructors
     public ProductModel() {};
-    public ProductModel(String name, String description, String price) {
+    public ProductModel(String name, String description, int price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -24,7 +24,7 @@ public class ProductModel {
     public String getDescription() {
         return description;
     }
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
     public String getImage(){
@@ -38,7 +38,7 @@ public class ProductModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
     public void setImage(String image){
