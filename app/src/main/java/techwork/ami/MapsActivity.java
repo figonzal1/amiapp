@@ -113,7 +113,7 @@ public class MapsActivity extends AppCompatActivity implements
                             c.getString(Config.TAG_NAME),
                             c.getString(Config.TAG_OFFERS_QUANTITY));
                     stores.put(m.getId(), s);
-                    markers.put(m.getId(), c.getString(Config.TAG_IMAGE));
+                    markers.put(m.getId(), Config.URL_ENTERPRISE_IMAGE + c.getString(Config.TAG_IMAGE));
                     markerSet.put(m.getId(), false);
                 }
             }

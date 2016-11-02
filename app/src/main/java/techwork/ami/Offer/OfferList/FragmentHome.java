@@ -15,7 +15,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -56,6 +56,7 @@ public class FragmentHome extends Fragment {
     private RecyclerView rv;
     private LinearLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
+    private TextView tvOffersEmpty;
 
     //android.support.v4.app.NotificationCompat.Builder mBuilder;
     static int NOTIFY = 0;
@@ -84,6 +85,7 @@ public class FragmentHome extends Fragment {
         // Inflate view, find recycle view in layouts
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         rv = (RecyclerView) v.findViewById(R.id.recycler_view_offer);
+        tvOffersEmpty = (TextView)v.findViewById(R.id.tv_offers_empty);
         rv.setHasFixedSize(true);
 
         //Evita el error de skipping layout
@@ -184,6 +186,12 @@ public class FragmentHome extends Fragment {
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
+        if (offerList.size()==0){
+            tvOffersEmpty.setText("¡Oops! \n No encontramos ninguna promoción :( \n Vuelve más tarde...");
+        }else {
+            tvOffersEmpty.setText("");
+        }
+
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
@@ -279,7 +287,6 @@ public class FragmentHome extends Fragment {
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try{
-
             JSONObject jsonObject = new JSONObject(json);
 
             JSONArray jsonOffers = jsonObject.optJSONArray(Config.TAG_GO_OFFERS);

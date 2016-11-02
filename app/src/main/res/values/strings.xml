@@ -26,10 +26,8 @@
 
     <!-- Main Activity Strings -->
     <string name="nav_edit_profile">Mi Perfil</string>
-    <string name="nav_my_preferences">Mis Gustos</string>
-    <string name="nav_reserve_needs">Mis Pedidos Reservados</string>
-    <string name="nav_reservations">Mis Reservas</string>
-    <string name="nav_settings">Configuración</string>
+    <string name="nav_reserve_needs">Mis Ofertas Reservadas</string>
+    <string name="nav_reservations">Mis Promociones Reservadas</string>
     <string name="nav_logout">Cerrar Sesión</string>
     <string name="nav_contact_us">Contáctanos</string>
     <string name="nav_group_communication">Comunícate</string>
@@ -142,6 +140,8 @@
     <string name="NeedOfferCompanies">Ofertas recibidas</string>
     <string name="NeedOfferLocalDetails">Información local</string>
     <string name="NeedOfferLocalStreetView">StreetView local</string>
+    <string name="NeedListTitle">Tus Pedidos</string>
+    <string name="NeedListTitleEmpty">No tienes pedidos activos</string>
 
 
     <!-- NeedReservations Strings -->

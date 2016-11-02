@@ -19,9 +19,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="20dp">
 
-
             <TextView
-                android:id="@+id/tv_order"
+                android:id="@+id/tv_need"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tus pedidos"
@@ -33,7 +32,7 @@
                 android:id="@+id/recycler_view_need"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tv_order"
+                android:layout_below="@+id/tv_need"
                 android:scrollbars="vertical">
 
             </android.support.v7.widget.RecyclerView>

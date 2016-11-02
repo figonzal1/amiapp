@@ -176,9 +176,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
-            case R.id.action_search:
-                Toast.makeText(MainActivity.this,"Menu buscar", Toast.LENGTH_SHORT).show();
-                return true;
             case R.id.action_maps:
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 return true;
@@ -210,14 +207,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_settings) {
-
-        } else if (id == R.id.nav_my_preferences) {
-
-        } else if (id == R.id.nav_reserve_needs) {
+        if (id == R.id.nav_reserve_needs) {
             Intent intent = new Intent(MainActivity.this, NeedReservationsActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_reservations) {
             Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);
             startActivity(iMyReservations);
