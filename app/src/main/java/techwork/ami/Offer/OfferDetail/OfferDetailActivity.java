@@ -1,5 +1,6 @@
 package techwork.ami.Offer.OfferDetail;
 
+import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,6 +20,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +48,8 @@ import techwork.ami.ExpiryTime;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
+import static com.google.android.gms.analytics.internal.zzy.v;
+
 /**
  * Created by Daniel on 15-10-2016.
  */
@@ -57,7 +62,7 @@ public class OfferDetailActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
     private NumberPicker numberPicker;
     private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsct, priceTxt, price, remainingDays;
-    private FloatingActionButton fab;
+    private FloatingActionButton floatingButton;
 
     private String idOffer;
     private String idPersona;
@@ -178,9 +183,49 @@ public class OfferDetailActivity extends AppCompatActivity {
             dsct.setText(s+String.valueOf(Math.abs(100-perc))+"%");
         }
         else dsct.setText("");
+
         // Floating Action Button
-        fab = (FloatingActionButton)findViewById(R.id.fab_offer_detail);
-        fab.setOnClickListener(new View.OnClickListener() {
+        floatingButton=(FloatingActionButton)findViewById(R.id.floating_button);
+        floatingButton.setScaleX(0);
+        floatingButton.setScaleY(0);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            final Interpolator interpolador = AnimationUtils.loadInterpolator(getApplicationContext(),
+                    android.R.interpolator.fast_out_slow_in);
+
+            floatingButton.animate()
+                    .scaleX((float) 1.5)
+                    .scaleY((float) 1.5)
+                    .setInterpolator(interpolador)
+                    .setDuration(600)
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            floatingButton.animate()
+                                    .scaleY(1)
+                                    .scaleX(1)
+                                    .setInterpolator(interpolador)
+                                    .setDuration(1000)
+                                    .start();
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+        }
+        floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create custom dialog.
