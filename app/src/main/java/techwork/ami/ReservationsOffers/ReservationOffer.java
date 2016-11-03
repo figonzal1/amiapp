@@ -20,6 +20,10 @@ public class ReservationOffer {
     private String reservationDate;
     private String paymentDate;
     private String localCode;
+    private int MaxPPerson;
+    private int stock;
+    private int totalPrice;
+    private String finalDateTime;
 
     //Getters
     public String getIdReservationOffer() {
@@ -67,7 +71,18 @@ public class ReservationOffer {
     public String getLocalCode(){
         return localCode;
     }
-
+    public int getMaxPPerson() {
+        return MaxPPerson;
+    }
+    public int getStock() {
+        return stock;
+    }
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+    public String getFinalDateTime() {
+        return finalDateTime;
+    }
     public String getCashed() {
         return cashed;
     }
@@ -118,8 +133,19 @@ public class ReservationOffer {
     public void setLocalCode(String localCode){
         this.localCode = localCode;
     }
-
     public void setCashed(String cashed) {
         this.cashed = cashed;
+    }
+    public void setMaxPPerson(int maxPPerson) {
+        MaxPPerson = maxPPerson;
+    }
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    public void setFinalDateTime(String finalDateTime) {
+        this.finalDateTime = finalDateTime;
     }
 }

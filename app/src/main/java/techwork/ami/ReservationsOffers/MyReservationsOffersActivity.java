@@ -51,6 +51,8 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
+import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
+import techwork.ami.Offer.OfferList.OfferModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -194,6 +196,22 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
                         startActivity(intent);
                         return true;*/
+                    case R.id.item_popup_menu_reservations_details:
+                        Intent intent = new Intent(MyReservationsOffersActivity.this, OfferDetailActivity.class);
+                        intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
+                        intent.putExtra(Config.TAG_GO_DESCRIPTION, model.getDescription());
+                        intent.putExtra(Config.TAG_GO_IMAGE, model.getImage());
+                        intent.putExtra(Config.TAG_GO_COMPANY, model.getCompany());
+                        intent.putExtra(Config.TAG_GO_PRICE, model.getPrice());
+                        intent.putExtra(Config.TAG_GO_OFFER_ID, model.getIdReservationOffer());
+                        intent.putExtra(Config.TAG_GO_MAXXPER, model.getMaxPPerson());
+                        intent.putExtra(Config.TAG_GO_STOCK, model.getStock());
+                        intent.putExtra(Config.TAG_GO_DATEFIN, model.getFinalDate());
+                        intent.putExtra(Config.TAG_GO_TOTALPRICE, model.getTotalPrice());
+                        intent.putExtra(Config.TAG_GO_DATETIMEFIN, model.getFinalDateTime());
+                        intent.putExtra(Config.TAG_GO_RESERVE_OPTION,false);
+                        startActivity(intent);
+                        return true;
 
                     case R.id.item_popup_menu_reservations_charge:
                         item.setEnabled(true);
@@ -224,9 +242,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         else{
                             rateOffer(model,false);
                         }
-
                 }
-
                 return false;
             }
         });
@@ -549,8 +565,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
     // Get data from DB and put into each ReservationOffer (to be shown)
     private void getData(String s) {
-        String sFinalDate, sReservationDate;
-        Date dFinalDate, dReservationDate;
+        String sFinalDate, sReservationDate, dTimeFin;
+        Date dFinalDate, dReservationDate, dateTimeFin;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
 
@@ -558,6 +574,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(s);
 
             JSONArray jsonOffers = jsonObject.optJSONArray(Config.TAG_GRO);
+
+            System.out.println("print Array = "+jsonOffers);
 
             Calendar c = Calendar.getInstance();
             reservationsOffersList = new ArrayList<>();
@@ -569,12 +587,15 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
                 sFinalDate = jsonObjectItem.getString(Config.TAG_GRO_DATEFIN);
                 sReservationDate = jsonObjectItem.getString(Config.TAG_GRO_RESERDATE);
+                dTimeFin = jsonObjectItem.getString(Config.TAG_GRO_DATEFIN);
                 dFinalDate = format.parse(sFinalDate);
                 dReservationDate = format.parse(sReservationDate);
+                dateTimeFin=format.parse(dTimeFin);;
 
                 item.setIdReservationOffer(jsonObjectItem.getString(Config.TAG_GRO_ID_OFFER));
 
                 item.setTitle(jsonObjectItem.getString(Config.TAG_GRO_TITLE));
+                item.setDescription(jsonObjectItem.getString(Config.TAG_GRO_DESCRIPTION));
                 c.setTime(dFinalDate);
                 item.setFinalDate(String.format(Locale.US, Config.DATE_FORMAT,
                         c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
@@ -583,14 +604,22 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 c.setTime(dReservationDate);
                 item.setReservationDate(String.format(Locale.US, Config.DATE_FORMAT,
                         c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH)+1, c.get(Calendar.YEAR)));
+                c.setTime(dateTimeFin);
+                item.setFinalDateTime(String.format(Locale.US,Config.DATETIME_FORMAT,
+                        c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,
+                        c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),
+                        c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
                 item.setQuantity(jsonObjectItem.getString(Config.TAG_GRO_QUANTITY));
                 item.setPromotionCode(jsonObjectItem.getString(Config.TAG_GRO_PROMOCOD));
                 item.setLocalCode(jsonObjectItem.getString(Config.TAG_GRO_LOCCODE));
                 item.setCalification(jsonObjectItem.getString(Config.TAG_GRO_CALIFICATION));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GRO_IMAGE));
                 item.setCashed(jsonObjectItem.getString(Config.TAG_GRO_CASHED));
-
                 item.setPaymentDate(jsonObjectItem.getString(Config.TAG_GRO_PAYDATE));
+                item.setMaxPPerson(jsonObjectItem.getInt(Config.TAG_GRO_MAXXPER));
+                item.setStock(jsonObjectItem.getInt(Config.TAG_GRO_STOCK));
+                item.setTotalPrice(jsonObjectItem.getInt(Config.TAG_GRO_TOTALPRICE));
+
 
                 reservationsOffersList.add(item);
             }

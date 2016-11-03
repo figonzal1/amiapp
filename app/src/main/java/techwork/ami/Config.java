@@ -67,6 +67,7 @@ public class Config {
 	public static final String TAG_GO_MAXXPER="maxPPersona";
 	public static final String TAG_GO_COMPANY="empresa";
 	public static final String TAG_GO_IMAGE ="imagen" ;
+	public static final String TAG_GO_RESERVE_OPTION = "mostrarOpcionReserva";
 
 	// GOD = Get Offer Details
 	public static final String TAG_GOD_PRODUCT = "products";
@@ -97,6 +98,9 @@ public class Config {
 	public static final String TAG_GRO_CALIFICATION = "calificacion";
 	public static final String TAG_GRO_LOCCODE = "codigoLocal";
 	public static final String TAG_GRO_CASHED="cobrado";
+	public static final String TAG_GRO_MAXXPER = "maxPPersona";
+	public static final String TAG_GRO_STOCK = "stock";
+	public static final String TAG_GRO_TOTALPRICE = "precioTotal";
 
 	//URL MapsActivity
 	public static final String URL_ENTERPRISE_IMAGE="http://amiapp.cl/admin/uploads/";
