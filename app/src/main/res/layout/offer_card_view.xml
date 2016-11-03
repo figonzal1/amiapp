@@ -2,10 +2,8 @@
 
     android:id="@+id/offer_card_view"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="wrap_content"
     card_view:cardUseCompatPadding="true"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
     card_view:cardCornerRadius="2dp"
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,6 +18,61 @@
 
         <!-- Width y height dan el tamaño de la foto (ImageView)-->
 
+        <View
+            android:id="@+id/offer_separator"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/offer_linear"
+            android:background="#afafaf"
+            android:layout_alignTop="@+id/offer_linear"
+            android:layout_alignBottom="@+id/offer_linear"/>
+
+        <LinearLayout
+            android:id="@+id/offer_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/offer_cv_photo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_loading_image"
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/offer_cv_dsct"
+                    android:text="@string/offer_cv_dsct"
+                    android:textColor="@color/green"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    android:layout_marginEnd="5dp"/>
+
+                <TextView
+                    android:id="@+id/offer_cv_dsct_sy"
+                    android:text="@string/offer_cv_dsct_sy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:layout_toEndOf="@id/offer_cv_dsct"
+                    android:layout_alignTop="@id/offer_cv_dsct"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
         <TextView
             android:id="@+id/offer_cv_description"
             android:layout_width="wrap_content"
@@ -28,21 +81,9 @@
             android:layout_height="wrap_content"
             android:textStyle="normal|italic"
             android:layout_alignStart="@+id/offer_cv_tittle"
-            android:layout_above="@+id/offer_cv_company"
             android:textAlignment="textStart"
             android:layout_alignEnd="@+id/offer_cv_price"
             android:layout_below="@+id/offer_cv_tittle" />
-
-        <TextView
-            android:id="@+id/offer_cv_dsct_sy"
-            android:text="@string/offer_cv_dsct_sy"
-            android:textColor="@color/green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/offer_cv_dsct"
-            android:layout_alignBottom="@+id/offer_cv_dsct"
-            android:layout_alignEnd="@+id/offer_cv_price"
-            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/offer_cv_price"
@@ -52,7 +93,7 @@
             android:text="@string/offer_cv_price"
             android:layout_marginEnd="11dp"
             android:textStyle="normal|bold"
-            android:layout_below="@+id/offer_cv_description"
+            android:layout_alignBottom="@+id/offer_cv_company"
             android:layout_alignParentEnd="true" />
 
         <TextView
@@ -61,17 +102,11 @@
             android:layout_height="wrap_content"
             android:text="@string/offer_cv_company"
             android:textSize="15sp"
-            android:layout_below="@+id/offer_cv_photo"
-            android:layout_alignStart="@+id/offer_cv_description" />
-
-        <ImageView
-            android:id="@+id/offer_cv_photo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_menu_camera"
-            android:contentDescription="@string/offer_cv_image_desciption"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_toEndOf="@+id/offer_linear"
+            android:layout_alignStart="@+id/offer_cv_description"
+            android:layout_alignBottom="@+id/offer_linear"
+            android:layout_toStartOf="@id/offer_cv_price"
+            android:layout_below="@id/offer_cv_description"/>
 
         <TextView
             android:id="@+id/offer_cv_tittle"
@@ -82,19 +117,19 @@
             android:layout_marginStart="11dp"
             android:textStyle="normal|bold"
             android:layout_width="wrap_content"
-            android:layout_alignTop="@+id/offer_cv_photo"
-            android:layout_toEndOf="@+id/offer_cv_photo" />
+            android:layout_toEndOf="@+id/offer_separator"
+            android:layout_toStartOf="@+id/tv_discard_offer"
+            android:layout_alignTop="@id/offer_separator"/>
 
         <TextView
-            android:id="@+id/offer_cv_dsct"
-            android:text="@string/offer_cv_dsct"
-            android:textColor="@color/green"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal|bold"
-            android:layout_above="@+id/offer_cv_tittle"
-            android:layout_toStartOf="@+id/offer_cv_dsct_sy" />
+            android:id="@+id/tv_discard_offer"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/times"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

@@ -68,11 +68,11 @@ public class FilterOfferActivity extends AppCompatActivity {
         if (extras != null) {
             if (extras.containsKey("idCategory")) {
                 idCategory = extras.getString("idCategory", "");
-                setTitle("Ofertas de " + extras.getString("categoryName", ""));
+                setTitle("Promociones de " + extras.getString("categoryName", ""));
             }
             if (extras.containsKey("idStore")) {
                 idStore = extras.getString("idStore", "");
-                setTitle("Ofertas de " + extras.getString("companyName", ""));
+                setTitle("Promociones de " + extras.getString("companyName", ""));
             }
         }
 
@@ -207,6 +207,7 @@ public class FilterOfferActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 discardOffer(dialog, offersList.get(mRecyclerView.getChildAdapterPosition(view)));
+                                getFilterOffers();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -278,49 +279,10 @@ public class FilterOfferActivity extends AppCompatActivity {
     }
 
     private void discardOffer(DialogInterface dialog, OfferModel offer) {
-        class DiscardOffer extends AsyncTask<String, Void, String> {
-            private ProgressDialog loading;
-            private DialogInterface dialog;
-
-            private DiscardOffer(DialogInterface dialog) {
-                this.dialog = dialog;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(FilterOfferActivity.this,
-                        getString(R.string.offers_list_discard_processing),
-                        getString(R.string.wait), false, false);
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_DO_PERSON_ID,
-                        getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
-                                .getString(Config.KEY_SP_ID, "-1"));
-                hashMap.put(Config.KEY_DO_OFFER_ID, params[0]);
-                RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_DO_DISCARD, hashMap);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                if (s.equals("0")) {
-                    Toast.makeText(getApplicationContext(),
-                            R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
-                    getFilterOffers();
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            R.string.operation_fail, Toast.LENGTH_LONG).show();
-                }
-                this.dialog.dismiss();
-            }
-        }
-        new DiscardOffer(dialog).execute(offer.getId());
+        String idPerson = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                .getString(Config.KEY_SP_ID, "-1");
+        String idOffer = offer.getId();
+        new DiscardOffer(getApplicationContext(), dialog).execute(idPerson, idOffer);
     }
 
 }
