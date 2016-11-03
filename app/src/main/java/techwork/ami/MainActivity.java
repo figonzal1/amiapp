@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final int LOCATION_REQUEST_CODE = 101;
 
+    // TODO: estas constantes deberían guardarse pemanentemente, en SharedPreferences
     public static boolean notificate = true;
     public static Date now = new Date();
 
