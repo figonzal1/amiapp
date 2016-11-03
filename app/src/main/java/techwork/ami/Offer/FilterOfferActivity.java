@@ -59,6 +59,7 @@ public class FilterOfferActivity extends AppCompatActivity {
         tvFilterOffersEmpty = (TextView)findViewById(R.id.tv_filter_offers_empty);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         idCategory = "";
         idStore = "";
