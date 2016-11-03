@@ -202,7 +202,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         //If needOffer is charge, not charged permitted.
                         if (model.getCashed().equals("1")){
                             popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
-                            Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
                             Snackbar.make(view,R.string.need_reservations_offers_already,Snackbar.LENGTH_SHORT).show();
                         }
                         //Do charge
@@ -307,7 +307,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 final ReservationOffer model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
                 // If the offer was already charged
                 if(model.getCashed().equals("1")){
-                    Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
                     Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
                 }
                 else {
