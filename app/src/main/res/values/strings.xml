@@ -3,6 +3,7 @@
     <string name="navigation_drawer_open">Abrir menú</string>
     <string name="navigation_drawer_close">Cerrar menú</string>
     <string name="vertical_ellipsis">&#8942;</string>
+    <string name="times">&#215;</string>
     <!-- General -->
     <string name="error_invalid_email">Correo no válido</string>
     <string name="error_invalid_name">Nombre no válido</string>
@@ -186,7 +187,7 @@
 
 
     <!-- Explore Offers Strings -->
-    <string name="titleActivityExploreOffers">Explorar ofertas</string>
+    <string name="titleActivityExploreOffers">Explorar promociones</string>
 
     <!-- Offer Strings -->
     <string name="offer_cv_company">Compañía</string>
@@ -235,8 +236,8 @@
     <string name="title_activity_filter_offers">Filtrar Ofertas</string>
 
     <!-- Map Strings -->
-    <string name="MA_storeFormatSingle">En este local existe %s oferta disponible.</string>
-    <string name="MA_storeFormatPlural">En este local existen %s ofertas disponibles.</string>
+    <string name="MA_storeFormatSingle">En este local existe %s promociones disponible.</string>
+    <string name="MA_storeFormatPlural">En este local existen %s promociones disponibles.</string>
     <string name="MA_go">Ver</string>
 
     <!-- Contact Us Strings -->

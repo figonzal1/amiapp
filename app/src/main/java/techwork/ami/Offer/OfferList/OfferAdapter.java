@@ -2,8 +2,10 @@ package techwork.ami.Offer.OfferList;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.app.FragmentHostCallback;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
@@ -19,6 +22,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import techwork.ami.Config;
+import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.Offer.DiscardOffer;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
@@ -44,6 +49,7 @@ public class OfferAdapter
         public TextView offerDescription;
         public TextView offerDsct;
         public TextView offerDsctSy;
+        public TextView offerDiscard;
         public ImageView offerImage;
 
         public OfferViewHolder(View itemView) {
@@ -54,6 +60,7 @@ public class OfferAdapter
             offerDsctSy = (TextView)itemView.findViewById(R.id.offer_cv_dsct_sy) ;
             offerCompany = (TextView)itemView.findViewById(R.id.offer_cv_company);
             offerDescription= (TextView)itemView.findViewById(R.id.offer_cv_description);
+            offerDiscard = (TextView) itemView.findViewById(R.id.tv_discard_offer);
             offerImage = (ImageView)itemView.findViewById(R.id.offer_cv_photo);
         }
     }
@@ -71,7 +78,7 @@ public class OfferAdapter
     // Set data into view offers (list)
     @Override
     public void onBindViewHolder(OfferAdapter.OfferViewHolder holder, int position) {
-        OfferModel offer = items.get(position);
+        final OfferModel offer = items.get(position);
         holder.offerTitle.setText(offer.getTitle());
         holder.offerPrice.setText("$"+String.format(Config.CLP_FORMAT,offer.getPrice()));
         holder.offerCompany.setText(offer.getCompany());
@@ -95,6 +102,29 @@ public class OfferAdapter
         Picasso.with(context).load(Config.URL_IMAGES_OFFER+s)
                 .placeholder(R.drawable.image_default)
                 .into(holder.offerImage);
+
+        holder.offerDiscard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CustomAlertDialogBuilder(context)
+                        .setTitle(R.string.offers_list_discard_question)
+                        .setMessage("Confirme la acción")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String idPerson = context.getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                        .getString(Config.KEY_SP_ID, "-1");
+                                String idOffer = offer.getId();
+                                new DiscardOffer(context, dialog).execute(idPerson, idOffer);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
     @Override
     public int getItemCount() {

@@ -42,6 +42,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
+import techwork.ami.Offer.DiscardOffer;
 import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -233,51 +234,12 @@ public class FragmentHome extends Fragment {
         });
     }
 
-    private void discardOffer(DialogInterface dialog, OfferModel offer) {
-        class DiscardOffer extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
-            DialogInterface dialog;
-
-            DiscardOffer (DialogInterface dialog) {
-                this.dialog = dialog;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(getContext(),
-                        getString(R.string.offers_list_discard_processing),
-                        getString(R.string.wait), false, false);
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_DO_PERSON_ID,
-                        getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
-                                .getString(Config.KEY_SP_ID, "-1"));
-                hashMap.put(Config.KEY_DO_OFFER_ID, params[0]);
-                RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_DO_DISCARD, hashMap);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                if (s.equals("0")) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            R.string.operation_fail, Toast.LENGTH_LONG).show();
-                }
-                this.dialog.dismiss();
-            }
-        }
-        new DiscardOffer(dialog).execute(offer.getId());
+    public void discardOffer(DialogInterface dialog, OfferModel offer) {
+        String idPerson = getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                .getString(Config.KEY_SP_ID, "-1");
+        String idOffer = offer.getId();
+        new DiscardOffer(getActivity().getApplicationContext(), dialog).execute(idPerson, idOffer);
         getOffers();
-        //rateOffer(ro, true);
     }
 
     //Clase que itera sobre el json array para obtener datos de la BD.

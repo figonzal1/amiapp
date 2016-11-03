@@ -77,6 +77,8 @@ public class MapsActivity extends AppCompatActivity implements
         // Get the googleMap instance
         ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap)).getMapAsync(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void fillOffersLocations(String json) {
