@@ -42,36 +42,18 @@
                 android:src="@drawable/ic_loading_image"
                 />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/offer_cv_dsct"
+                android:text="@string/offer_cv_dsct"
+                android:textColor="@color/green"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
-
-                <TextView
-                    android:id="@+id/offer_cv_dsct"
-                    android:text="@string/offer_cv_dsct"
-                    android:textColor="@color/green"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_marginEnd="1dp"/>
-
-                <TextView
-                    android:id="@+id/offer_cv_dsct_sy"
-                    android:text="@string/offer_cv_dsct_sy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/green"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:layout_toEndOf="@id/offer_cv_dsct"
-                    android:layout_alignBottom="@id/offer_cv_dsct"/>
-            </RelativeLayout>
+                android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:layout_marginEnd="1dp"/>
 
         </LinearLayout>
-
 
         <TextView
             android:id="@+id/offer_cv_description"

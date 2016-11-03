@@ -123,7 +123,7 @@
 
                     <TextView
                         android:id="@+id/od_tv_dsct"
-                        android:text="@string/od_tv_dsct_txt"
+                        android:text="@string/od_tv_dsct_syg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
