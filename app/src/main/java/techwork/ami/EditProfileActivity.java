@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -548,7 +549,8 @@ public class EditProfileActivity extends AppCompatActivity {
 					editor.putString(Config.KEY_SP_EMAIL, email);
 					editor.putString(Config.KEY_SP_GENDER, idGender);
 					editor.apply();
-
+					Vibrator c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+					c.vibrate(500);
 					Toast.makeText(EditProfileActivity.this, R.string.saveOk, Toast.LENGTH_LONG).show();
 					finish();
 				}
