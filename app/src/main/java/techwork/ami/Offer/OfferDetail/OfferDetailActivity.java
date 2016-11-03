@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -183,92 +184,112 @@ public class OfferDetailActivity extends AppCompatActivity {
         else dsct.setText("");
 
         // Floating Action Button
-        floatingButton=(FloatingActionButton)findViewById(R.id.floating_button);
-        floatingButton.setScaleX(0);
-        floatingButton.setScaleY(0);
+        floatingButton = (FloatingActionButton) findViewById(R.id.floating_button);
+        if (!getIntent().hasExtra(Config.TAG_GO_NO_RESERVE_OPTION)) {
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            final Interpolator interpolador = AnimationUtils.loadInterpolator(getApplicationContext(),
-                    android.R.interpolator.fast_out_slow_in);
+            floatingButton.setScaleX(0);
+            floatingButton.setScaleY(0);
 
-            floatingButton.animate()
-                    .scaleX((float) 1.5)
-                    .scaleY((float) 1.5)
-                    .setInterpolator(interpolador)
-                    .setDuration(600)
-                    .setListener(new Animator.AnimatorListener() {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                final Interpolator interpolador = AnimationUtils.loadInterpolator(getApplicationContext(),
+                        android.R.interpolator.fast_out_slow_in);
+
+                floatingButton.animate()
+                        .scaleX((float) 1.5)
+                        .scaleY((float) 1.5)
+                        .setInterpolator(interpolador)
+                        .setDuration(600)
+                        .setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                floatingButton.animate()
+                                        .scaleY(1)
+                                        .scaleX(1)
+                                        .setInterpolator(interpolador)
+                                        .setDuration(1000)
+                                        .start();
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+            }
+            floatingButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Create custom dialog.
+                    final CustomAlertDialogBuilder dialogBuilder = new CustomAlertDialogBuilder(context);
+                    dialogBuilder.setTitle(R.string.offer_detail_reserve);
+                    dialogBuilder.setMessage(R.string.offer_detail_quantity);
+
+                    // Create number picker (can be seek bar) into dialog
+                    numberPicker = new NumberPicker(dialogBuilder.getContext());
+
+                    final Bundle bundle = getIntent().getExtras();
+
+                    // By default the min value to reserve is 1 (cause the offer only is displayed when exist at least one)
+                    numberPicker.setMinValue(1);
+                    // Verify if the stock is greater than max per person, otherwise stock is a upper bound
+                    int quantity =
+                            (bundle.getInt(Config.TAG_GO_MAXXPER) <= bundle.getInt(Config.TAG_GO_STOCK)) ?
+                                    bundle.getInt(Config.TAG_GO_MAXXPER) : bundle.getInt(Config.TAG_GO_STOCK);
+                    numberPicker.setMaxValue(quantity);
+                    numberPicker.setValue(1);
+
+                    // Options will not be repeated infinitely
+                    numberPicker.setWrapSelectorWheel(false);
+
+                    // To no show number keys
+                    numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+                    dialogBuilder.setView(numberPicker);
+                    dialogBuilder.setPositiveButton(R.string.offer_detail_reserve, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            floatingButton.animate()
-                                    .scaleY(1)
-                                    .scaleX(1)
-                                    .setInterpolator(interpolador)
-                                    .setDuration(1000)
-                                    .start();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Reservar
+                            sendGetRequest(bundle);
                         }
                     });
+                    // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+                    dialogBuilder.setNegativeButton(R.string.my_reservations_offers_validate_negativeText, null);
+
+                    // (optional) set whether to dismiss dialog when touching outside
+                    dialogBuilder.setCanceledOnTouchOutside(false);
+
+                    // Show the dialog
+                    dialogBuilder.show();
+                }
+            });
         }
-        floatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create custom dialog.
-                final CustomAlertDialogBuilder dialogBuilder = new CustomAlertDialogBuilder(context);
-                dialogBuilder.setTitle(R.string.offer_detail_reserve);
-                dialogBuilder.setMessage(R.string.offer_detail_quantity);
+        else {
+            CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) floatingButton.getLayoutParams();
+            p.setBehavior(null); //should disable default animations
+            p.setAnchorId(View.NO_ID); //should let you set visibility
+            floatingButton.setLayoutParams(p);
+            floatingButton.setVisibility(View.INVISIBLE); // View.INVISIBLE might also be worth trying
+        }
 
-                // Create number picker (can be seek bar) into dialog
-                numberPicker = new NumberPicker(dialogBuilder.getContext());
+        /*if (getIntent().hasExtra(Config.TAG_GO_RESERVE_OPTION)){
+            //floatingButton.setVisibility(View.INVISIBLE);
+            CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) floatingButton.getLayoutParams();
+            p.setBehavior(null); //should disable default animations
+            p.setAnchorId(View.NO_ID); //should let you set visibility
+            floatingButton.setLayoutParams(p);
+            floatingButton.setVisibility(View.GONE); // View.INVISIBLE might also be worth trying
+        }*/
 
-                final Bundle bundle = getIntent().getExtras();
-
-                // By default the min value to reserve is 1 (cause the offer only is displayed when exist at least one)
-                numberPicker.setMinValue(1);
-                // Verify if the stock is greater than max per person, otherwise stock is a upper bound
-                int quantity =
-                        (bundle.getInt(Config.TAG_GO_MAXXPER) <= bundle.getInt(Config.TAG_GO_STOCK))?
-                                bundle.getInt(Config.TAG_GO_MAXXPER) : bundle.getInt(Config.TAG_GO_STOCK);
-                numberPicker.setMaxValue(quantity);
-                numberPicker.setValue(1);
-
-                // Options will not be repeated infinitely
-                numberPicker.setWrapSelectorWheel(false);
-
-                // To no show number keys
-                numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-
-                dialogBuilder.setView(numberPicker);
-                dialogBuilder.setPositiveButton(R.string.offer_detail_reserve, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Reservar
-                        sendGetRequest(bundle);
-                    }
-                });
-                // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
-                dialogBuilder.setNegativeButton(R.string.my_reservations_offers_validate_negativeText, null);
-
-                // (optional) set whether to dismiss dialog when touching outside
-                dialogBuilder.setCanceledOnTouchOutside(false);
-
-                // Show the dialog
-                dialogBuilder.show();
-            }
-        });
         getProducts();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -67,7 +67,7 @@ public class Config {
 	public static final String TAG_GO_MAXXPER="maxPPersona";
 	public static final String TAG_GO_COMPANY="empresa";
 	public static final String TAG_GO_IMAGE ="imagen" ;
-	public static final String TAG_GO_RESERVE_OPTION = "mostrarOpcionReserva";
+	public static final String TAG_GO_NO_RESERVE_OPTION = "mostrarOpcionReserva";
 
 	// GOD = Get Offer Details
 	public static final String TAG_GOD_PRODUCT = "products";

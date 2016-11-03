@@ -209,7 +209,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         intent.putExtra(Config.TAG_GO_DATEFIN, model.getFinalDate());
                         intent.putExtra(Config.TAG_GO_TOTALPRICE, model.getTotalPrice());
                         intent.putExtra(Config.TAG_GO_DATETIMEFIN, model.getFinalDateTime());
-                        intent.putExtra(Config.TAG_GO_RESERVE_OPTION,false);
+                        intent.putExtra(Config.TAG_GO_NO_RESERVE_OPTION, false);
                         startActivity(intent);
                         return true;
 
@@ -574,8 +574,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(s);
 
             JSONArray jsonOffers = jsonObject.optJSONArray(Config.TAG_GRO);
-
-            System.out.println("print Array = "+jsonOffers);
 
             Calendar c = Calendar.getInstance();
             reservationsOffersList = new ArrayList<>();
