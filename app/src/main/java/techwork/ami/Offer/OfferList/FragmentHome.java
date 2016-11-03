@@ -51,6 +51,11 @@ import techwork.ami.RequestHandler;
 
 public class FragmentHome extends Fragment {
 
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        getOffers();
+    }
     // Required for fragment use
     private OfferAdapter adapter;
     private List<OfferModel> offerList;
