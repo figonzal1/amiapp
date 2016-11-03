@@ -210,15 +210,16 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.item_popup_menu_reservations_calificate:
-
                         //If needOffer is not charge, not calificate.
                         if (model.getCashed().equals("0")){
-                            Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_LONG).show();
+                            Snackbar.make(fab, R.string.need_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
                         }
                         //If has already validated and rated.
                         else if (!model.getCalification().equals("")){
                             item.setEnabled(false);
-                            Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_LONG).show();
+                            Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
                         }
                         else{
                             rateOffer(model,false);
