@@ -61,10 +61,11 @@
             android:layout_height="wrap_content"
             android:textStyle="italic"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
             android:text="Descripcion del pedido"
             android:layout_alignStart="@+id/offer_cv_tittle"
-            android:layout_below="@+id/offer_cv_tittle" />
+            android:layout_below="@+id/offer_cv_tittle"
+            android:layout_above="@+id/offer_cv_company"
+            android:layout_toStartOf="@+id/offer_cv_price" />
 
         <TextView
             android:id="@+id/offer_cv_price"
