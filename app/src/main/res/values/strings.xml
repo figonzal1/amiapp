@@ -112,9 +112,9 @@
     <string name="defaultGender">Otro</string>
 
     <!-- Need Strings -->
-    <string name="CreateNeedTitle">Aqui podras ver y generar tus necesidades</string>
+    <string name="CreateNeedTitle">Aqui podras ver y generar tus pedidos</string>
     <string name="NeedTitle">Realiza tu pedido</string>
-    <string name="NeedLeyend">¿Qué Necesitas?</string>
+    <string name="NeedLeyend">¿Qué necesitas?</string>
     <string name="NeedData">Detalles del pedido</string>
     <string name="NeedMoney">¿Cuánto es tu presupuesto?</string>
     <string name="NeedUserTitle">Titulo del pedido</string>
@@ -171,7 +171,7 @@
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
     <string name="afterLoginTitle">¡Bienvenido a AMI!</string>
-    <string name="afterLoginLeyend">Desde ahora podrás enterarte de las mejores ofertas pensadas en tus gustos, pero primero necesitamos conocer un poco más de tí…</string>
+    <string name="afterLoginLeyend">Desde ahora podrás enterarte de las mejores promociones pensadas en tus gustos, pero primero necesitamos conocer un poco más de tí…</string>
     <string name="afterLoginDate">Fecha de nacimiento</string>
     <string name="AL_textViewBirthDate">¿Cuándo naciste?</string>
     <string name="AL_textViewOccupation">¿A qué te dedicas?</string>
@@ -193,7 +193,7 @@
     <string name="offer_cv_company">Compañía</string>
     <string name="offer_cv_price">Precio</string>
     <string name="offer_cv_description">Descripción</string>
-    <string name="offer_cv_title">Título oferta</string>
+    <string name="offer_cv_title">Título promoción</string>
     <string name="offer_cv_dsct">Descuento</string>
     <string name="offer_cv_dsct_sy">%</string>
     <string name="offer_cv_image_desciption">Imagen</string>
@@ -212,28 +212,28 @@
 
     <!-- My Reservations Offers Strings -->
     <string name="title_activity_my_reservations">Mis reservas</string>
-    <string name="myReservationOfferDialog">Cobrar oferta</string>
+    <string name="myReservationOfferDialog">Cobrar promoción</string>
     <string name="my_reservations_offers_validate_message">Solicite a un empleado de %s que ingrese código del local</string>
     <string name="my_reservations_offers_validate_title">Validar oferta</string>
     <string name="my_reservations_offers_validate_positiveText">Validar</string>
     <string name="my_reservations_offers_validate_negativeText">Cancelar</string>
     <string name="my_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
-    <string name="my_reservations_offers_validate_ok">¡Oferta validada!</string>
-    <string name="my_reservations_offers_validate_processing">Validando oferta</string>
+    <string name="my_reservations_offers_validate_ok">¡Promoción validada!</string>
+    <string name="my_reservations_offers_validate_processing">Validando promoción</string>
     <string name="my_reservations_offers_rate_processing">Opinando</string>
     <string name="my_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
     <string name="my_reservations_offers_validate_local">El código de la promoción es</string>
-    <string name="my_reservations_offers_already">Esta oferta ya ha sido cobrada</string>
+    <string name="my_reservations_offers_already">Esta promoción ya ha sido cobrada</string>
     <string name="my_reservations_offers_already_commented">¡Gracias, ya opinaste!</string>
     <string name="my_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
     <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
-    <string name="my_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
+    <string name="my_reservations_offers_unvalidated">Esta promoción no ha sido cobrada</string>
     <string name="mrolcvReserved">Reservada</string>
 
     <!-- Filter Offers Strings -->
-    <string name="title_activity_filter_offers">Filtrar Ofertas</string>
+    <string name="title_activity_filter_offers">Filtrar promociones</string>
 
     <!-- Map Strings -->
     <string name="MA_storeFormatSingle">En este local existe %s promociones disponible.</string>
@@ -252,8 +252,8 @@
     <string name="sendFail">Tu mensaje no se ha podido registrar.</string>
 
     <!-- Fragment Home / Offers list Strings -->
-    <string name="offers_list_discard_question">¿Desea descartar esta oferta?</string>
-    <string name="offers_list_discard_processing">Descartando oferta</string>
+    <string name="offers_list_discard_question">¿Desea descartar esta promoción?</string>
+    <string name="offers_list_discard_processing">Descartando promoción</string>
     <string name="title_activity_offer_detail">Detalles</string>
 
 </resources>

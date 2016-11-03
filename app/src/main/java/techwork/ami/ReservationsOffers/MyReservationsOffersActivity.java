@@ -171,8 +171,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
 
                 switch(item.getItemId()){
-
-
                     /*case R.id.item_popup_menu_reservations_details:
 
                         //Go to see details of each needOffer reserved.
@@ -203,7 +201,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         if (model.getCashed().equals("1")){
                             popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
                             //Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
-                            Snackbar.make(view,R.string.need_reservations_offers_already,Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(view,R.string.need_reservations_offers_already,Snackbar.LENGTH_LONG).show();
                         }
                         //Do charge
                         else {
@@ -215,13 +213,12 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
                         //If needOffer is not charge, not calificate.
                         if (model.getCashed().equals("0")){
-
-                            Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_LONG).show();
                         }
                         //If has already validated and rated.
                         else if (!model.getCalification().equals("")){
                             item.setEnabled(false);
-                            Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_LONG).show();
                         }
                         else{
                             rateOffer(model,false);
@@ -308,7 +305,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 // If the offer was already charged
                 if(model.getCashed().equals("1")){
                     //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
                 }
                 else {
                     dialogLocalCode(model);
@@ -320,11 +317,13 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 final ReservationOffer model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
                 // Validate before rate
                 if (model.getCashed().equals("0")){
-                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
                 }
                 // If has already validated but not rated
                 else if (!model.getCalification().equals("")){
-                    Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     rateOffer(model, false);
