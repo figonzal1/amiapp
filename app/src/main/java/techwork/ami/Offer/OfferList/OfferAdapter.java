@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentHostCallback;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,6 @@ public class OfferAdapter
         public TextView offerCompany;
         public TextView offerDescription;
         public TextView offerDsct;
-        public TextView offerDsctSy;
         public TextView offerDiscard;
         public ImageView offerImage;
 
@@ -57,7 +57,6 @@ public class OfferAdapter
             offerTitle = (TextView)itemView.findViewById(R.id.offer_cv_tittle);
             offerPrice = (TextView)itemView.findViewById(R.id.offer_cv_price);
             offerDsct = (TextView)itemView.findViewById(R.id.offer_cv_dsct);
-            offerDsctSy = (TextView)itemView.findViewById(R.id.offer_cv_dsct_sy) ;
             offerCompany = (TextView)itemView.findViewById(R.id.offer_cv_company);
             offerDescription= (TextView)itemView.findViewById(R.id.offer_cv_description);
             offerDiscard = (TextView) itemView.findViewById(R.id.tv_discard_offer);
@@ -87,16 +86,17 @@ public class OfferAdapter
         String s = "-";
         if (perc == 100){
             holder.offerDsct.setText("");
-            holder.offerDsctSy.setText("");
             s = "";
         }
         else if (perc > 100){
             // Red color
             holder.offerDsct.setTextColor(ContextCompat.getColor(context, R.color.red));
-            holder.offerDsctSy.setTextColor(ContextCompat.getColor(context, R.color.red));
             s = "+";
         }
-        if (!s.equals("")) holder.offerDsct.setText(s+String.valueOf(Math.abs(100-perc)));
+
+        Log.d("hola",s);
+        if (!s.equals("")) holder.offerDsct.setText(s+String.valueOf(Math.abs(100-perc))+"%");
+
         holder.offerDescription.setText(offer.getDescription());
         s = offer.getImage();
         Picasso.with(context).load(Config.URL_IMAGES_OFFER+s)

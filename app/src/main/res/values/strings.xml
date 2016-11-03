@@ -205,8 +205,9 @@
 
     <!-- Offer Detail Strings-->
     <string name="od_tv_price_txt">Promoción</string>
-    <string name="od_tv_tprice_txt">Precio</string>
+    <string name="od_tv_tprice_txt">Precio normal</string>
     <string name="od_tv_dsct_txt">Descuento</string>
+    <string name="od_tv_dsct_syg">%</string>
     <string name="od_tv_increase_txt">Aumento</string>
     <string name="od_tv_rd">Días restantes</string>
 

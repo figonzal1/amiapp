@@ -201,7 +201,7 @@ public class Config {
 
 	//Tags and keys for NeedOfferActivity
 	public static final String URL_GET_NEED_OFFER="http://amiapp.cl/public/getData/Need/getNeedOffer.php";
-	public static final String URL_IMAGES_NEED_OFFER="http://amiapp.cl/public/getData/Imagenes/";
+	public static final String URL_IMAGES_NEED_OFFER="http://amiapp.cl/encargado/uploads/";
 	public static final String KEY_GNO_IDNEED="idNecesidad";
 	public static final String TAG_GNO_NEED="needOffers";
 	public static final String TAG_GNO_IDNEED="idNecesidad";

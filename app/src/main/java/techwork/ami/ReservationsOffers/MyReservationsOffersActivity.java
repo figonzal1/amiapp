@@ -22,6 +22,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,7 @@ import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -67,6 +69,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
     private List<ReservationOffer> reservationsOffersList;
     private MyReservationsOffersListAdapter adapter;
+    private TextView tvReservationsOffersEmpty;
     Context context;
     CustomAlertDialogBuilder dialogBuilder;
     FloatingActionButton fab;
@@ -81,6 +84,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
         // Recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.my_reservations_offers_list_reserved);
+        tvReservationsOffersEmpty = (TextView)findViewById(R.id.tv_reservations_empty);
 
 
         // Use this setting to improve performance if you know that change in content do not change the layout size of the RecyclerView
@@ -309,10 +313,16 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private void showOffersReservations(String s){
         getData(s);
 
-        adapter = new MyReservationsOffersListAdapter(this, reservationsOffersList,MyReservationsOffersActivity.this);
+        adapter = new MyReservationsOffersListAdapter(this, reservationsOffersList, MyReservationsOffersActivity.this);
         ScaleInAnimationAdapter scaleAdapterReserved = new ScaleInAnimationAdapter(adapter);
 
         mRecyclerView.setAdapter(scaleAdapterReserved);
+
+        if (reservationsOffersList.size()==0){
+            tvReservationsOffersEmpty.setText("No has hecho reservas aún.");
+        } else {
+            tvReservationsOffersEmpty.setText("");
+        }
 
         // Set behavior to click in some item (offer validate)
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
