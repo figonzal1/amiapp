@@ -308,7 +308,6 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 // If the offer was already charged
                 if(model.getCashed().equals("1")){
                     Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    System.out.println("Aqui");
                     Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_SHORT).show();
                 }
                 else {

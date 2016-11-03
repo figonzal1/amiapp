@@ -125,9 +125,6 @@ public class FragmentHome extends Fragment {
             MainActivity.notificate = true;
             notificado = false;
         }
-        System.out.println("print Notificado = "+notificado);
-        System.out.println("print Notificate = "+MainActivity.notificate);
-        System.out.println("print Now= "+MainActivity.now);
     }
 
     private void sendGetRequest(){
@@ -297,7 +294,6 @@ public class FragmentHome extends Fragment {
 
                 // Se calcula la diferencia de tiempo acutal con cuando se publica la oferta, si son menor a una cierta holgura entonces se muestra la notificación
                 double d = (MainActivity.now.getTime() - dateIni.getTime())*Config.MILIS_TO_MIN;
-                if (true) System.out.println("print d = " + d);
                 if(MainActivity.notificate && d >= 0.0 && d < Config.NOTIFICATION_SLACK_TIME){
                     notificado = true;
                     myNotification(item);
