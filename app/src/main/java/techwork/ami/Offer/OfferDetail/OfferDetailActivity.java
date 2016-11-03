@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -69,6 +70,7 @@ public class OfferDetailActivity extends AppCompatActivity {
     private String idPersona;
     private Context context;
     public CountDownTimer countDownTimer;
+    private Vibrator c;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -412,9 +414,13 @@ public class OfferDetailActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 loading.dismiss();
                 if (s.equals("0")) {
+                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                     Toast.makeText(context, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
                     finish();
                 } else if (!s.equals("-1")) {
+                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                     Toast.makeText(context, R.string.operation_fail, Toast.LENGTH_SHORT).show();
                 }
             }

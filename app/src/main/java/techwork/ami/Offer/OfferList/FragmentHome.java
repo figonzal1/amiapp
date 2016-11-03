@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.NotificationCompat;
@@ -63,6 +64,7 @@ public class FragmentHome extends Fragment {
     private LinearLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private TextView tvOffersEmpty;
+    private Vibrator c;
 
     //android.support.v4.app.NotificationCompat.Builder mBuilder;
     static int NOTIFY = 0;
@@ -238,7 +240,6 @@ public class FragmentHome extends Fragment {
                 .getString(Config.KEY_SP_ID, "-1");
         String idOffer = offer.getId();
         new DiscardOffer(getActivity().getApplicationContext(), dialog).execute(idPerson, idOffer);
-        getOffers();
     }
 
     //Clase que itera sobre el json array para obtener datos de la BD.
