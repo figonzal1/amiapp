@@ -51,8 +51,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
         btnStreetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent streetView = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.streetview:cbll="+ lat+","+lon+""));
-                //startActivity(streetView);
+
                 Intent intent = new Intent(NeedOfferViewLocalActivity.this,StreetViewPanoramaActivity.class);
                 intent.putExtra(Config.TAG_GL_LAT,lat);
                 intent.putExtra(Config.TAG_GL_LONG,lon);
@@ -60,6 +59,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
             }
         });
 
+        //Button that's sends to the lis offer reserves.
         btnNeedOfferReserv = (Button)findViewById(R.id.btn_mis_pedidos_reservados);
         btnNeedOfferReserv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +102,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
             protected String doInBackground(Void... params) {
                 HashMap<String,String> hashmap= new HashMap<>();
 
+                //Send id local to php archive.
                 hashmap.put(Config.KEY_GL_IDLOCAL,idLocal);
                 RequestHandler rh = new RequestHandler();
 
@@ -118,6 +119,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
         go.execute();
     }
 
+    //Getting info of json for each local
     private void showLocal(String json) {
         try{
             JSONObject jsonObject = new JSONObject(json);
@@ -137,8 +139,9 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
             tvAddress.setText(address+", "+commune);
             tvWeb.setText(web);
 
+            //Image of local are get of admin directory
             Picasso.with(getApplicationContext())
-                        .load("http://amiapp.cl/admin/uploads/"+image)
+                        .load(Config.URL_LOCAL_IMAGE+image)
                         .into(ivImage);
 
 

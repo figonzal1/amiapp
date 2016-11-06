@@ -1,6 +1,5 @@
 package techwork.ami.Need.ListNeeds;
 
-import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,9 +20,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.Need.NeedActivity;
@@ -57,15 +54,13 @@ public class FragmentNeed extends Fragment {
     private RecyclerView rv;
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
-    private FloatingActionButton floatingButton;
+    private FloatingActionButton fab;
     private TextView tvNeedsEmpty;
 
 
     public FragmentNeed() {
-        // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static FragmentNeed newInstance() {
         FragmentNeed fragment = new FragmentNeed();
         return fragment;
@@ -77,8 +72,6 @@ public class FragmentNeed extends Fragment {
         adapter= new NeedAdapter(getActivity(),needList, FragmentNeed.this);
     }
 
-
-    //Listo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,6 +91,7 @@ public class FragmentNeed extends Fragment {
         }
         rv.setLayoutManager(layout);
 
+        //Setting of a refresh layout.
         refreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipe_refresh_need);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -107,57 +101,20 @@ public class FragmentNeed extends Fragment {
             }
         });
 
-        getNeeds();
+        //Settings of a fab button.
+        fab=(FloatingActionButton)v.findViewById(R.id.floating_button);
+        //Call the animatefab archive with a fab button and context;
+        AnimateFab.doAnimate(fab,getContext());
 
-        floatingButton=(FloatingActionButton)v.findViewById(R.id.floating_button);
-        floatingButton.setScaleX(0);
-        floatingButton.setScaleY(0);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            final Interpolator interpolador = AnimationUtils.loadInterpolator(getContext(),
-                    android.R.interpolator.fast_out_slow_in);
-
-            floatingButton.animate()
-                    .scaleX((float) 1.5)
-                    .scaleY((float) 1.5)
-                    .setInterpolator(interpolador)
-                    .setDuration(600)
-                    .setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            floatingButton.animate()
-                                    .scaleY(1)
-                                    .scaleX(1)
-                                    .setInterpolator(interpolador)
-                                    .setDuration(1000)
-                                    .start();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-        }
-
-        floatingButton.setOnClickListener(new View.OnClickListener() {
+        //Onclick listener for fab button.
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), NeedActivity.class);
                 getActivity().startActivity(intent);
             }
         });
-
+        getNeeds();
         return v;
     }
 
@@ -168,11 +125,14 @@ public class FragmentNeed extends Fragment {
         MenuInflater inflater = popup.getMenuInflater();
 
         inflater.inflate(R.menu.popup_menu,popup.getMenu());
+
+        //Set on click listener in popup menu on cardview.
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
 
+                    // If case is a "Ver Ofertas"
                     case R.id.item_popup_menu_need_view:
                         Intent intent = new Intent(view.getContext(),NeedOfferActivity.class);
                         //Send de idNecesidad to send post request for obtain each NeedOffer with this id.

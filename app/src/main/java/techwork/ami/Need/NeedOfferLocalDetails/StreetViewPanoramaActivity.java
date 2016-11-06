@@ -9,6 +9,7 @@ import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
 
 import techwork.ami.Config;
 import techwork.ami.R;
@@ -28,15 +29,20 @@ public class StreetViewPanoramaActivity extends AppCompatActivity {
         double lon = Double.parseDouble(bundle.getString(Config.TAG_GL_LONG));
         final LatLng location = new LatLng(lat,lon);
 
-        SupportStreetViewPanoramaFragment streetViewPanoramaFragment = (SupportStreetViewPanoramaFragment)getSupportFragmentManager().findFragmentById(R.id.street_view_panorama);
+
+
+        final SupportStreetViewPanoramaFragment streetViewPanoramaFragment = (SupportStreetViewPanoramaFragment)getSupportFragmentManager().findFragmentById(R.id.street_view_panorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(new OnStreetViewPanoramaReadyCallback() {
             @Override
             public void onStreetViewPanoramaReady(StreetViewPanorama streetViewPanorama) {
+
                 if (savedInstanceState==null){
                     streetViewPanorama.setPosition(location);
                 }
             }
         });
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
