@@ -6,7 +6,7 @@
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".Need.ListNeeds.FragmentNeed">
+    tools:context=".Need.ListNeeds.FragmentOrder">
 
     <!-- Refresh fragment -->
     <android.support.v4.widget.SwipeRefreshLayout
@@ -21,7 +21,7 @@
 
             <!-- Tus pedidos-->
             <TextView
-                android:id="@+id/tv_need"
+                android:id="@+id/tv_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -31,10 +31,10 @@
 
             <!-- Listado de pedidos-->
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_need"
+                android:id="@+id/recycler_view_order"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tv_need"
+                android:layout_below="@+id/tv_order"
                 android:scrollbars="vertical">
 
             </android.support.v7.widget.RecyclerView>

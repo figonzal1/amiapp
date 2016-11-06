@@ -48,38 +48,38 @@ import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
 
-public class FragmentNeed extends Fragment {
+public class FragmentOrder extends Fragment {
 
-    private NeedAdapter adapter;
-    private List<NeedModel> orderList;
+    private OrderAdapter adapter;
+    private List<OrderModel> orderList;
     private RecyclerView rv;
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private FloatingActionButton fab;
-    private TextView tvNeedsEmpty;
+    private TextView tvOrderEmpty;
 
 
-    public FragmentNeed() {
+    public FragmentOrder() {
     }
 
-    public static FragmentNeed newInstance() {
-        FragmentNeed fragment = new FragmentNeed();
+    public static FragmentOrder newInstance() {
+        FragmentOrder fragment = new FragmentOrder();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter= new NeedAdapter(getActivity(),orderList, FragmentNeed.this);
+        adapter= new OrderAdapter(getActivity(),orderList, FragmentOrder.this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.need_fragment,container,false);
-        tvNeedsEmpty = (TextView)v.findViewById(R.id.tv_need);
-        rv = (RecyclerView)v.findViewById(R.id.recycler_view_need);
+        View v = inflater.inflate(R.layout.order_fragment,container,false);
+        tvOrderEmpty = (TextView)v.findViewById(R.id.tv_order);
+        rv = (RecyclerView)v.findViewById(R.id.recycler_view_order);
         rv.setHasFixedSize(true);
 
         //1 cardviews in portrait mode.
@@ -120,7 +120,7 @@ public class FragmentNeed extends Fragment {
     }
 
     //Show menu in cardview
-    public void showPopupMenu(final View view, final NeedModel model){
+    public void showPopupMenu(final View view, final OrderModel model){
 
         PopupMenu popup= new PopupMenu(view.getContext(),view);
         MenuInflater inflater = popup.getMenuInflater();
@@ -229,14 +229,14 @@ public class FragmentNeed extends Fragment {
     private void showOrders(String s) {
         getOrdersData(s);
 
-        adapter = new NeedAdapter(getActivity(),orderList,FragmentNeed.this);
+        adapter = new OrderAdapter(getActivity(),orderList,FragmentOrder.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
         if (orderList.size()==0){
-            tvNeedsEmpty.setText(R.string.OrderListTitleEmpty);
+            tvOrderEmpty.setText(R.string.OrderListTitleEmpty);
         }else {
-            tvNeedsEmpty.setText(R.string.OrderListTitle);
+            tvOrderEmpty.setText(R.string.OrderListTitle);
         }
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
@@ -244,7 +244,7 @@ public class FragmentNeed extends Fragment {
             public void onItemClick(View view) {
                 Intent intent = new Intent(getActivity(),NeedOfferActivity.class);
                 int position = rv.getChildAdapterPosition(view);
-                NeedModel n = orderList.get(position);
+                OrderModel n = orderList.get(position);
 
                 //Send de idNecesidad to send post request for obtain each NeedOffer with this id.
                 intent.putExtra(Config.TAG_GET_ORDER_IDNEED,n.getIdNeed());
@@ -276,7 +276,7 @@ public class FragmentNeed extends Fragment {
         });
     }
 
-    private void deleteOrder(final View view, DialogInterface dialog, final NeedModel model) {
+    private void deleteOrder(final View view, DialogInterface dialog, final OrderModel model) {
 
         class deleteOrderAsyncTask extends AsyncTask<String, Void, String> {
             private ProgressDialog loading;
@@ -359,7 +359,7 @@ public class FragmentNeed extends Fragment {
 
             for (int i=0;i<jsonNeed.length();i++){
                 JSONObject jsonObjectItem = jsonNeed.getJSONObject(i);
-                NeedModel item = new NeedModel();
+                OrderModel item = new OrderModel();
 
                 item.setIdNeed(jsonObjectItem.getString(Config.TAG_GET_ORDER_IDNEED));
                 item.setTittle(jsonObjectItem.getString(Config.TAG_GET_ORDER_TITTLE));

@@ -11,7 +11,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import techwork.ami.Category.FragmentCategory;
-import techwork.ami.Need.ListNeeds.FragmentNeed;
+import techwork.ami.Need.ListNeeds.FragmentOrder;
 import techwork.ami.Offer.OfferList.FragmentHome;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
@@ -46,7 +46,7 @@ public class MainPageAdapter extends FragmentPagerAdapter {
                 f = FragmentCategory.newInstance();
                 break;
             case Config.NEED:
-                f = FragmentNeed.newInstance();
+                f = FragmentOrder.newInstance();
                 break;
         }
         return f;

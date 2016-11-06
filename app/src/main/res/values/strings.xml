@@ -113,7 +113,14 @@
 
     <!-- Order Fragment -->
     <string name="OrderListTitle">Tus Pedidos</string>
+    <string name="OrderNDiscard">Ofertas descartadas:</string>
+    <string name="OrderNRecived">Ofertas descartadas:</string>
     <string name="OrderListTitleEmpty">¡Oops! \n No tienes pedidos recientes :(</string>
+    <string name="OrderCardViewTittle">Titulo del pedido</string>
+    <string name="OrderCardViewDescription">Descripción del pedido</string>
+    <string name="OrderCardViewN">N</string>
+    <string name="OrderCardViewDateFin">XX/XX/XXXX</string>
+    <string name="OrderCardViewPriceMax">$x.xxx</string>
 
     <!-- New Order Strings -->
     <string name="CreateNeedTitle">Aqui podras ver y generar tus pedidos</string>

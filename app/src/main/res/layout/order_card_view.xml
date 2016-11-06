@@ -16,20 +16,23 @@
         android:paddingBottom="5dp"
         android:background="?android:attr/selectableItemBackground">
 
+
+        <!-- titulo del pedido -->
         <TextView
-            android:id="@+id/tv_need_tittle"
+            android:id="@+id/tv_order_tittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="@string/OrderCardViewTittle"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:layout_toStartOf="@+id/tv_need_popup_menu"
+            android:layout_toStartOf="@+id/tv_order_popup_menu"
             android:layout_alignStart="@+id/separator"
-            android:text="Título de necesidad"
             />
 
+        <!-- popup del cardview -->
         <TextView
-            android:id="@+id/tv_need_popup_menu"
+            android:id="@+id/tv_order_popup_menu"
             android:layout_width="40dp"
             android:layout_height="35dp"
             android:text="@string/vertical_ellipsis"
@@ -39,85 +42,91 @@
             android:textSize="25sp"
             />
 
+        <!-- separador de layouts -->
         <View
             android:id="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#afafaf"
             android:layout_marginBottom="3dp"
-            android:layout_below="@id/tv_need_popup_menu"
+            android:layout_below="@id/tv_order_popup_menu"
             />
 
+        <!-- descripcion del pedido -->
         <TextView
-            android:id="@+id/tv_need_description"
+            android:id="@+id/tv_order_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="italic"
-            android:text="Descripción del pedido"
+            android:text="@string/OrderCardViewDescription"
             android:layout_marginTop="5dp"
             android:layout_below="@+id/separator"
             />
 
+        <!-- texto numero de recibidas -->
         <TextView
-            android:id="@+id/tv_need_company_needs"
+            android:id="@+id/tv_order_company_needs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ofertas recibidas:"
             android:layout_marginTop="7dp"
-            android:layout_below="@+id/tv_need_description"
-            />
-        <TextView
-            android:id="@+id/tv_need_company_needs_discard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ofertas descartadas:"
-            android:layout_marginTop="7dp"
-            android:layout_below="@+id/tv_need_company_needs"
+            android:text="@string/OrderNRecived"
+            android:layout_below="@+id/tv_order_description"
             />
 
+        <!-- texto numero de descartadas -->
         <TextView
-            android:id="@+id/tv_need_company_needs_number"
+            android:id="@+id/tv_order_company_needs_discard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="@string/OrderNDiscard"
+            android:layout_below="@+id/tv_order_company_needs"
+            />
+
+        <!-- numero de recibidas -->
+        <TextView
+            android:id="@+id/tv_order_company_needs_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:text="N"
+            android:text="@string/OrderCardViewN"
             android:background="@drawable/offer_square_background"
-            android:layout_above="@+id/tv_need_company_needs_discard"
-            android:layout_alignStart="@+id/tv_need_company_needs_number_discard" />
+            android:layout_above="@+id/tv_order_company_needs_discard"
+            android:layout_alignStart="@+id/tv_order_company_needs_number_discard" />
 
+        <!-- numero de descartadas -->
         <TextView
-            android:id="@+id/tv_need_company_needs_number_discard"
+            android:id="@+id/tv_order_company_needs_number_discard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:textColor="@android:color/white"
-            android:text="N"
-            android:layout_below="@+id/tv_need_company_needs_number"
+            android:text="@string/OrderCardViewN"
+            android:layout_below="@+id/tv_order_company_needs_number"
             android:layout_marginStart="5dp"
             android:background="@drawable/offer_discard_square_background"
-            android:layout_toEndOf="@+id/tv_need_company_needs_discard"
+            android:layout_toEndOf="@+id/tv_order_company_needs_discard"
             />
 
+        <!-- precio maximo -->
         <TextView
-            android:id="@+id/tv_need_price_max"
+            android:id="@+id/tv_order_price_max"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Precio Máximo"
-            android:layout_alignTop="@+id/tv_need_company_needs_number_discard"
+            android:text="@string/OrderCardViewPriceMax"
+            android:layout_alignTop="@+id/tv_order_company_needs_number_discard"
             android:layout_alignParentEnd="true"
             />
 
+        <!-- fecha termino -->
         <TextView
-            android:id="@+id/tv_need_date_fin"
+            android:id="@+id/tv_order_date_fin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha Exp"
-            android:layout_above="@+id/tv_need_price_max"
+            android:text="@string/OrderCardViewDateFin"
+            android:layout_above="@+id/tv_order_price_max"
             android:layout_alignParentEnd="true"
             />
-
-
-
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

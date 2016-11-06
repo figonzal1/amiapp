@@ -1,7 +1,7 @@
 package techwork.ami.Need.ListNeeds;
 
 
-public class NeedModel {
+public class OrderModel {
     String idNeed;
     String tittle;
     String description;
