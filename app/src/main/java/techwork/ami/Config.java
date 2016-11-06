@@ -7,6 +7,7 @@ import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
 @SuppressWarnings("WeakerAccess")
 public class Config {
 
+
 	public static final double MILIS_TO_MIN = 1.0 / (1000 * 60);
 
 	// Slack time (in minutes, change only first number) that define if the notification is shown or not (if greater than this, no show).
@@ -52,6 +53,7 @@ public class Config {
 	public static final String URL_DELETE_NEED = "http://amiapp.cl/public/getData/Need/ChangeStatusNeed.php";
 
 	// GO = Get Offers
+	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GO_OFFERS="offers";
 	public static final String TAG_GO_OFFER_ID="id";
 	public static final String TAG_GO_TITLE="titulo";
@@ -70,6 +72,7 @@ public class Config {
 	public static final String TAG_GO_NO_RESERVE_OPTION = "mostrarOpcionReserva";
 
 	// GOD = Get Offer Details
+	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GOD_PRODUCT = "products";
 	public static final String TAG_GOD_NAME = "nombre";
 	public static final String TAG_GOD_DESCRIPTION = "descripcion";
@@ -77,10 +80,12 @@ public class Config {
 	public static final String TAG_GOD_IMAGE = "imagen";
 
 	// FO = Filter Offers
+	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_FO_ID_CATEGORY="idCategoria";
 	public static final String TAG_FO_ID_STORE="idLocal";
 
 	//GRO = Get Reservations Offers (not same)
+	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GRO = "reservationsOffers";
 	public static final String TAG_GRO_ID_OFFER = "idOferta";
 	public static final String TAG_GRO_TITLE = "titulo";
@@ -106,6 +111,7 @@ public class Config {
 	public static final String URL_ENTERPRISE_IMAGE="http://amiapp.cl/admin/uploads/";
 
 	//MRO = My Reservations Offers URLs
+	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
 	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
 
@@ -126,6 +132,7 @@ public class Config {
 	public static final  String KEY_STATUS ="estado";
 
 	// Need Keys
+	//TODO: Cambiar los nombres a la actual definicion.
 	public static final  String KEY_NE_TITLE="Title";
 	public static final  String KEY_NE_DESCRIPTION="Description";
 	public static final  String KEY_NE_MONEY="Money";
@@ -177,6 +184,7 @@ public class Config {
 	public static final String TAG_EXIST_EMAIL ="emailExiste";
 
 	//Tags and Url for CategoryFragments
+
 	public static final String URL_GET_CATEGORY="http://amiapp.cl/public/getData/CategoryList/getCategoryList.php";
 	public static final String URL_IMAGES_CATEGORY="http://amiapp.cl/public/getData/Imagenes/";
 	public static final String TAG_GC_CATEGORY= "categorias";
@@ -185,21 +193,23 @@ public class Config {
 	public static final String TAG_GC_IMAGE ="imagen";
 
 	//Tags and keys for NeedFragment
-	public static final String URL_GET_NEED="http://amiapp.cl/public/getData/Need/getNeed.php";
-	public static final String KEY_GN_IDPERSON="idPersona";
-	public static final String TAG_GN_NEED= "needs";
-	public static final String TAG_GN_IDNEED ="idNecesidad";
-	public static final String TAG_GN_TITTLE ="titulo";
-	public static final String TAG_GN_DESCRIPTION="descripcion";
-	public static final String TAG_GN_EXPIRATIONDATE = "fechaExpiracion";
-	public static final String TAG_GN_PRICEMAX="precioMax";
-	public static final String TAG_GN_LATITUDE = "latitud";
-	public static final String TAG_GN_LONGITUDE="longitud";
-	public static final String TAG_GN_RADIO="radio";
-	public static final String TAG_GN_OFFERS_COMPANY = "ofertasEmpresas";
-	public static final String TAG_GN_NDISCARD_OFFERS="nDescartadas";
+	//TODO: Cambiar los nombres a la actual definicion.
+	public static final String URL_GET_ORDER="http://amiapp.cl/public/getData/Need/getOrders.php";
+	public static final String KEY_GET_ORDER_IDPERSON="idPersona";
+	public static final String TAG_GET_ORDER= "pedidos";
+	public static final String TAG_GET_ORDER_IDNEED ="idNecesidad";
+	public static final String TAG_GET_ORDER_TITTLE ="titulo";
+	public static final String TAG_GET_ORDER_DESCRIPTION="descripcion";
+	public static final String TAG_GET_ORDER_EXPIRATIONDATE = "fechaExpiracion";
+	public static final String TAG_GET_ORDER_PRICEMAX="precioMax";
+	public static final String TAG_GET_ORDER_LATITUDE = "latitud";
+	public static final String TAG_GET_ORDER_LONGITUDE="longitud";
+	public static final String TAG_GET_ORDER_RADIO="radio";
+	public static final String TAG_GET_ORDER_OFFERS_COMPANY = "ofertasEmpresas";
+	public static final String TAG_GET_ORDER_NDISCARD_OFFERS="nDescartadas";
 
 	//Tags and keys for NeedOfferActivity
+	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String URL_GET_NEED_OFFER="http://amiapp.cl/public/getData/Need/getNeedOffer.php";
 	public static final String URL_IMAGES_NEED_OFFER="http://amiapp.cl/encargado/uploads/";
 	public static final String KEY_GNO_IDNEED="idNecesidad";

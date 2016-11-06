@@ -35,6 +35,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.AnimateFab;
@@ -50,7 +52,7 @@ import techwork.ami.RequestHandler;
 public class FragmentNeed extends Fragment {
 
     private NeedAdapter adapter;
-    private List<NeedModel> needList;
+    private List<NeedModel> orderList;
     private RecyclerView rv;
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
@@ -69,7 +71,7 @@ public class FragmentNeed extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter= new NeedAdapter(getActivity(),needList, FragmentNeed.this);
+        adapter= new NeedAdapter(getActivity(),orderList, FragmentNeed.this);
     }
 
     @Override
@@ -97,7 +99,7 @@ public class FragmentNeed extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNeeds();
+                getOrders();
             }
         });
 
@@ -114,7 +116,7 @@ public class FragmentNeed extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-        getNeeds();
+        getOrders();
         return v;
     }
 
@@ -134,20 +136,27 @@ public class FragmentNeed extends Fragment {
 
                     // If case is a "Ver Ofertas"
                     case R.id.item_popup_menu_need_view:
+
                         Intent intent = new Intent(view.getContext(),NeedOfferActivity.class);
-                        //Send de idNecesidad to send post request for obtain each NeedOffer with this id.
-                        intent.putExtra(Config.TAG_GN_IDNEED,model.getIdNeed());
+
+                        //Send de idNecesidad for obtain each Offers with this id.
+                        intent.putExtra(Config.TAG_GET_ORDER_IDNEED,model.getIdNeed());
                         view.getContext().startActivity(intent);
                         return true;
 
+                    //If case is "Descartar Pedido"
                     case R.id.item_popup_menu_discard_order:
 
+                        //Show a CustomDialog in screen
                         new CustomAlertDialogBuilder(view.getContext())
-                                .setTitle(R.string.NeedDeleteConfirm)
-                                .setMessage("Confirme la acción")
+                                .setTitle(R.string.OrderDeleteConfirm)
+                                .setMessage(R.string.OrderConfirmAction)
+                                .setCancelable(false)
+
+                                //If positive button is clicked deleteOrder
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        deleteNeed(view,dialog,model);
+                                        deleteOrder(view,dialog,model);
                                     }
                                 })
                                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -164,7 +173,7 @@ public class FragmentNeed extends Fragment {
         popup.show();
     }
 
-    private void getNeeds(){
+    private void getOrders(){
         sendPostRequest();
     }
 
@@ -172,10 +181,10 @@ public class FragmentNeed extends Fragment {
 
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
 
-        final String id = sharedPref.getString(Config.KEY_SP_ID, "-1");
+        final String idPerson = sharedPref.getString(Config.KEY_SP_ID, "-1");
 
 
-        class NeedAsyncTask extends AsyncTask<Void,Void,String>{
+        class OrderAsyncTask extends AsyncTask<Void,Void,String>{
 
             @Override
             protected void onPreExecute(){
@@ -197,9 +206,9 @@ public class FragmentNeed extends Fragment {
 
                 if (connectionStatus) {
                     HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put(Config.KEY_GN_IDPERSON, id);
+                    hashMap.put(Config.KEY_GET_ORDER_IDPERSON, idPerson);
 
-                    return rh.sendPostRequest(Config.URL_GET_NEED, hashMap);
+                    return rh.sendPostRequest(Config.URL_GET_ORDER, hashMap);
                 }
                 else
                     return "-1";
@@ -210,27 +219,25 @@ public class FragmentNeed extends Fragment {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
                 if (!s.equals("-1"))
-                    showNeeds(s);
+                    showOrders(s);
             }
         }
-        NeedAsyncTask go = new NeedAsyncTask();
+        OrderAsyncTask go = new OrderAsyncTask();
         go.execute();
     }
 
+    //Show info in model in a recycler view
+    private void showOrders(String s) {
+        getOrdersData(s);
 
-
-    //Clase que muestra los datos en el recycler view y realiza el listener del click
-    private void showNeeds(String s) {
-        getNeedsData(s);
-
-        adapter = new NeedAdapter(getActivity(),needList,FragmentNeed.this);
+        adapter = new NeedAdapter(getActivity(),orderList,FragmentNeed.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
-        if (needList.size()==0){
-            tvNeedsEmpty.setText(R.string.NeedListTitleEmpty);
+        if (orderList.size()==0){
+            tvNeedsEmpty.setText(R.string.OrderListTitleEmpty);
         }else {
-            tvNeedsEmpty.setText(R.string.NeedListTitle);
+            tvNeedsEmpty.setText(R.string.OrderListTitle);
         }
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
@@ -238,23 +245,28 @@ public class FragmentNeed extends Fragment {
             public void onItemClick(View view) {
                 Intent intent = new Intent(getActivity(),NeedOfferActivity.class);
                 int position = rv.getChildAdapterPosition(view);
-                NeedModel n = needList.get(position);
+                NeedModel n = orderList.get(position);
 
                 //Send de idNecesidad to send post request for obtain each NeedOffer with this id.
-                intent.putExtra(Config.TAG_GN_IDNEED,n.getIdNeed());
+                intent.putExtra(Config.TAG_GET_ORDER_IDNEED,n.getIdNeed());
                 startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(final View view) {
                 new CustomAlertDialogBuilder(getContext())
-                        .setTitle(R.string.NeedDeleteConfirm)
-                        .setMessage("Confirme la acción")
+                        .setTitle(R.string.OrderDeleteConfirm)
+                        .setMessage(R.string.OrderConfirmAction)
+                        .setCancelable(false)
+
+                        //If positive button is clicked ... discard Order.
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteNeed(view,dialog, needList.get(rv.getChildAdapterPosition(view)));
+                                deleteOrder(view,dialog, orderList.get(rv.getChildAdapterPosition(view)));
                             }
                         })
+
+                        //if negativ is clicked .... cancel dialog.
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
@@ -265,21 +277,26 @@ public class FragmentNeed extends Fragment {
         });
     }
 
-    private void deleteNeed(final View view, DialogInterface dialog, final NeedModel model) {
-        class DeleteNeed extends AsyncTask<String, Void, String> {
+    private void deleteOrder(final View view, DialogInterface dialog, final NeedModel model) {
+
+        class deleteOrderAsyncTask extends AsyncTask<String, Void, String> {
             private ProgressDialog loading;
             private DialogInterface dialog;
 
-            private DeleteNeed(DialogInterface dialog) {
+            private deleteOrderAsyncTask(DialogInterface dialog) {
                 this.dialog = dialog;
             }
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+
                 loading = ProgressDialog.show(view.getContext(),
-                        getString(R.string.Need_delete_processing),
+                        getString(R.string.OrderDeleteProcessing),
                         getString(R.string.wait), false, false);
+
+
+
             }
 
             @Override
@@ -294,10 +311,22 @@ public class FragmentNeed extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
                 if (s.equals("0")) {
+
+                    long delayInMillis = 3000;
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            loading.dismiss();
+                        }
+                    }, delayInMillis);
+
                     Toast.makeText(view.getContext(),
-                            R.string.Need_delete_ok, Toast.LENGTH_LONG).show();
+                            R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
+
+                    //If operations is ok refresh orders.
+                    getOrders();
                 } else {
                     Toast.makeText(view.getContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
@@ -305,13 +334,13 @@ public class FragmentNeed extends Fragment {
                 this.dialog.dismiss();
             }
         }
-        DeleteNeed go = new DeleteNeed(dialog);
+        deleteOrderAsyncTask go = new deleteOrderAsyncTask(dialog);
         go.execute();
-        getNeeds();
+
     }
 
-    //Clase que itera sobre el json array y llena el listado de necesidades.
-    private void getNeedsData(String json) {
+    //Get information of each order and put in model of orders.
+    private void getOrdersData(String json) {
 
         String dExp;
         Date dateExp;
@@ -319,33 +348,33 @@ public class FragmentNeed extends Fragment {
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try{
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonNeed = jsonObject.optJSONArray(Config.TAG_GN_NEED);
+            JSONArray jsonNeed = jsonObject.optJSONArray(Config.TAG_GET_ORDER);
             Calendar c = Calendar.getInstance();
-            needList = new ArrayList<>();
+            orderList = new ArrayList<>();
 
             for (int i=0;i<jsonNeed.length();i++){
                 JSONObject jsonObjectItem = jsonNeed.getJSONObject(i);
                 NeedModel item = new NeedModel();
 
-                item.setIdNeed(jsonObjectItem.getString(Config.TAG_GN_IDNEED));
-                item.setTittle(jsonObjectItem.getString(Config.TAG_GN_TITTLE));
-                item.setDescription(jsonObjectItem.getString(Config.TAG_GN_DESCRIPTION));
+                item.setIdNeed(jsonObjectItem.getString(Config.TAG_GET_ORDER_IDNEED));
+                item.setTittle(jsonObjectItem.getString(Config.TAG_GET_ORDER_TITTLE));
+                item.setDescription(jsonObjectItem.getString(Config.TAG_GET_ORDER_DESCRIPTION));
 
-                dExp = jsonObjectItem.getString(Config.TAG_GN_EXPIRATIONDATE);
+                dExp = jsonObjectItem.getString(Config.TAG_GET_ORDER_EXPIRATIONDATE);
                 dateExp = format.parse(dExp);
                 c.setTime(dateExp);
 
                 item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
                 item.setDateTimeFin(String.format(Locale.US,Config.DATETIME_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
 
-                item.setPriceMax(jsonObjectItem.getInt(Config.TAG_GN_PRICEMAX));
-                item.setLat(jsonObjectItem.getString(Config.TAG_GN_LATITUDE));
-                item.setLon(jsonObjectItem.getString(Config.TAG_GN_LONGITUDE));
-                item.setRadio(jsonObjectItem.getString(Config.TAG_GN_RADIO));
-                item.setOffersCompany(jsonObjectItem.getString(Config.TAG_GN_OFFERS_COMPANY));
-                item.setnDiscardOffers(jsonObjectItem.getString(Config.TAG_GN_NDISCARD_OFFERS));
+                item.setPriceMax(jsonObjectItem.getInt(Config.TAG_GET_ORDER_PRICEMAX));
+                item.setLat(jsonObjectItem.getString(Config.TAG_GET_ORDER_LATITUDE));
+                item.setLon(jsonObjectItem.getString(Config.TAG_GET_ORDER_LONGITUDE));
+                item.setRadio(jsonObjectItem.getString(Config.TAG_GET_ORDER_RADIO));
+                item.setOffersCompany(jsonObjectItem.getString(Config.TAG_GET_ORDER_OFFERS_COMPANY));
+                item.setnDiscardOffers(jsonObjectItem.getString(Config.TAG_GET_ORDER_NDISCARD_OFFERS));
 
-                needList.add(item);
+                orderList.add(item);
             }
 
         } catch (JSONException e) {

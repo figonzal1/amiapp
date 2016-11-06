@@ -111,7 +111,11 @@
     <string name="defaultOccupation">Otro</string>
     <string name="defaultGender">Otro</string>
 
-    <!-- Need Strings -->
+    <!-- Order Fragment -->
+    <string name="OrderListTitle">Tus Pedidos</string>
+    <string name="OrderListTitleEmpty">¡Oops! \n No tienes pedidos recientes :(</string>
+
+    <!-- New Order Strings -->
     <string name="CreateNeedTitle">Aqui podras ver y generar tus pedidos</string>
     <string name="NeedTitle">Realiza tu pedido</string>
     <string name="NeedLeyend">¿Qué necesitas?</string>
@@ -131,19 +135,21 @@
     <string name="NeedDaysTitle">¿Cuántos días puedes esperar?</string>
     <string name="NeedButtonText">Enviar Pedido</string>
     <string name="NeedUserLocation">Usar mi ubicación</string>
-    <string name="NeedButtonDelete">Eliminar pedido</string>
-    <string name="NeedDelete">El pedido ha sido eliminado</string>
-    <string name="NeedDeleteConfirm">¿Desea eliminar este pedido?</string>
-    <string name="NeedDeleteYes">Eliminar</string>
-    <string name="Need_delete_processing">Eliminando pedido</string>
-    <string name="Need_delete_ok">El pedido ha sido eliminado</string>
-    <string name="NeedOfferDetails">Detalle oferta</string>
-    <string name="NeedOfferCompanies">Ofertas recibidas</string>
-    <string name="NeedOfferLocalDetails">Información local</string>
-    <string name="NeedOfferLocalStreetView">StreetView local</string>
-    <string name="NeedListTitle">Tus Pedidos</string>
-    <string name="NeedListTitleEmpty">No tienes pedidos activos</string>
 
+    <!-- Discard Order -->
+    <string name="OrderButtonDelete">Eliminar pedido</string>
+    <string name="OrderDelete">El pedido ha sido eliminado</string>
+    <string name="OrderDeleteConfirm">¿Desea eliminar este pedido?</string>
+    <string name="OrderConfirmAction">Confirme la acción</string>
+    <string name="OrderDeleteYes">Eliminar</string>
+    <string name="OrderDeleteProcessing">Eliminando pedido</string>
+    <string name="OrderDeleteOk">El pedido ha sido eliminado</string>
+
+    <!-- Offers of Orders -->
+    <string name="OfferDetails">Detalle oferta</string>
+    <string name="OfferCompanies">Ofertas recibidas</string>
+    <string name="OfferLocalDetails">Información local</string>
+    <string name="OfferLocalStreetView">StreetView local</string>
 
     <!-- NeedReservations Strings -->
     <string name="NeedReservations">Mis pedidos reservados</string>
