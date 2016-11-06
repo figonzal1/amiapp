@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -35,15 +36,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Need.NeedActivity;
 import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
+import techwork.ami.Need.NeedActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -311,23 +310,29 @@ public class FragmentNeed extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+
+                //If operation is correct dialog close in 1,5 [s]
                 if (s.equals("0")) {
 
-                    long delayInMillis = 3000;
-                    Timer timer = new Timer();
-                    timer.schedule(new TimerTask() {
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+
                             loading.dismiss();
+                            Toast.makeText(view.getContext(),
+                                  R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
+
+                            //If operations is ok refresh orders.
+                            getOrders();
                         }
-                    }, delayInMillis);
+                    },1500);
 
-                    Toast.makeText(view.getContext(),
-                            R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
+                }
 
-                    //If operations is ok refresh orders.
-                    getOrders();
-                } else {
+                //If not correct depends of the operation.
+                else {
+                    loading.dismiss();
                     Toast.makeText(view.getContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
