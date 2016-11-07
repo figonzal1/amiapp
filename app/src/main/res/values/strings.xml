@@ -67,8 +67,10 @@
     <string name="ingresaCorreo">Ingresa tu correo registrado</string>
 
     <!-- String menu AppBar -->
-    <string name="action_settings">Configuración</string>
-    <string name="action_search">Buscar</string>
+    <string name="action_map">Mapa</string>
+    <string name="action_home">Inicio</string>
+    <string name="action_config">Configuración</string>
+    <string name="action_logout">Cerrar sesión</string>
 
     <!-- Profile Strings -->
     <string name="profileName">Nombre</string>

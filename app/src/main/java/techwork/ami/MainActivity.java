@@ -15,12 +15,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -178,6 +181,23 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_maps:
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 return true;
+
+            case R.id.action_home:
+                Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_logout:
+                logout();
+                Intent intentLogout = new Intent(MainActivity.this, LoginActivity.class);
+                finish();
+                startActivity(intentLogout);
+                return true;
+
+            case R.id.action_config:
+                Toast.makeText(getApplicationContext(),"Configuración",Toast.LENGTH_LONG).show();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
