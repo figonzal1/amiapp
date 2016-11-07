@@ -1,17 +1,12 @@
-package techwork.ami.Need.NeedReservations.NeedReservationsList;
+package techwork.ami.Need.OffersReservations.OffersReservationsList;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,17 +22,17 @@ import techwork.ami.R;
  * Created by tataf on 24-10-2016.
  */
 
-public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservationsAdapter.NeedReservationsViewHolder> implements View.OnClickListener,View.OnLongClickListener {
+public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReservationsAdapter.NeedReservationsViewHolder> implements View.OnClickListener,View.OnLongClickListener {
 
     private Context context;
-    private List<NeedReservationsModel> items;
+    private List<OffersReservationsModel> items;
     private OnItemClickListenerRecyclerView itemClick;
-    private NeedReservationsActivity needReservationsActivity;
+    private OffersReservationsActivity offersReservationsActivity;
 
-    public NeedReservationsAdapter(Context context, List<NeedReservationsModel> items,NeedReservationsActivity needReservationsActivity){
+    public OffersReservationsAdapter(Context context, List<OffersReservationsModel> items, OffersReservationsActivity offersReservationsActivity){
         this.context=context;
         this.items=items;
-        this.needReservationsActivity = needReservationsActivity;
+        this.offersReservationsActivity = offersReservationsActivity;
     }
 
 
@@ -57,31 +52,31 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
             super(itemView);
 
 
-            tvTittle=(TextView)itemView.findViewById(R.id.tv_need_reservations_tittle);
-            tvDescription=(TextView)itemView.findViewById(R.id.tv_need_reservations_description);
-            tvCompany=(TextView)itemView.findViewById(R.id.tv_need_reservations_company);
-            tvPrice=(TextView)itemView.findViewById(R.id.tv_need_reservations_quantity_price);
-            tvStatus=(TextView)itemView.findViewById(R.id.tv_need_reservations_status);
-            popupMenu=(TextView)itemView.findViewById(R.id.tv_need_reservations_popup_menu);
-            ivImage=(ImageView)itemView.findViewById(R.id.iv_need_reservations_image);
+            tvTittle=(TextView)itemView.findViewById(R.id.tv_offer_reservations_tittle);
+            tvDescription=(TextView)itemView.findViewById(R.id.tv_offer_reservations_description);
+            tvCompany=(TextView)itemView.findViewById(R.id.tv_offer_reservations_company);
+            tvPrice=(TextView)itemView.findViewById(R.id.tv_offer_reservations_quantity_price);
+            tvStatus=(TextView)itemView.findViewById(R.id.tv_offer_reservations_status);
+            popupMenu=(TextView)itemView.findViewById(R.id.tv_offer_reservations_popup_menu);
+            ivImage=(ImageView)itemView.findViewById(R.id.iv_offer_reservations_image);
         }
     }
 
     @Override
-    public NeedReservationsAdapter.NeedReservationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.need_reservations_card_view,parent,false);
+    public OffersReservationsAdapter.NeedReservationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offers_reservations_card_view,parent,false);
         v.setOnClickListener(this);
         v.setOnLongClickListener(this);
         return new NeedReservationsViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(NeedReservationsAdapter.NeedReservationsViewHolder holder, int position) {
-        final NeedReservationsModel model = items.get(position);
+    public void onBindViewHolder(OffersReservationsAdapter.NeedReservationsViewHolder holder, int position) {
+        final OffersReservationsModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
         holder.tvDescription.setText(model.getDescription());
         holder.tvCompany.setText(model.getCompany());
-        holder.tvPrice.setText(model.getQuantity()+"x $"+String.format(Config.CLP_FORMAT,model.getPrice()));
+        holder.tvPrice.setText(model.getQuantity()+"x "+String.format(Config.CLP_FORMAT,model.getPrice()));
 
         Picasso.with(context)
                 .load(Config.URL_IMAGES_OFFER_2+model.getImage())
@@ -113,7 +108,7 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
         holder.popupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                needReservationsActivity.showPopupMenu(v,model);
+                offersReservationsActivity.showPopupMenu(v,model);
           }
         });
     }

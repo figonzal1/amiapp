@@ -3,10 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/need_reservations_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="techwork.ami.Need.NeedReservations.NeedReservationsList.NeedReservationsActivity">
+    tools:context="techwork.ami.Need.OffersReservations.OffersReservationsList.OffersReservationsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -24,7 +23,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_need_reservations"
+        android:id="@+id/swipe_refresh_offers_reservations"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_below="@+id/appbar">
@@ -38,7 +37,7 @@
             android:paddingTop="10dp">
 
             <TextView
-                android:id="@+id/tv_need_reservations_empty"
+                android:id="@+id/tv_offers_reservations_empty"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="25sp"
@@ -47,7 +46,7 @@
                 android:gravity="center_horizontal"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_need_reservations"
+                android:id="@+id/recycler_view_offers_reservations"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical">

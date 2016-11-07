@@ -182,7 +182,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                     /*case R.id.item_popup_menu_reservations_details:
 
                         //Go to see details of each needOffer reserved.
-                        Intent intent = new Intent(MyReservationsOffersActivity.this,NeedReservationsDetailsActivity.class);
+                        Intent intent = new Intent(MyReservationsOffersActivity.this,OffersReservationsViewActivity.class);
                         intent.putExtra(Config.TAG_GNR_IDOFFER,model.getIdOffer());
                         intent.putExtra(Config.TAG_GNR_IDLOCAL,model.getIdLocal());
                         intent.putExtra(Config.TAG_GNR_IDNEED,model.getIdNeed());
@@ -225,7 +225,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         if (model.getCashed().equals("1")){
                             popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
                             //Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
-                            Snackbar.make(view,R.string.need_reservations_offers_already,Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view,R.string.OfferReservedAlready,Snackbar.LENGTH_LONG).show();
                         }
                         //Do charge
                         else {
@@ -237,13 +237,13 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                         //If needOffer is not charge, not calificate.
                         if (model.getCashed().equals("0")){
                             //Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_LONG).show();
-                            Snackbar.make(fab, R.string.need_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(fab, R.string.OffersReservedUnvalidated, Snackbar.LENGTH_LONG).show();
                         }
                         //If has already validated and rated.
                         else if (!model.getCalification().equals("")){
                             item.setEnabled(false);
                             //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_LONG).show();
-                            Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(fab, R.string.OfferReservedAlreadyCommented, Snackbar.LENGTH_LONG).show();
                         }
                         else{
                             rateOffer(model,false);

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="techwork.ami.Need.OfferLocalDetails.OfferViewLocalActivity">
+    tools:context="techwork.ami.Need.OffersLocalDetails.OfferViewLocalActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -81,7 +81,7 @@
                 android:id="@+id/btn_local_street_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/OfferReservedViewLocalMyOrders"
+                android:text="@string/OfferReservedViewLocalStreetView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/tv_web2"/>

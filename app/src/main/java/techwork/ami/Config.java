@@ -254,35 +254,35 @@ public class Config {
 	public static final String TAG_GET_LOCAL_IMAGE="imagen";
 	public static final String TAG_GET_LOCAL_COMMUNE="comuna";
 
-	//NeedreservationsActivity
-	//TODO:Cambiar nombres de archivos.
-	public static final String URL_GET_NEED_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getNeedReservations.php";
-	public static final String URL_VALIDATE_NEED_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateNeedReservation.php";
-	public static final String URL_NEED_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateNeed.php";
-	public static final String KEY_GNR_IDPERSON="idPersona";
-	public static final String KEY_GNR_IDOFFER = "idOferta";
-	public static final String KEY_GNR_QUANTITY = "cantidad";
-	public static final String KEY_GNR_DATE_RESERV = "fechaReserva";
-	public static final String KEY_GNR_RATE = "calificacion";
-	public static final String TAG_GNR_NEED="needReservations";
-	public static final String TAG_GNR_IDNEED="idNecesidad";
-	public static final String TAG_GNR_IDLOCAL="idLocal";
-	public static final String TAG_GNR_IDOFFER="idOferta";
-	public static final String TAG_GNR_TITTLE="titulo";
-	public static final String TAG_GNR_DESCRIPTION="descripcion";
-	public static final String TAG_GNR_STOCK ="stock";
-	public static final String TAG_GNR_CODPROMOTION="codPromocion";
-	public static final String TAG_GNR_QUANTITY="cantidad";
-	public static final String TAG_GNR_CASHED="cobrado";
-	public static final String TAG_GNR_CALIFICATION="calificacion";
-	public static final String TAG_GNR_DATERESERV="fechaReserva";
-	public static final String TAG_GNR_DATECASHED="fechaCobro";
-	public static final String TAG_GNR_DATEINI="fechaInicio";
-	public static final String TAG_GNR_DATEFIN="fechaTermino";
-	public static final String TAG_GNR_PRICEOFFER="precioOferta";
-	public static final String TAG_GNR_COMPANY="empresa";
-	public static final String TAG_GNR_LOCALCODE="codigoLocal";
-	public static final String TAG_GNR_IMAGE="imagen";
+	//Offers Reservations
+
+	public static final String URL_GET_OFFER_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getNeedReservations.php";
+	public static final String URL_VALIDATE_OFFER_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateNeedReservation.php";
+	public static final String URL_OFFER_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateNeed.php";
+	public static final String KEY_GET_OFFER_RESERVED_IDPERSON="idPersona";
+	public static final String KEY_GET_OFFER_RESERVED_IDOFFER = "idOferta";
+	public static final String KEY_GET_OFFER_RESERVED_QUANTITY = "cantidad";
+	public static final String KEY_GET_OFFER_RESERVED_DATE_RESERV = "fechaReserva";
+	public static final String KEY_GET_OFFER_RESERVED_RATE = "calificacion";
+	public static final String TAG_GET_OFFER_RESERVED="needReservations";
+	public static final String TAG_GET_OFFER_RESERVED_IDNEED="idNecesidad";
+	public static final String TAG_GET_OFFER_RESERVED_IDLOCAL="idLocal";
+	public static final String TAG_GET_OFFER_RESERVED_IDOFFER="idOferta";
+	public static final String TAG_GET_OFFER_RESERVED_TITTLE="titulo";
+	public static final String TAG_GET_OFFER_RESERVED_DESCRIPTION="descripcion";
+	public static final String TAG_GET_OFFER_RESERVED_STOCK ="stock";
+	public static final String TAG_GET_OFFER_RESERVED_CODPROMOTION="codPromocion";
+	public static final String TAG_GET_OFFER_RESERVED_QUANTITY="cantidad";
+	public static final String TAG_GET_OFFER_RESERVED_CASHED="cobrado";
+	public static final String TAG_GET_OFFER_RESERVED_CALIFICATION="calificacion";
+	public static final String TAG_GET_OFFER_RESERVED_DATERESERV="fechaReserva";
+	public static final String TAG_GET_OFFER_RESERVED_DATECASHED="fechaCobro";
+	public static final String TAG_GET_OFFER_RESERVED_DATEINI="fechaInicio";
+	public static final String TAG_GET_OFFER_RESERVED_DATEFIN="fechaTermino";
+	public static final String TAG_GET_OFFER_RESERVED_PRICEOFFER="precioOferta";
+	public static final String TAG_GET_OFFER_RESERVED_COMPANY="empresa";
+	public static final String TAG_GET_OFFER_RESERVED_LOCALCODE="codigoLocal";
+	public static final String TAG_GET_OFFER_RESERVED_IMAGE="imagen";
 
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";

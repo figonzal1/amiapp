@@ -21,11 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Date;
 
-import techwork.ami.Need.NeedReservations.NeedReservationsList.NeedReservationsActivity;
+import techwork.ami.Need.OffersReservations.OffersReservationsList.OffersReservationsActivity;
 import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -208,7 +207,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_reserve_needs) {
-            Intent intent = new Intent(MainActivity.this, NeedReservationsActivity.class);
+            Intent intent = new Intent(MainActivity.this, OffersReservationsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_reservations) {
             Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);

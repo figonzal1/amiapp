@@ -1,9 +1,7 @@
-package techwork.ami.Need.OfferLocalDetails;
+package techwork.ami.Need.OffersLocalDetails;
 
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
@@ -12,7 +10,6 @@ import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
 import techwork.ami.R;
 
 public class StreetViewPanoramaFragment extends FragmentActivity {

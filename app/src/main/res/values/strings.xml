@@ -194,33 +194,45 @@
     <string name="OfferViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferViewLocalStreetView">Ver street view</string>
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
+
+
+    <!-- NeedReservations Strings -->
+    <string name="OrdersReservations">Mis pedidos reservados</string>
+    <string name="OfferReservedEmpty">¡Oops! \n No tienes ofertas recientes :(</string>
+    <string name="OfferReservedExpired">Oferta expirada</string>
+    <string name="OfferReservedOfferDetails">Detalle oferta</string>
+    <string name="OfferReservedCompanies">Ofertas recibidas</string>
+    <string name="OfferReservedLocalDetails">Información local</string>
+    <string name="OfferReservedStreetView">StreetView local</string>
+    <string name="OfferReservedExpiredShort">Expirada</string>
+    <string name="OfferReservedExpired2">Expira en \n</string>
+    <string name="OfferReservedCardViewTittle">Titulo oferta</string>
+    <string name="OfferReservedCardViewDescription">Descripcion de la oferta</string>
+    <string name="OfferReservedCardViewPrice">$x.xxx</string>
+    <string name="OfferReservedCardViewCompany">Empresa</string>
+    <string name="OfferReservedCardViewState">Estado</string>
+    <string name="OfferReservedValidateMessage">Solicite a un empleado de %s que ingrese código del local</string>
+    <string name="OfferReservedValidateTitle">Validar oferta</string>
+    <string name="OfferReservedValidatePositiveText">Validar</string>
+    <string name="OfferReservedValidateNegativeText">Cancelar</string>
+    <string name="OfferReservedValidateErrorPromotionCode">Código erróneo</string>
+    <string name="OfferReservedValidateOk">¡Oferta validada!</string>
+    <string name="OfferReservedRateProcessing">Opinando</string>
+    <string name="OfferReservedRateOk">¡Gracias por tu opinión!</string>
+    <string name="OfferReservedValidateLocal">El código de la promoción es</string>
+    <string name="OfferReservedAlready">Esta oferta ya ha sido cobrada</string>
+    <string name="OfferReservedAlreadyCommented">¡Gracias, ya opinaste!</string>
+    <string name="OfferReservedRateMessage">Califica tu experiencia con esta empresa</string>
+    <string name="OfferReservedRateTittle">Tu opinión nos interesa</string>
+    <string name="OfferReservedRatePositive">Calificar</string>
+    <string name="OffersReservedUnvalidated">Esta oferta no ha sido cobrada</string>
+    <string name="OfferReservedValidateProcessing">Validando oferta</string>
+
+    <!-- Offers Reserved View Local-->
     <string name="OfferReservedViewLocalAdress">#Dirección, Comuna</string>
     <string name="OfferReservedViewLocalWebText">Más información en</string>
     <string name="OfferReservedViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferReservedViewLocalStreetView">Ver street view</string>
-    <string name="OfferReservedViewLocalMyOrders">Mis pedidos reservados</string>
-
-    <!-- NeedReservations Strings -->
-    <string name="NeedReservations">Mis pedidos reservados</string>
-    <string name="need_reservations_offer_dialog">Cobrar oferta</string>
-    <string name="need_reservations_validate_message">Solicite a un empleado de %s que ingrese código del local</string>
-    <string name="need_reservations_offers_validate_title">Validar oferta</string>
-    <string name="need_reservations_offers_validate_positiveText">Validar</string>
-    <string name="need_reservations_offers_validate_negativeText">Cancelar</string>
-    <string name="need_reservations_offers_validate_errorPromotionCode">Código erróneo</string>
-    <string name="need_reservations_offers_validate_ok">¡Oferta validada!</string>
-    <string name="need_reservations_offers_rate_processing">Opinando</string>
-    <string name="need_reservations_offers_rate_ok">¡Gracias por tu opinión!</string>
-    <string name="need_reservations_offers_validate_local">El código de la promoción es</string>
-    <string name="need_reservations_offers_already">Esta oferta ya ha sido cobrada</string>
-    <string name="need_reservations_offers_already_commented">¡Gracias, ya opinaste!</string>
-    <string name="need_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
-    <string name="need_reservations_offers_rate_message">Tu opinión nos interesa</string>
-    <string name="need_reservations_offers_rate_positive">Calificar</string>
-    <string name="need_reservations_offers_unvalidated">Esta oferta no ha sido cobrada</string>
-    <string name="need_reservations_offers_validate_processing">Validando oferta</string>
-    <string name="need_reservations_offers_acept_processing">Aceptando oferta</string>
-
 
 
     <!-- After Login Strings -->

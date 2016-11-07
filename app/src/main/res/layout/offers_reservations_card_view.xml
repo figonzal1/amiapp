@@ -14,24 +14,24 @@
         android:background="?android:selectableItemBackground">
 
         <LinearLayout
-            android:id="@+id/need_reservations_linear"
+            android:id="@+id/offer_reservations_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="10dp">
 
             <ImageView
-                android:id="@+id/iv_need_reservations_image"
+                android:id="@+id/iv_offer_reservations_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/ic_loading_image"
                 />
 
             <TextView
-                android:id="@+id/tv_need_reservations_status"
+                android:id="@+id/tv_offer_reservations_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Estado"
+                android:text="@string/OfferReservedCardViewState"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
@@ -46,58 +46,58 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/need_reservations_linear"
+            android:layout_toEndOf="@+id/offer_reservations_linear"
             android:background="#afafaf"
-            android:layout_alignTop="@+id/need_reservations_linear"
-            android:layout_alignBottom="@+id/need_reservations_linear"
+            android:layout_alignTop="@+id/offer_reservations_linear"
+            android:layout_alignBottom="@+id/offer_reservations_linear"
             />
 
         <TextView
-            android:id="@+id/tv_need_reservations_tittle"
+            android:id="@+id/tv_offer_reservations_tittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Titulo Oferta Empresa"
+            android:text="@string/OfferReservedCardViewTittle"
             android:gravity="top"
             android:textStyle="bold"
             android:layout_toEndOf="@+id/separator"
             android:layout_alignTop="@+id/separator"
-            android:layout_toStartOf="@+id/tv_need_reservations_popup_menu"
+            android:layout_toStartOf="@+id/tv_offer_reservations_popup_menu"
             android:layout_marginStart="10dp"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tv_need_reservations_description"
+            android:id="@+id/tv_offer_reservations_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="italic"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:text="Descripcion del pedido"
-            android:layout_alignStart="@+id/tv_need_reservations_tittle"
-            android:layout_below="@+id/tv_need_reservations_tittle" />
+            android:text="@string/OfferReservedCardViewDescription"
+            android:layout_alignStart="@+id/tv_offer_reservations_tittle"
+            android:layout_below="@+id/tv_offer_reservations_tittle" />
 
         <TextView
-            android:id="@+id/tv_need_reservations_quantity_price"
+            android:id="@+id/tv_offer_reservations_quantity_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Xx $xx.xx"
+            android:text="@string/OfferReservedCardViewPrice"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
-            android:layout_alignBottom="@+id/tv_need_reservations_company"
+            android:layout_alignBottom="@+id/tv_offer_reservations_company"
             />
 
         <TextView
-            android:id="@+id/tv_need_reservations_company"
+            android:id="@+id/tv_offer_reservations_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Empresa"
+            android:text="@string/OfferReservedCardViewCompany"
             android:gravity="center"
             android:layout_toEndOf="@+id/separator"
-            android:layout_alignStart="@+id/tv_need_reservations_tittle"
-            android:layout_alignBottom="@+id/need_reservations_linear" />
+            android:layout_alignStart="@+id/tv_offer_reservations_tittle"
+            android:layout_alignBottom="@+id/offer_reservations_linear" />
 
         <TextView
-            android:id="@+id/tv_need_reservations_popup_menu"
+            android:id="@+id/tv_offer_reservations_popup_menu"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:text="@string/vertical_ellipsis"

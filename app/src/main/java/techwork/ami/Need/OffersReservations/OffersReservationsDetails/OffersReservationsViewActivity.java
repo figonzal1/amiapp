@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedReservations.NeedReservationsDetails;
+package techwork.ami.Need.OffersReservations.OffersReservationsDetails;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -25,7 +25,7 @@ import techwork.ami.Need.OffersDetails.ProductModel;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class NeedReservationsDetailsActivity extends AppCompatActivity {
+public class OffersReservationsViewActivity extends AppCompatActivity {
 
     TextView tvCompany,tvTittle,tvDescription,tvDateIni,tvDateFin,tvPrice;
     Button btnLocal;
@@ -39,7 +39,7 @@ public class NeedReservationsDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.need_reservations_details_activity);
+        setContentView(R.layout.offers_reservations_view_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,8 +47,8 @@ public class NeedReservationsDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         //Capture id's .
-        idOffer = bundle.getString(Config.TAG_GNR_IDOFFER);
-        idLocal = bundle.getString(Config.TAG_GNR_IDLOCAL);
+        idOffer = bundle.getString(Config.TAG_GET_OFFER_RESERVED_IDOFFER);
+        idLocal = bundle.getString(Config.TAG_GET_OFFER_RESERVED_IDLOCAL);
 
 
         tvCompany = (TextView)findViewById(R.id.tv_need_reservations_view_company);
@@ -59,12 +59,12 @@ public class NeedReservationsDetailsActivity extends AppCompatActivity {
         tvPrice=(TextView)findViewById(R.id.tv_need_reservations_view_price);
         btnLocal=(Button)findViewById(R.id.btn_need_reservations_view_local_details);
 
-        tvCompany.setText(bundle.getString(Config.TAG_GNR_COMPANY));
-        tvTittle.setText(bundle.getString(Config.TAG_GNR_TITTLE));
-        tvDescription.setText(bundle.getString(Config.TAG_GNR_DESCRIPTION));
-        tvDateIni.setText("Fecha de publicación: "+bundle.getString(Config.TAG_GNR_DATEINI));
-        tvDateFin.setText("Fecha de expiración: "+bundle.getString(Config.TAG_GNR_DATEFIN));
-        tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GNR_PRICEOFFER)));
+        tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_RESERVED_COMPANY));
+        tvTittle.setText(bundle.getString(Config.TAG_GET_OFFER_RESERVED_TITTLE));
+        tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_RESERVED_DESCRIPTION));
+        tvDateIni.setText("Fecha de publicación: "+bundle.getString(Config.TAG_GET_OFFER_RESERVED_DATEINI));
+        tvDateFin.setText("Fecha de expiración: "+bundle.getString(Config.TAG_GET_OFFER_RESERVED_DATEFIN));
+        tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_RESERVED_PRICEOFFER)));
 
         rv = (RecyclerView)findViewById(R.id.recycler_view_need_reservations_view) ;
         rv.setHasFixedSize(true);
@@ -74,8 +74,8 @@ public class NeedReservationsDetailsActivity extends AppCompatActivity {
         btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NeedReservationsDetailsActivity.this, NeedReservationsLocalDetails.class);
-                intent.putExtra(Config.TAG_GNR_IDLOCAL,idLocal);
+                Intent intent = new Intent(OffersReservationsViewActivity.this, OffersReservationsViewLocalActivity.class);
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_IDLOCAL,idLocal);
                 startActivity(intent);
             }
         });

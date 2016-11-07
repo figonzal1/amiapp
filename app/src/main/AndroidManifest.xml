@@ -96,21 +96,21 @@
                 android:value=".Need.OffersList.OffersActivity" />
         </activity>
         <activity
-            android:name=".Need.OfferLocalDetails.OfferViewLocalActivity"
+            android:name=".Need.OffersLocalDetails.OfferViewLocalActivity"
             android:label="@string/OfferLocalDetails"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Need.OfferLocalDetails.StreetViewPanoramaFragment"
+            android:name=".Need.OffersLocalDetails.StreetViewPanoramaFragment"
             android:label="@string/OfferLocalStreetView"
-            android:parentActivityName=".Need.OfferLocalDetails.OfferViewLocalActivity"
+            android:parentActivityName=".Need.OffersLocalDetails.OfferViewLocalActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.OfferLocalDetails.OfferViewLocalActivity" />
+                android:value=".Need.OffersLocalDetails.OfferViewLocalActivity" />
         </activity>
         <activity
-            android:name=".Need.NeedReservations.NeedReservationsList.NeedReservationsActivity"
-            android:label="@string/NeedReservations"
+            android:name=".Need.OffersReservations.OffersReservationsList.OffersReservationsActivity"
+            android:label="@string/OrdersReservations"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -126,22 +126,22 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Need.NeedReservations.NeedReservationsDetails.NeedReservationsDetailsActivity"
+            android:name=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
             android:label="@string/OfferDetails"
-            android:parentActivityName=".Need.NeedReservations.NeedReservationsList.NeedReservationsActivity"
+            android:parentActivityName=".Need.OffersReservations.OffersReservationsList.OffersReservationsActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.NeedReservations.NeedReservationsList.NeedReservationsActivity" />
+                android:value=".Need.OffersReservations.OffersReservationsList.OffersReservationsActivity" />
         </activity>
         <activity
-            android:name=".Need.NeedReservations.NeedReservationsDetails.NeedReservationsLocalDetails"
+            android:name=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewLocalActivity"
             android:label="@string/OfferLocalDetails"
-            android:parentActivityName=".Need.NeedReservations.NeedReservationsDetails.NeedReservationsDetailsActivity"
+            android:parentActivityName=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.NeedReservations.NeedReservationsDetails.NeedReservationsDetailsActivity"
+                android:value=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
                 />
         </activity>
         <activity android:name=".ContactUsActivity" />

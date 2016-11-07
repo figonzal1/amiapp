@@ -1,10 +1,10 @@
-package techwork.ami.Need.NeedReservations.NeedReservationsList;
+package techwork.ami.Need.OffersReservations.OffersReservationsList;
 
 /**
  * Created by tataf on 24-10-2016.
  */
 
-public class NeedReservationsModel {
+public class OffersReservationsModel {
     String idOffer;
     String idNeed;
     String idLocal;

@@ -30,7 +30,7 @@ import java.util.List;
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
 import techwork.ami.Need.OffersList.OffersActivity;
-import techwork.ami.Need.OfferLocalDetails.OfferViewLocalActivity;
+import techwork.ami.Need.OffersLocalDetails.OfferViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
