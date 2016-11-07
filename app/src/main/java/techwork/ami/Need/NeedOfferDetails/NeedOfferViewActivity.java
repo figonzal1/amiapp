@@ -29,7 +29,7 @@ import java.util.List;
 
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
-import techwork.ami.Need.ListOfferCompanies.OffersActivity;
+import techwork.ami.Need.OffersList.OffersActivity;
 import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;

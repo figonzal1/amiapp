@@ -1,4 +1,4 @@
-package techwork.ami.Need.ListOfferCompanies;
+package techwork.ami.Need.OffersList;
 
 import android.app.Activity;
 import android.content.Intent;

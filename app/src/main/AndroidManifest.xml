@@ -78,7 +78,7 @@
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Need.ListOfferCompanies.OffersActivity"
+            android:name=".Need.OffersList.OffersActivity"
             android:label="@string/OfferCompanies"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
@@ -89,11 +89,11 @@
         <activity
             android:name=".Need.NeedOfferDetails.NeedOfferViewActivity"
             android:label="@string/OfferDetails"
-            android:parentActivityName=".Need.ListOfferCompanies.OffersActivity"
+            android:parentActivityName=".Need.OffersList.OffersActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.ListOfferCompanies.OffersActivity" />
+                android:value=".Need.OffersList.OffersActivity" />
         </activity>
         <activity
             android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity"

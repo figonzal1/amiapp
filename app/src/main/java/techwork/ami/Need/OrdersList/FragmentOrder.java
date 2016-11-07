@@ -41,7 +41,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Need.ListOfferCompanies.OffersActivity;
+import techwork.ami.Need.OffersList.OffersActivity;
 import techwork.ami.Need.NeedActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;

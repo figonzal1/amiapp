@@ -1,4 +1,4 @@
-package techwork.ami.Need.ListOfferCompanies;
+package techwork.ami.Need.OffersList;
 
 import android.content.Context;
 import android.graphics.Color;
