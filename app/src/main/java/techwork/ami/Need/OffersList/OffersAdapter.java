@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -72,7 +73,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.NeedOfferV
         OffersModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
         holder.tvDescription.setText(model.getDescription());
-        holder.tvPrice.setText("$"+String.format(Config.CLP_FORMAT,model.getPrice()));
+        holder.tvPrice.setText(String.format(Config.CLP_FORMAT,model.getPrice()));
         holder.tvCompany.setText(model.getCompany());
 
         Picasso.with(context)
@@ -91,7 +92,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.NeedOfferV
                     long days = hours / 24;
 
                     String time =days + " " + "días" + " " + hours % 24 + "h:" + (minutes % 60) + "m:" + seconds % 60+"s";
-
+                    
                     if (days==0){
                         time= hours % 24 + "h:" + minutes % 60 + "m:" + seconds % 60+"s";
                         if (hours<1){
@@ -104,7 +105,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.NeedOfferV
                     else if (days==1){
                         time =days + " " + "día" + " " + hours % 24 + "h:" + (minutes % 60) + "m:" + seconds % 60+"s";
                     }
-                    holder.tvTime.setText(R.string.OfferExpired2+time);
+                    holder.tvTime.setText("Expira en \n "+time);
                 }
 
                 public void onFinish() {

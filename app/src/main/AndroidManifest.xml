@@ -87,7 +87,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Need.NeedOfferDetails.NeedOfferViewActivity"
+            android:name=".Need.OffersDetails.OfferViewActivity"
             android:label="@string/OfferDetails"
             android:parentActivityName=".Need.OffersList.OffersActivity"
             android:theme="@style/AppTheme">

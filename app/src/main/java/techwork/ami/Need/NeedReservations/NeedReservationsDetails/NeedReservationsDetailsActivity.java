@@ -2,13 +2,11 @@ package techwork.ami.Need.NeedReservations.NeedReservationsDetails;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.ConditionVariable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,9 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import techwork.ami.Config;
-import techwork.ami.Need.NeedOfferDetails.ProductAdapter;
-import techwork.ami.Need.NeedOfferDetails.ProductModel;
-import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
+import techwork.ami.Need.OffersDetails.ProductAdapter;
+import techwork.ami.Need.OffersDetails.ProductModel;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -106,7 +103,7 @@ public class NeedReservationsDetailsActivity extends AppCompatActivity {
 
                 HashMap<String,String> hashmap = new HashMap<>();
 
-                hashmap.put(Config.KEY_PNO_IDOFFER,idOffer);
+                hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER,idOffer);
 
                 RequestHandler rh = new RequestHandler();
                 return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER,hashmap);
@@ -133,13 +130,13 @@ public class NeedReservationsDetailsActivity extends AppCompatActivity {
 
         try{
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonProductOffer = jsonObject.optJSONArray(Config.TAG_PNO_PRODUCT);
+            JSONArray jsonProductOffer = jsonObject.optJSONArray(Config.TAG_GET_PRODUCT_OFFER);
             productList= new ArrayList<>();
 
             for (int i=0;i<jsonProductOffer.length();i++){
                 JSONObject jsonObjectItem = jsonProductOffer.optJSONObject(i);
                 ProductModel item = new ProductModel();
-                item.setName(jsonObjectItem.getString(Config.TAG_PNO_NAME));
+                item.setName(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_NAME));
                 productList.add(item);
             }
 

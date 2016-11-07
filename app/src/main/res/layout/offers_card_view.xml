@@ -32,10 +32,10 @@
             <!-- Tiempo de expiracion -->
             <TextView
                 android:id="@+id/tv_offer_time"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/OfferCardViewTime"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_gravity="center"
                 />
 
         </LinearLayout>

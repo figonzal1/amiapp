@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedOfferDetails;
+package techwork.ami.Need.OffersDetails;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -32,13 +32,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-            tvName = (TextView)itemView.findViewById(R.id.tv_need_offer_product_name);
+            tvName = (TextView)itemView.findViewById(R.id.tv_offer_view_product_name);
         }
     }
 
     @Override
     public ProductAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.need_offer_product_card_view,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offers_product_card_view,parent,false);
         return new ProductViewHolder(v);
     }
 

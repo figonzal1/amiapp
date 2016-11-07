@@ -192,7 +192,7 @@ public class Config {
 	public static final String TAG_GC_NAME="nombre";
 	public static final String TAG_GC_IMAGE ="imagen";
 
-	//Tags and keys for NeedFragment
+	//OrderFragment
 	public static final String URL_GET_ORDER="http://amiapp.cl/public/getData/Need/getOrders.php";
 	public static final String KEY_GET_ORDER_IDPERSON="idPersona";
 	public static final String TAG_GET_ORDER= "pedidos";
@@ -207,11 +207,11 @@ public class Config {
 	public static final String TAG_GET_ORDER_OFFERS_COMPANY = "ofertasEmpresas";
 	public static final String TAG_GET_ORDER_NDISCARD_OFFERS="nDescartadas";
 
-	//Tags and keys for OfferActivity (NeedOffer after)
+	//OfferActivity (NeedOffer after)
 	public static final String URL_GET_OFFER="http://amiapp.cl/public/getData/Need/getOffers.php";
 	public static final String URL_IMAGES_OFFER_2="http://amiapp.cl/encargado/uploads/";
 	public static final String KEY_GET_OFFER_IDNEED="idNecesidad";
-	public static final String TAG_GET_OFFER_NEED="needOffers";
+	public static final String TAG_GET_OFFER_NEED="ofertas";
 	public static final String TAG_GET_OFFER_IDNEED="idNecesidad";
 	public static final String TAG_GET_OFFER_IDLOCAL="idLocal";
 	public static final String TAG_GET_OFFER_IDOFFER="idOferta";
@@ -226,6 +226,23 @@ public class Config {
 	public static final String TAG_GET_OFFER_MAXPPERSON="maxPPersona";
 	public static final String TAG_GET_OFFER_COMPANY="nombreEmpresa";
 	public static final String TAG_GET_OFFER_IMAGE="imagen";
+
+	//Get Products for OfferViewActivity
+	public static final String URL_GET_PRODUCT_OFFER="http://amiapp.cl/public/getData/Need/getProductOffer.php";
+	public static final String KEY_GET_PRODUCT_OFFER_IDOFFER="idOferta";
+	public static final String TAG_GET_PRODUCT_OFFER="productos";
+	public static final String TAG_GET_PRODUCT_OFFER_NAME="nombre";
+	//Discard OffersActivity
+	public static final String URL_DISCARD_OFFER="http://amiapp.cl/public/getData/Need/discardOffer.php";
+	public static final String KEY_DISCARD_OFFER_IDOFFER="idOferta";
+	public static final String KEY_DISCARD_OFFER_IDPERSON="idPersona";
+	//Accept OffersActivity
+	public static final String URL_ACCEPT_OFFER="http://amiapp.cl/public/getData/Need/acceptOffer.php";
+	public static final String KEY_ACCEPT_OFFER_IDOFFER="idOferta";
+	public static final String KEY_ACCEPT_OFFER_IDPERSON="idPersona";
+	public static final String KEY_ACCEPT_OFFER_MAXPPERSON="cantidad";
+
+
 
 	//Tags and Keys for NeedreservationsActivity
 
@@ -258,21 +275,6 @@ public class Config {
 	public static final String TAG_GNR_IMAGE="imagen";
 
 
-	//Discard OffersActivity
-	public static final String URL_DISCARD_NEED_OFFER="http://amiapp.cl/public/getData/Need/discardNeedOffer.php";
-	public static final String KEY_DNO_IDOFFER="idOferta";
-	public static final String KEY_DNO_IDPERSON="idPersona";
-	//Accept OffersActivity
-	public static final String URL_ACCEPT_NEED_OFFER="http://amiapp.cl/public/getData/Need/acceptNeedOffer.php";
-	public static final String KEY_ANO_IDOFFER="idOferta";
-	public static final String KEY_ANO_IDPERSON="idPersona";
-	public static final String KEY_ANO_MAXPPERSON="cantidad";
-	//Get Products for NeedOfferViewActivity
-	public static final String URL_GET_PRODUCT_OFFER="http://amiapp.cl/public/getData/Need/getProductNeedOffer.php";
-	public static final String KEY_PNO_IDOFFER="idOferta";
-	public static final String TAG_PNO_PRODUCT="products";
-	public static final String TAG_PNO_NAME="nombre";
-
 	//Get Local details of NeedOffer
 
 	public static final String URL_GET_LOCAL="http://amiapp.cl/public/getData/Need/getLocal.php";
@@ -293,7 +295,7 @@ public class Config {
 	public static final String TAG_CU_MESSAGE = "mensaje";
 
 	// Money format
-	public static final String CLP_FORMAT = "%,d";
+	public static final String CLP_FORMAT = "$ %,d";
 
 	// My Reservations offers keys
 	public static final String KEY_RESERVE_OFFER_ID = "idOferta";

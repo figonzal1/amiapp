@@ -172,7 +172,7 @@ public class FragmentOrder extends Fragment {
         popup.show();
     }
 
-    private void getOrders(){
+    public void getOrders(){
         sendPostRequest();
     }
 

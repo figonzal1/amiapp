@@ -1,7 +1,8 @@
-package techwork.ami.Need.NeedOfferDetails;
+package techwork.ami.Need.OffersDetails;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -31,41 +32,42 @@ import techwork.ami.Config;
 import techwork.ami.MainActivity;
 import techwork.ami.Need.OffersList.OffersActivity;
 import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
+import techwork.ami.Need.OrdersList.FragmentOrder;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class NeedOfferViewActivity extends AppCompatActivity {
+public class OfferViewActivity extends AppCompatActivity {
 
     TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvMaxPPerson;
     Button btnAccept, btnDiscard;
-    private String idOffer,idLocal,dateTimeFin;
+    private String idOffer,idLocal;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
     private ProductAdapter adapter;
     private Vibrator c;
-    private ProgressDialog loading;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.need_offer_view_activity);
+        setContentView(R.layout.offers_view_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Init textviews
-        tvTittle = (TextView)findViewById(R.id.tv_need_offer_view_tittle);
-        tvPrice = (TextView)findViewById(R.id.tv_need_offer_view_price);
-        tvCompany= (TextView)findViewById(R.id.tv_need_offer_view_company);
-        tvDescription= (TextView)findViewById(R.id.tv_need_offer_view_description);
-        tvDateIni = (TextView)findViewById(R.id.tv_need_offer_view_date_ini);
-        tvDateFin = (TextView)findViewById(R.id.tv_need_offer_view_date_fin);
-        tvMaxPPerson = (TextView)findViewById(R.id.tv_need_offer_view_max_person);
+        tvTittle = (TextView)findViewById(R.id.tv_offer_view_tittle);
+        tvPrice = (TextView)findViewById(R.id.tv_offer_view_price);
+        tvCompany= (TextView)findViewById(R.id.tv_offer_view_company);
+        tvDescription= (TextView)findViewById(R.id.tv_offer_view_description);
+        tvDateIni = (TextView)findViewById(R.id.tv_offer_view_date_ini);
+        tvDateFin = (TextView)findViewById(R.id.tv_offer_view_date_fin);
+        tvMaxPPerson = (TextView)findViewById(R.id.tv_offer_view_max_person);
 
         //Init buttons
-        btnAccept = (Button)findViewById(R.id.btn_need_offer_view_accept);
-        btnDiscard= (Button)findViewById(R.id.btn_need_offer_view_discard);
+        btnAccept = (Button)findViewById(R.id.btn_offer_view_accept);
+        btnDiscard= (Button)findViewById(R.id.btn_offer_view_discard);
 
         //Get info from OffersActivity
         final Bundle bundle = getIntent().getExtras();
@@ -78,10 +80,10 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         //Set TextViews with the information of each NeedOffer.
         tvTittle.setText(bundle.getString(Config.TAG_GET_OFFER_TITTLE));
         tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_DESCRIPTION));
-        tvPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
+        tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
         tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_COMPANY));
-        tvDateIni.setText("Fecha de publicación: "+bundle.getString(Config.TAG_GET_OFFER_DATEINI));
-        tvDateFin.setText("Fecha de expiración: "+bundle.getString(Config.TAG_GET_OFFER_DATEFIN));
+        tvDateIni.setText("Fecha de publicación: " + bundle.getString(Config.TAG_GET_OFFER_DATEINI));
+        tvDateFin.setText("Fecha de expiración: " + bundle.getString(Config.TAG_GET_OFFER_DATEFIN));
 
         //If stock > maxxperson, textview show maxxperson
         if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON))) {
@@ -102,7 +104,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
 
         //Load recycle view
-        rv = (RecyclerView)findViewById(R.id.recycler_view_need_offer_view);
+        rv = (RecyclerView)findViewById(R.id.recycler_view_offer_view);
         rv.setHasFixedSize(true);
         layout = new GridLayoutManager(this,1);
         rv.setLayoutManager(layout);
@@ -143,14 +145,16 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                 //Accept NeedOffer Task
                 class acceptNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
+                    private ProgressDialog loading;
+
 
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        loading = ProgressDialog.show(NeedOfferViewActivity.this,
-                                getString(R.string.need_reservations_offers_acept_processing),
+                        loading = ProgressDialog.show(OfferViewActivity.this,
+                                getString(R.string.OfferViewAcceptOfferProcessing),
                                 getString(R.string.wait), false, false);
-                        //Toast.makeText(getApplicationContext(),"Aceptando oferta..",Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
@@ -158,50 +162,49 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
                         HashMap<String,String> hashMap = new HashMap<>();
 
-                        hashMap.put(Config.KEY_ANO_IDOFFER,idOffer);
-                        hashMap.put(Config.KEY_ANO_IDPERSON,idPerson);
-                        hashMap.put(Config.KEY_ANO_MAXPPERSON, cantidad[0]);
+                        hashMap.put(Config.KEY_ACCEPT_OFFER_IDOFFER,idOffer);
+                        hashMap.put(Config.KEY_ACCEPT_OFFER_IDPERSON,idPerson);
+                        hashMap.put(Config.KEY_ACCEPT_OFFER_MAXPPERSON, cantidad[0]);
 
                         RequestHandler rh = new RequestHandler();
-                        return rh.sendPostRequest(Config.URL_ACCEPT_NEED_OFFER,hashMap);
+                        return rh.sendPostRequest(Config.URL_ACCEPT_OFFER,hashMap);
                     }
                     @Override
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
-                        loading.dismiss();
+
+
                         if (s.equals("0")){
 
-                            Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_LONG).show();
-
-                            //OffersActivity (List offer companies) is finish.
-                            OffersActivity.activity.finish();
-
-                            //NeedOffer accept go to LocalDetails.
                             Handler mHandler = new Handler();
                             mHandler.postDelayed(new Runnable() {
 
-                                // Salir de la activity despues de que la necesidad haya sido registrada
                                 @Override
                                 public void run() {
-
+                                    loading.dismiss();
                                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                                     c.vibrate(500);
 
-                                    Intent intent = new Intent(NeedOfferViewActivity.this,NeedOfferViewLocalActivity.class);
+                                    Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
+
+                                    //OffersActivity (List offer companies) is finish.
+                                    OffersActivity.activity.finish();
+
+                                    //NeedOffer accept go to LocalDetails.
+                                    Intent intent = new Intent(OfferViewActivity.this,NeedOfferViewLocalActivity.class);
                                     intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
                                     finish();
                                     startActivity(intent);
-
                                 }
-
-                            }, 2500);
-
+                            },1500);
 
                         }else{
-                            Toast.makeText(getApplicationContext(),"No se ha podido realizar la reserva",Toast.LENGTH_LONG).show();
+                            loading.dismiss();
+                            Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOfferFail,Toast.LENGTH_LONG).show();
                         }
                     }
                 }
+
                 acceptNeedOfferAsyncTask go = new acceptNeedOfferAsyncTask();
                 go.execute();
 
@@ -214,56 +217,55 @@ public class NeedOfferViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 class discardNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
+                    private ProgressDialog loading;
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        loading = ProgressDialog.show(NeedOfferViewActivity.this,
-                                getString(R.string.need_reservations_offers_nonacept_processing),
+                        loading = ProgressDialog.show(OfferViewActivity.this,
+                                getString(R.string.OfferViewDiscardOfferProcessing),
                                 getString(R.string.wait), false, false);
-                        //Toast.makeText(getApplicationContext(),"Rechazando oferta..",Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
                     protected String doInBackground(Void... params) {
                         HashMap<String,String> hashMap = new HashMap<>();
-                        hashMap.put(Config.KEY_DNO_IDOFFER,idOffer);
-                        hashMap.put(Config.KEY_DNO_IDPERSON,idPerson);
+                        hashMap.put(Config.KEY_DISCARD_OFFER_IDOFFER,idOffer);
+                        hashMap.put(Config.KEY_DISCARD_OFFER_IDPERSON,idPerson);
 
                         RequestHandler rh = new RequestHandler();
 
-                        return rh.sendPostRequest(Config.URL_DISCARD_NEED_OFFER,hashMap);
+                        return rh.sendPostRequest(Config.URL_DISCARD_OFFER,hashMap);
                     }
                     @Override
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
-                        loading.dismiss();
+
                         if (s.equals("0")){
-                            Toast.makeText(getApplicationContext(), "Oferta rechazada", Toast.LENGTH_LONG).show();
 
-
-                            //NeedOffer declined go to Main activity refreshed
                             Handler mHandler = new Handler();
                             mHandler.postDelayed(new Runnable() {
-
-                                // Salir de la activity despues de que la necesidad haya sido registrada
                                 @Override
                                 public void run() {
+                                    loading.dismiss();
 
                                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                                     c.vibrate(500);
-                                    Intent intent = new Intent(NeedOfferViewActivity.this,MainActivity.class);
+
+                                    Toast.makeText(getApplicationContext(), R.string.OfferViewDiscardOffer, Toast.LENGTH_LONG).show();
+
+                                    //If Offer is discard go to Main activity refreshed
+                                    Intent intent = new Intent(OfferViewActivity.this,MainActivity.class);
                                     finish();
                                     startActivity(intent);
 
                                 }
-
-                            }, 2500);
+                            },1500);
 
                         }else{
-                            Toast.makeText(getApplicationContext(),"No se ha podido rechazar",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),R.string.OfferViewDiscardOfferFail,Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -306,7 +308,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
                 HashMap<String,String> hashmap = new HashMap<>();
 
-                hashmap.put(Config.KEY_PNO_IDOFFER,idOffer);
+                hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER,idOffer);
 
                 RequestHandler rh = new RequestHandler();
                 return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER,hashmap);
@@ -333,13 +335,13 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
         try{
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonProductOffer = jsonObject.optJSONArray(Config.TAG_PNO_PRODUCT);
+            JSONArray jsonProductOffer = jsonObject.optJSONArray(Config.TAG_GET_PRODUCT_OFFER);
             productList= new ArrayList<>();
 
             for (int i=0;i<jsonProductOffer.length();i++){
                 JSONObject jsonObjectItem = jsonProductOffer.optJSONObject(i);
                 ProductModel item = new ProductModel();
-                item.setName(jsonObjectItem.getString(Config.TAG_PNO_NAME));
+                item.setName(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_NAME));
                 productList.add(item);
             }
 
