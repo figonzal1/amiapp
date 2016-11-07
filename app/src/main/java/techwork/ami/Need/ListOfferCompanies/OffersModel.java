@@ -4,7 +4,7 @@ package techwork.ami.Need.ListOfferCompanies;
  * Created by tataf on 25-09-2016.
  */
 
-public class NeedOfferModel {
+public class OffersModel {
     String idOffer;
     String idNeed;
     String idLocal;

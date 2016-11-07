@@ -3,14 +3,12 @@ package techwork.ami.Need.ListOfferCompanies;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -36,49 +34,49 @@ import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class NeedOfferActivity extends AppCompatActivity {
+public class OffersActivity extends AppCompatActivity {
 
 
     private RecyclerView rv;
-    private List<NeedOfferModel> needOfferList;
-    private NeedOfferAdapter adapter;
+    private List<OffersModel> offerList;
+    private OffersAdapter adapter;
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private String idNeedOffer;
     public static Activity activity;
-    TextView tvNeedOfferEmpty;
+    TextView tvOfferEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.need_offer_activity);
+        setContentView(R.layout.offers_activity);
         activity=this;
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        idNeedOffer = bundle.getString(Config.TAG_GNO_IDNEED);
+        idNeedOffer = bundle.getString(Config.TAG_GET_OFFER_IDNEED);
 
-        tvNeedOfferEmpty = (TextView)findViewById(R.id.tv_need_company_empty);
+        tvOfferEmpty = (TextView)findViewById(R.id.tv_offer_company_empty);
 
-        rv = (RecyclerView)findViewById(R.id.recycler_view_need_offer);
+        rv = (RecyclerView)findViewById(R.id.recycler_view_offer);
         rv.setHasFixedSize(true);
 
         layout= new GridLayoutManager(this,1);
         rv.setLayoutManager(layout);
 
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_need_offer);
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_offer);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNeedOffers();
+                getOffers();
             }
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getNeedOffers();
+        getOffers();
 
     }
 
@@ -95,13 +93,13 @@ public class NeedOfferActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getNeedOffers(){
+    private void getOffers(){
         sendPostRequest();
     }
 
     private void sendPostRequest(){
 
-        class NeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
+        class OfferAsyncTask extends AsyncTask<Void,Void,String>{
 
             @Override
             protected void onPreExecute(){
@@ -111,32 +109,33 @@ public class NeedOfferActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... voids) {
                 HashMap<String, String> hashmap = new HashMap<>();
-                hashmap.put(Config.KEY_GNO_IDNEED,idNeedOffer);
+                hashmap.put(Config.KEY_GET_OFFER_IDNEED,idNeedOffer);
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_NEED_OFFER,hashmap);
+                return rh.sendPostRequest(Config.URL_GET_OFFER,hashmap);
             }
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showNeedOffers(s);
+                showOffers(s);
             }
         }
-        NeedOfferAsyncTask go = new NeedOfferAsyncTask();
+        OfferAsyncTask go = new OfferAsyncTask();
         go.execute();
     }
 
-    private void showNeedOffers(String s){
-        getNeedOffersData(s);
+    //Show info in model in a recycler view
+    private void showOffers(String s){
+        getOffersData(s);
 
-        adapter = new NeedOfferAdapter(getApplicationContext(),needOfferList);
+        adapter = new OffersAdapter(getApplicationContext(),offerList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
-        if (needOfferList.size()==0){
-            tvNeedOfferEmpty.setText("¡Oops! \n No tienes ofertas recientes :(");
+        if (offerList.size()==0){
+            tvOfferEmpty.setText(R.string.OfferEmpty);
         }else {
-            tvNeedOfferEmpty.setText("");
+            tvOfferEmpty.setText("");
         }
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
@@ -144,32 +143,32 @@ public class NeedOfferActivity extends AppCompatActivity {
             public void onItemClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NeedOfferViewActivity.class);
                 int position = rv.getChildAdapterPosition(view);
-                NeedOfferModel m = needOfferList.get(position);
+                OffersModel m = offerList.get(position);
 
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat format2 = new SimpleDateFormat(Config.DATETIME_FORMAT_ANDROID);
 
                 try {
-                    //If needoffer date is end you not open the offer.
+                    //If offer date is end you not open the offer.
                     if (format2.parse(m.getDateTimeFin()).after(c.getTime())) {
 
                         //Send to NeedOfferDetails the details of each offer.
-                        intent.putExtra(Config.TAG_GNO_IDOFFER, m.getIdOferta());
-                        intent.putExtra(Config.TAG_GNO_IDLOCAL, m.getIdLocal());
-                        intent.putExtra(Config.TAG_GNO_TITTLE, m.getTittle());
-                        intent.putExtra(Config.TAG_GNO_DESCRIPTION, m.getDescription());
-                        intent.putExtra(Config.TAG_GNO_PRICEOFFER, m.getPrice());
-                        intent.putExtra(Config.TAG_GNO_DESCRIPTION, m.getDescription());
-                        intent.putExtra(Config.TAG_GNO_STOCK, m.getStock());
-                        intent.putExtra(Config.TAG_GNO_MAXPPERSON, m.getMaxPPerson());
-                        intent.putExtra(Config.TAG_GNO_CODPROMOTION, m.getCodPromotion());
-                        intent.putExtra(Config.TAG_GNO_DATEFIN, m.getDateFin());
-                        intent.putExtra(Config.TAG_GNO_DATEINI, m.getDateIni());
-                        intent.putExtra(Config.TAG_GNO_COMPANY, m.getCompany());
+                        intent.putExtra(Config.TAG_GET_OFFER_IDOFFER, m.getIdOferta());
+                        intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL, m.getIdLocal());
+                        intent.putExtra(Config.TAG_GET_OFFER_TITTLE, m.getTittle());
+                        intent.putExtra(Config.TAG_GET_OFFER_DESCRIPTION, m.getDescription());
+                        intent.putExtra(Config.TAG_GET_OFFER_PRICEOFFER, m.getPrice());
+                        intent.putExtra(Config.TAG_GET_OFFER_DESCRIPTION, m.getDescription());
+                        intent.putExtra(Config.TAG_GET_OFFER_STOCK, m.getStock());
+                        intent.putExtra(Config.TAG_GET_OFFER_MAXPPERSON, m.getMaxPPerson());
+                        intent.putExtra(Config.TAG_GET_OFFER_CODPROMOTION, m.getCodPromotion());
+                        intent.putExtra(Config.TAG_GET_OFFER_DATEFIN, m.getDateFin());
+                        intent.putExtra(Config.TAG_GET_OFFER_DATEINI, m.getDateIni());
+                        intent.putExtra(Config.TAG_GET_OFFER_COMPANY, m.getCompany());
                         startActivity(intent);
                     }
                     else {
-                        Toast.makeText(getApplicationContext(),"Oferta expirada",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),R.string.OfferExpired,Toast.LENGTH_LONG).show();
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -185,37 +184,37 @@ public class NeedOfferActivity extends AppCompatActivity {
 
     }
 
-
-    private void getNeedOffersData(String json){
+    //Get information of each offer and put in model of offers
+    private void getOffersData(String json){
         String dIni,dFin,dTimeFin;
         Date dateIni,dateFin,dateTimeFin;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try{
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonNeedOffer = jsonObject.optJSONArray(Config.TAG_GNO_NEED);
+            JSONArray jsonNeedOffer = jsonObject.optJSONArray(Config.TAG_GET_OFFER_NEED);
             Calendar c = Calendar.getInstance();
-            needOfferList = new ArrayList<>();
+            offerList = new ArrayList<>();
 
             for (int i=0;i<jsonNeedOffer.length();i++){
                 JSONObject jsonObjectItem = jsonNeedOffer.getJSONObject(i);
-                NeedOfferModel item = new NeedOfferModel();
+                OffersModel item = new OffersModel();
 
-                item.setIdOferta(jsonObjectItem.getString(Config.TAG_GNO_IDOFFER));
-                item.setIdNeed(jsonObjectItem.getString(Config.TAG_GNO_IDNEED));
-                item.setIdLocal(jsonObjectItem.getString(Config.TAG_GNO_IDLOCAL));
-                item.setTittle(jsonObjectItem.getString(Config.TAG_GNO_TITTLE));
-                item.setDescription(jsonObjectItem.getString(Config.TAG_GNO_DESCRIPTION));
-                item.setCodPromotion(jsonObjectItem.getString(Config.TAG_GNO_CODPROMOTION));
-                item.setStock(jsonObjectItem.getString(Config.TAG_GNO_STOCK));
-                item.setPrice(jsonObjectItem.getInt(Config.TAG_GNO_PRICEOFFER));
-                item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GNO_MAXPPERSON));
-                item.setCompany(jsonObjectItem.getString(Config.TAG_GNO_COMPANY));
-                item.setImage(jsonObjectItem.getString(Config.TAG_GNO_IMAGE));
+                item.setIdOferta(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDOFFER));
+                item.setIdNeed(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDNEED));
+                item.setIdLocal(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDLOCAL));
+                item.setTittle(jsonObjectItem.getString(Config.TAG_GET_OFFER_TITTLE));
+                item.setDescription(jsonObjectItem.getString(Config.TAG_GET_OFFER_DESCRIPTION));
+                item.setCodPromotion(jsonObjectItem.getString(Config.TAG_GET_OFFER_CODPROMOTION));
+                item.setStock(jsonObjectItem.getString(Config.TAG_GET_OFFER_STOCK));
+                item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_OFFER_PRICEOFFER));
+                item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GET_OFFER_MAXPPERSON));
+                item.setCompany(jsonObjectItem.getString(Config.TAG_GET_OFFER_COMPANY));
+                item.setImage(jsonObjectItem.getString(Config.TAG_GET_OFFER_IMAGE));
 
-                dIni = jsonObjectItem.getString(Config.TAG_GNO_DATEINI);
-                dFin = jsonObjectItem.getString(Config.TAG_GNO_DATEFIN);
-                dTimeFin= jsonObjectItem.getString(Config.TAG_GNO_DATETIME_FIN);
+                dIni = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEINI);
+                dFin = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEFIN);
+                dTimeFin= jsonObjectItem.getString(Config.TAG_GET_OFFER_DATETIME_FIN);
                 dateIni= format.parse(dIni);
                 dateFin = format.parse(dFin);
                 dateTimeFin=format.parse(dTimeFin);
@@ -229,7 +228,7 @@ public class NeedOfferActivity extends AppCompatActivity {
                 c.setTime(dateTimeFin);
                 item.setDateTimeFin(String.format(Locale.US,Config.DATETIME_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
 
-                needOfferList.add(item);
+                offerList.add(item);
             }
 
         } catch (JSONException e) {

@@ -84,7 +84,7 @@ public class NeedReservationsAdapter extends RecyclerView.Adapter<NeedReservatio
         holder.tvPrice.setText(model.getQuantity()+"x $"+String.format(Config.CLP_FORMAT,model.getPrice()));
 
         Picasso.with(context)
-                .load(Config.URL_IMAGES_NEED_OFFER+model.getImage())
+                .load(Config.URL_IMAGES_OFFER_2+model.getImage())
                 .placeholder(R.drawable.image_default)
                 .into(holder.ivImage);
 

@@ -1,4 +1,4 @@
-package techwork.ami.Need.ListNeeds;
+package techwork.ami.Need.OrdersList;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
@@ -41,7 +41,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
+import techwork.ami.Need.ListOfferCompanies.OffersActivity;
 import techwork.ami.Need.NeedActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -136,7 +136,7 @@ public class FragmentOrder extends Fragment {
                     // If case is a "Ver Ofertas"
                     case R.id.item_popup_menu_need_view:
 
-                        Intent intent = new Intent(view.getContext(),NeedOfferActivity.class);
+                        Intent intent = new Intent(view.getContext(),OffersActivity.class);
 
                         //Send de idNecesidad for obtain each Offers with this id.
                         intent.putExtra(Config.TAG_GET_ORDER_IDNEED,model.getIdNeed());
@@ -242,7 +242,7 @@ public class FragmentOrder extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                Intent intent = new Intent(getActivity(),NeedOfferActivity.class);
+                Intent intent = new Intent(getActivity(),OffersActivity.class);
                 int position = rv.getChildAdapterPosition(view);
                 OrderModel n = orderList.get(position);
 

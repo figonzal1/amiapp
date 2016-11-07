@@ -41,7 +41,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        idLocal= bundle.getString(Config.TAG_GNO_IDLOCAL);
+        idLocal= bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
 
         //GetLocal info
         getLocal();

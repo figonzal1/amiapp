@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,16 +23,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
-import techwork.ami.Need.ListOfferCompanies.NeedOfferActivity;
+import techwork.ami.Need.ListOfferCompanies.OffersActivity;
 import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -71,36 +67,36 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         btnAccept = (Button)findViewById(R.id.btn_need_offer_view_accept);
         btnDiscard= (Button)findViewById(R.id.btn_need_offer_view_discard);
 
-        //Get info from NeedOfferActivity
+        //Get info from OffersActivity
         final Bundle bundle = getIntent().getExtras();
 
         //Capture id's
-        idOffer = bundle.getString(Config.TAG_GNO_IDOFFER);
-        idLocal = bundle.getString(Config.TAG_GNO_IDLOCAL);
+        idOffer = bundle.getString(Config.TAG_GET_OFFER_IDOFFER);
+        idLocal = bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
 
 
         //Set TextViews with the information of each NeedOffer.
-        tvTittle.setText(bundle.getString(Config.TAG_GNO_TITTLE));
-        tvDescription.setText(bundle.getString(Config.TAG_GNO_DESCRIPTION));
-        tvPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GNO_PRICEOFFER)));
-        tvCompany.setText(bundle.getString(Config.TAG_GNO_COMPANY));
-        tvDateIni.setText("Fecha de publicación: "+bundle.getString(Config.TAG_GNO_DATEINI));
-        tvDateFin.setText("Fecha de expiración: "+bundle.getString(Config.TAG_GNO_DATEFIN));
+        tvTittle.setText(bundle.getString(Config.TAG_GET_OFFER_TITTLE));
+        tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_DESCRIPTION));
+        tvPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
+        tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_COMPANY));
+        tvDateIni.setText("Fecha de publicación: "+bundle.getString(Config.TAG_GET_OFFER_DATEINI));
+        tvDateFin.setText("Fecha de expiración: "+bundle.getString(Config.TAG_GET_OFFER_DATEFIN));
 
         //If stock > maxxperson, textview show maxxperson
-        if (Integer.valueOf(bundle.getString(Config.TAG_GNO_STOCK))>Integer.valueOf(bundle.getString(Config.TAG_GNO_MAXPPERSON))) {
-            if (Integer.valueOf(bundle.getString(Config.TAG_GNO_MAXPPERSON)) > 1) {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GNO_MAXPPERSON) + " unidades!");
+        if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON))) {
+            if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)) > 1) {
+                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON) + " unidades!");
             } else {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GNO_MAXPPERSON) + " unidad!");
+                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON) + " unidad!");
             }
         }
         //if stock < maxpperson, textview show stock
         else{
-            if (Integer.valueOf(bundle.getString(Config.TAG_GNO_STOCK)) > 1) {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GNO_STOCK) + " unidades!");
+            if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK)) > 1) {
+                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_STOCK) + " unidades!");
             } else {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GNO_STOCK) + " unidad!");
+                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_STOCK) + " unidad!");
             }
         }
 
@@ -119,8 +115,8 @@ public class NeedOfferViewActivity extends AppCompatActivity {
         final NumberPicker numberPicker = (NumberPicker)findViewById(R.id.number_picker);
         numberPicker.setMinValue(1);
         int quantity =
-                (Integer.valueOf(bundle.getString(Config.TAG_GNO_MAXPPERSON)) <= Integer.valueOf(bundle.getString(Config.TAG_GNO_STOCK)))?
-                        Integer.valueOf(bundle.getString(Config.TAG_GNO_MAXPPERSON)) : Integer.valueOf(bundle.getString(Config.TAG_GNO_STOCK));
+                (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)) <= Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK)))?
+                        Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)) : Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK));
 
         numberPicker.setMaxValue(quantity);
         numberPicker.setWrapSelectorWheel(false);
@@ -177,8 +173,8 @@ public class NeedOfferViewActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "Oferta Aceptada", Toast.LENGTH_LONG).show();
 
-                            //NeedOfferActivity (List offer companies) is finish.
-                            NeedOfferActivity.activity.finish();
+                            //OffersActivity (List offer companies) is finish.
+                            OffersActivity.activity.finish();
 
                             //NeedOffer accept go to LocalDetails.
                             Handler mHandler = new Handler();
@@ -192,7 +188,7 @@ public class NeedOfferViewActivity extends AppCompatActivity {
                                     c.vibrate(500);
 
                                     Intent intent = new Intent(NeedOfferViewActivity.this,NeedOfferViewLocalActivity.class);
-                                    intent.putExtra(Config.TAG_GNO_IDLOCAL,idLocal);
+                                    intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
                                     finish();
                                     startActivity(intent);
 

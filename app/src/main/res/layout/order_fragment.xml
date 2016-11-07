@@ -6,7 +6,7 @@
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".Need.ListNeeds.FragmentOrder">
+    tools:context=".Need.OrdersList.FragmentOrder">
 
     <!-- Refresh fragment -->
     <android.support.v4.widget.SwipeRefreshLayout
@@ -25,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:text="@string/OrderListTitle"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
                 android:textSize="25sp"/>
