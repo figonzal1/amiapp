@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -57,6 +58,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
     private TextView tvOffersReservationEmpty;
     CustomAlertDialogBuilder dialogBuilder;
     Context context;
+    private Vibrator c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -374,6 +376,10 @@ public class OffersReservationsActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         loading.dismiss();
+
+                                        c= (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                        c.vibrate(500);
+
                                         Toast.makeText(getApplicationContext(),
                                                 R.string.OfferReservedValidateOk, Toast.LENGTH_LONG).show();
                                         getOfferReservs();
@@ -486,6 +492,10 @@ public class OffersReservationsActivity extends AppCompatActivity {
                         public void run() {
 
                             loading.dismiss();
+
+                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
+
                             Toast.makeText(getApplicationContext(),
                                     R.string.OfferReservedRateOk, Toast.LENGTH_LONG).show();
                             getOfferReservs();
