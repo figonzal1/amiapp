@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedOfferLocalDetails;
+package techwork.ami.Need.OfferLocalDetails;
 
 /**
  * Created by tataf on 20-10-2016.

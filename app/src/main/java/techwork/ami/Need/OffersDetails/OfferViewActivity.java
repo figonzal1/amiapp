@@ -2,7 +2,6 @@ package techwork.ami.Need.OffersDetails;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -31,8 +30,7 @@ import java.util.List;
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
 import techwork.ami.Need.OffersList.OffersActivity;
-import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
-import techwork.ami.Need.OrdersList.FragmentOrder;
+import techwork.ami.Need.OfferLocalDetails.OfferViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -141,9 +139,8 @@ public class OfferViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                //Accept NeedOffer Task
-                class acceptNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
+                //Accept Offer Task
+                class acceptOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
                     private ProgressDialog loading;
 
@@ -191,7 +188,7 @@ public class OfferViewActivity extends AppCompatActivity {
                                     OffersActivity.activity.finish();
 
                                     //NeedOffer accept go to LocalDetails.
-                                    Intent intent = new Intent(OfferViewActivity.this,NeedOfferViewLocalActivity.class);
+                                    Intent intent = new Intent(OfferViewActivity.this,OfferViewLocalActivity.class);
                                     intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
                                     finish();
                                     startActivity(intent);
@@ -205,7 +202,7 @@ public class OfferViewActivity extends AppCompatActivity {
                     }
                 }
 
-                acceptNeedOfferAsyncTask go = new acceptNeedOfferAsyncTask();
+                acceptOfferAsyncTask go = new acceptOfferAsyncTask();
                 go.execute();
 
 
@@ -217,7 +214,7 @@ public class OfferViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                class discardNeedOfferAsyncTask extends AsyncTask<Void,Void,String>{
+                class discardOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
                     private ProgressDialog loading;
                     @Override
@@ -269,12 +266,12 @@ public class OfferViewActivity extends AppCompatActivity {
                         }
                     }
                 }
-                discardNeedOfferAsyncTask go = new discardNeedOfferAsyncTask();
+                discardOfferAsyncTask go = new discardOfferAsyncTask();
                 go.execute();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getNeedOfferProducts();
+        getOfferProducts();
 
     }
 
@@ -290,7 +287,7 @@ public class OfferViewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getNeedOfferProducts(){
+    private void getOfferProducts(){
         sendPostRequest();
     }
 

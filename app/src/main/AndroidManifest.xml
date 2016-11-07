@@ -96,17 +96,17 @@
                 android:value=".Need.OffersList.OffersActivity" />
         </activity>
         <activity
-            android:name=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity"
+            android:name=".Need.OfferLocalDetails.OfferViewLocalActivity"
             android:label="@string/OfferLocalDetails"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Need.NeedOfferLocalDetails.StreetViewPanoramaActivity"
+            android:name=".Need.OfferLocalDetails.StreetViewPanoramaFragment"
             android:label="@string/OfferLocalStreetView"
-            android:parentActivityName=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity"
+            android:parentActivityName=".Need.OfferLocalDetails.OfferViewLocalActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity" />
+                android:value=".Need.OfferLocalDetails.OfferViewLocalActivity" />
         </activity>
         <activity
             android:name=".Need.NeedReservations.NeedReservationsList.NeedReservationsActivity"

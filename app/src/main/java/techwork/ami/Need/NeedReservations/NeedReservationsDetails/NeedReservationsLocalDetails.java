@@ -19,9 +19,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
-import techwork.ami.Need.NeedOfferLocalDetails.NeedOfferViewLocalActivity;
-import techwork.ami.Need.NeedOfferLocalDetails.StreetViewPanoramaActivity;
+import techwork.ami.Need.OfferLocalDetails.StreetViewPanoramaFragment;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -56,9 +54,9 @@ public class NeedReservationsLocalDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent= new Intent(NeedReservationsLocalDetails.this, StreetViewPanoramaActivity.class);
-                intent.putExtra(Config.TAG_GL_LAT,lat);
-                intent.putExtra(Config.TAG_GL_LONG,lon);
+                Intent intent= new Intent(NeedReservationsLocalDetails.this, StreetViewPanoramaFragment.class);
+                intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
+                intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
                 startActivity(intent);
             }
         });
@@ -95,7 +93,7 @@ public class NeedReservationsLocalDetails extends AppCompatActivity {
             protected String doInBackground(Void... params) {
                 HashMap<String,String> hashmap= new HashMap<>();
 
-                hashmap.put(Config.KEY_GL_IDLOCAL,idLocal);
+                hashmap.put(Config.KEY_GET_LOCAL_IDLOCAL,idLocal);
                 RequestHandler rh = new RequestHandler();
 
                 return rh.sendPostRequest(Config.URL_GET_LOCAL,hashmap);
@@ -115,14 +113,14 @@ public class NeedReservationsLocalDetails extends AppCompatActivity {
 
         try{
             JSONObject jsonObject = new JSONObject(json);
-            JSONObject local = jsonObject.getJSONArray(Config.TAG_GL_LOCAL).getJSONObject(0);
+            JSONObject local = jsonObject.getJSONArray(Config.TAG_GET_LOCAL).getJSONObject(0);
 
-            lat = local.getString(Config.TAG_GL_LAT);
-            lon= local.getString(Config.TAG_GL_LONG);
-            address= local.getString(Config.TAG_GL_ADDRESS);
-            web = local.getString(Config.TAG_GL_WEB);
-            image= local.getString(Config.TAG_GL_IMAGE);
-            commune=local.getString(Config.TAG_GL_COMMUNE);
+            lat = local.getString(Config.TAG_GET_LOCAL_LAT);
+            lon= local.getString(Config.TAG_GET_LOCAL_LONG);
+            address= local.getString(Config.TAG_GET_LOCAL_ADDRESS);
+            web = local.getString(Config.TAG_GET_LOCAL_WEB);
+            image= local.getString(Config.TAG_GET_LOCAL_IMAGE);
+            commune=local.getString(Config.TAG_GET_LOCAL_COMMUNE);
 
             tvAddress = (TextView)findViewById(R.id.tv_address);
             tvWeb = (TextView)findViewById(R.id.tv_web2);
@@ -132,7 +130,7 @@ public class NeedReservationsLocalDetails extends AppCompatActivity {
             tvWeb.setText(web);
 
             Picasso.with(getApplicationContext())
-                    .load("http://amiapp.cl/encargado/uploads/"+image)
+                    .load(Config.URL_LOCAL_IMAGE+image)
                     .into(ivImage);
 
 

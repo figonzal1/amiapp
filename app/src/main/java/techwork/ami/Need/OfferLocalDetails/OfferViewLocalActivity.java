@@ -1,4 +1,4 @@
-package techwork.ami.Need.NeedOfferLocalDetails;
+package techwork.ami.Need.OfferLocalDetails;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,12 +19,11 @@ import java.util.HashMap;
 
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
-import techwork.ami.Need.NeedReservations.NeedReservationsDetails.NeedReservationsDetailsActivity;
 import techwork.ami.Need.NeedReservations.NeedReservationsList.NeedReservationsActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class NeedOfferViewLocalActivity extends AppCompatActivity{
+public class OfferViewLocalActivity extends AppCompatActivity{
 
     private String idLocal,lat,lon,address,web,image,commune;
     Button btnStreetView,btnNeedOfferReserv;
@@ -35,7 +33,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.need_offer_view_local_activity);
+        setContentView(R.layout.offers_view_local_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,19 +50,19 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(NeedOfferViewLocalActivity.this,StreetViewPanoramaActivity.class);
-                intent.putExtra(Config.TAG_GL_LAT,lat);
-                intent.putExtra(Config.TAG_GL_LONG,lon);
+                Intent intent = new Intent(OfferViewLocalActivity.this,StreetViewPanoramaFragment.class);
+                intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
+                intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
                 startActivity(intent);
             }
         });
 
         //Button that's sends to the lis offer reserves.
-        btnNeedOfferReserv = (Button)findViewById(R.id.btn_mis_pedidos_reservados);
+        btnNeedOfferReserv = (Button)findViewById(R.id.btn_orders_reserved);
         btnNeedOfferReserv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NeedOfferViewLocalActivity.this, NeedReservationsActivity.class);
+                Intent intent = new Intent(OfferViewLocalActivity.this, NeedReservationsActivity.class);
                 startActivity(intent);
             }
         });
@@ -79,13 +77,14 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
 
         if (count == 0) {
             super.onBackPressed();
-            Intent intent = new Intent(NeedOfferViewLocalActivity.this,MainActivity.class);
+            Intent intent = new Intent(OfferViewLocalActivity.this,MainActivity.class);
             startActivity(intent);
         } else {
             getFragmentManager().popBackStack();
         }
 
     }
+
 
     private void getLocal(){ sendPostRequest();}
 
@@ -103,7 +102,7 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
                 HashMap<String,String> hashmap= new HashMap<>();
 
                 //Send id local to php archive.
-                hashmap.put(Config.KEY_GL_IDLOCAL,idLocal);
+                hashmap.put(Config.KEY_GET_LOCAL_IDLOCAL,idLocal);
                 RequestHandler rh = new RequestHandler();
 
                 return rh.sendPostRequest(Config.URL_GET_LOCAL,hashmap);
@@ -123,14 +122,14 @@ public class NeedOfferViewLocalActivity extends AppCompatActivity{
     private void showLocal(String json) {
         try{
             JSONObject jsonObject = new JSONObject(json);
-            JSONObject local = jsonObject.getJSONArray(Config.TAG_GL_LOCAL).getJSONObject(0);
+            JSONObject local = jsonObject.getJSONArray(Config.TAG_GET_LOCAL).getJSONObject(0);
 
-            lat = local.getString(Config.TAG_GL_LAT);
-            lon= local.getString(Config.TAG_GL_LONG);
-            address= local.getString(Config.TAG_GL_ADDRESS);
-            web = local.getString(Config.TAG_GL_WEB);
-            image= local.getString(Config.TAG_GL_IMAGE);
-            commune=local.getString(Config.TAG_GL_COMMUNE);
+            lat = local.getString(Config.TAG_GET_LOCAL_LAT);
+            lon= local.getString(Config.TAG_GET_LOCAL_LONG);
+            address= local.getString(Config.TAG_GET_LOCAL_ADDRESS);
+            web = local.getString(Config.TAG_GET_LOCAL_WEB);
+            image= local.getString(Config.TAG_GET_LOCAL_IMAGE);
+            commune=local.getString(Config.TAG_GET_LOCAL_COMMUNE);
 
             tvAddress = (TextView)findViewById(R.id.tv_address);
             tvWeb = (TextView)findViewById(R.id.tv_web2);

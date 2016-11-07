@@ -242,10 +242,20 @@ public class Config {
 	public static final String KEY_ACCEPT_OFFER_IDPERSON="idPersona";
 	public static final String KEY_ACCEPT_OFFER_MAXPPERSON="cantidad";
 
+	//Local details of OfferView
+	public static final String URL_GET_LOCAL="http://amiapp.cl/public/getData/Need/getLocal.php";
+	public static final String URL_LOCAL_IMAGE="http://amiapp.cl/admin/uploads/";
+	public static final String KEY_GET_LOCAL_IDLOCAL="idLocal";
+	public static final String TAG_GET_LOCAL="local";
+	public static final String TAG_GET_LOCAL_LAT="latitud";
+	public static final String TAG_GET_LOCAL_LONG="longitud";
+	public static final String TAG_GET_LOCAL_ADDRESS="direccion";
+	public static final String TAG_GET_LOCAL_WEB="pagina";
+	public static final String TAG_GET_LOCAL_IMAGE="imagen";
+	public static final String TAG_GET_LOCAL_COMMUNE="comuna";
 
-
-	//Tags and Keys for NeedreservationsActivity
-
+	//NeedreservationsActivity
+	//TODO:Cambiar nombres de archivos.
 	public static final String URL_GET_NEED_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getNeedReservations.php";
 	public static final String URL_VALIDATE_NEED_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateNeedReservation.php";
 	public static final String URL_NEED_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateNeed.php";
@@ -273,20 +283,6 @@ public class Config {
 	public static final String TAG_GNR_COMPANY="empresa";
 	public static final String TAG_GNR_LOCALCODE="codigoLocal";
 	public static final String TAG_GNR_IMAGE="imagen";
-
-
-	//Get Local details of NeedOffer
-
-	public static final String URL_GET_LOCAL="http://amiapp.cl/public/getData/Need/getLocal.php";
-	public static final String URL_LOCAL_IMAGE="http://amiapp.cl/admin/uploads/";
-	public static final String KEY_GL_IDLOCAL="idLocal";
-	public static final String TAG_GL_LOCAL="local";
-	public static final String TAG_GL_LAT="latitud";
-	public static final String TAG_GL_LONG="longitud";
-	public static final String TAG_GL_ADDRESS="direccion";
-	public static final String TAG_GL_WEB="pagina";
-	public static final String TAG_GL_IMAGE="imagen";
-	public static final String TAG_GL_COMMUNE="comuna";
 
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";

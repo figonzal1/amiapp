@@ -187,6 +187,19 @@
     <string name="OfferViewDateIni2">Fecha de publicación: </string>
     <string name="OfferViewDateFin2">Fecha de expiración: </string>
 
+    <!-- Offer Local View -->
+    <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
+    <string name="OfferViewLocalAdress">#Dirección, Comuna</string>
+    <string name="OfferViewLocalWebText">Más información en</string>
+    <string name="OfferViewLocalWebExample">wwww.webempresa.cl</string>
+    <string name="OfferViewLocalStreetView">Ver street view</string>
+    <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
+    <string name="OfferReservedViewLocalAdress">#Dirección, Comuna</string>
+    <string name="OfferReservedViewLocalWebText">Más información en</string>
+    <string name="OfferReservedViewLocalWebExample">wwww.webempresa.cl</string>
+    <string name="OfferReservedViewLocalStreetView">Ver street view</string>
+    <string name="OfferReservedViewLocalMyOrders">Mis pedidos reservados</string>
+
     <!-- NeedReservations Strings -->
     <string name="NeedReservations">Mis pedidos reservados</string>
     <string name="need_reservations_offer_dialog">Cobrar oferta</string>

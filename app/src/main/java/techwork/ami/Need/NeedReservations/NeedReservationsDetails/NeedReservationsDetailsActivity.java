@@ -64,7 +64,7 @@ public class NeedReservationsDetailsActivity extends AppCompatActivity {
         tvDescription.setText(bundle.getString(Config.TAG_GNR_DESCRIPTION));
         tvDateIni.setText("Fecha de publicación: "+bundle.getString(Config.TAG_GNR_DATEINI));
         tvDateFin.setText("Fecha de expiración: "+bundle.getString(Config.TAG_GNR_DATEFIN));
-        tvPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GNR_PRICEOFFER)));
+        tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GNR_PRICEOFFER)));
 
         rv = (RecyclerView)findViewById(R.id.recycler_view_need_reservations_view) ;
         rv.setHasFixedSize(true);
