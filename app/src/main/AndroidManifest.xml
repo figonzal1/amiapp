@@ -74,7 +74,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Offers.NeedActivity"
+            android:name=".Offers.CreateOrderActivity"
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
         <activity

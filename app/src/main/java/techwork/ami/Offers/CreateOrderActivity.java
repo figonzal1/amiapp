@@ -46,7 +46,7 @@ import techwork.ami.RequestHandler;
 import android.widget.CheckBox;
 
 
-public class NeedActivity extends AppCompatActivity implements LocationListener {
+public class CreateOrderActivity extends AppCompatActivity implements LocationListener {
     // State Keys for saving activity's instance
     static final String KEY_FORM_STATE = "formState";
     static final String KEY_CATEGORIES_NAMES = "categoriesNames";
@@ -258,7 +258,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(NeedActivity.this,
+                loading = ProgressDialog.show(CreateOrderActivity.this,
                         getResources().getString(R.string.saving),
                         getResources().getString(R.string.wait),false,false);
             }
@@ -307,13 +307,13 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                     c.vibrate(500);
 
-                    Toast.makeText(NeedActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(NeedActivity.this, MainActivity.class);
+                    Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(CreateOrderActivity.this, MainActivity.class);
                     finish();
                     startActivity(i);
                 }
                 else if (!s.equals("-1")) {
-                    Toast.makeText(NeedActivity.this, getResources().getString(R.string.NeedError), Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedError), Toast.LENGTH_LONG).show();
                     c = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     c.vibrate(500);
                 }
@@ -366,7 +366,7 @@ public class NeedActivity extends AppCompatActivity implements LocationListener 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(NeedActivity.this,
+                loading = ProgressDialog.show(CreateOrderActivity.this,
                         getResources().getString(R.string.gettingData),
                         getResources().getString(R.string.wait),false,false);
             }

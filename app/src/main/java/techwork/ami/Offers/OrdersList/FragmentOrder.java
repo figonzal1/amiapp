@@ -42,7 +42,7 @@ import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.Offers.OffersList.OffersActivity;
-import techwork.ami.Offers.NeedActivity;
+import techwork.ami.Offers.CreateOrderActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -111,7 +111,7 @@ public class FragmentOrder extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NeedActivity.class);
+                Intent intent = new Intent(getActivity(), CreateOrderActivity.class);
                 getActivity().startActivity(intent);
             }
         });

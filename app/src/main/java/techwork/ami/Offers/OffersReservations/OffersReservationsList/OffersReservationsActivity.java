@@ -238,7 +238,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 final OffersReservationsModel model = offersReservationsList.get(rv.getChildAdapterPosition(view));
 
-                //TODO: Realizar un "ver mi reserva" donde muestre los detalles de la misma.
                 //If the needOffer was already cashed
                 if (model.getCashed().equals("1")){
                     Toast.makeText(getApplicationContext(),R.string.OfferReservedAlready,Toast.LENGTH_LONG).show();
@@ -247,7 +246,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 else{
                     dialogLocalCode(model);
                 }
-
             }
 
             @Override
