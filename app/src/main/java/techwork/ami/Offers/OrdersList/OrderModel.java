@@ -1,4 +1,4 @@
-package techwork.ami.Need.OrdersList;
+package techwork.ami.Offers.OrdersList;
 
 
 public class OrderModel {

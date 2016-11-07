@@ -74,11 +74,11 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Need.NeedActivity"
+            android:name=".Offers.NeedActivity"
             android:label="@string/titleActivityExploreOffers"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Need.OffersList.OffersActivity"
+            android:name=".Offers.OffersList.OffersActivity"
             android:label="@string/OfferCompanies"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
@@ -87,29 +87,29 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Need.OffersDetails.OfferViewActivity"
+            android:name=".Offers.OffersDetails.OfferViewActivity"
             android:label="@string/OfferDetails"
-            android:parentActivityName=".Need.OffersList.OffersActivity"
+            android:parentActivityName=".Offers.OffersList.OffersActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.OffersList.OffersActivity" />
+                android:value=".Offers.OffersList.OffersActivity" />
         </activity>
         <activity
-            android:name=".Need.OffersLocalDetails.OfferViewLocalActivity"
+            android:name=".Offers.OffersLocalDetails.OfferViewLocalActivity"
             android:label="@string/OfferLocalDetails"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Need.OffersLocalDetails.StreetViewPanoramaFragment"
+            android:name=".Offers.OffersLocalDetails.StreetViewPanoramaFragment"
             android:label="@string/OfferLocalStreetView"
-            android:parentActivityName=".Need.OffersLocalDetails.OfferViewLocalActivity"
+            android:parentActivityName=".Offers.OffersLocalDetails.OfferViewLocalActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.OffersLocalDetails.OfferViewLocalActivity" />
+                android:value=".Offers.OffersLocalDetails.OfferViewLocalActivity" />
         </activity>
         <activity
-            android:name=".Need.OffersReservations.OffersReservationsList.OffersReservationsActivity"
+            android:name=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity"
             android:label="@string/OrdersReservations"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -126,22 +126,22 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
+            android:name=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
             android:label="@string/OfferDetails"
-            android:parentActivityName=".Need.OffersReservations.OffersReservationsList.OffersReservationsActivity"
+            android:parentActivityName=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.OffersReservations.OffersReservationsList.OffersReservationsActivity" />
+                android:value=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity" />
         </activity>
         <activity
-            android:name=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewLocalActivity"
+            android:name=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewLocalActivity"
             android:label="@string/OfferLocalDetails"
-            android:parentActivityName=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
+            android:parentActivityName=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
+                android:value=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
                 />
         </activity>
         <activity android:name=".ContactUsActivity" />

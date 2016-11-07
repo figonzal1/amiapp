@@ -1,4 +1,4 @@
-package techwork.ami.Need.OrdersList;
+package techwork.ami.Offers.OrdersList;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
@@ -41,8 +41,8 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Need.OffersList.OffersActivity;
-import techwork.ami.Need.NeedActivity;
+import techwork.ami.Offers.OffersList.OffersActivity;
+import techwork.ami.Offers.NeedActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;

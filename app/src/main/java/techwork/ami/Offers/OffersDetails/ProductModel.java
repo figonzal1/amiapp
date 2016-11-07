@@ -1,4 +1,4 @@
-package techwork.ami.Need.OffersDetails;
+package techwork.ami.Offers.OffersDetails;
 
 /**
  * Created by tataf on 27-09-2016.

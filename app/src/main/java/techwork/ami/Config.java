@@ -255,16 +255,15 @@ public class Config {
 	public static final String TAG_GET_LOCAL_COMMUNE="comuna";
 
 	//Offers Reservations
-
-	public static final String URL_GET_OFFER_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getNeedReservations.php";
-	public static final String URL_VALIDATE_OFFER_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateNeedReservation.php";
-	public static final String URL_OFFER_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateNeed.php";
+	public static final String URL_GET_OFFER_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getOfferReservations.php";
+	public static final String URL_VALIDATE_OFFER_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateOfferReservation.php";
+	public static final String URL_OFFER_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateOffer.php";
 	public static final String KEY_GET_OFFER_RESERVED_IDPERSON="idPersona";
 	public static final String KEY_GET_OFFER_RESERVED_IDOFFER = "idOferta";
 	public static final String KEY_GET_OFFER_RESERVED_QUANTITY = "cantidad";
 	public static final String KEY_GET_OFFER_RESERVED_DATE_RESERV = "fechaReserva";
 	public static final String KEY_GET_OFFER_RESERVED_RATE = "calificacion";
-	public static final String TAG_GET_OFFER_RESERVED="needReservations";
+	public static final String TAG_GET_OFFER_RESERVED="ofertasReservadas";
 	public static final String TAG_GET_OFFER_RESERVED_IDNEED="idNecesidad";
 	public static final String TAG_GET_OFFER_RESERVED_IDLOCAL="idLocal";
 	public static final String TAG_GET_OFFER_RESERVED_IDOFFER="idOferta";

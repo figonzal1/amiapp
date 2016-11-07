@@ -1,10 +1,11 @@
-package techwork.ami.Need.OffersLocalDetails;
+package techwork.ami.Offers.OffersReservations.OffersReservationsDetails;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,73 +19,64 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
-import techwork.ami.Need.OffersReservations.OffersReservationsList.OffersReservationsActivity;
+import techwork.ami.Offers.OffersLocalDetails.StreetViewPanoramaFragment;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class OfferViewLocalActivity extends AppCompatActivity{
+public class OffersReservationsViewLocalActivity extends AppCompatActivity {
 
     private String idLocal,lat,lon,address,web,image,commune;
-    Button btnStreetView,btnNeedOfferReserv;
+    Button btnStreetView;
     TextView tvAddress,tvWeb;
     ImageView ivImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.offers_view_local_activity);
+        setContentView(R.layout.offers_reservations_view_local_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        idLocal= bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
 
-        //GetLocal info
+        //Get local info
+        idLocal= bundle.getString(Config.TAG_GET_OFFER_RESERVED_IDLOCAL);
+
+        tvAddress=(TextView)findViewById(R.id.tv_address);
+        tvWeb=(TextView)findViewById(R.id.tv_web2);
+        ivImage=(ImageView)findViewById(R.id.iv_local);
+        btnStreetView = (Button)findViewById(R.id.btn_local_street_view);
+
         getLocal();
 
-
-        btnStreetView = (Button)findViewById(R.id.btn_local_street_view);
         btnStreetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OfferViewLocalActivity.this,StreetViewPanoramaFragment.class);
+                Intent intent= new Intent(OffersReservationsViewLocalActivity.this, StreetViewPanoramaFragment.class);
                 intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
                 intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
                 startActivity(intent);
             }
         });
 
-        //Button that's sends to the lis offer reserves.
-        btnNeedOfferReserv = (Button)findViewById(R.id.btn_orders_reserved);
-        btnNeedOfferReserv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OfferViewLocalActivity.this, OffersReservationsActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    //When de button back is pressed main activity is refreshed.
+
     @Override
-    public void onBackPressed() {
-
-        int count = getFragmentManager().getBackStackEntryCount();
-
-        if (count == 0) {
-            super.onBackPressed();
-            Intent intent = new Intent(OfferViewLocalActivity.this,MainActivity.class);
-            startActivity(intent);
-        } else {
-            getFragmentManager().popBackStack();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
         }
-
+        return super.onOptionsItemSelected(item);
     }
-
 
     private void getLocal(){ sendPostRequest();}
 
@@ -101,7 +93,6 @@ public class OfferViewLocalActivity extends AppCompatActivity{
             protected String doInBackground(Void... params) {
                 HashMap<String,String> hashmap= new HashMap<>();
 
-                //Send id local to php archive.
                 hashmap.put(Config.KEY_GET_LOCAL_IDLOCAL,idLocal);
                 RequestHandler rh = new RequestHandler();
 
@@ -118,8 +109,8 @@ public class OfferViewLocalActivity extends AppCompatActivity{
         go.execute();
     }
 
-    //Getting info of json for each local
     private void showLocal(String json) {
+
         try{
             JSONObject jsonObject = new JSONObject(json);
             JSONObject local = jsonObject.getJSONArray(Config.TAG_GET_LOCAL).getJSONObject(0);
@@ -138,10 +129,9 @@ public class OfferViewLocalActivity extends AppCompatActivity{
             tvAddress.setText(address+", "+commune);
             tvWeb.setText(web);
 
-            //Image of local are get of admin directory
             Picasso.with(getApplicationContext())
-                        .load(Config.URL_LOCAL_IMAGE+image)
-                        .into(ivImage);
+                    .load(Config.URL_LOCAL_IMAGE+image)
+                    .into(ivImage);
 
 
         } catch (JSONException e) {
@@ -149,3 +139,4 @@ public class OfferViewLocalActivity extends AppCompatActivity{
         }
     }
 }
+

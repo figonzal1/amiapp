@@ -198,7 +198,7 @@
 
     <!-- NeedReservations Strings -->
     <string name="OrdersReservations">Mis pedidos reservados</string>
-    <string name="OfferReservedEmpty">¡Oops! \n No tienes ofertas recientes :(</string>
+    <string name="OfferReservedEmpty">¡Oops! \n No tienes reservas recientes :(</string>
     <string name="OfferReservedExpired">Oferta expirada</string>
     <string name="OfferReservedOfferDetails">Detalle oferta</string>
     <string name="OfferReservedCompanies">Ofertas recibidas</string>

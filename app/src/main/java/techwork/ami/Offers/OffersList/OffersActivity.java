@@ -1,4 +1,4 @@
-package techwork.ami.Need.OffersList;
+package techwork.ami.Offers.OffersList;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,7 +29,7 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
-import techwork.ami.Need.OffersDetails.OfferViewActivity;
+import techwork.ami.Offers.OffersDetails.OfferViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;

@@ -1,34 +1,29 @@
-package techwork.ami.Need.OffersReservations.OffersReservationsList;
+package techwork.ami.Offers.OffersList;
 
 /**
- * Created by tataf on 24-10-2016.
+ * Created by tataf on 25-09-2016.
  */
 
-public class OffersReservationsModel {
+public class OffersModel {
     String idOffer;
     String idNeed;
     String idLocal;
     String tittle;
     String description;
-    String codPromotion;
     String stock;
-    String quantity;
-    String cashed;
-    String calification;
-    String dateReserv;
-    String dateCashed;
+    String codPromotion;
     String dateIni;
+    String dateTimeFin;
     String dateFin;
-    String company;
-    String localCode;
-    String image;
     int price;
-
+    String maxPPerson;
+    String company;
+    String image;
 
     //Getters
 
 
-    public String getIdOffer() {
+    public String getIdOferta() {
         return idOffer;
     }
 
@@ -56,26 +51,6 @@ public class OffersReservationsModel {
         return codPromotion;
     }
 
-    public String getCalification() {
-        return calification;
-    }
-
-    public String getCashed() {
-        return cashed;
-    }
-
-    public String getDateCashed() {
-        return dateCashed;
-    }
-
-    public String getDateReserv() {
-        return dateReserv;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
     public String getDateIni() {
         return dateIni;
     }
@@ -88,12 +63,16 @@ public class OffersReservationsModel {
         return price;
     }
 
+    public String getMaxPPerson() {
+        return maxPPerson;
+    }
+
     public String getCompany() {
         return company;
     }
 
-    public String getLocalCode() {
-        return localCode;
+    public String getDateTimeFin() {
+        return dateTimeFin;
     }
 
     public String getImage() {
@@ -102,29 +81,32 @@ public class OffersReservationsModel {
 
     //Setters
 
+    public void setIdNeed(String idNeed) {
+        this.idNeed = idNeed;
+    }
+
+    public void setIdOferta(String idOffer) {
+        this.idOffer = idOffer;
+    }
 
     public void setIdLocal(String idLocal) {
         this.idLocal = idLocal;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setStock(String stock) {
         this.stock = stock;
     }
 
-    public void setCalification(String calification) {
-        this.calification = calification;
-    }
-
-    public void setCashed(String cashed) {
-        this.cashed = cashed;
+    public void setMaxPPerson(String maxPPerson) {
+        this.maxPPerson = maxPPerson;
     }
 
     public void setCodPromotion(String codPromotion) {
         this.codPromotion = codPromotion;
-    }
-
-    public void setDateCashed(String dateCashed) {
-        this.dateCashed = dateCashed;
     }
 
     public void setDateFin(String dateFin) {
@@ -133,26 +115,6 @@ public class OffersReservationsModel {
 
     public void setDateIni(String dateIni) {
         this.dateIni = dateIni;
-    }
-
-    public void setDateReserv(String dateReserv) {
-        this.dateReserv = dateReserv;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setIdNeed(String idNeed) {
-        this.idNeed = idNeed;
-    }
-
-    public void setIdOffer(String idOffer) {
-        this.idOffer = idOffer;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
     }
 
     public void setPrice(int price) {
@@ -167,8 +129,8 @@ public class OffersReservationsModel {
         this.company = company;
     }
 
-    public void setLocalCode(String localCode) {
-        this.localCode = localCode;
+    public void setDateTimeFin(String dateTimeFin) {
+        this.dateTimeFin = dateTimeFin;
     }
 
     public void setImage(String image) {

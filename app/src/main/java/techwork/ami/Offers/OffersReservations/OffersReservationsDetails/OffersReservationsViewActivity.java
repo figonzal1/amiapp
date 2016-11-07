@@ -1,4 +1,4 @@
-package techwork.ami.Need.OffersReservations.OffersReservationsDetails;
+package techwork.ami.Offers.OffersReservations.OffersReservationsDetails;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import techwork.ami.Config;
-import techwork.ami.Need.OffersDetails.ProductAdapter;
-import techwork.ami.Need.OffersDetails.ProductModel;
+import techwork.ami.Offers.OffersDetails.ProductAdapter;
+import techwork.ami.Offers.OffersDetails.ProductModel;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 

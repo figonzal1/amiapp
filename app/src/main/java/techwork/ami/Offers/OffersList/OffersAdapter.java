@@ -1,4 +1,4 @@
-package techwork.ami.Need.OffersList;
+package techwork.ami.Offers.OffersList;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 

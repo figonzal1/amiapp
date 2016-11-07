@@ -1,4 +1,4 @@
-package techwork.ami.Need.OffersLocalDetails;
+package techwork.ami.Offers.OffersLocalDetails;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;

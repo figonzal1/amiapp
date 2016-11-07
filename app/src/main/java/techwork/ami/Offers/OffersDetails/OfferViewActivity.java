@@ -1,4 +1,4 @@
-package techwork.ami.Need.OffersDetails;
+package techwork.ami.Offers.OffersDetails;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -29,8 +29,8 @@ import java.util.List;
 
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
-import techwork.ami.Need.OffersList.OffersActivity;
-import techwork.ami.Need.OffersLocalDetails.OfferViewLocalActivity;
+import techwork.ami.Offers.OffersList.OffersActivity;
+import techwork.ami.Offers.OffersLocalDetails.OfferViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 

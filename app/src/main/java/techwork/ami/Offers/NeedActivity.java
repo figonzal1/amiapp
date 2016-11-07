@@ -1,4 +1,4 @@
-package techwork.ami.Need;
+package techwork.ami.Offers;
 
 
 import android.Manifest;
@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -40,7 +39,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
-import techwork.ami.ContactUsActivity;
 import techwork.ami.MainActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;

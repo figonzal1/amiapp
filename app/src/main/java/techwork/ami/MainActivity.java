@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import java.util.Date;
 
-import techwork.ami.Need.OffersReservations.OffersReservationsList.OffersReservationsActivity;
+import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
 import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
 
 public class MainActivity extends AppCompatActivity

@@ -1,4 +1,4 @@
-package techwork.ami.Need.OffersReservations.OffersReservationsList;
+package techwork.ami.Offers.OffersReservations.OffersReservationsList;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -43,7 +43,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Need.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity;
+import techwork.ami.Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;

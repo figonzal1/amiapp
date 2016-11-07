@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="techwork.ami.Need.OffersLocalDetails.OfferViewLocalActivity">
+    tools:context="techwork.ami.Offers.OffersLocalDetails.OfferViewLocalActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -68,12 +68,12 @@
             <TextView
                 android:id="@+id/tv_web2"
                 android:textSize="23sp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/OfferReservedViewLocalWebExample"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/tv_web1"
-                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:autoLink="web"
                 />
 
