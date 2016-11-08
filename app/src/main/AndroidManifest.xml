@@ -87,7 +87,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Offers.OffersDetails.OfferViewActivity"
+            android:name=".Offers.OffersDetails.OffersViewActivity"
             android:label="@string/OfferDetails"
             android:parentActivityName=".Offers.OffersList.OffersActivity"
             android:theme="@style/AppTheme">
@@ -96,17 +96,17 @@
                 android:value=".Offers.OffersList.OffersActivity" />
         </activity>
         <activity
-            android:name=".Offers.OffersLocalDetails.OfferViewLocalActivity"
+            android:name=".Offers.OffersLocalDetails.OffersViewLocalActivity"
             android:label="@string/OfferLocalDetails"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Offers.OffersLocalDetails.StreetViewPanoramaFragment"
             android:label="@string/OfferLocalStreetView"
-            android:parentActivityName=".Offers.OffersLocalDetails.OfferViewLocalActivity"
+            android:parentActivityName=".Offers.OffersLocalDetails.OffersViewLocalActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Offers.OffersLocalDetails.OfferViewLocalActivity" />
+                android:value=".Offers.OffersLocalDetails.OffersViewLocalActivity" />
         </activity>
         <activity
             android:name=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity"

@@ -30,11 +30,11 @@ import java.util.List;
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
 import techwork.ami.Offers.OffersList.OffersActivity;
-import techwork.ami.Offers.OffersLocalDetails.OfferViewLocalActivity;
+import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class OfferViewActivity extends AppCompatActivity {
+public class OffersViewActivity extends AppCompatActivity {
 
     TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvMaxPPerson;
     Button btnAccept, btnDiscard;
@@ -148,7 +148,7 @@ public class OfferViewActivity extends AppCompatActivity {
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        loading = ProgressDialog.show(OfferViewActivity.this,
+                        loading = ProgressDialog.show(OffersViewActivity.this,
                                 getString(R.string.OfferViewAcceptOfferProcessing),
                                 getString(R.string.wait), false, false);
 
@@ -170,7 +170,6 @@ public class OfferViewActivity extends AppCompatActivity {
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
 
-
                         if (s.equals("0")){
 
                             Handler mHandler = new Handler();
@@ -188,7 +187,7 @@ public class OfferViewActivity extends AppCompatActivity {
                                     OffersActivity.activity.finish();
 
                                     //NeedOffer accept go to LocalDetails.
-                                    Intent intent = new Intent(OfferViewActivity.this,OfferViewLocalActivity.class);
+                                    Intent intent = new Intent(OffersViewActivity.this,OffersViewLocalActivity.class);
                                     intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
                                     finish();
                                     startActivity(intent);
@@ -220,7 +219,7 @@ public class OfferViewActivity extends AppCompatActivity {
                     @Override
                     protected void onPreExecute(){
                         super.onPreExecute();
-                        loading = ProgressDialog.show(OfferViewActivity.this,
+                        loading = ProgressDialog.show(OffersViewActivity.this,
                                 getString(R.string.OfferViewDiscardOfferProcessing),
                                 getString(R.string.wait), false, false);
 
@@ -254,7 +253,7 @@ public class OfferViewActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), R.string.OfferViewDiscardOffer, Toast.LENGTH_LONG).show();
 
                                     //If Offer is discard go to Main activity refreshed
-                                    Intent intent = new Intent(OfferViewActivity.this,MainActivity.class);
+                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
                                     finish();
                                     startActivity(intent);
 

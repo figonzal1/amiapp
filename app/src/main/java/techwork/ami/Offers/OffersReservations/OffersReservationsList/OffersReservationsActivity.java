@@ -17,7 +17,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +43,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
 import techwork.ami.Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -356,6 +356,9 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                             c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                             c.vibrate(500);
+
+                            //If offer reserved is deleted finish OfferViewLocalActivity.
+                            OffersViewLocalActivity.activity.finish();
 
                             Toast.makeText(context,R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
 
