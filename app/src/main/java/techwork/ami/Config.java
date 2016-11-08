@@ -283,6 +283,11 @@ public class Config {
 	public static final String TAG_GET_OFFER_RESERVED_LOCALCODE="codigoLocal";
 	public static final String TAG_GET_OFFER_RESERVED_IMAGE="imagen";
 
+	//Delete offer reservations
+	public static final String URL_DELETE_OFFER_RESERVED="http://amiapp.cl/public/getData/NeedReserved/deleteOfferReserved.php";
+	public static final String KEY_DELETE_OFFER_RESERVED_IDOFFER="idOferta";
+	public static final String KEY_DELETE_OFFER_RESERVED_IDPERSON="idPersona";
+
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";
 	public static final String TAG_CU_MAIL = "email";

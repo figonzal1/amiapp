@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,6 +70,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         tvOffersReservationEmpty = (TextView)findViewById(R.id.tv_offers_reservations_empty);
 
         rv = (RecyclerView) findViewById(R.id.recycler_view_offers_reservations);
@@ -82,12 +84,12 @@ public class OffersReservationsActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getOfferReservs();
+                getOfferReservation();
             }
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getOfferReservs();
+        getOfferReservation();
 
 
     }
@@ -116,7 +118,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 switch(item.getItemId()){
 
-
                     case R.id.item_popup_menu_reservations_details:
 
                         //Go to see details of each needOffer reserved.
@@ -144,7 +145,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                     case R.id.item_popup_menu_reservations_charge:
                         item.setEnabled(true);
                         //If needOffer is charge, not charged permitted.
-                        if (model.getCashed().equals("1")){
+                        if (model.getCharge().equals("1")){
                             popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
                             Toast.makeText(getApplicationContext(),R.string.OfferReservedAlready,Toast.LENGTH_LONG).show();
                             Snackbar.make(view,R.string.OfferReservedAlready,Snackbar.LENGTH_SHORT).show();
@@ -158,7 +159,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                     case R.id.item_popup_menu_reservations_calificate:
 
                         //If needOffer is not charge, not calificate.
-                        if (model.getCashed().equals("0")){
+                        if (model.getCharge().equals("0")){
 
                             Toast.makeText(getApplicationContext(), R.string.OffersReservedUnvalidated, Toast.LENGTH_SHORT).show();
                         }
@@ -170,6 +171,12 @@ public class OffersReservationsActivity extends AppCompatActivity {
                         else{
                             rateOfferReserved(model,false);
                         }
+                        return true;
+
+                    case R.id.item_popup_menu_reservations_delete_reservation:
+
+                        deleteDialogOfferReservation(model);
+                        return true;
 
                 }
 
@@ -179,7 +186,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
         popup.show();
     }
 
-    private void getOfferReservs() {
+    private void getOfferReservation() {
         sendPostRequest();
     }
 
@@ -210,14 +217,14 @@ public class OffersReservationsActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showNeedReservations(s);
+                showOfferReservations(s);
             }
         }
         OfferReservationsAsyncTask go = new OfferReservationsAsyncTask();
         go.execute();
     }
 
-    private void showNeedReservations(String s) {
+    private void showOfferReservations(String s) {
         getOfferReservationsData(s);
 
         adapter = new OffersReservationsAdapter(getApplicationContext(), offersReservationsList,OffersReservationsActivity.this);
@@ -239,7 +246,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 final OffersReservationsModel model = offersReservationsList.get(rv.getChildAdapterPosition(view));
 
                 //If the needOffer was already cashed
-                if (model.getCashed().equals("1")){
+                if (model.getCharge().equals("1")){
                     Toast.makeText(getApplicationContext(),R.string.OfferReservedAlready,Toast.LENGTH_LONG).show();
                     Snackbar.make(view,R.string.OfferReservedAlready,Snackbar.LENGTH_SHORT).show();
                 }
@@ -252,7 +259,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
             public void onItemLongClick(final View view) {
                 final OffersReservationsModel model = offersReservationsList.get(rv.getChildAdapterPosition(view));
 
-                if (model.getCashed().equals("0")){
+                if (model.getCharge().equals("0")){
                     Toast.makeText(getApplicationContext(), R.string.OffersReservedUnvalidated, Toast.LENGTH_SHORT).show();
                 }
                 //If has already validated and rated.
@@ -265,6 +272,98 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void deleteDialogOfferReservation(final OffersReservationsModel model){
+
+        dialogBuilder = new CustomAlertDialogBuilder(context);
+        dialogBuilder.setTitle("¿Desea eliminar esta reserva?");
+        //dialogBuilder.setCancelable(false);
+        //dialogBuilder.setCanceledOnTouchOutside(false);
+        dialogBuilder.setMessage("Confirme la acción");
+        dialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteOfferReservation(model, dialog);
+                    }
+                });
+        dialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialogBuilder.show();
+
+    }
+    private void deleteOfferReservation(final OffersReservationsModel model, DialogInterface dialog){
+
+        SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+        final String idPerson = sharedPref.getString(Config.KEY_SP_ID, "-1");
+
+        class deleteOfferReservationAsyncTask extends AsyncTask<Void,Void,String>{
+
+            private ProgressDialog loading;
+            private DialogInterface dialog;
+
+            private deleteOfferReservationAsyncTask(DialogInterface dialog){
+                this.dialog=dialog;
+            }
+
+            @Override
+            protected void onPreExecute(){
+                super.onPreExecute();
+
+                loading= ProgressDialog.show(OffersReservationsActivity.this,
+                        "Eliminando reserva",
+                        getString(R.string.wait),false,false);
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                HashMap<String,String> hashMap = new HashMap<>();
+
+                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDOFFER,model.getIdOffer());
+                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDPERSON,idPerson);
+
+
+                RequestHandler rh = new RequestHandler();
+                return rh.sendPostRequest(Config.URL_DELETE_OFFER_RESERVED,hashMap);
+            }
+
+            @Override
+            protected void onPostExecute(String s){
+                super.onPostExecute(s);
+
+                //If operation is correct dialog close in 1,5 [s]
+                if (s.equals("0")){
+
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            loading.dismiss();
+                            Toast.makeText(context,R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
+
+                            //If operations is ok refresh orders.
+                            getOfferReservation();
+                        }
+                    },1500);
+
+                }
+
+                //If not correct depends of the operation.
+                else {
+                    loading.dismiss();
+                    Toast.makeText(context,
+                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                }
+                this.dialog.dismiss();
+            }
+        }
+        deleteOfferReservationAsyncTask go = new deleteOfferReservationAsyncTask(dialog);
+        go.execute();
 
     }
 
@@ -380,7 +479,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                                         Toast.makeText(getApplicationContext(),
                                                 R.string.OfferReservedValidateOk, Toast.LENGTH_LONG).show();
-                                        getOfferReservs();
+                                        getOfferReservation();
                                     }
                                 },1500);
 
@@ -427,7 +526,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                if(isFirst) getOfferReservs();
+                if(isFirst) getOfferReservation();
             }
         });
 
@@ -449,6 +548,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
     private void doPositiveRate(DialogInterface dialog, OffersReservationsModel model, final String rate, boolean isFirst) {
 
         final String idOffer = model.getIdOffer();
+        SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+        final String idPerson = sharedPref.getString(Config.KEY_SP_ID, "-1");
 
         class RateOfferReservation extends AsyncTask<String, Void, String> {
             ProgressDialog loading;
@@ -469,9 +570,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON,
-                        getSharedPreferences(Config.KEY_SHARED_PREF,Context.MODE_PRIVATE)
-                                .getString(Config.KEY_SP_ID, "-1"));
+                hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON,idPerson);
                 hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDOFFER, idOffer);
                 hashMap.put(Config.KEY_GET_OFFER_RESERVED_RATE, rate);
                 RequestHandler rh = new RequestHandler();
@@ -496,7 +595,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(),
                                     R.string.OfferReservedRateOk, Toast.LENGTH_LONG).show();
-                            getOfferReservs();
+                            getOfferReservation();
                         }
                     },1500);
 
@@ -537,7 +636,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 item.setCodPromotion(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_CODPROMOTION));
                 item.setStock(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_STOCK));
                 item.setQuantity(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_QUANTITY));
-                item.setCashed(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_CASHED));
+                item.setCharge(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_CASHED));
                 item.setCalification(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_CALIFICATION));
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_OFFER_RESERVED_PRICEOFFER));
                 item.setCompany(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_COMPANY));

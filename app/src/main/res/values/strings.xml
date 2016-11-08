@@ -196,7 +196,7 @@
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
 
 
-    <!-- NeedReservations Strings -->
+    <!-- OfferReservations (NeedOffer) Strings -->
     <string name="OrdersReservations">Mis pedidos reservados</string>
     <string name="OfferReservedEmpty">¡Oops! \n No tienes reservas recientes :(</string>
     <string name="OfferReservedExpired">Oferta expirada</string>
@@ -323,5 +323,11 @@
     <string name="offers_list_discard_question">¿Desea descartar esta promoción?</string>
     <string name="offers_list_discard_processing">Descartando promoción</string>
     <string name="title_activity_offer_detail">Detalles</string>
+
+    <!-- Popup menu strings -->
+    <string name="PopupMenuViewDetails">Ver detalles</string>
+    <string name="PopupMenuCalification">Calificar</string>
+    <string name="PopupMenuDeleteReservation">Eliminar reserva</string>
+    <string name="PopupMenuCharged">Cobrar</string>
 
 </resources>

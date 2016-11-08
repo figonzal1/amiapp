@@ -13,7 +13,7 @@ public class OffersReservationsModel {
     String codPromotion;
     String stock;
     String quantity;
-    String cashed;
+    String charge;
     String calification;
     String dateReserv;
     String dateCashed;
@@ -60,8 +60,8 @@ public class OffersReservationsModel {
         return calification;
     }
 
-    public String getCashed() {
-        return cashed;
+    public String getCharge() {
+        return charge;
     }
 
     public String getDateCashed() {
@@ -115,8 +115,8 @@ public class OffersReservationsModel {
         this.calification = calification;
     }
 
-    public void setCashed(String cashed) {
-        this.cashed = cashed;
+    public void setCharge(String charge) {
+        this.charge = charge;
     }
 
     public void setCodPromotion(String codPromotion) {

@@ -3,16 +3,20 @@
 
     <item
         android:id="@+id/item_popup_menu_reservations_details"
-        android:title="Ver detalles">
+        android:title="@string/PopupMenuViewDetails">
     </item>
     <item
         android:id="@+id/item_popup_menu_reservations_charge"
-        android:title="Cobrar"
+        android:title="@string/PopupMenuCharged"
         >
     </item>
     <item
         android:id="@+id/item_popup_menu_reservations_calificate"
-        android:title="Calificar">
+        android:title="@string/PopupMenuCalification">
+    </item>
+    <item
+        android:id="@+id/item_popup_menu_reservations_delete_reservation"
+        android:title="@string/PopupMenuDeleteReservation">
     </item>
 
 </menu>
