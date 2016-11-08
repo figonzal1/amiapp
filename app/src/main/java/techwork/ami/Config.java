@@ -287,6 +287,7 @@ public class Config {
 	public static final String URL_DELETE_OFFER_RESERVED="http://amiapp.cl/public/getData/NeedReserved/deleteOfferReserved.php";
 	public static final String KEY_DELETE_OFFER_RESERVED_IDOFFER="idOferta";
 	public static final String KEY_DELETE_OFFER_RESERVED_IDPERSON="idPersona";
+	public static final String KEY_DELETE_OFFER_RESERVED_QUANTITY="cantidad";
 
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";

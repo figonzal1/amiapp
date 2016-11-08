@@ -334,6 +334,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDOFFER,model.getIdOffer());
                 hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDPERSON,idPerson);
+                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_QUANTITY,model.getQuantity()); //Send quatity reserved by user
 
 
                 RequestHandler rh = new RequestHandler();
