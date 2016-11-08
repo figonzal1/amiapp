@@ -147,7 +147,7 @@ public class FragmentOrder extends Fragment {
                     case R.id.item_popup_menu_discard_order:
 
                         //Show a CustomDialog in screen
-                        new CustomAlertDialogBuilder(view.getContext())
+                        new CustomAlertDialogBuilder(getContext())
                                 .setTitle(R.string.OrderDeleteConfirm)
                                 .setMessage(R.string.OrderConfirmAction)
                                 .setCancelable(false)

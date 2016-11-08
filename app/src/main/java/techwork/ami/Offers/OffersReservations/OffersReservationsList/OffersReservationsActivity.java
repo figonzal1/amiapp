@@ -165,7 +165,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                         }
                         //If has already validated and rated.
                         else if (!model.getCalification().equals("")){
-                            item.setEnabled(false);
+
                             Toast.makeText(getApplicationContext(), R.string.OfferReservedAlreadyCommented, Toast.LENGTH_SHORT).show();
                         }
                         else{
@@ -175,7 +175,15 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                     case R.id.item_popup_menu_reservations_delete_reservation:
 
-                        deleteDialogOfferReservation(model);
+                        if (!model.getCalification().equals("")){
+                            Toast.makeText(getApplicationContext(),R.string.OfferReservedDeleteOfferCalificated,Toast.LENGTH_LONG).show();
+                        }
+                        else if (model.getCharge().equals("1")){
+                            Toast.makeText(getApplicationContext(),R.string.OfferReservedDeleteOfferCharged,Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            deleteDialogOfferReservation(model);
+                        }
                         return true;
 
                 }
@@ -278,10 +286,10 @@ public class OffersReservationsActivity extends AppCompatActivity {
     private void deleteDialogOfferReservation(final OffersReservationsModel model){
 
         dialogBuilder = new CustomAlertDialogBuilder(context);
-        dialogBuilder.setTitle("¿Desea eliminar esta reserva?");
-        //dialogBuilder.setCancelable(false);
-        //dialogBuilder.setCanceledOnTouchOutside(false);
-        dialogBuilder.setMessage("Confirme la acción");
+        dialogBuilder.setTitle(R.string.OfferReservedDeleteTittle);
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.setCanceledOnTouchOutside(false);
+        dialogBuilder.setMessage(R.string.OfferReservedDeleteConfirm);
         dialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -297,6 +305,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
         dialogBuilder.show();
 
     }
+
     private void deleteOfferReservation(final OffersReservationsModel model, DialogInterface dialog){
 
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
@@ -316,7 +325,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 super.onPreExecute();
 
                 loading= ProgressDialog.show(OffersReservationsActivity.this,
-                        "Eliminando reserva",
+                        getString(R.string.OfferReservedDeleteProcessing),
                         getString(R.string.wait),false,false);
             }
             @Override
@@ -344,7 +353,11 @@ public class OffersReservationsActivity extends AppCompatActivity {
                         public void run() {
 
                             loading.dismiss();
-                            Toast.makeText(context,R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
+
+                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
+
+                            Toast.makeText(context,R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
 
                             //If operations is ok refresh orders.
                             getOfferReservation();

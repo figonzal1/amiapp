@@ -227,6 +227,12 @@
     <string name="OfferReservedRatePositive">Calificar</string>
     <string name="OffersReservedUnvalidated">Esta oferta no ha sido cobrada</string>
     <string name="OfferReservedValidateProcessing">Validando oferta</string>
+    <string name="OfferReservedDeleteProcessing">Eliminando reserva</string>
+    <string name="OfferReservedDeleteTittle">¿Desea eliminar esta reserva?</string>
+    <string name="OfferReservedDeleteConfirm">Confirme la acción</string>
+    <string name="OfferReservedDeleteOk">La reserva ha sido eliminada</string>
+    <string name="OfferReservedDeleteOfferCharged">No puedes eliminar una cobrada</string>
+    <string name="OfferReservedDeleteOfferCalificated">No puedes eliminar una calificada</string>
 
     <!-- Offers Reserved View Local-->
     <string name="OfferReservedViewLocalAdress">#Dirección, Comuna</string>
