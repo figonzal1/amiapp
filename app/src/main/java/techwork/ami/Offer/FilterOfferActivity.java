@@ -34,6 +34,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
+import techwork.ami.Offer.OfferList.FragmentHome;
 import techwork.ami.Offer.OfferList.OfferAdapter;
 import techwork.ami.Offer.OfferList.OfferModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
@@ -283,7 +284,7 @@ public class FilterOfferActivity extends AppCompatActivity {
         String idPerson = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                 .getString(Config.KEY_SP_ID, "-1");
         String idOffer = offer.getId();
-        new DiscardOffer(getApplicationContext(), dialog).execute(idPerson, idOffer);
+        new FragmentHome.DiscardOffer(getApplicationContext(), dialog).execute(idPerson, idOffer);
     }
 
 }

@@ -24,7 +24,6 @@ import java.util.List;
 
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Offer.DiscardOffer;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
@@ -94,7 +93,6 @@ public class OfferAdapter
             s = "+";
         }
 
-        Log.d("hola",s);
         if (!s.equals("")) holder.offerDsct.setText(s+String.valueOf(Math.abs(100-perc))+"%");
 
         holder.offerDescription.setText(offer.getDescription());
@@ -114,7 +112,7 @@ public class OfferAdapter
                                 String idPerson = context.getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                                         .getString(Config.KEY_SP_ID, "-1");
                                 String idOffer = offer.getId();
-                                new DiscardOffer(context, dialog).execute(idPerson, idOffer);
+                                new FragmentHome.DiscardOffer(context, dialog).execute(idPerson, idOffer);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

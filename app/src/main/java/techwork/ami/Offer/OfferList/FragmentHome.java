@@ -43,7 +43,6 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
-import techwork.ami.Offer.DiscardOffer;
 import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -120,7 +119,7 @@ public class FragmentHome extends Fragment {
     }
 
     // Call to DB
-    private void getOffers(){
+    public  void getOffers(){
         sendGetRequest();
 
         if(notificado){
@@ -239,7 +238,7 @@ public class FragmentHome extends Fragment {
         String idPerson = getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                 .getString(Config.KEY_SP_ID, "-1");
         String idOffer = offer.getId();
-        new DiscardOffer(getActivity().getApplicationContext(), dialog).execute(idPerson, idOffer);
+        new DiscardOffer(getActivity(), dialog).execute(idPerson, idOffer);
     }
 
     //Clase que itera sobre el json array para obtener datos de la BD.
@@ -299,7 +298,8 @@ public class FragmentHome extends Fragment {
                 offerList.add(item);
 
                 // Se calcula la diferencia de tiempo acutal con cuando se publica la oferta, si son menor a una cierta holgura entonces se muestra la notificación
-                double d = (MainActivity.now.getTime() - dateIni.getTime())*Config.MILIS_TO_MIN;
+                double d = ((new Date()).getTime() - dateIni.getTime())*Config.MILIS_TO_MIN;
+
                 if(MainActivity.notificate && d >= 0.0 && d < Config.NOTIFICATION_SLACK_TIME){
                     notificado = true;
                     myNotification(item);
@@ -358,6 +358,49 @@ public class FragmentHome extends Fragment {
                 .setAutoCancel(autoCancel)
                 .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                 .setContentIntent(contIntent);
+    }
+
+    public static class DiscardOffer extends AsyncTask<String, Void, String> {
+        Context context;
+        ProgressDialog loading;
+        DialogInterface dialog;
+
+        public DiscardOffer(Context c, DialogInterface dialog) {
+            this.context = c;
+            this.dialog = dialog;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(context,
+                    context.getString(R.string.offers_list_discard_processing),
+                    context.getString(R.string.wait), false, false);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put(Config.KEY_DO_PERSON_ID, params[0]);
+            hashMap.put(Config.KEY_DO_OFFER_ID, params[1]);
+            RequestHandler rh = new RequestHandler();
+            return rh.sendPostRequest(Config.URL_DO_DISCARD, hashMap);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+            if (s.equals("0")) {
+                System.out.println("PRINT ENTRA");
+                Toast.makeText(context,
+                        R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context,
+                        R.string.operation_fail, Toast.LENGTH_LONG).show();
+            }
+            this.dialog.dismiss();
+        }
     }
 
 }
