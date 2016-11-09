@@ -65,16 +65,62 @@
             android:layout_marginStart="10dp"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_offer_reservations_description"
+        <LinearLayout
+            android:id="@+id/offer_reservations_linear2"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="@string/OfferReservedCardViewDescription"
+            android:layout_centerVertical="true"
             android:layout_alignStart="@+id/tv_offer_reservations_tittle"
-            android:layout_below="@+id/tv_offer_reservations_tittle" />
+            android:clipChildren="false"
+            android:layout_alignParentEnd="true"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="50">
+
+                <TextView
+                    android:id="@+id/tv_offer_reservations_reserv_txt"
+                    android:text="@string/OfferReservedCardViewDateReservTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_offer_reservations_reserv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/OfferReservedCardViewDate"
+                     />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="50">
+
+                <TextView
+                    android:id="@+id/tv_offer_reservations_fin_date_txt"
+                    android:text="@string/OfferReservedCardViewDateFin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/tv_offer_reservations_fin_date"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/OfferReservedCardViewDate"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_offer_reservations_quantity_price"

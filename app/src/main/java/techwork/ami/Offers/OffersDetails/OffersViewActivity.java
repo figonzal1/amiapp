@@ -91,20 +91,20 @@ public class OffersViewActivity extends AppCompatActivity {
         if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>
                 Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON))) {
             if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)) > 1) {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warnings),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarnings),
                         bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)));
             } else {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warning),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarning),
                         bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)));
             }
         }
         //if stock < maxpperson, textview show stock
         else{
             if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK)) > 1) {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warnings),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarnings),
                         bundle.getString(Config.TAG_GET_OFFER_STOCK)));
             } else {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warning),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarning),
                         bundle.getString(Config.TAG_GET_OFFER_STOCK)));
             }
         }

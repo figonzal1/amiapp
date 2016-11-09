@@ -187,8 +187,8 @@
     <string name="OfferViewDiscardOffer">Oferta rechazada</string>
     <string name="OfferViewAcceptOfferFail">No se ha podido reservar</string>
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
-    <string name="offers_view_maxpp_warnings">¡Puedes reservar hasta %s unidades!</string>
-    <string name="offers_view_maxpp_warning">¡Puedes reservar hasta %s unidad!</string>
+    <string name="OfferViewMaxppWarnings">¡Puedes reservar hasta %s unidades!</string>
+    <string name="OfferViewMaxppWarning">¡Puedes reservar hasta %s unidad!</string>
 
     <!-- Offer Local View -->
     <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
@@ -209,7 +209,9 @@
     <string name="OfferReservedExpiredShort">Expirada</string>
     <string name="OfferReservedExpired2">Expira en \n</string>
     <string name="OfferReservedCardViewTittle">Titulo oferta</string>
-    <string name="OfferReservedCardViewDescription">Descripcion de la oferta</string>
+    <string name="OfferReservedCardViewDateReservTxt">Reservada el</string>
+    <string name="OfferReservedCardViewDateFin">Termina el</string>
+    <string name="OfferReservedCardViewDate">XX/XX/XXXX</string>
     <string name="OfferReservedCardViewPrice">$x.xxx</string>
     <string name="OfferReservedCardViewCompany">Empresa</string>
     <string name="OfferReservedCardViewState">Estado</string>

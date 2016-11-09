@@ -40,7 +40,8 @@ public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReserv
     public static class NeedReservationsViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tvTittle;
-        public TextView tvDescription;
+        public TextView tvDateReserv;
+        public TextView tvDateFin;
         public TextView tvCompany;
         public TextView tvPrice;
         public TextView tvStatus;
@@ -53,7 +54,8 @@ public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReserv
 
 
             tvTittle=(TextView)itemView.findViewById(R.id.tv_offer_reservations_tittle);
-            tvDescription=(TextView)itemView.findViewById(R.id.tv_offer_reservations_description);
+            tvDateReserv=(TextView)itemView.findViewById(R.id.tv_offer_reservations_reserv_date);
+            tvDateFin =(TextView)itemView.findViewById(R.id.tv_offer_reservations_fin_date);
             tvCompany=(TextView)itemView.findViewById(R.id.tv_offer_reservations_company);
             tvPrice=(TextView)itemView.findViewById(R.id.tv_offer_reservations_quantity_price);
             tvStatus=(TextView)itemView.findViewById(R.id.tv_offer_reservations_status);
@@ -74,7 +76,8 @@ public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReserv
     public void onBindViewHolder(OffersReservationsAdapter.NeedReservationsViewHolder holder, int position) {
         final OffersReservationsModel model = items.get(position);
         holder.tvTittle.setText(model.getTittle());
-        holder.tvDescription.setText(model.getDescription());
+        holder.tvDateFin.setText(model.getDateFin());
+        holder.tvDateReserv.setText(model.getDateReserv());
         holder.tvCompany.setText(model.getCompany());
         holder.tvPrice.setText(model.getQuantity()+"x "+String.format(Config.CLP_FORMAT,model.getPrice()));
 
