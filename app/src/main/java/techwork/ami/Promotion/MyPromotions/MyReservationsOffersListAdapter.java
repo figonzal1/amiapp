@@ -29,10 +29,10 @@ public class MyReservationsOffersListAdapter
     private OnItemClickListenerRecyclerView itemClick;
     private List<ReservationOffer> items;
     private Context context;
-    private MyReservationsOffersActivity offersReservationsActivity;
+    private MyPromotionsActivity offersReservationsActivity;
 
     // Class constructor
-    public MyReservationsOffersListAdapter(Context context, List<ReservationOffer> items, MyReservationsOffersActivity offersReservationsActivity) {
+    public MyReservationsOffersListAdapter(Context context, List<ReservationOffer> items, MyPromotionsActivity offersReservationsActivity) {
         this.context = context;
         this.items = items;
         this.offersReservationsActivity=offersReservationsActivity;
@@ -65,7 +65,7 @@ public class MyReservationsOffersListAdapter
     // Inflate the view
     @Override
     public MyReservationsOffersListAdapter.MyReservationsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_reservations_offers_list_card_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_promotions_list_card_view, parent, false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         MyReservationsListViewHolder vh = new MyReservationsListViewHolder(v);

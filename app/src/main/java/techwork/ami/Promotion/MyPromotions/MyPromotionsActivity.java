@@ -48,12 +48,12 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Promotion.OfferDetail.OfferDetailActivity;
+import techwork.ami.Promotion.PromotionDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class MyReservationsOffersActivity extends AppCompatActivity {
+public class MyPromotionsActivity extends AppCompatActivity {
 
     // Two recycle views in one layout by https://goo.gl/Iy5prs (natrio)
 
@@ -73,7 +73,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        setContentView(R.layout.activity_my_reservations_offers);
+        setContentView(R.layout.activity_my_promotion_offers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -151,7 +151,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 // Close the Activity
                 finish();
                 // Call to FragmentHome and show available offers
-                //startActivity(new Intent(MyReservationsOffersActivity.this, MainActivity.class) );
+                //startActivity(new Intent(MyPromotionsActivity.this, MainActivity.class) );
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -172,31 +172,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
 
                 switch(item.getItemId()){
-                    /*case R.id.item_popup_menu_reservations_details:
-
-                        //Go to see details of each needOffer reserved.
-                        Intent intent = new Intent(MyReservationsOffersActivity.this,OffersReservationsViewActivity.class);
-                        intent.putExtra(Config.TAG_GNR_IDOFFER,model.getIdOffer());
-                        intent.putExtra(Config.TAG_GNR_IDLOCAL,model.getIdLocal());
-                        intent.putExtra(Config.TAG_GNR_IDNEED,model.getIdNeed());
-                        intent.putExtra(Config.TAG_GNR_TITTLE,model.getTittle());
-                        intent.putExtra(Config.TAG_GNR_DESCRIPTION,model.getDescription());
-                        intent.putExtra(Config.TAG_GNR_PRICEOFFER,model.getPrice());
-                        intent.putExtra(Config.TAG_GNR_CASHED,model.getDescription());
-                        intent.putExtra(Config.TAG_GNR_DATECASHED,model.getDateCashed());
-                        intent.putExtra(Config.TAG_GNR_CALIFICATION,model.getCalification());
-                        intent.putExtra(Config.TAG_GNR_CODPROMOTION,model.getCodPromotion());
-                        intent.putExtra(Config.TAG_GNR_QUANTITY,model.getQuantity());
-                        intent.putExtra(Config.TAG_GNR_LOCALCODE,model.getLocalCode());
-                        intent.putExtra(Config.TAG_GNR_COMPANY,model.getCompany());
-                        intent.putExtra(Config.TAG_GNR_DATEINI,model.getDateIni());
-                        intent.putExtra(Config.TAG_GNR_DATEFIN,model.getDateFin());
-                        intent.putExtra(Config.TAG_GNR_DATERESERV,model.getDateReserv());
-
-                        startActivity(intent);
-                        return true;*/
                     case R.id.item_popup_menu_reservations_details:
-                        Intent intent = new Intent(MyReservationsOffersActivity.this, OfferDetailActivity.class);
+                        Intent intent = new Intent(MyPromotionsActivity.this, OfferDetailActivity.class);
                         intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
                         intent.putExtra(Config.TAG_GO_DESCRIPTION, model.getDescription());
                         intent.putExtra(Config.TAG_GO_IMAGE, model.getImage());
@@ -308,7 +285,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private void showOffersReservations(String s){
         getData(s);
 
-        adapter = new MyReservationsOffersListAdapter(this, reservationsOffersList, MyReservationsOffersActivity.this);
+        adapter = new MyReservationsOffersListAdapter(this, reservationsOffersList, MyPromotionsActivity.this);
         ScaleInAnimationAdapter scaleAdapterReserved = new ScaleInAnimationAdapter(adapter);
 
         mRecyclerView.setAdapter(scaleAdapterReserved);
@@ -424,7 +401,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                             @Override
                             protected void onPreExecute() {
                                 super.onPreExecute();
-                                loading = ProgressDialog.show(MyReservationsOffersActivity.this,
+                                loading = ProgressDialog.show(MyPromotionsActivity.this,
                                         getString(R.string.my_reservations_offers_validate_processing),
                                         getString(R.string.wait), false, false);
                             }
@@ -535,7 +512,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(MyReservationsOffersActivity.this,
+                loading = ProgressDialog.show(MyPromotionsActivity.this,
                         getString(R.string.my_reservations_offers_rate_processing),
                         getString(R.string.wait), false, false);
             }

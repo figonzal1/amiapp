@@ -27,7 +27,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
-import techwork.ami.Promotion.MyPromotions.MyReservationsOffersActivity;
+import techwork.ami.Promotion.MyPromotions.MyPromotionsActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, OffersReservationsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_reservations) {
-            Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);
+            Intent iMyReservations= new Intent(MainActivity.this, MyPromotionsActivity.class);
             startActivity(iMyReservations);
         } else if (id == R.id.nav_edit_profile) {
             Intent iMyProfile = new Intent(MainActivity.this, MyProfileActivity.class);

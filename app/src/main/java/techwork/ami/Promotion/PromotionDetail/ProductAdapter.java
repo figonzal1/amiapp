@@ -1,4 +1,4 @@
-package techwork.ami.Promotion.OfferDetail;
+package techwork.ami.Promotion.PromotionDetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public ProductAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_detail_card_view, parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_detail_card_view, parent,false);
         return new ProductAdapter.ProductViewHolder(v);
     }
 

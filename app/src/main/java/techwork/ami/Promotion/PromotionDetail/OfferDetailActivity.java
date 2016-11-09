@@ -1,4 +1,4 @@
-package techwork.ami.Promotion.OfferDetail;
+package techwork.ami.Promotion.PromotionDetail;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
@@ -65,7 +65,7 @@ public class OfferDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.offer_detail_activity);
+        setContentView(R.layout.promotion_detail_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.offer_detail_toolbar);
         setSupportActionBar(toolbar);

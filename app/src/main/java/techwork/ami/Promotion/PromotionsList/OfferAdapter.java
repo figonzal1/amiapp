@@ -1,4 +1,4 @@
-package techwork.ami.Promotion.OfferList;
+package techwork.ami.Promotion.PromotionsList;
 
 
 import android.content.Context;
@@ -59,7 +59,7 @@ public class OfferAdapter
     // Inflate the view
     @Override
     public OfferAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_card_view,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_card_view,parent,false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         OfferViewHolder vh = new OfferViewHolder(v);

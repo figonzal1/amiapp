@@ -1,4 +1,4 @@
-package techwork.ami.Promotion.OfferList;
+package techwork.ami.Promotion.PromotionsList;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -43,7 +43,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
-import techwork.ami.Promotion.OfferDetail.OfferDetailActivity;
+import techwork.ami.Promotion.PromotionDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -196,7 +196,6 @@ public class FragmentHome extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                //Intent intent = new Intent(getActivity(), OfferDetailOld.class);
                 Intent intent = new Intent(getActivity(), OfferDetailActivity.class);
                 int position = rv.getChildAdapterPosition(view);
                 OfferModel o = offerList.get(position);

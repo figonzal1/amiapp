@@ -49,7 +49,7 @@ public class OffersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.offers_activity);
+        setContentView(R.layout.activity_offers);
         activity=this;
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);

@@ -30,15 +30,15 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Promotion.OfferDetail.OfferDetailActivity;
-import techwork.ami.Promotion.OfferList.FragmentHome;
-import techwork.ami.Promotion.OfferList.OfferAdapter;
-import techwork.ami.Promotion.OfferList.OfferModel;
+import techwork.ami.Promotion.PromotionDetail.OfferDetailActivity;
+import techwork.ami.Promotion.PromotionsList.FragmentHome;
+import techwork.ami.Promotion.PromotionsList.OfferAdapter;
+import techwork.ami.Promotion.PromotionsList.OfferModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class FilterOfferActivity extends AppCompatActivity {
+public class FilterActivity extends AppCompatActivity {
 
     // UI references
     private RecyclerView mRecyclerView;
@@ -52,7 +52,7 @@ public class FilterOfferActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_offer);
+        setContentView(R.layout.activity_filter);
 
         tvFilterOffersEmpty = (TextView)findViewById(R.id.tv_filter_offers_empty);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -181,7 +181,7 @@ public class FilterOfferActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
-                Intent intent = new Intent(FilterOfferActivity.this, OfferDetailActivity.class);
+                Intent intent = new Intent(FilterActivity.this, OfferDetailActivity.class);
                 int position = mRecyclerView.getChildAdapterPosition(view);
                 OfferModel o = offersList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
@@ -200,7 +200,7 @@ public class FilterOfferActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(final View view) {
-                new CustomAlertDialogBuilder(FilterOfferActivity.this)
+                new CustomAlertDialogBuilder(FilterActivity.this)
                         .setTitle(R.string.offers_list_discard_question)
                         .setMessage("Confirme la acción")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

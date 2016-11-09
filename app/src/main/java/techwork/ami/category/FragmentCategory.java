@@ -23,7 +23,7 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
-import techwork.ami.Promotion.FilterOfferActivity;
+import techwork.ami.Promotion.FilterActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -175,7 +175,7 @@ public class FragmentCategory extends Fragment {
                 int position = rv.getChildAdapterPosition(view);
                 CategoryModel c = categoryList.get(position);
 
-                Intent intent = new Intent(getActivity(),FilterOfferActivity.class);
+                Intent intent = new Intent(getActivity(),FilterActivity.class);
                 intent.putExtra("idCategory", c.getId()+"");
                 intent.putExtra("categoryName", c.getName());
                 startActivity(intent);
