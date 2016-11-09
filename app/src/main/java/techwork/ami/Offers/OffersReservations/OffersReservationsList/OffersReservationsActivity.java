@@ -360,7 +360,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                             c.vibrate(500);
 
                             //If offer reserved is deleted finish OfferViewLocalActivity.
-                            OffersViewLocalActivity.activity.finish();
+                            //OffersViewLocalActivity.activity.finish();
 
                             Toast.makeText(context,R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
 

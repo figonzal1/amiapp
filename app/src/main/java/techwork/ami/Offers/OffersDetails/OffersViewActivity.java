@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.AnimateFab;
 import techwork.ami.AnimateMenuFab;
 import techwork.ami.Config;
@@ -50,6 +52,7 @@ public class OffersViewActivity extends AppCompatActivity {
     private Vibrator c;
     private com.github.clans.fab.FloatingActionButton fabAccept,fabDiscard;
     private FloatingActionMenu fabMenu;
+    private SwipeRefreshLayout refreshLayout;
 
 
     @Override
@@ -130,6 +133,15 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                  cantidad[0] = ""+ newVal;
+            }
+        });
+
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_offers_view);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getOfferProducts();
             }
         });
 
@@ -293,6 +305,7 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute(){
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             @Override
@@ -309,6 +322,7 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
+                refreshLayout.setRefreshing(false);
                 showProducts(s);
             }
         }
@@ -320,7 +334,8 @@ public class OffersViewActivity extends AppCompatActivity {
         getProductData(s);
 
         adapter = new ProductAdapter(getApplicationContext(),productList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
     }
 
     private void getProductData(String json) {
@@ -334,6 +349,10 @@ public class OffersViewActivity extends AppCompatActivity {
                 JSONObject jsonObjectItem = jsonProductOffer.optJSONObject(i);
                 ProductModel item = new ProductModel();
                 item.setName(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_NAME));
+                item.setDescription(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_DESCRIPTION));
+                item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_PRODUCT_OFFER_PRICE));
+                item.setImage(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_IMAGE));
+
                 productList.add(item);
             }
 

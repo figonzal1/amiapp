@@ -5,10 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
+import techwork.ami.Config;
 import techwork.ami.R;
 
 /**
@@ -29,10 +35,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tvName;
+        public TextView tvDescription;
+        public TextView tvPrice;
+        public ImageView ivImage;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView)itemView.findViewById(R.id.tv_offer_view_product_name);
+            tvDescription=(TextView)itemView.findViewById(R.id.tv_offer_view_product_description);
+            tvPrice=(TextView)itemView.findViewById(R.id.tv_offer_view_product_price);
+            ivImage=(ImageView)itemView.findViewById(R.id.iv_offer_view_product_image);
         }
     }
 
@@ -47,6 +59,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         ProductModel model = items.get(position);
         holder.tvName.setText(model.getName());
+        holder.tvDescription.setText(model.getDescription());
+        holder.tvPrice.setText(String.format(Config.CLP_FORMAT,model.getPrice()));
+        Picasso.with(context)
+                .load(Config.URL_IMAGES_PRODUCTS+model.getImage())
+                .placeholder(R.drawable.image_default)
+                .into(holder.ivImage);
     }
 
     @Override

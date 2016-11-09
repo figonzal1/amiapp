@@ -5,13 +5,23 @@ package techwork.ami.Offers.OffersDetails;
  */
 
 public class ProductModel {
-    String idProduct;
-    String name;
+    private String name;
+    private String description;
+    private int price;
+    private String image;
 
     //Getters
 
-    public String getIdProduct() {
-        return idProduct;
+    public String getImage() {
+        return image;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getName() {
@@ -20,11 +30,20 @@ public class ProductModel {
 
     //Setters
 
-    public void setIdProduct(String idProduct) {
-        this.idProduct = idProduct;
-    }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

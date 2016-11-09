@@ -169,6 +169,8 @@
 
     <!-- Offer View -->
     <string name="OfferViewCardViewNameProduct">Nombre producto</string>
+    <string name="OfferViewCardViewPriceProduct">$xx.xxx</string>
+    <string name="OfferViewCardViewDescriptionProduct">Descripción</string>
     <string name="OfferViewCompany">Empresa</string>
     <string name="OfferViewTittle">Título oferta</string>
     <string name="OfferViewDescription">Descripción de la oferta</string>

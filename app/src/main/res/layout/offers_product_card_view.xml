@@ -4,22 +4,56 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:contentPadding="5dp"
     card_view:cardCornerRadius="2dp"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="5dp"
         android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iv_offer_view_product_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_menu_camera"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/tv_offer_view_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/iv_offer_view_product_image"
+            android:textStyle="bold"
             android:text="@string/OfferViewCardViewNameProduct"/>
+
+        <TextView
+            android:id="@+id/tv_offer_view_product_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="@string/OfferViewCardViewDescriptionProduct"
+            android:layout_alignStart="@+id/tv_offer_view_product_name"
+            android:layout_below="@+id/tv_offer_view_product_name"
+            android:layout_above="@+id/tv_offer_view_product_price"
+            android:layout_alignEnd="@+id/tv_offer_view_product_price"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/tv_offer_view_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/OfferViewCardViewPriceProduct"
+            android:layout_alignBottom="@+id/iv_offer_view_product_image"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
