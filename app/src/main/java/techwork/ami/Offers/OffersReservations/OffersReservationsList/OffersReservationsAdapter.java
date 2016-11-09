@@ -87,7 +87,7 @@ public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReserv
 
 
 
-        if (model.getCashed().equals("0")){
+        if (model.getCharge().equals("0")){
             ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
 
             holder.tvStatus.setText("Reservada");

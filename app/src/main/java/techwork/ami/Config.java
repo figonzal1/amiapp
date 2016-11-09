@@ -50,7 +50,7 @@ public class Config {
 	public static final String URL_NEW_NEED ="http://amiapp.cl/public/getData/Need/saveNeed.php";
 	public static final String URL_NEED_DATA = "http://amiapp.cl/public/getData/Need/get_categories.php";
 	public static final String URL_CONTACT_US = "http://amiapp.cl/public/getData/ContactUs/sendContactEmail.php";
-	public static final String URL_DELETE_NEED = "http://amiapp.cl/public/getData/Need/ChangeStatusNeed.php";
+	public static final String URL_DELETE_NEED = "http://amiapp.cl/public/getData/Need/discardOrder.php";
 
 	// GO = Get Offers
 	//TODO: Cambiar los nombres a la actual definicion.
@@ -227,7 +227,7 @@ public class Config {
 	public static final String TAG_GET_OFFER_COMPANY="nombreEmpresa";
 	public static final String TAG_GET_OFFER_IMAGE="imagen";
 
-	//Get Products for OfferViewActivity
+	//Get Products for OffersViewActivity
 	public static final String URL_GET_PRODUCT_OFFER="http://amiapp.cl/public/getData/Need/getProductOffer.php";
 	public static final String KEY_GET_PRODUCT_OFFER_IDOFFER="idOferta";
 	public static final String TAG_GET_PRODUCT_OFFER="productos";
@@ -255,9 +255,9 @@ public class Config {
 	public static final String TAG_GET_LOCAL_COMMUNE="comuna";
 
 	//Offers Reservations
-	public static final String URL_GET_OFFER_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getOfferReservations.php";
-	public static final String URL_VALIDATE_OFFER_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateOfferReservation.php";
-	public static final String URL_OFFER_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateOffer.php";
+	public static final String URL_GET_OFFER_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getOfferReserved.php";
+	public static final String URL_VALIDATE_OFFER_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateOfferReserved.php";
+	public static final String URL_OFFER_RATE ="http://amiapp.cl/public/getData/NeedReserved/rateOfferReserved.php";
 	public static final String KEY_GET_OFFER_RESERVED_IDPERSON="idPersona";
 	public static final String KEY_GET_OFFER_RESERVED_IDOFFER = "idOferta";
 	public static final String KEY_GET_OFFER_RESERVED_QUANTITY = "cantidad";
@@ -282,6 +282,12 @@ public class Config {
 	public static final String TAG_GET_OFFER_RESERVED_COMPANY="empresa";
 	public static final String TAG_GET_OFFER_RESERVED_LOCALCODE="codigoLocal";
 	public static final String TAG_GET_OFFER_RESERVED_IMAGE="imagen";
+
+	//Delete offer reservations
+	public static final String URL_DELETE_OFFER_RESERVED="http://amiapp.cl/public/getData/NeedReserved/deleteOfferReserved.php";
+	public static final String KEY_DELETE_OFFER_RESERVED_IDOFFER="idOferta";
+	public static final String KEY_DELETE_OFFER_RESERVED_IDPERSON="idPersona";
+	public static final String KEY_DELETE_OFFER_RESERVED_QUANTITY="cantidad";
 
 	// Contact Us Keys
 	public static final String TAG_CU_NAME = "nombre";

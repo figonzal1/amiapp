@@ -198,7 +198,7 @@
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
 
 
-    <!-- NeedReservations Strings -->
+    <!-- OfferReservations (NeedOffer) Strings -->
     <string name="OrdersReservations">Mis pedidos reservados</string>
     <string name="OfferReservedEmpty">¡Oops! \n No tienes reservas recientes :(</string>
     <string name="OfferReservedExpired">Oferta expirada</string>
@@ -229,6 +229,12 @@
     <string name="OfferReservedRatePositive">Calificar</string>
     <string name="OffersReservedUnvalidated">Esta oferta no ha sido cobrada</string>
     <string name="OfferReservedValidateProcessing">Validando oferta</string>
+    <string name="OfferReservedDeleteProcessing">Eliminando reserva</string>
+    <string name="OfferReservedDeleteTittle">¿Desea eliminar esta reserva?</string>
+    <string name="OfferReservedDeleteConfirm">Confirme la acción</string>
+    <string name="OfferReservedDeleteOk">La reserva ha sido eliminada</string>
+    <string name="OfferReservedDeleteOfferCharged">No puedes eliminar una cobrada</string>
+    <string name="OfferReservedDeleteOfferCalificated">No puedes eliminar una calificada</string>
 
     <!-- Offers Reserved View Local-->
     <string name="OfferReservedViewLocalAdress">#Dirección, Comuna</string>
@@ -325,5 +331,11 @@
     <string name="offers_list_discard_question">¿Desea descartar esta promoción?</string>
     <string name="offers_list_discard_processing">Descartando promoción</string>
     <string name="title_activity_offer_detail">Detalles</string>
+
+    <!-- Popup menu strings -->
+    <string name="PopupMenuViewDetails">Ver detalles</string>
+    <string name="PopupMenuCalification">Calificar</string>
+    <string name="PopupMenuDeleteReservation">Eliminar reserva</string>
+    <string name="PopupMenuCharged">Cobrar</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -57,6 +58,7 @@ public class FragmentOrder extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private FloatingActionButton fab;
     private TextView tvOrderEmpty;
+    private Vibrator c;
 
 
     public FragmentOrder() {
@@ -147,7 +149,7 @@ public class FragmentOrder extends Fragment {
                     case R.id.item_popup_menu_discard_order:
 
                         //Show a CustomDialog in screen
-                        new CustomAlertDialogBuilder(view.getContext())
+                        new CustomAlertDialogBuilder(getContext())
                                 .setTitle(R.string.OrderDeleteConfirm)
                                 .setMessage(R.string.OrderConfirmAction)
                                 .setCancelable(false)
@@ -320,6 +322,9 @@ public class FragmentOrder extends Fragment {
                         public void run() {
 
                             loading.dismiss();
+
+                            c=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
                             Toast.makeText(view.getContext(),
                                   R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
 

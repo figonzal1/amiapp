@@ -1,5 +1,7 @@
 package techwork.ami.Offers.OffersLocalDetails;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,17 +25,19 @@ import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReser
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class OfferViewLocalActivity extends AppCompatActivity{
+public class OffersViewLocalActivity extends AppCompatActivity{
 
     private String idLocal,lat,lon,address,web,image,commune;
     Button btnStreetView,btnNeedOfferReserv;
     TextView tvAddress,tvWeb;
     ImageView ivImage;
+    public static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offers_view_local_activity);
+        activity=this;
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,7 +54,7 @@ public class OfferViewLocalActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OfferViewLocalActivity.this,StreetViewPanoramaFragment.class);
+                Intent intent = new Intent(OffersViewLocalActivity.this,StreetViewPanoramaFragment.class);
                 intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
                 intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
                 startActivity(intent);
@@ -62,7 +66,7 @@ public class OfferViewLocalActivity extends AppCompatActivity{
         btnNeedOfferReserv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OfferViewLocalActivity.this, OffersReservationsActivity.class);
+                Intent intent = new Intent(OffersViewLocalActivity.this, OffersReservationsActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,7 +81,7 @@ public class OfferViewLocalActivity extends AppCompatActivity{
 
         if (count == 0) {
             super.onBackPressed();
-            Intent intent = new Intent(OfferViewLocalActivity.this,MainActivity.class);
+            Intent intent = new Intent(OffersViewLocalActivity.this,MainActivity.class);
             startActivity(intent);
         } else {
             getFragmentManager().popBackStack();
