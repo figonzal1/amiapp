@@ -188,7 +188,7 @@
     <string name="OfferViewAcceptOfferFail">No se ha podido reservar</string>
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
     <string name="offers_view_maxpp_warnings">¡Puedes reservar hasta %s unidades!</string>
-    <string name="offers_view_maxpp_warning">¡Puedes reservar hasta %s unidades!</string>
+    <string name="offers_view_maxpp_warning">¡Puedes reservar hasta %s unidad!</string>
 
     <!-- Offer Local View -->
     <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
