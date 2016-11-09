@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
@@ -107,45 +108,9 @@ public class MyPromotionsActivity extends AppCompatActivity {
         // Floating button
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        fab.setScaleX(0);
-        fab.setScaleY(0);
+        //Animate floating button
+        AnimateFab.doAnimate(fab,context);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            final Interpolator interpolador = AnimationUtils.loadInterpolator(getApplicationContext(),
-                    android.R.interpolator.fast_out_slow_in);
-
-            fab.animate()
-                    .scaleX((float) 1.5)
-                    .scaleY((float) 1.5)
-                    .setInterpolator(interpolador)
-                    .setDuration(600)
-                    .setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            fab.animate()
-                                    .scaleY(1)
-                                    .scaleX(1)
-                                    .setInterpolator(interpolador)
-                                    .setDuration(1000)
-                                    .start();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,7 +164,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                         // If available
                         if (expiryTime > 0.0) {
                             // If the offer was already charged
-                            if (model.getCashed().equals("1")) {
+                            if (model.getCharged().equals("1")) {
                                 popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
                                 //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
                                 Snackbar.make(view, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
@@ -217,7 +182,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                         // If promotion is available
                         if (expiryTime > 0.0) {
                             // Validate before rate
-                            if (model.getCashed().equals("0")) {
+                            if (model.getCharged().equals("0")) {
                                 //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
                                 Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
                             }
@@ -305,7 +270,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(scaleAdapterReserved);
 
         if (reservationsOffersList.size()==0){
-            tvReservationsOffersEmpty.setText("No has hecho reservas aún.");
+            tvReservationsOffersEmpty.setText(R.string.my_reservations_offers_empty);
         } else {
             tvReservationsOffersEmpty.setText("");
         }
@@ -321,7 +286,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 // If available
                 if(expiryTime > 0.0){
                     // If the offer was already charged
-                    if(model.getCashed().equals("1")){
+                    if(model.getCharged().equals("1")){
                         //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
                         Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
                     }
@@ -343,7 +308,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 // If promotion is available
                 if (expiryTime > 0.0) {
                     // Validate before rate
-                    if (model.getCashed().equals("0")) {
+                    if (model.getCharged().equals("0")) {
                         //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
                         Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
                     }
@@ -633,7 +598,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 item.setLocalCode(jsonObjectItem.getString(Config.TAG_GRO_LOCCODE));
                 item.setCalification(jsonObjectItem.getString(Config.TAG_GRO_CALIFICATION));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GRO_IMAGE));
-                item.setCashed(jsonObjectItem.getString(Config.TAG_GRO_CASHED));
+                item.setCharged(jsonObjectItem.getString(Config.TAG_GRO_CHARGED));
                 item.setPaymentDate(jsonObjectItem.getString(Config.TAG_GRO_PAYDATE));
                 item.setMaxPPerson(jsonObjectItem.getInt(Config.TAG_GRO_MAXXPER));
                 item.setStock(jsonObjectItem.getInt(Config.TAG_GRO_STOCK));

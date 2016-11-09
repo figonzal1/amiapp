@@ -308,6 +308,7 @@
     <string name="my_reservations_offers_rate_positive">Calificar</string>
     <string name="my_reservations_offers_unvalidated">Esta promoción no ha sido cobrada</string>
     <string name="mrolcvReserved">Reservada</string>
+    <string name="my_reservations_offers_empty">¡Oops! \n No tienes reservas recientes :(</string>
 
     <!-- Filter Offers Strings -->
     <string name="title_activity_filter_offers">Filtrar promociones</string>

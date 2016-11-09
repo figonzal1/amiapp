@@ -104,31 +104,30 @@ public class MyPromotionsAdapter
         long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
         // If promotion is available
         if (expiryTime > 0.0){
-            if (model.getCashed().equals("0")){
-                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.orange));
+            if (model.getCharged().equals("0")){
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.yellow));
                 holder.tvStatus.setText("Reservada");
 
             }else{
                 if (model.getCalification().equals("")){
-                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
+                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.greenInTime));
                     holder.tvStatus.setText("Cobrada");
                 }
                 else {
                     ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
-                    holder.tvStatus.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.white, null));
                     holder.tvStatus.setText("Calificada");
                 }
             }
         }
         // Unavailable
         else {
-            if (model.getCashed().equals("0")){
+            if (model.getCharged().equals("0")){
                 ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
                 holder.tvStatus.setText("Vencida");
             }
             else {
                 if (model.getCalification().equals("")) {
-                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.green));
+                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.greenOutTime));
                     holder.tvStatus.setText("Cobrada");
                 } else {
                     ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.blue));

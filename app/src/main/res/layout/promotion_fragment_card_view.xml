@@ -45,7 +45,7 @@
             <TextView
                 android:id="@+id/offer_cv_dsct"
                 android:text="@string/offer_cv_dsct"
-                android:textColor="@color/green"
+                android:textColor="@color/greenInTime"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

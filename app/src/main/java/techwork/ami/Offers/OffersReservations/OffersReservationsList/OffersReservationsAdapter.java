@@ -88,19 +88,18 @@ public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReserv
 
 
         if (model.getCharge().equals("0")){
-            ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
-
+            ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.yellow));
             holder.tvStatus.setText("Reservada");
 
 
         }else{
             //
             if (model.getCalification().equals("")){
-                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.orange));
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.greenInTime));
                 holder.tvStatus.setText("Cobrada");
             }
             else {
-                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
                 holder.tvStatus.setText("Calificada");
             }
         }

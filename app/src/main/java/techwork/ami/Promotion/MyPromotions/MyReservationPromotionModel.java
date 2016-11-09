@@ -16,7 +16,7 @@ public class MyReservationPromotionModel {
     private String image;
     private String company;
     private String quantity;
-    private String cashed;
+    private String charged;
     private String reservationDate;
     private String paymentDate;
     private String localCode;
@@ -53,6 +53,11 @@ public class MyReservationPromotionModel {
     public int getState() {
         return state;
     }
+
+    public String getCharged() {
+        return charged;
+    }
+
     public String getImage() {
         return image;
     }
@@ -83,9 +88,7 @@ public class MyReservationPromotionModel {
     public String getFinalDateTime() {
         return finalDateTime;
     }
-    public String getCashed() {
-        return cashed;
-    }
+
 
     //Setters
     public void setIdReservationOffer(String idReservationOffer) {
@@ -133,9 +136,11 @@ public class MyReservationPromotionModel {
     public void setLocalCode(String localCode){
         this.localCode = localCode;
     }
-    public void setCashed(String cashed) {
-        this.cashed = cashed;
+
+    public void setCharged(String charged) {
+        this.charged = charged;
     }
+
     public void setMaxPPerson(int maxPPerson) {
         MaxPPerson = maxPPerson;
     }
