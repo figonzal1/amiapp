@@ -43,7 +43,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
-import techwork.ami.Promotion.PromotionDetail.OfferDetailActivity;
+import techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -57,8 +57,8 @@ public class FragmentHome extends Fragment {
         getOffers();
     }
     // Required for fragment use
-    private OfferAdapter adapter;
-    private List<OfferModel> offerList;
+    private PromotionAdapter adapter;
+    private List<PromotionModel> offerList;
     private RecyclerView rv;
     private LinearLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
@@ -83,7 +83,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter= new OfferAdapter(getActivity(),offerList);
+        adapter= new PromotionAdapter(getActivity(),offerList);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class FragmentHome extends Fragment {
         rv.setHasFixedSize(true);
 
         //Evita el error de skipping layout
-        adapter= new OfferAdapter(getActivity(),offerList);
+        adapter= new PromotionAdapter(getActivity(),offerList);
 
         // Set the layout that will use recycle view
         layout = new LinearLayoutManager(getContext());
@@ -183,7 +183,7 @@ public class FragmentHome extends Fragment {
 
     private void showOffers(String s){
         getData(s);
-        adapter = new OfferAdapter(getActivity(), offerList);
+        adapter = new PromotionAdapter(getActivity(), offerList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
@@ -196,9 +196,9 @@ public class FragmentHome extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                Intent intent = new Intent(getActivity(), OfferDetailActivity.class);
+                Intent intent = new Intent(getActivity(), PromotionDetailActivity.class);
                 int position = rv.getChildAdapterPosition(view);
-                OfferModel o = offerList.get(position);
+                PromotionModel o = offerList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
@@ -233,7 +233,7 @@ public class FragmentHome extends Fragment {
         });
     }
 
-    public void discardOffer(DialogInterface dialog, OfferModel offer) {
+    public void discardOffer(DialogInterface dialog, PromotionModel offer) {
         String idPerson = getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                 .getString(Config.KEY_SP_ID, "-1");
         String idOffer = offer.getId();
@@ -256,7 +256,7 @@ public class FragmentHome extends Fragment {
             for(int i=0;i<jsonOffers.length();i++){
 
                 JSONObject jsonObjectItem = jsonOffers.optJSONObject(i);
-                OfferModel item = new OfferModel();
+                PromotionModel item = new PromotionModel();
 
                 dIni =jsonObjectItem.getString(Config.TAG_GO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
@@ -312,8 +312,8 @@ public class FragmentHome extends Fragment {
         }
     }
 
-    void myNotification(OfferModel o){
-        Intent nintent = new Intent(getActivity(), OfferDetailActivity.class);
+    void myNotification(PromotionModel o){
+        Intent nintent = new Intent(getActivity(), PromotionDetailActivity.class);
         nintent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
         nintent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
         nintent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());

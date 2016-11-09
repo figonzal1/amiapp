@@ -30,10 +30,10 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Promotion.PromotionDetail.OfferDetailActivity;
+import techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity;
 import techwork.ami.Promotion.PromotionsList.FragmentHome;
-import techwork.ami.Promotion.PromotionsList.OfferAdapter;
-import techwork.ami.Promotion.PromotionsList.OfferModel;
+import techwork.ami.Promotion.PromotionsList.PromotionAdapter;
+import techwork.ami.Promotion.PromotionsList.PromotionModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -43,7 +43,7 @@ public class FilterActivity extends AppCompatActivity {
     // UI references
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout refreshLayout;
-    private List<OfferModel> offersList;
+    private List<PromotionModel> offersList;
     private int page;
     private String idCategory;
     private String idStore;
@@ -167,7 +167,7 @@ public class FilterActivity extends AppCompatActivity {
     private void showFilterOffers(String json) {
         getData(json);
 
-        OfferAdapter adapter = new OfferAdapter(this, offersList);
+        PromotionAdapter adapter = new PromotionAdapter(this, offersList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         mRecyclerView.setAdapter(scaleAdapter);
 
@@ -181,9 +181,9 @@ public class FilterActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
-                Intent intent = new Intent(FilterActivity.this, OfferDetailActivity.class);
+                Intent intent = new Intent(FilterActivity.this, PromotionDetailActivity.class);
                 int position = mRecyclerView.getChildAdapterPosition(view);
-                OfferModel o = offersList.get(position);
+                PromotionModel o = offersList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
@@ -234,7 +234,7 @@ public class FilterActivity extends AppCompatActivity {
             for(int i=0;i<jsonOffers.length();i++){
 
                 JSONObject jsonObjectItem = jsonOffers.optJSONObject(i);
-                OfferModel item = new OfferModel();
+                PromotionModel item = new PromotionModel();
 
                 dIni =jsonObjectItem.getString(Config.TAG_GO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
@@ -277,7 +277,7 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
-    private void discardOffer(DialogInterface dialog, OfferModel offer) {
+    private void discardOffer(DialogInterface dialog, PromotionModel offer) {
         String idPerson = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                 .getString(Config.KEY_SP_ID, "-1");
         String idOffer = offer.getId();

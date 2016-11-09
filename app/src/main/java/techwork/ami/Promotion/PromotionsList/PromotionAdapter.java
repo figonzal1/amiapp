@@ -20,16 +20,16 @@ import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
-public class OfferAdapter
-        extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder>
+public class PromotionAdapter
+        extends RecyclerView.Adapter<PromotionAdapter.OfferViewHolder>
         implements View.OnClickListener,View.OnLongClickListener {
 
     private OnItemClickListenerRecyclerView itemClick;
-    private List<OfferModel> items;
+    private List<PromotionModel> items;
     private Context context;
 
     // Class constructor
-    public OfferAdapter(Context context, List<OfferModel> items){
+    public PromotionAdapter(Context context, List<PromotionModel> items){
         this.context = context;
         this.items = items;
     }
@@ -58,7 +58,7 @@ public class OfferAdapter
 
     // Inflate the view
     @Override
-    public OfferAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PromotionAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_card_view,parent,false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
@@ -68,8 +68,8 @@ public class OfferAdapter
 
     // Set data into view offers (list)
     @Override
-    public void onBindViewHolder(OfferAdapter.OfferViewHolder holder, int position) {
-        final OfferModel offer = items.get(position);
+    public void onBindViewHolder(PromotionAdapter.OfferViewHolder holder, int position) {
+        final PromotionModel offer = items.get(position);
         holder.offerTitle.setText(offer.getTitle());
         holder.offerPrice.setText("$"+String.format(Config.CLP_FORMAT,offer.getPrice()));
         holder.offerCompany.setText(offer.getCompany());

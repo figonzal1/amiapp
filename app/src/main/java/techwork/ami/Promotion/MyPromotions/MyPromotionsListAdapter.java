@@ -22,17 +22,17 @@ import techwork.ami.R;
  * Created by Daniel on 19-09-2016.
  */
 
-public class MyReservationsOffersListAdapter
-        extends RecyclerView.Adapter<MyReservationsOffersListAdapter.MyReservationsListViewHolder>
+public class MyPromotionsListAdapter
+        extends RecyclerView.Adapter<MyPromotionsListAdapter.MyReservationsListViewHolder>
         implements View.OnClickListener,View.OnLongClickListener {
 
     private OnItemClickListenerRecyclerView itemClick;
-    private List<ReservationOffer> items;
+    private List<MyReservationPromotionModel> items;
     private Context context;
     private MyPromotionsActivity offersReservationsActivity;
 
     // Class constructor
-    public MyReservationsOffersListAdapter(Context context, List<ReservationOffer> items, MyPromotionsActivity offersReservationsActivity) {
+    public MyPromotionsListAdapter(Context context, List<MyReservationPromotionModel> items, MyPromotionsActivity offersReservationsActivity) {
         this.context = context;
         this.items = items;
         this.offersReservationsActivity=offersReservationsActivity;
@@ -64,7 +64,7 @@ public class MyReservationsOffersListAdapter
 
     // Inflate the view
     @Override
-    public MyReservationsOffersListAdapter.MyReservationsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyPromotionsListAdapter.MyReservationsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_promotions_list_card_view, parent, false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
@@ -74,8 +74,8 @@ public class MyReservationsOffersListAdapter
 
     // Set data into view reservations (list)
     @Override
-    public void onBindViewHolder(MyReservationsOffersListAdapter.MyReservationsListViewHolder holder, int position) {
-        final ReservationOffer model = items.get(position);
+    public void onBindViewHolder(MyPromotionsListAdapter.MyReservationsListViewHolder holder, int position) {
+        final MyReservationPromotionModel model = items.get(position);
 
         holder.reservationTitle.setText(model.getTitle());
         holder.reservationFinalDate.setText(model.getFinalDate());

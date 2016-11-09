@@ -145,7 +145,7 @@
                 />
         </activity>
         <activity android:name=".ContactUsActivity" />
-        <activity android:name=".Promotion.PromotionDetail.OfferDetailActivity"
+        <activity android:name=".Promotion.PromotionDetail.PromotionDetailActivity"
             android:label="@string/title_activity_offer_detail"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">

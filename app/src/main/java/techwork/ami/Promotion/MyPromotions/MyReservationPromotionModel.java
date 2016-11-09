@@ -3,7 +3,7 @@ package techwork.ami.Promotion.MyPromotions;
 /**
  * Created by Daniel on 15-08-2016.
  */
-public class ReservationOffer {
+public class MyReservationPromotionModel {
     private String idReservationOffer;
     private String title;
     private String description;

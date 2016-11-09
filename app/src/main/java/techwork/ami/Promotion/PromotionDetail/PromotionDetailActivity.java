@@ -45,7 +45,7 @@ import techwork.ami.RequestHandler;
 /**
  * Created by Daniel on 15-10-2016.
  */
-public class OfferDetailActivity extends AppCompatActivity {
+public class PromotionDetailActivity extends AppCompatActivity {
     // UI references
     private RecyclerView rv;
     private List<ProductModel> productList;

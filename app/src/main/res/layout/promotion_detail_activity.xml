@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="techwork.ami.Promotion.PromotionDetail.OfferDetailActivity">
+    tools:context="techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity">
     <!--android:scrollbarStyle="outsideInset"-->
 
     <android.support.design.widget.AppBarLayout
