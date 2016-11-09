@@ -79,7 +79,15 @@ public class MyPromotionsAdapter
 
         holder.reservationTitle.setText(model.getTitle());
         holder.reservationFinalDate.setText(model.getFinalDate());
-        holder.reservationPrice.setText(model.getQuantity()+"x"+ String.format(Config.CLP_FORMAT, model.getPrice()));
+        if(Integer.valueOf(model.getQuantity())>1){
+            holder.reservationPrice.setText(String.format(Config.QUANTITYPRICE_FORMAT,
+                    model.getQuantity(),
+                    String.format(Config.CLP_FORMAT, model.getPrice()),
+                    context.getResources().getString(R.string.offer_detail_cv_each)));
+        }
+        else{
+            holder.reservationPrice.setText(String.format(Config.CLP_FORMAT, model.getPrice()));
+        }
         holder.reservationCompany.setText(model.getCompany());
         holder.reservationReservationDate.setText(model.getReservationDate());
 

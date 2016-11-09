@@ -343,6 +343,7 @@ public class PromotionDetailActivity extends AppCompatActivity {
                 item.setName(jsonObjectItem.getString(Config.TAG_GOD_NAME));
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GOD_DESCRIPTION));
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GOD_PRICE));
+                item.setQuantity(jsonObjectItem.getString(Config.TAG_GOD_QUANTITY));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GOD_IMAGE));
                 productList.add(item);
             }

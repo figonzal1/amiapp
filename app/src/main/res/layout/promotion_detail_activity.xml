@@ -34,7 +34,10 @@
             android:id="@+id/relative"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp">
+            android:paddingTop="@dimen/activity_padding"
+            android:paddingBottom="@dimen/activity_paddingBottom"
+            android:paddingLeft="@dimen/activity_paddingLeft"
+            android:paddingRight="@dimen/activity_paddingRight">
 
             <TextView
                 android:text="@string/offer_cv_title"

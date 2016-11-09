@@ -271,6 +271,7 @@
     <string name="offer_cv_dsct">Descuento</string>
     <string name="offer_cv_dsct_sy">%</string>
     <string name="offer_cv_image_desciption">Imagen</string>
+    <string name="offer_detail_cv_each">c/u</string>
     <string name="reserve_ok">¡Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>

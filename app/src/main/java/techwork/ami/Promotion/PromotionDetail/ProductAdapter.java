@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import techwork.ami.Config;
@@ -52,10 +54,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         ProductModel product = items.get(position);
         holder.productName.setText(product.getName());
-        //TODO BORRAR
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(String.format(Config.CLP_FORMAT,product.getPrice()));
-        //holder.productPrice.setText(("$"+"1"));
+        if(Integer.valueOf(product.getQuantity())>1){
+            holder.productPrice.setText(String.format(Config.QUANTITYPRICE_FORMAT,
+                    product.getQuantity(),
+                    String.format(Config.CLP_FORMAT, product.getPrice()),
+                    context.getResources().getString(R.string.offer_detail_cv_each)));
+            /*holder.productPrice.setText(product.getQuantity()+
+                    " x "+
+                    String.format(Config.CLP_FORMAT, product.getPrice()) +
+                    " "
+                    +context.getResources().getString(R.string.offer_detail_cv_each));*/
+        }
+        else{
+            holder.productPrice.setText(String.format(Config.CLP_FORMAT, product.getPrice()));
+        }
         Picasso.with(context).load(Config.URL_IMAGES_OFFER + product.getImage())
                 .placeholder(R.drawable.image_default)
                 .into(holder.productImage);

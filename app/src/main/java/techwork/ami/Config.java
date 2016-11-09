@@ -78,6 +78,7 @@ public class Config {
 	public static final String TAG_GOD_DESCRIPTION = "descripcion";
 	public static final String TAG_GOD_PRICE ="precio" ;
 	public static final String TAG_GOD_IMAGE = "imagen";
+	public static final String TAG_GOD_QUANTITY = "cantidad";
 
 	// FO = Filter Offers
 	//TODO: Cambiar los nombres a la actual definicion.
@@ -297,6 +298,9 @@ public class Config {
 
 	// Money format
 	public static final String CLP_FORMAT = "$ %,d";
+
+	// Quantity and price format
+	public static final String QUANTITYPRICE_FORMAT = "%s x %s %s";
 
 	// My Reservations offers keys
 	public static final String KEY_RESERVE_OFFER_ID = "idOferta";

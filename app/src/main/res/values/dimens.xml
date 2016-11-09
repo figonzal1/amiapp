@@ -17,4 +17,6 @@
     <dimen name="activity_paddingLeft">10dp</dimen>
     <dimen name="activity_paddingRight">10dp</dimen>
     <dimen name="activity_paddingTop">0dp</dimen>
+    <dimen name="cardView_relativeLayout_padding">5dp</dimen>
+    <dimen name="char_space">5dp</dimen>
 </resources>
