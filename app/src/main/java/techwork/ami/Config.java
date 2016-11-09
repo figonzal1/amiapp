@@ -29,8 +29,8 @@ public class Config {
 
 	// Request URLs
 	public static final String URL_GENERAL_SERVER="http://amiapp.cl";
-
 	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php";
+	public static final String PARAMS_URL_GET_PROFILE = "type=%s&id=%s";
 	public static final String URL_CHANGE_ACCOUNT_STATUS ="http://amiapp.cl/public/getData/Profile/changeAccountStatus.php";
 	public static final String URL_GET_MAP_OFFERS="http://amiapp.cl/public/getData/Maps/getData.php";
 	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php";

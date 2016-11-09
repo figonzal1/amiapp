@@ -199,7 +199,6 @@
     <string name="OfferViewLocalStreetView">Ver street view</string>
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
 
-
     <!-- OfferReservations (NeedOffer) Strings -->
     <string name="OrdersReservations">Mis pedidos reservados</string>
     <string name="OfferReservedEmpty">¡Oops! \n No tienes reservas recientes :(</string>
@@ -244,7 +243,6 @@
     <string name="OfferReservedViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferReservedViewLocalStreetView">Ver street view</string>
 
-
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
     <string name="afterLoginTitle">¡Bienvenido a AMI!</string>
@@ -261,7 +259,6 @@
     <string name="regionNoSelected">Seleccionar Región</string>
     <string name="provinceNoSelected">Seleccionar Provincia</string>
     <string name="communeNoSelected">Seleccionar Comuna</string>
-
 
     <!-- Explore Offers Strings -->
     <string name="titleActivityExploreOffers">Explorar promociones</string>

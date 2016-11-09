@@ -398,7 +398,7 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
             }
         }
         GetProfile gp = new GetProfile();
-        gp.execute("type=" + type + "&id=" + id);
+        gp.execute(String.format(Config.PARAMS_URL_GET_PROFILE, type, id));
     }
 
     private void showData(String json) {
