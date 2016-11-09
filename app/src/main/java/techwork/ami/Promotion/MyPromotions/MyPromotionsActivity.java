@@ -48,6 +48,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.ExpiryTime;
 import techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -170,8 +171,11 @@ public class MyPromotionsActivity extends AppCompatActivity {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                //Calculate remainig time
+                ExpiryTime expt= new ExpiryTime();
+                long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
 
-                switch(item.getItemId()){
+                switch(item.getItemId()) {
                     case R.id.item_popup_menu_reservations_details:
                         Intent intent = new Intent(MyPromotionsActivity.this, PromotionDetailActivity.class);
                         intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
@@ -191,32 +195,42 @@ public class MyPromotionsActivity extends AppCompatActivity {
 
                     case R.id.item_popup_menu_reservations_charge:
                         item.setEnabled(true);
-                        //If needOffer is charge, not charged permitted.
-                        if (model.getCashed().equals("1")){
+
+                        // If available
+                        if (expiryTime > 0.0) {
+                            // If the offer was already charged
+                            if (model.getCashed().equals("1")) {
+                                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                                //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+                                Snackbar.make(view, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
+                            } else {
+                                dialogLocalCode(model);
+                            }
+                        } else {
                             popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
-                            //Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
-                            Snackbar.make(view,R.string.OfferReservedAlready,Snackbar.LENGTH_LONG).show();
-                        }
-                        //Do charge
-                        else {
-                            dialogLocalCode(model);
+                            //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+                            Snackbar.make(view, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
                         }
                         return true;
 
                     case R.id.item_popup_menu_reservations_calificate:
-                        //If needOffer is not charge, not calificate.
-                        if (model.getCashed().equals("0")){
-                            //Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_LONG).show();
-                            Snackbar.make(fab, R.string.OffersReservedUnvalidated, Snackbar.LENGTH_LONG).show();
-                        }
-                        //If has already validated and rated.
-                        else if (!model.getCalification().equals("")){
-                            item.setEnabled(false);
-                            //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_LONG).show();
-                            Snackbar.make(fab, R.string.OfferReservedAlreadyCommented, Snackbar.LENGTH_LONG).show();
-                        }
-                        else{
-                            rateOffer(model,false);
+                        // If promotion is available
+                        if (expiryTime > 0.0) {
+                            // Validate before rate
+                            if (model.getCashed().equals("0")) {
+                                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                                Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
+                            }
+                            // If has already validated but not rated
+                            else if (!model.getCalification().equals("")) {
+                                item.setEnabled(false);
+                                Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                            } else {
+                                rateOffer(model, false);
+                            }
+                        } else {
+                            Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
                         }
                 }
                 return false;
@@ -301,31 +315,48 @@ public class MyPromotionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(final View view) {
                 final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
-                // If the offer was already charged
-                if(model.getCashed().equals("1")){
-                    //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
+                //Calculate remainig time
+                ExpiryTime expt= new ExpiryTime();
+                long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
+                // If available
+                if(expiryTime > 0.0){
+                    // If the offer was already charged
+                    if(model.getCashed().equals("1")){
+                        //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+                        Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
+                    }
+                    else {
+                        dialogLocalCode(model);
+                    }
                 }
                 else {
-                    dialogLocalCode(model);
+                    Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onItemLongClick(View view) {
                 final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
-                // Validate before rate
-                if (model.getCashed().equals("0")){
-                    //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
-                    Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
-                }
-                // If has already validated but not rated
-                else if (!model.getCalification().equals("")){
-                    Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                //Calculate remainig time
+                ExpiryTime expt= new ExpiryTime();
+                long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
+                // If promotion is available
+                if (expiryTime > 0.0) {
+                    // Validate before rate
+                    if (model.getCashed().equals("0")) {
+                        //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                        Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
+                    }
+                    // If has already validated but not rated
+                    else if (!model.getCalification().equals("")) {
+                        Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+                    } else {
+                        rateOffer(model, false);
+                    }
                 }
                 else {
-                    rateOffer(model, false);
+                    Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
                 }
             }
         });

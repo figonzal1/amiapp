@@ -303,6 +303,7 @@
     <string name="my_reservations_offers_already_commented">¡Gracias, ya opinaste!</string>
     <string name="my_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
     <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
+    <string name="my_reservations_offers_expired">Promoción vencida</string>
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
     <string name="my_reservations_offers_unvalidated">Esta promoción no ha sido cobrada</string>

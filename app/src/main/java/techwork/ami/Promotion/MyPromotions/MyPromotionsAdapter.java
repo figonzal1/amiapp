@@ -3,6 +3,7 @@ package techwork.ami.Promotion.MyPromotions;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.List;
 
 import techwork.ami.Config;
+import techwork.ami.ExpiryTime;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
@@ -96,24 +99,43 @@ public class MyPromotionsAdapter
                 .placeholder(R.drawable.image_default)
                 .into(holder.reservationImage);
 
-        if (model.getCashed().equals("0")){
-            ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
-
-            holder.tvStatus.setText("Reservada");
-
-
-        }else{
-            //
-            if (model.getCalification().equals("")){
+        //Calculate remainig time
+        ExpiryTime expt= new ExpiryTime();
+        long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
+        // If promotion is available
+        if (expiryTime > 0.0){
+            if (model.getCashed().equals("0")){
                 ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.orange));
-                holder.tvStatus.setText("Cobrada");
-            }
-            else {
-                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
-                holder.tvStatus.setText("Calificada");
+                holder.tvStatus.setText("Reservada");
+
+            }else{
+                if (model.getCalification().equals("")){
+                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
+                    holder.tvStatus.setText("Cobrada");
+                }
+                else {
+                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
+                    holder.tvStatus.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.white, null));
+                    holder.tvStatus.setText("Calificada");
+                }
             }
         }
-
+        // Unavailable
+        else {
+            if (model.getCashed().equals("0")){
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
+                holder.tvStatus.setText("Vencida");
+            }
+            else {
+                if (model.getCalification().equals("")) {
+                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.green));
+                    holder.tvStatus.setText("Cobrada");
+                } else {
+                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.blue));
+                    holder.tvStatus.setText("Calificada");
+                }
+            }
+        }
         holder.popupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
