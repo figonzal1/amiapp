@@ -80,23 +80,28 @@ public class OffersViewActivity extends AppCompatActivity {
         tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_DESCRIPTION));
         tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
         tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_COMPANY));
-        tvDateIni.setText("Fecha de publicación: " + bundle.getString(Config.TAG_GET_OFFER_DATEINI));
-        tvDateFin.setText("Fecha de expiración: " + bundle.getString(Config.TAG_GET_OFFER_DATEFIN));
+        tvDateIni.setText(R.string.OfferViewDateIni2 + bundle.getString(Config.TAG_GET_OFFER_DATEINI));
+        tvDateFin.setText(R.string.OfferViewDateFin2 + bundle.getString(Config.TAG_GET_OFFER_DATEFIN));
 
         //If stock > maxxperson, textview show maxxperson
-        if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON))) {
+        if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>
+                Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON))) {
             if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)) > 1) {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON) + " unidades!");
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warnings),
+                        bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)));
             } else {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON) + " unidad!");
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warning),
+                        bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)));
             }
         }
         //if stock < maxpperson, textview show stock
         else{
             if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK)) > 1) {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_STOCK) + " unidades!");
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warnings),
+                        bundle.getString(Config.TAG_GET_OFFER_STOCK)));
             } else {
-                tvMaxPPerson.setText("¡Puedes reservar hasta " + bundle.getString(Config.TAG_GET_OFFER_STOCK) + " unidad!");
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warning),
+                        bundle.getString(Config.TAG_GET_OFFER_STOCK)));
             }
         }
 

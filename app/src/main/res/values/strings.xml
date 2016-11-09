@@ -188,6 +188,8 @@
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
     <string name="OfferViewDateIni2">Fecha de publicación: </string>
     <string name="OfferViewDateFin2">Fecha de expiración: </string>
+    <string name="offers_view_maxpp_warnings">¡Puedes reservar hasta %s unidades!</string>
+    <string name="offers_view_maxpp_warning">¡Puedes reservar hasta %s unidades!</string>
 
     <!-- Promotion Local View -->
     <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
