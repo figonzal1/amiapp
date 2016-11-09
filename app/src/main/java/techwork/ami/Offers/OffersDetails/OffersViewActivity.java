@@ -139,7 +139,7 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Accept Offer Task
+                //Accept Promotion Task
                 class acceptOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
                     private ProgressDialog loading;
@@ -252,7 +252,7 @@ public class OffersViewActivity extends AppCompatActivity {
 
                                     Toast.makeText(getApplicationContext(), R.string.OfferViewDiscardOffer, Toast.LENGTH_LONG).show();
 
-                                    //If Offer is discard go to Main activity refreshed
+                                    //If Promotion is discard go to Main activity refreshed
                                     Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
                                     finish();
                                     startActivity(intent);

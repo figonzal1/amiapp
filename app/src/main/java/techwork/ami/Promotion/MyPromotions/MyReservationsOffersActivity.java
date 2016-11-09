@@ -1,8 +1,7 @@
-package techwork.ami.ReservationsOffers;
+package techwork.ami.Promotion.MyPromotions;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,10 +11,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +20,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +27,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -53,9 +48,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.MainActivity;
-import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
-import techwork.ami.Offer.OfferList.OfferModel;
+import techwork.ami.Promotion.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -487,7 +480,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     }
 
     private void rateOffer(final ReservationOffer ro, final boolean isFirst) {
-        // Rate the Offer
+        // Rate the Promotion
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.rank_dialog, null);
@@ -529,7 +522,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    // Actions to rate Offer
+    // Actions to rate Promotion
     private void doPositiveRate(DialogInterface dialog, ReservationOffer ro, String rate, boolean isFirst) {
         class RateReservationOffer extends AsyncTask<String, Void, String> {
             ProgressDialog loading;

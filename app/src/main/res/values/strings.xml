@@ -169,7 +169,7 @@
     <string name="OfferCardViewPrice">$x.xxx</string>
     <string name="OfferCardViewCompany">Empresa</string>
 
-    <!-- Offer View -->
+    <!-- Promotion View -->
     <string name="OfferViewCardViewNameProduct">Nombre producto</string>
     <string name="OfferViewOfferSendFor">Oferta enviada por: </string>
     <string name="OfferViewCompany">Empresa</string>
@@ -189,7 +189,7 @@
     <string name="OfferViewDateIni2">Fecha de publicación: </string>
     <string name="OfferViewDateFin2">Fecha de expiración: </string>
 
-    <!-- Offer Local View -->
+    <!-- Promotion Local View -->
     <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
     <string name="OfferViewLocalAdress">#Dirección, Comuna</string>
     <string name="OfferViewLocalWebText">Más información en</string>
@@ -264,7 +264,7 @@
     <!-- Explore Offers Strings -->
     <string name="titleActivityExploreOffers">Explorar promociones</string>
 
-    <!-- Offer Strings -->
+    <!-- Promotion Strings -->
     <string name="offer_cv_company">Compañía</string>
     <string name="offer_cv_price">Precio</string>
     <string name="offer_cv_description">Descripción</string>
@@ -278,7 +278,7 @@
     <string name="offer_detail_reserve">Reservar</string>
     <string name="offer_detail_quantity">Seleccione cuántos desea.</string>
 
-    <!-- Offer Detail Strings-->
+    <!-- Promotion Detail Strings-->
     <string name="od_tv_price_txt">Promoción</string>
     <string name="od_tv_tprice_txt">Precio normal</string>
     <string name="od_tv_dsct_txt">Descuento</string>

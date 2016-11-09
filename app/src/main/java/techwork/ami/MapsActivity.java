@@ -39,7 +39,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import techwork.ami.Offer.FilterOfferActivity;
+import techwork.ami.Promotion.FilterOfferActivity;
 
 public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback {

@@ -1,23 +1,16 @@
-package techwork.ami.Offer.OfferList;
+package techwork.ami.Promotion.OfferList;
 
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.support.v4.app.FragmentHostCallback;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

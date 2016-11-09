@@ -1,4 +1,4 @@
-package techwork.ami.Offer.OfferDetail;
+package techwork.ami.Promotion.OfferDetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

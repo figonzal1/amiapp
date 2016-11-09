@@ -1,11 +1,10 @@
-package techwork.ami.Offer.OfferDetail;
+package techwork.ami.Promotion.OfferDetail;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -28,20 +27,13 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
@@ -49,8 +41,6 @@ import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
-
-import static com.google.android.gms.analytics.internal.zzy.v;
 
 /**
  * Created by Daniel on 15-10-2016.

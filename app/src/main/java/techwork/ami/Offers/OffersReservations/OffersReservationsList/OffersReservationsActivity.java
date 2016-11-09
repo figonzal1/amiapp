@@ -530,7 +530,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
     }
 
     private void rateOfferReserved(final OffersReservationsModel model, final boolean isFirst) {
-        // Rate the Offer
+        // Rate the Promotion
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.rank_dialog, null);
@@ -561,7 +561,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    // Actions to rate Offer
+    // Actions to rate Promotion
     private void doPositiveRate(DialogInterface dialog, OffersReservationsModel model, final String rate, boolean isFirst) {
 
         final String idOffer = model.getIdOffer();

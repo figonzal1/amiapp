@@ -1,4 +1,4 @@
-package techwork.ami.ReservationsOffers;
+package techwork.ami.Promotion.MyPromotions;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;

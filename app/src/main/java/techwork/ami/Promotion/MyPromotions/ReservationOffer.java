@@ -1,4 +1,4 @@
-package techwork.ami.ReservationsOffers;
+package techwork.ami.Promotion.MyPromotions;
 
 /**
  * Created by Daniel on 15-08-2016.

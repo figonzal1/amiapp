@@ -1,4 +1,4 @@
-package techwork.ami.Offer.OfferDetail;
+package techwork.ami.Promotion.OfferDetail;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;

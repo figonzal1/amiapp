@@ -1,4 +1,4 @@
-package techwork.ami.Offer.OfferList;
+package techwork.ami.Promotion.OfferList;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -43,7 +43,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
-import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
+import techwork.ami.Promotion.OfferDetail.OfferDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;

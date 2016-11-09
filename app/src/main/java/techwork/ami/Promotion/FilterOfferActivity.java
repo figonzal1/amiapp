@@ -1,7 +1,6 @@
-package techwork.ami.Offer;
+package techwork.ami.Promotion;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,17 +24,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
-import techwork.ami.Offer.OfferList.FragmentHome;
-import techwork.ami.Offer.OfferList.OfferAdapter;
-import techwork.ami.Offer.OfferList.OfferModel;
+import techwork.ami.Promotion.OfferDetail.OfferDetailActivity;
+import techwork.ami.Promotion.OfferList.FragmentHome;
+import techwork.ami.Promotion.OfferList.OfferAdapter;
+import techwork.ami.Promotion.OfferList.OfferModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;

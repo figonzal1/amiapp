@@ -71,7 +71,7 @@ public class Config {
 	public static final String TAG_GO_IMAGE ="imagen" ;
 	public static final String TAG_GO_NO_RESERVE_OPTION = "mostrarOpcionReserva";
 
-	// GOD = Get Offer Details
+	// GOD = Get Promotion Details
 	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GOD_PRODUCT = "products";
 	public static final String TAG_GOD_NAME = "nombre";
@@ -115,7 +115,7 @@ public class Config {
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
 	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
 
-	// DO = Discard Offer URLs
+	// DO = Discard Promotion URLs
 	public static final String URL_DO_DISCARD = "http://amiapp.cl/public/getData/DiscardOffer/discardOffer.php";
 
 	// Keys that will be used to send the request to php scripts
@@ -309,7 +309,7 @@ public class Config {
 	public static final String KEY_DO_OFFER_ID = "idOferta";
 	public static final String KEY_DO_PERSON_ID = "idPersona";
 
-	// Offer Detail keys
+	// Promotion Detail keys
 	public static final String KEY_OD_OFFER_ID = "idOferta";
 
 	// Date format
