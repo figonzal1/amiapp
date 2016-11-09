@@ -1,4 +1,4 @@
-package techwork.ami.Offer.OfferList;
+package techwork.ami.Promotion.PromotionsList;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -43,8 +43,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.MainActivity;
-import techwork.ami.Offer.DiscardOffer;
-import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
+import techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -58,8 +57,8 @@ public class FragmentHome extends Fragment {
         getOffers();
     }
     // Required for fragment use
-    private OfferAdapter adapter;
-    private List<OfferModel> offerList;
+    private PromotionAdapter adapter;
+    private List<PromotionModel> offerList;
     private RecyclerView rv;
     private LinearLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
@@ -84,20 +83,20 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter= new OfferAdapter(getActivity(),offerList);
+        adapter= new PromotionAdapter(getActivity(),offerList);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate view, find recycle view in layouts
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_promotions, container, false);
         rv = (RecyclerView) v.findViewById(R.id.recycler_view_offer);
         tvOffersEmpty = (TextView)v.findViewById(R.id.tv_offers_empty);
         rv.setHasFixedSize(true);
 
         //Evita el error de skipping layout
-        adapter= new OfferAdapter(getActivity(),offerList);
+        adapter= new PromotionAdapter(getActivity(),offerList);
 
         // Set the layout that will use recycle view
         layout = new LinearLayoutManager(getContext());
@@ -120,7 +119,7 @@ public class FragmentHome extends Fragment {
     }
 
     // Call to DB
-    private void getOffers(){
+    public  void getOffers(){
         sendGetRequest();
 
         if(notificado){
@@ -184,7 +183,7 @@ public class FragmentHome extends Fragment {
 
     private void showOffers(String s){
         getData(s);
-        adapter = new OfferAdapter(getActivity(), offerList);
+        adapter = new PromotionAdapter(getActivity(), offerList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
@@ -197,10 +196,9 @@ public class FragmentHome extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(View view) {
-                //Intent intent = new Intent(getActivity(), OfferDetailOld.class);
-                Intent intent = new Intent(getActivity(), OfferDetailActivity.class);
+                Intent intent = new Intent(getActivity(), PromotionDetailActivity.class);
                 int position = rv.getChildAdapterPosition(view);
-                OfferModel o = offerList.get(position);
+                PromotionModel o = offerList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
@@ -235,11 +233,11 @@ public class FragmentHome extends Fragment {
         });
     }
 
-    public void discardOffer(DialogInterface dialog, OfferModel offer) {
+    public void discardOffer(DialogInterface dialog, PromotionModel offer) {
         String idPerson = getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                 .getString(Config.KEY_SP_ID, "-1");
         String idOffer = offer.getId();
-        new DiscardOffer(getActivity().getApplicationContext(), dialog).execute(idPerson, idOffer);
+        new DiscardOffer(getActivity(), dialog).execute(idPerson, idOffer);
     }
 
     //Clase que itera sobre el json array para obtener datos de la BD.
@@ -258,7 +256,7 @@ public class FragmentHome extends Fragment {
             for(int i=0;i<jsonOffers.length();i++){
 
                 JSONObject jsonObjectItem = jsonOffers.optJSONObject(i);
-                OfferModel item = new OfferModel();
+                PromotionModel item = new PromotionModel();
 
                 dIni =jsonObjectItem.getString(Config.TAG_GO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
@@ -281,7 +279,6 @@ public class FragmentHome extends Fragment {
                     item.setTotal(0);
                 }
 
-
                 c.setTime(dateIni);
 
                 item.setInitialDate(String.format(Locale.US, Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
@@ -299,7 +296,8 @@ public class FragmentHome extends Fragment {
                 offerList.add(item);
 
                 // Se calcula la diferencia de tiempo acutal con cuando se publica la oferta, si son menor a una cierta holgura entonces se muestra la notificación
-                double d = (MainActivity.now.getTime() - dateIni.getTime())*Config.MILIS_TO_MIN;
+                double d = ((new Date()).getTime() - dateIni.getTime())*Config.MILIS_TO_MIN;
+
                 if(MainActivity.notificate && d >= 0.0 && d < Config.NOTIFICATION_SLACK_TIME){
                     notificado = true;
                     myNotification(item);
@@ -313,8 +311,8 @@ public class FragmentHome extends Fragment {
         }
     }
 
-    void myNotification(OfferModel o){
-        Intent nintent = new Intent(getActivity(), OfferDetailActivity.class);
+    void myNotification(PromotionModel o){
+        Intent nintent = new Intent(getActivity(), PromotionDetailActivity.class);
         nintent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
         nintent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
         nintent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
@@ -358,6 +356,49 @@ public class FragmentHome extends Fragment {
                 .setAutoCancel(autoCancel)
                 .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                 .setContentIntent(contIntent);
+    }
+
+    public static class DiscardOffer extends AsyncTask<String, Void, String> {
+        Context context;
+        ProgressDialog loading;
+        DialogInterface dialog;
+
+        public DiscardOffer(Context c, DialogInterface dialog) {
+            this.context = c;
+            this.dialog = dialog;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(context,
+                    context.getString(R.string.offers_list_discard_processing),
+                    context.getString(R.string.wait), false, false);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put(Config.KEY_DO_PERSON_ID, params[0]);
+            hashMap.put(Config.KEY_DO_OFFER_ID, params[1]);
+            RequestHandler rh = new RequestHandler();
+            return rh.sendPostRequest(Config.URL_DO_DISCARD, hashMap);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+            if (s.equals("0")) {
+                System.out.println("PRINT ENTRA");
+                Toast.makeText(context,
+                        R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context,
+                        R.string.operation_fail, Toast.LENGTH_LONG).show();
+            }
+            this.dialog.dismiss();
+        }
     }
 
 }

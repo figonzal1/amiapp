@@ -1,9 +1,9 @@
-package techwork.ami.Offer.OfferList;
+package techwork.ami.Promotion.PromotionsList;
 
 /**
  * Created by Daniel on 15-08-2016.
  */
-public class  OfferModel {
+public class PromotionModel {
     private String id;
     private String title;
     private String description;

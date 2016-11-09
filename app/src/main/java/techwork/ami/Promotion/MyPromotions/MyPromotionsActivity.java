@@ -1,8 +1,7 @@
-package techwork.ami.ReservationsOffers;
+package techwork.ami.Promotion.MyPromotions;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,10 +11,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +20,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +27,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -53,14 +48,12 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.MainActivity;
-import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
-import techwork.ami.Offer.OfferList.OfferModel;
+import techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class MyReservationsOffersActivity extends AppCompatActivity {
+public class MyPromotionsActivity extends AppCompatActivity {
 
     // Two recycle views in one layout by https://goo.gl/Iy5prs (natrio)
 
@@ -68,8 +61,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout refreshLayout;
-    private List<ReservationOffer> reservationsOffersList;
-    private MyReservationsOffersListAdapter adapter;
+    private List<MyReservationPromotionModel> reservationsOffersList;
+    private MyPromotionsAdapter adapter;
     private TextView tvReservationsOffersEmpty;
     Context context;
     CustomAlertDialogBuilder dialogBuilder;
@@ -80,7 +73,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        setContentView(R.layout.activity_my_reservations_offers);
+        setContentView(R.layout.my_promotions_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -158,7 +151,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                 // Close the Activity
                 finish();
                 // Call to FragmentHome and show available offers
-                //startActivity(new Intent(MyReservationsOffersActivity.this, MainActivity.class) );
+                //startActivity(new Intent(MyPromotionsActivity.this, MainActivity.class) );
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -167,7 +160,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         getReservations();
     }
 
-    public void showPopupMenu(final View view, final ReservationOffer model){
+    public void showPopupMenu(final View view, final MyReservationPromotionModel model){
 
         final PopupMenu popup= new PopupMenu(view.getContext(),view);
         final MenuInflater inflater = popup.getMenuInflater();
@@ -179,31 +172,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
 
                 switch(item.getItemId()){
-                    /*case R.id.item_popup_menu_reservations_details:
-
-                        //Go to see details of each needOffer reserved.
-                        Intent intent = new Intent(MyReservationsOffersActivity.this,OffersReservationsViewActivity.class);
-                        intent.putExtra(Config.TAG_GNR_IDOFFER,model.getIdOffer());
-                        intent.putExtra(Config.TAG_GNR_IDLOCAL,model.getIdLocal());
-                        intent.putExtra(Config.TAG_GNR_IDNEED,model.getIdNeed());
-                        intent.putExtra(Config.TAG_GNR_TITTLE,model.getTittle());
-                        intent.putExtra(Config.TAG_GNR_DESCRIPTION,model.getDescription());
-                        intent.putExtra(Config.TAG_GNR_PRICEOFFER,model.getPrice());
-                        intent.putExtra(Config.TAG_GNR_CASHED,model.getDescription());
-                        intent.putExtra(Config.TAG_GNR_DATECASHED,model.getDateCashed());
-                        intent.putExtra(Config.TAG_GNR_CALIFICATION,model.getCalification());
-                        intent.putExtra(Config.TAG_GNR_CODPROMOTION,model.getCodPromotion());
-                        intent.putExtra(Config.TAG_GNR_QUANTITY,model.getQuantity());
-                        intent.putExtra(Config.TAG_GNR_LOCALCODE,model.getLocalCode());
-                        intent.putExtra(Config.TAG_GNR_COMPANY,model.getCompany());
-                        intent.putExtra(Config.TAG_GNR_DATEINI,model.getDateIni());
-                        intent.putExtra(Config.TAG_GNR_DATEFIN,model.getDateFin());
-                        intent.putExtra(Config.TAG_GNR_DATERESERV,model.getDateReserv());
-
-                        startActivity(intent);
-                        return true;*/
                     case R.id.item_popup_menu_reservations_details:
-                        Intent intent = new Intent(MyReservationsOffersActivity.this, OfferDetailActivity.class);
+                        Intent intent = new Intent(MyPromotionsActivity.this, PromotionDetailActivity.class);
                         intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
                         intent.putExtra(Config.TAG_GO_DESCRIPTION, model.getDescription());
                         intent.putExtra(Config.TAG_GO_IMAGE, model.getImage());
@@ -315,7 +285,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
     private void showOffersReservations(String s){
         getData(s);
 
-        adapter = new MyReservationsOffersListAdapter(this, reservationsOffersList, MyReservationsOffersActivity.this);
+        adapter = new MyPromotionsAdapter(this, reservationsOffersList, MyPromotionsActivity.this);
         ScaleInAnimationAdapter scaleAdapterReserved = new ScaleInAnimationAdapter(adapter);
 
         mRecyclerView.setAdapter(scaleAdapterReserved);
@@ -330,7 +300,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
-                final ReservationOffer model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
+                final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
                 // If the offer was already charged
                 if(model.getCashed().equals("1")){
                     //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
@@ -343,7 +313,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(View view) {
-                final ReservationOffer model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
+                final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
                 // Validate before rate
                 if (model.getCashed().equals("0")){
                     //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
@@ -363,7 +333,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
 
     }
 
-    private void dialogLocalCode(final ReservationOffer ro) {
+    private void dialogLocalCode(final MyReservationPromotionModel ro) {
         // Create the CustomAlertDialogBuilder
         dialogBuilder = new CustomAlertDialogBuilder(context);
 
@@ -406,7 +376,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         dialogBuilder.show();
     }
 
-    private void dialogPromotionCode(final ReservationOffer ro) {
+    private void dialogPromotionCode(final MyReservationPromotionModel ro) {
         // Create the CustomAlertDialogBuilder
         dialogBuilder = new CustomAlertDialogBuilder(context);
 
@@ -431,7 +401,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
                             @Override
                             protected void onPreExecute() {
                                 super.onPreExecute();
-                                loading = ProgressDialog.show(MyReservationsOffersActivity.this,
+                                loading = ProgressDialog.show(MyPromotionsActivity.this,
                                         getString(R.string.my_reservations_offers_validate_processing),
                                         getString(R.string.wait), false, false);
                             }
@@ -486,8 +456,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         dialogBuilder.show();
     }
 
-    private void rateOffer(final ReservationOffer ro, final boolean isFirst) {
-        // Rate the Offer
+    private void rateOffer(final MyReservationPromotionModel ro, final boolean isFirst) {
+        // Rate the Promotion
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.rank_dialog, null);
@@ -529,8 +499,8 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    // Actions to rate Offer
-    private void doPositiveRate(DialogInterface dialog, ReservationOffer ro, String rate, boolean isFirst) {
+    // Actions to rate Promotion
+    private void doPositiveRate(DialogInterface dialog, MyReservationPromotionModel ro, String rate, boolean isFirst) {
         class RateReservationOffer extends AsyncTask<String, Void, String> {
             ProgressDialog loading;
             DialogInterface dialog;
@@ -542,7 +512,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(MyReservationsOffersActivity.this,
+                loading = ProgressDialog.show(MyPromotionsActivity.this,
                         getString(R.string.my_reservations_offers_rate_processing),
                         getString(R.string.wait), false, false);
             }
@@ -583,7 +553,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
         new RateReservationOffer(dialog).execute(ro.getIdReservationOffer(), rate);
     }
 
-    // Get data from DB and put into each ReservationOffer (to be shown)
+    // Get data from DB and put into each MyReservationPromotionModel (to be shown)
     private void getData(String s) {
         String sFinalDate, sReservationDate, dTimeFin;
         Date dFinalDate, dReservationDate, dateTimeFin;
@@ -601,7 +571,7 @@ public class MyReservationsOffersActivity extends AppCompatActivity {
             for(int i=0;i<jsonOffers.length();i++){
 
                 JSONObject jsonObjectItem = jsonOffers.optJSONObject(i);
-                ReservationOffer item = new ReservationOffer();
+                MyReservationPromotionModel item = new MyReservationPromotionModel();
 
                 sFinalDate = jsonObjectItem.getString(Config.TAG_GRO_DATEFIN);
                 sReservationDate = jsonObjectItem.getString(Config.TAG_GRO_RESERDATE);

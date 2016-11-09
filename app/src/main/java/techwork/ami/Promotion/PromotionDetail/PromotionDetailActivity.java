@@ -1,11 +1,10 @@
-package techwork.ami.Offer.OfferDetail;
+package techwork.ami.Promotion.PromotionDetail;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -28,20 +27,13 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
@@ -50,12 +42,10 @@ import techwork.ami.ExpiryTime;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-import static com.google.android.gms.analytics.internal.zzy.v;
-
 /**
  * Created by Daniel on 15-10-2016.
  */
-public class OfferDetailActivity extends AppCompatActivity {
+public class PromotionDetailActivity extends AppCompatActivity {
     // UI references
     private RecyclerView rv;
     private List<ProductModel> productList;
@@ -75,7 +65,7 @@ public class OfferDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.offer_detail_activity);
+        setContentView(R.layout.promotion_detail_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.offer_detail_toolbar);
         setSupportActionBar(toolbar);
@@ -160,8 +150,8 @@ public class OfferDetailActivity extends AppCompatActivity {
         title.setText(bundle.getString(Config.TAG_GO_TITLE));
         company.setText(bundle.getString(Config.TAG_GO_COMPANY));
         description.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
-        tPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_TOTALPRICE)));
-        price.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_PRICE)));
+        tPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_TOTALPRICE)));
+        price.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_PRICE)));
         int perc = (bundle.getInt(Config.TAG_GO_TOTALPRICE) != 0) ?
                 bundle.getInt(Config.TAG_GO_PRICE)*100/bundle.getInt(Config.TAG_GO_TOTALPRICE):
                 100;
@@ -353,6 +343,7 @@ public class OfferDetailActivity extends AppCompatActivity {
                 item.setName(jsonObjectItem.getString(Config.TAG_GOD_NAME));
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GOD_DESCRIPTION));
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GOD_PRICE));
+                item.setQuantity(jsonObjectItem.getString(Config.TAG_GOD_QUANTITY));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GOD_IMAGE));
                 productList.add(item);
             }

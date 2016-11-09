@@ -1,4 +1,4 @@
-package techwork.ami.ReservationsOffers;
+package techwork.ami.Promotion.MyPromotions;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -22,17 +22,17 @@ import techwork.ami.R;
  * Created by Daniel on 19-09-2016.
  */
 
-public class MyReservationsOffersListAdapter
-        extends RecyclerView.Adapter<MyReservationsOffersListAdapter.MyReservationsListViewHolder>
+public class MyPromotionsAdapter
+        extends RecyclerView.Adapter<MyPromotionsAdapter.MyReservationsListViewHolder>
         implements View.OnClickListener,View.OnLongClickListener {
 
     private OnItemClickListenerRecyclerView itemClick;
-    private List<ReservationOffer> items;
+    private List<MyReservationPromotionModel> items;
     private Context context;
-    private MyReservationsOffersActivity offersReservationsActivity;
+    private MyPromotionsActivity offersReservationsActivity;
 
     // Class constructor
-    public MyReservationsOffersListAdapter(Context context, List<ReservationOffer> items, MyReservationsOffersActivity offersReservationsActivity) {
+    public MyPromotionsAdapter(Context context, List<MyReservationPromotionModel> items, MyPromotionsActivity offersReservationsActivity) {
         this.context = context;
         this.items = items;
         this.offersReservationsActivity=offersReservationsActivity;
@@ -64,8 +64,8 @@ public class MyReservationsOffersListAdapter
 
     // Inflate the view
     @Override
-    public MyReservationsOffersListAdapter.MyReservationsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_reservations_offers_list_card_view, parent, false);
+    public MyPromotionsAdapter.MyReservationsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_promotions_card_view, parent, false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         MyReservationsListViewHolder vh = new MyReservationsListViewHolder(v);
@@ -74,12 +74,20 @@ public class MyReservationsOffersListAdapter
 
     // Set data into view reservations (list)
     @Override
-    public void onBindViewHolder(MyReservationsOffersListAdapter.MyReservationsListViewHolder holder, int position) {
-        final ReservationOffer model = items.get(position);
+    public void onBindViewHolder(MyPromotionsAdapter.MyReservationsListViewHolder holder, int position) {
+        final MyReservationPromotionModel model = items.get(position);
 
         holder.reservationTitle.setText(model.getTitle());
         holder.reservationFinalDate.setText(model.getFinalDate());
-        holder.reservationPrice.setText(model.getQuantity()+"x $"+ String.format(Config.CLP_FORMAT, model.getPrice()));
+        if(Integer.valueOf(model.getQuantity())>1){
+            holder.reservationPrice.setText(String.format(Config.QUANTITYPRICE_FORMAT,
+                    model.getQuantity(),
+                    String.format(Config.CLP_FORMAT, model.getPrice()),
+                    context.getResources().getString(R.string.offer_detail_cv_each)));
+        }
+        else{
+            holder.reservationPrice.setText(String.format(Config.CLP_FORMAT, model.getPrice()));
+        }
         holder.reservationCompany.setText(model.getCompany());
         holder.reservationReservationDate.setText(model.getReservationDate());
 

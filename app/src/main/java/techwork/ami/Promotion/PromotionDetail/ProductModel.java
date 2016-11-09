@@ -1,4 +1,4 @@
-package techwork.ami.Offer.OfferDetail;
+package techwork.ami.Promotion.PromotionDetail;
 
 /**
  * Created by Daniel on 15-10-2016.
@@ -8,6 +8,7 @@ public class ProductModel {
     private String description;
     private int price;
     private String image;
+    private String quantity;
 
     // Constructors
     public ProductModel() {};
@@ -30,6 +31,9 @@ public class ProductModel {
     public String getImage(){
         return image;
     }
+    public String getQuantity(){
+        return quantity;
+    }
 
     // Setters
     public void setName(String name) {
@@ -43,5 +47,8 @@ public class ProductModel {
     }
     public void setImage(String image){
         this.image = image;
+    }
+    public void setQuantity(String quantity){
+        this.quantity = quantity;
     }
 }

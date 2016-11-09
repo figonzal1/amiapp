@@ -12,7 +12,7 @@ import android.text.style.ImageSpan;
 
 import techwork.ami.Category.FragmentCategory;
 import techwork.ami.Offers.OrdersList.FragmentOrder;
-import techwork.ami.Offer.OfferList.FragmentHome;
+import techwork.ami.Promotion.PromotionsList.FragmentHome;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
 

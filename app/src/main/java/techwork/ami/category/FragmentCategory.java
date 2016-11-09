@@ -1,7 +1,6 @@
 package techwork.ami.Category;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -11,32 +10,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.FadeInAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import techwork.ami.Config;
-import techwork.ami.Offer.FilterOfferActivity;
+import techwork.ami.Promotion.FilterActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -188,7 +175,7 @@ public class FragmentCategory extends Fragment {
                 int position = rv.getChildAdapterPosition(view);
                 CategoryModel c = categoryList.get(position);
 
-                Intent intent = new Intent(getActivity(),FilterOfferActivity.class);
+                Intent intent = new Intent(getActivity(),FilterActivity.class);
                 intent.putExtra("idCategory", c.getId()+"");
                 intent.putExtra("categoryName", c.getName());
                 startActivity(intent);

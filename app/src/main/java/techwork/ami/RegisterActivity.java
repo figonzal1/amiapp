@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.register_activity);
 
         // Set up the register form.
         mNameView = (AutoCompleteTextView) findViewById(R.id.register_name);

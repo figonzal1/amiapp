@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:padding="@dimen/cardView_relativeLayout_padding"
         android:background="?android:attr/selectableItemBackground"
         >
 

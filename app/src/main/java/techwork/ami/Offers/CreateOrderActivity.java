@@ -88,7 +88,7 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_need);
+        setContentView(R.layout.order_activity);
 
         // Prevent the keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -398,7 +398,7 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
             }
         }
         GetProfile gp = new GetProfile();
-        gp.execute("type=" + type + "&id=" + id);
+        gp.execute(String.format(Config.PARAMS_URL_GET_PROFILE, type, id));
     }
 
     private void showData(String json) {

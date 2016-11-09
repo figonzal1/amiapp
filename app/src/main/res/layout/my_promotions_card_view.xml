@@ -74,15 +74,6 @@
             android:layout_alignBottom="@+id/offer_linear"/>
 
         <TextView
-            android:id="@+id/my_reservations_offers_list_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xx $xx.xx"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_alignBottom="@+id/my_reservations_offers_list_company"/>
-
-        <TextView
             android:id="@+id/tv_offers_popup_menu"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -159,6 +150,17 @@
                         android:textSize="14sp"-->/>
             </LinearLayout>
     </LinearLayout>
+
+        <TextView
+            android:id="@+id/my_reservations_offers_list_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X x $xx.xx c/u"
+            android:layout_alignBaseline="@+id/my_reservations_offers_list_company"
+            android:layout_alignBottom="@+id/my_reservations_offers_list_company"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="18dp"
+            android:textStyle="normal|bold" />
 
     </RelativeLayout>
 

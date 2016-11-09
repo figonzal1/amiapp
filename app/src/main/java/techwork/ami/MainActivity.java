@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -21,11 +22,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
 import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
-import techwork.ami.ReservationsOffers.MyReservationsOffersActivity;
+import techwork.ami.Promotion.MyPromotions.MyPromotionsActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         // Get the profile data from the session (sharedPreferences) and showed on the nav bar
         updateProfileView();
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -178,6 +180,23 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_maps:
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 return true;
+
+            case R.id.action_home:
+                Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_logout:
+                logout();
+                Intent intentLogout = new Intent(MainActivity.this, LoginActivity.class);
+                finish();
+                startActivity(intentLogout);
+                return true;
+
+            case R.id.action_config:
+                Toast.makeText(getApplicationContext(),"Configuración",Toast.LENGTH_LONG).show();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -202,7 +221,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -210,7 +229,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, OffersReservationsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_reservations) {
-            Intent iMyReservations= new Intent(MainActivity.this, MyReservationsOffersActivity.class);
+            Intent iMyReservations= new Intent(MainActivity.this, MyPromotionsActivity.class);
             startActivity(iMyReservations);
         } else if (id == R.id.nav_edit_profile) {
             Intent iMyProfile = new Intent(MainActivity.this, MyProfileActivity.class);

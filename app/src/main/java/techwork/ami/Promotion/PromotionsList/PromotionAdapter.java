@@ -1,43 +1,35 @@
-package techwork.ami.Offer.OfferList;
+package techwork.ami.Promotion.PromotionsList;
 
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.support.v4.app.FragmentHostCallback;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Offer.DiscardOffer;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
-public class OfferAdapter
-        extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder>
+public class PromotionAdapter
+        extends RecyclerView.Adapter<PromotionAdapter.OfferViewHolder>
         implements View.OnClickListener,View.OnLongClickListener {
 
     private OnItemClickListenerRecyclerView itemClick;
-    private List<OfferModel> items;
+    private List<PromotionModel> items;
     private Context context;
 
     // Class constructor
-    public OfferAdapter(Context context, List<OfferModel> items){
+    public PromotionAdapter(Context context, List<PromotionModel> items){
         this.context = context;
         this.items = items;
     }
@@ -66,8 +58,8 @@ public class OfferAdapter
 
     // Inflate the view
     @Override
-    public OfferAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_card_view,parent,false);
+    public PromotionAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_fragment_card_view,parent,false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         OfferViewHolder vh = new OfferViewHolder(v);
@@ -76,10 +68,10 @@ public class OfferAdapter
 
     // Set data into view offers (list)
     @Override
-    public void onBindViewHolder(OfferAdapter.OfferViewHolder holder, int position) {
-        final OfferModel offer = items.get(position);
+    public void onBindViewHolder(PromotionAdapter.OfferViewHolder holder, int position) {
+        final PromotionModel offer = items.get(position);
         holder.offerTitle.setText(offer.getTitle());
-        holder.offerPrice.setText("$"+String.format(Config.CLP_FORMAT,offer.getPrice()));
+        holder.offerPrice.setText(String.format(Config.CLP_FORMAT,offer.getPrice()));
         holder.offerCompany.setText(offer.getCompany());
         int perc = (offer.getTotalPrice() != 0)? (offer.getPrice()*100)/offer.getTotalPrice() : 100;
         // If offer price is greater than total price
@@ -94,7 +86,6 @@ public class OfferAdapter
             s = "+";
         }
 
-        Log.d("hola",s);
         if (!s.equals("")) holder.offerDsct.setText(s+String.valueOf(Math.abs(100-perc))+"%");
 
         holder.offerDescription.setText(offer.getDescription());
@@ -114,7 +105,7 @@ public class OfferAdapter
                                 String idPerson = context.getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                                         .getString(Config.KEY_SP_ID, "-1");
                                 String idOffer = offer.getId();
-                                new DiscardOffer(context, dialog).execute(idPerson, idOffer);
+                                new FragmentHome.DiscardOffer(context, dialog).execute(idPerson, idOffer);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

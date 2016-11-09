@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:padding="@dimen/cardView_relativeLayout_padding"
         android:background="?android:attr/selectableItemBackground"
         >
 
@@ -35,27 +35,27 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/offer_detail_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Precio"
-            android:layout_alignBottom="@+id/offer_detail_photo"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
-            android:textStyle="normal|bold" />
-
-        <TextView
             android:id="@+id/offer_detail_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Descripción"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:layout_alignStart="@+id/offer_detail_tittle"
             android:layout_below="@+id/offer_detail_tittle"
             android:layout_above="@+id/offer_detail_price"
             android:layout_alignEnd="@+id/offer_detail_price"
             android:textStyle="normal|italic" />
+
+        <TextView
+            android:id="@+id/offer_detail_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="XX x Precio c/u"
+            android:textStyle="normal|bold"
+            android:layout_alignBottom="@+id/offer_detail_photo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="11dp" />
 
         <!--<TextView
             android:id="@+id/offer_detail_company"

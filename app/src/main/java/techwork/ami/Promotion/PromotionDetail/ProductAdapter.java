@@ -1,4 +1,4 @@
-package techwork.ami.Offer.OfferDetail;
+package techwork.ami.Promotion.PromotionDetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public ProductAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_detail_card_view, parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_detail_card_view, parent,false);
         return new ProductAdapter.ProductViewHolder(v);
     }
 
@@ -52,10 +54,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         ProductModel product = items.get(position);
         holder.productName.setText(product.getName());
-        //TODO BORRAR
         holder.productDescription.setText(product.getDescription());
-        holder.productPrice.setText("$"+String.format(Config.CLP_FORMAT,product.getPrice()));
-        //holder.productPrice.setText(("$"+"1"));
+        holder.productPrice.setText(String.format(Config.CLP_FORMAT,product.getPrice()));
+        if(Integer.valueOf(product.getQuantity())>1){
+            holder.productPrice.setText(String.format(Config.QUANTITYPRICE_FORMAT,
+                    product.getQuantity(),
+                    String.format(Config.CLP_FORMAT, product.getPrice()),
+                    context.getResources().getString(R.string.offer_detail_cv_each)));
+            /*holder.productPrice.setText(product.getQuantity()+
+                    " x "+
+                    String.format(Config.CLP_FORMAT, product.getPrice()) +
+                    " "
+                    +context.getResources().getString(R.string.offer_detail_cv_each));*/
+        }
+        else{
+            holder.productPrice.setText(String.format(Config.CLP_FORMAT, product.getPrice()));
+        }
         Picasso.with(context).load(Config.URL_IMAGES_OFFER + product.getImage())
                 .placeholder(R.drawable.image_default)
                 .into(holder.productImage);

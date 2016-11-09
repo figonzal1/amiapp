@@ -25,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.internal.Platform;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -102,7 +104,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_after_login);
+		setContentView(R.layout.after_login_activity);
 
 		// Get the id of the profile from the login data
 		id = getProfileId();
@@ -274,7 +276,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 			}
 		}
 		GetOptions go = new GetOptions();
-		go.execute("type=" + type + "&id=" + id);
+		go.execute(String.format(Config.PARAMS_URL_GET_PROFILE, type, id));
 	}
 
 
@@ -540,7 +542,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 					startActivity(iLogin);
 				} else if (!s.equals("-1"))
 					Toast.makeText(getApplicationContext(),
-							getResources().getString(R.string.saveFail) + " Error: " + s, Toast.LENGTH_LONG).show();
+							getResources().getString(R.string.saveFail) + s, Toast.LENGTH_LONG).show();
 			}
 		}
 

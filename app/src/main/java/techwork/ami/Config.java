@@ -29,8 +29,8 @@ public class Config {
 
 	// Request URLs
 	public static final String URL_GENERAL_SERVER="http://amiapp.cl";
-
 	public static final String URL_GET_PROFILE="http://amiapp.cl/public/getData/Profile/getProfile.php";
+	public static final String PARAMS_URL_GET_PROFILE = "type=%s&id=%s";
 	public static final String URL_CHANGE_ACCOUNT_STATUS ="http://amiapp.cl/public/getData/Profile/changeAccountStatus.php";
 	public static final String URL_GET_MAP_OFFERS="http://amiapp.cl/public/getData/Maps/getData.php";
 	public static final String URL_GET_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/getOptions.php";
@@ -71,13 +71,14 @@ public class Config {
 	public static final String TAG_GO_IMAGE ="imagen" ;
 	public static final String TAG_GO_NO_RESERVE_OPTION = "mostrarOpcionReserva";
 
-	// GOD = Get Offer Details
+	// GOD = Get Promotion Details
 	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GOD_PRODUCT = "products";
 	public static final String TAG_GOD_NAME = "nombre";
 	public static final String TAG_GOD_DESCRIPTION = "descripcion";
 	public static final String TAG_GOD_PRICE ="precio" ;
 	public static final String TAG_GOD_IMAGE = "imagen";
+	public static final String TAG_GOD_QUANTITY = "cantidad";
 
 	// FO = Filter Offers
 	//TODO: Cambiar los nombres a la actual definicion.
@@ -115,7 +116,7 @@ public class Config {
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
 	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
 
-	// DO = Discard Offer URLs
+	// DO = Discard Promotion URLs
 	public static final String URL_DO_DISCARD = "http://amiapp.cl/public/getData/DiscardOffer/discardOffer.php";
 
 	// Keys that will be used to send the request to php scripts
@@ -302,6 +303,9 @@ public class Config {
 	// Money format
 	public static final String CLP_FORMAT = "$ %,d";
 
+	// Quantity and price format
+	public static final String QUANTITYPRICE_FORMAT = "%s x %s %s";
+
 	// My Reservations offers keys
 	public static final String KEY_RESERVE_OFFER_ID = "idOferta";
 	public static final String KEY_RESERVE_PERSON_ID = "idPersona";
@@ -313,7 +317,7 @@ public class Config {
 	public static final String KEY_DO_OFFER_ID = "idOferta";
 	public static final String KEY_DO_PERSON_ID = "idPersona";
 
-	// Offer Detail keys
+	// Promotion Detail keys
 	public static final String KEY_OD_OFFER_ID = "idOferta";
 
 	// Date format

@@ -1,7 +1,6 @@
-package techwork.ami.Offer;
+package techwork.ami.Promotion;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,26 +24,26 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
-import techwork.ami.Offer.OfferDetail.OfferDetailActivity;
-import techwork.ami.Offer.OfferList.OfferAdapter;
-import techwork.ami.Offer.OfferList.OfferModel;
+import techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity;
+import techwork.ami.Promotion.PromotionsList.FragmentHome;
+import techwork.ami.Promotion.PromotionsList.PromotionAdapter;
+import techwork.ami.Promotion.PromotionsList.PromotionModel;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class FilterOfferActivity extends AppCompatActivity {
+public class FilterActivity extends AppCompatActivity {
 
     // UI references
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout refreshLayout;
-    private List<OfferModel> offersList;
+    private List<PromotionModel> offersList;
     private int page;
     private String idCategory;
     private String idStore;
@@ -54,7 +52,7 @@ public class FilterOfferActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_offer);
+        setContentView(R.layout.filter_activity);
 
         tvFilterOffersEmpty = (TextView)findViewById(R.id.tv_filter_offers_empty);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -169,7 +167,7 @@ public class FilterOfferActivity extends AppCompatActivity {
     private void showFilterOffers(String json) {
         getData(json);
 
-        OfferAdapter adapter = new OfferAdapter(this, offersList);
+        PromotionAdapter adapter = new PromotionAdapter(this, offersList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         mRecyclerView.setAdapter(scaleAdapter);
 
@@ -183,9 +181,9 @@ public class FilterOfferActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
             public void onItemClick(final View view) {
-                Intent intent = new Intent(FilterOfferActivity.this, OfferDetailActivity.class);
+                Intent intent = new Intent(FilterActivity.this, PromotionDetailActivity.class);
                 int position = mRecyclerView.getChildAdapterPosition(view);
-                OfferModel o = offersList.get(position);
+                PromotionModel o = offersList.get(position);
                 intent.putExtra(Config.TAG_GO_TITLE, o.getTitle());
                 intent.putExtra(Config.TAG_GO_IMAGE, o.getImage());
                 intent.putExtra(Config.TAG_GO_DESCRIPTION, o.getDescription());
@@ -202,7 +200,7 @@ public class FilterOfferActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(final View view) {
-                new CustomAlertDialogBuilder(FilterOfferActivity.this)
+                new CustomAlertDialogBuilder(FilterActivity.this)
                         .setTitle(R.string.offers_list_discard_question)
                         .setMessage("Confirme la acción")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -236,7 +234,7 @@ public class FilterOfferActivity extends AppCompatActivity {
             for(int i=0;i<jsonOffers.length();i++){
 
                 JSONObject jsonObjectItem = jsonOffers.optJSONObject(i);
-                OfferModel item = new OfferModel();
+                PromotionModel item = new PromotionModel();
 
                 dIni =jsonObjectItem.getString(Config.TAG_GO_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GO_DATEFIN);
@@ -279,11 +277,11 @@ public class FilterOfferActivity extends AppCompatActivity {
         }
     }
 
-    private void discardOffer(DialogInterface dialog, OfferModel offer) {
+    private void discardOffer(DialogInterface dialog, PromotionModel offer) {
         String idPerson = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                 .getString(Config.KEY_SP_ID, "-1");
         String idOffer = offer.getId();
-        new DiscardOffer(getApplicationContext(), dialog).execute(idPerson, idOffer);
+        new FragmentHome.DiscardOffer(getApplicationContext(), dialog).execute(idPerson, idOffer);
     }
 
 }

@@ -67,8 +67,10 @@
     <string name="ingresaCorreo">Ingresa tu correo registrado</string>
 
     <!-- String menu AppBar -->
-    <string name="action_settings">Configuración</string>
-    <string name="action_search">Buscar</string>
+    <string name="action_map">Mapa</string>
+    <string name="action_home">Inicio</string>
+    <string name="action_config">Configuración</string>
+    <string name="action_logout">Cerrar sesión</string>
 
     <!-- Profile Strings -->
     <string name="profileName">Nombre</string>
@@ -185,6 +187,8 @@
     <string name="OfferViewDiscardOffer">Oferta rechazada</string>
     <string name="OfferViewAcceptOfferFail">No se ha podido reservar</string>
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
+    <string name="offers_view_maxpp_warnings">¡Puedes reservar hasta %s unidades!</string>
+    <string name="offers_view_maxpp_warning">¡Puedes reservar hasta %s unidades!</string>
 
     <!-- Offer Local View -->
     <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
@@ -193,7 +197,6 @@
     <string name="OfferViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferViewLocalStreetView">Ver street view</string>
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
-
 
     <!-- OfferReservations (NeedOffer) Strings -->
     <string name="OrdersReservations">Mis pedidos reservados</string>
@@ -239,7 +242,6 @@
     <string name="OfferReservedViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferReservedViewLocalStreetView">Ver street view</string>
 
-
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
     <string name="afterLoginTitle">¡Bienvenido a AMI!</string>
@@ -257,11 +259,10 @@
     <string name="provinceNoSelected">Seleccionar Provincia</string>
     <string name="communeNoSelected">Seleccionar Comuna</string>
 
-
     <!-- Explore Offers Strings -->
     <string name="titleActivityExploreOffers">Explorar promociones</string>
 
-    <!-- Offer Strings -->
+    <!-- Promotion Strings -->
     <string name="offer_cv_company">Compañía</string>
     <string name="offer_cv_price">Precio</string>
     <string name="offer_cv_description">Descripción</string>
@@ -269,13 +270,14 @@
     <string name="offer_cv_dsct">Descuento</string>
     <string name="offer_cv_dsct_sy">%</string>
     <string name="offer_cv_image_desciption">Imagen</string>
+    <string name="offer_detail_cv_each">c/u</string>
     <string name="reserve_ok">¡Reserva realizada!</string>
     <string name="reserving">Reservando</string>
     <string name="operation_fail">Ha ocurrido un error</string>
     <string name="offer_detail_reserve">Reservar</string>
     <string name="offer_detail_quantity">Seleccione cuántos desea.</string>
 
-    <!-- Offer Detail Strings-->
+    <!-- Promotion Detail Strings-->
     <string name="od_tv_price_txt">Promoción</string>
     <string name="od_tv_tprice_txt">Precio normal</string>
     <string name="od_tv_dsct_txt">Descuento</string>

@@ -39,7 +39,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import techwork.ami.Offer.FilterOfferActivity;
+import techwork.ami.Promotion.FilterActivity;
 
 public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback {
@@ -53,7 +53,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.maps_activity);
 
         markers = new Hashtable<>();
         markerSet = new Hashtable<>();
@@ -325,7 +325,7 @@ public class MapsActivity extends AppCompatActivity implements
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(View v) {
                         // TODO: call offers activity
-                        Intent i = new Intent(MapsActivity.this, FilterOfferActivity.class);
+                        Intent i = new Intent(MapsActivity.this, FilterActivity.class);
                         i.putExtra("idStore", s.getIdStore());
                         i.putExtra("companyName", s.getName());
                         startActivity(i);
