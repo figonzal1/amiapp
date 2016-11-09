@@ -150,8 +150,8 @@ public class PromotionDetailActivity extends AppCompatActivity {
         title.setText(bundle.getString(Config.TAG_GO_TITLE));
         company.setText(bundle.getString(Config.TAG_GO_COMPANY));
         description.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
-        tPrice.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_TOTALPRICE)));
-        price.setText("$"+String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_PRICE)));
+        tPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_TOTALPRICE)));
+        price.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_PRICE)));
         int perc = (bundle.getInt(Config.TAG_GO_TOTALPRICE) != 0) ?
                 bundle.getInt(Config.TAG_GO_PRICE)*100/bundle.getInt(Config.TAG_GO_TOTALPRICE):
                 100;

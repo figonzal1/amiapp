@@ -26,7 +26,7 @@ public class ContactUsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_us);
+        setContentView(R.layout.contact_us_activity);
 
         Button send = (Button) findViewById(R.id.CU_buttonSend);
         editTextSubject = (EditText) findViewById(R.id.CU_editTextSubject);

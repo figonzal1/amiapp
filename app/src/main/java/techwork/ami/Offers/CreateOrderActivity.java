@@ -88,7 +88,7 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_need);
+        setContentView(R.layout.order_activity);
 
         // Prevent the keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);

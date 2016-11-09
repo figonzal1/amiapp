@@ -87,7 +87,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit_profile);
+		setContentView(R.layout.edit_profile_activity);
 
 		// Get the id of the profile from the login data
 		id = getProfileId();

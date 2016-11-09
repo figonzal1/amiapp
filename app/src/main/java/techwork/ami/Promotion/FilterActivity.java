@@ -52,7 +52,7 @@ public class FilterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter);
+        setContentView(R.layout.filter_activity);
 
         tvFilterOffersEmpty = (TextView)findViewById(R.id.tv_filter_offers_empty);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

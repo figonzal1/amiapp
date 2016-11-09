@@ -54,7 +54,7 @@ public class RestorePassActivity extends AppCompatActivity implements LoaderCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restore_pass);
+        setContentView(R.layout.restore_pass_activity);
 
         // Set up the restorePass form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.restorePass_email);

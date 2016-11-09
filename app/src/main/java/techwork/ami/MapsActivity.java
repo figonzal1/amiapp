@@ -53,7 +53,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.maps_activity);
 
         markers = new Hashtable<>();
         markerSet = new Hashtable<>();

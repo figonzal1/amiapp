@@ -90,7 +90,7 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate view, find recycle view in layouts
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_promotions, container, false);
         rv = (RecyclerView) v.findViewById(R.id.recycler_view_offer);
         tvOffersEmpty = (TextView)v.findViewById(R.id.tv_offers_empty);
         rv.setHasFixedSize(true);

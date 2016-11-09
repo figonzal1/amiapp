@@ -59,7 +59,7 @@ public class PromotionAdapter
     // Inflate the view
     @Override
     public PromotionAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_card_view,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_fragment_card_view,parent,false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         OfferViewHolder vh = new OfferViewHolder(v);
@@ -71,7 +71,7 @@ public class PromotionAdapter
     public void onBindViewHolder(PromotionAdapter.OfferViewHolder holder, int position) {
         final PromotionModel offer = items.get(position);
         holder.offerTitle.setText(offer.getTitle());
-        holder.offerPrice.setText("$"+String.format(Config.CLP_FORMAT,offer.getPrice()));
+        holder.offerPrice.setText(String.format(Config.CLP_FORMAT,offer.getPrice()));
         holder.offerCompany.setText(offer.getCompany());
         int perc = (offer.getTotalPrice() != 0)? (offer.getPrice()*100)/offer.getTotalPrice() : 100;
         // If offer price is greater than total price
