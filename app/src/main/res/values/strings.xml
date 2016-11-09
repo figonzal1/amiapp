@@ -215,6 +215,15 @@
     <string name="OfferReservedCardViewPrice">$x.xxx</string>
     <string name="OfferReservedCardViewCompany">Empresa</string>
     <string name="OfferReservedCardViewState">Estado</string>
+    <string name="OfferReservedViewTittle">Titulo oferta</string>
+    <string name="OfferReservedViewCompany">Empresa</string>
+    <string name="OfferReservedViewDescription">Descripción de la oferta</string>
+    <string name="OfferReservedViewProducts">Esta oferta contiene:</string>
+    <string name="OfferReservedViewPrice">$xxx.xxx</string>
+    <string name="OfferReservedViewDsctTxt">Descuento</string>
+    <string name="OfferReservedViewDsct">-x.x%</string>
+    <string name="OfferReservedViewOffer">Oferta</string>
+    <string name="OfferreservedViewButton">Ver información local</string>
     <string name="OfferReservedValidateMessage">Solicite a un empleado de %s que ingrese código del local</string>
     <string name="OfferReservedValidateTitle">Validar oferta</string>
     <string name="OfferReservedValidatePositiveText">Validar</string>

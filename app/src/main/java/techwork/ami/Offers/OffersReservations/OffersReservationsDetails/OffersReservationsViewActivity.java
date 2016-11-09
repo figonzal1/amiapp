@@ -27,7 +27,7 @@ import techwork.ami.RequestHandler;
 
 public class OffersReservationsViewActivity extends AppCompatActivity {
 
-    TextView tvCompany,tvTittle,tvDescription,tvDateIni,tvDateFin,tvPrice;
+    TextView tvCompany,tvTittle,tvDescription,tvPriceOffer;
     Button btnLocal;
     String idOffer,idLocal;
     private RecyclerView rv;
@@ -51,22 +51,18 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
         idLocal = bundle.getString(Config.TAG_GET_OFFER_RESERVED_IDLOCAL);
 
 
-        tvCompany = (TextView)findViewById(R.id.tv_need_reservations_view_company);
-        tvTittle=(TextView)findViewById(R.id.tv_need_reservations_view_tittle);
-        tvDescription=(TextView)findViewById(R.id.tv_need_reservations_view_description);
-        tvDateFin=(TextView)findViewById(R.id.tv_need_reservations_view_date_fin);
-        tvDateIni=(TextView)findViewById(R.id.tv_need_reservations_view_date_ini);
-        tvPrice=(TextView)findViewById(R.id.tv_need_reservations_view_price);
-        btnLocal=(Button)findViewById(R.id.btn_need_reservations_view_local_details);
+        tvCompany = (TextView)findViewById(R.id.tv_offer_reservations_view_company);
+        tvTittle=(TextView)findViewById(R.id.tv_offer_reservations_view_tittle);
+        tvDescription=(TextView)findViewById(R.id.tv_offer_reservations_view_description);
+        tvPriceOffer=(TextView)findViewById(R.id.tv_offer_reservations_view_price_offer);
+        btnLocal=(Button)findViewById(R.id.btn_offer_reservations_view_local_details);
 
         tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_RESERVED_COMPANY));
         tvTittle.setText(bundle.getString(Config.TAG_GET_OFFER_RESERVED_TITTLE));
         tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_RESERVED_DESCRIPTION));
-        tvDateIni.setText("Fecha de publicación: "+bundle.getString(Config.TAG_GET_OFFER_RESERVED_DATEINI));
-        tvDateFin.setText("Fecha de expiración: "+bundle.getString(Config.TAG_GET_OFFER_RESERVED_DATEFIN));
-        tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_RESERVED_PRICEOFFER)));
+        tvPriceOffer.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_RESERVED_PRICEOFFER)));
 
-        rv = (RecyclerView)findViewById(R.id.recycler_view_need_reservations_view) ;
+        rv = (RecyclerView)findViewById(R.id.recycler_view_offer_reservations_view) ;
         rv.setHasFixedSize(true);
         layout = new LinearLayoutManager(this);
         rv.setLayoutManager(layout);

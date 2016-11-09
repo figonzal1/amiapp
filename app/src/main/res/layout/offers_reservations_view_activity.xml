@@ -23,146 +23,168 @@
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
-        android:id="@+id/need_reservations_details_activity"
+        android:id="@+id/offer_reservations_details_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/appbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
                 >
 
 
-                <LinearLayout
-                    android:id="@+id/need_reservations_view_linear_layout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:weightSum="10">
-
-                    <TextView
-                        android:id="@+id/tv_need_reservations_view_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Oferta enviada por: "
-                        android:layout_weight="5"
-                        android:textStyle="italic"
-                        android:gravity="center_horizontal"
-                        android:textSize="19sp"/>
-
-                    <TextView
-                        android:id="@+id/tv_need_reservations_view_company"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Empresa"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        android:textSize="18dp"
-                        android:gravity="center_horizontal"
-                        android:background="@drawable/offers_company_square_background"
-                        />
-                </LinearLayout>
-
-
+                <!-- Titulo Oferta Empresa -->
                 <TextView
-                    android:id="@+id/tv_need_reservations_view_tittle"
-                    android:layout_marginTop="20dp"
+                    android:id="@+id/tv_offer_reservations_view_tittle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Titulo Oferta Empresa"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:textSize="23sp"
-                    android:layout_below="@+id/need_reservations_view_linear_layout1"/>
+                    android:text="@string/OfferReservedViewTittle"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_toStartOf="@+id/tv_offer_reservations_view_company"/>
 
+                <!-- Nombre empresa -->
                 <TextView
-                    android:id="@+id/tv_need_reservations_view_description"
+                    android:id="@+id/tv_offer_reservations_view_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/OfferReservedViewCompany"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10dp"
+                    android:padding="2dp"
+                    android:textSize="15sp"
+                    android:textColor="#ffffffff"
+                    android:background="@drawable/offers_company_square_background"
+                    />
+
+                <!-- Descripcion -->
+                <TextView
+                    android:id="@+id/tv_offer_reservations_view_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:text="Esta es la descripcion de la oferta de la empresa XX"
+                    android:text="@string/OfferReservedViewDescription"
                     android:textStyle="italic"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="20dp"
-                    android:layout_below="@+id/tv_need_reservations_view_tittle"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/tv_offer_reservations_view_tittle"
                     />
 
 
-                <LinearLayout
-                    android:id="@+id/need_reservations_view_linear_layout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_below="@id/tv_need_reservations_view_description">
-
-                    <TextView
-                        android:id="@+id/tv_need_reservations_view_date_ini"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="Fecha de publicación: XX/XX/XX" />
-                    <TextView
-                        android:id="@+id/tv_need_reservations_view_date_fin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="Fecha de expiración: XX/XX/XX" />
-
-
-                </LinearLayout>
-
                 <TextView
-                    android:id="@+id/tv_need_reservations_view_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="$XX.XX"
-                    android:gravity="center_horizontal"
-                    android:textSize="23sp"
-                    android:textColor="#ff6565"
-                    android:layout_toEndOf="@+id/need_reservations_view_linear_layout2"
-                    android:layout_below="@+id/tv_need_reservations_view_description"/>
-
-                <TextView
-                    android:id="@+id/tv_need_reservations_view_3"
+                    android:id="@+id/tv_offer_reservations_view_1"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
-                    android:text="Esta oferta contiene: "
+                    android:text="@string/OfferReservedViewProducts"
                     android:textSize="16sp"
-                    android:layout_marginStart="20dp"
-                    android:layout_below="@id/tv_need_reservations_view_price"/>
+                    android:layout_below="@id/tv_offer_reservations_view_description"/>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_need_reservations_view"
+                    android:id="@+id/recycler_view_offer_reservations_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="140dp"
+                    android:layout_height="250dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/tv_need_reservations_view_3"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_offer_reservations_view_1"
                     android:scrollbars="vertical">
 
                 </android.support.v7.widget.RecyclerView>
 
+                <LinearLayout
+                    android:id="@+id/offer_reservations_view_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="30"
+                    android:layout_below="@id/recycler_view_offer_reservations_view">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10">
+
+                        <TextView
+                            android:id="@+id/tv_offer_reservations_view_price_normal_txt"
+                            android:text="@string/od_tv_tprice_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/tv_offer_reservations_view_price_normal"
+                            android:text="@string/OfferReservedViewPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10">
+
+                        <TextView
+                            android:id="@+id/tv_offer_reservations_view_dsct"
+                            android:text="@string/OfferReservedViewDsctTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/green"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/tv_offer_reservations_view_dsct_sy"
+                            android:text="@string/OfferReservedViewDsct"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/green"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_offer_reservations_view_price_offer_txt"
+                            android:text="@string/OfferReservedViewOffer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/tv_offer_reservations_view_price_offer"
+                            android:text="@string/OfferReservedViewPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <Button
-                    android:id="@+id/btn_need_reservations_view_local_details"
+                    android:id="@+id/btn_offer_reservations_view_local_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ver información local"
+                    android:text="@string/OfferreservedViewButton"
                     android:layout_marginTop="20dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/recycler_view_need_reservations_view"/>
-
+                    android:layout_below="@id/offer_reservations_view_linear_layout"/>
 
             </RelativeLayout>
 
