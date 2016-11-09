@@ -62,7 +62,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout refreshLayout;
     private List<MyReservationPromotionModel> reservationsOffersList;
-    private MyPromotionsListAdapter adapter;
+    private MyPromotionsAdapter adapter;
     private TextView tvReservationsOffersEmpty;
     Context context;
     CustomAlertDialogBuilder dialogBuilder;
@@ -285,7 +285,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
     private void showOffersReservations(String s){
         getData(s);
 
-        adapter = new MyPromotionsListAdapter(this, reservationsOffersList, MyPromotionsActivity.this);
+        adapter = new MyPromotionsAdapter(this, reservationsOffersList, MyPromotionsActivity.this);
         ScaleInAnimationAdapter scaleAdapterReserved = new ScaleInAnimationAdapter(adapter);
 
         mRecyclerView.setAdapter(scaleAdapterReserved);

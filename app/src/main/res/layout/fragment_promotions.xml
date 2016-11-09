@@ -2,9 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="5dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingBottom="@dimen/activity_paddingBottom"
+    android:paddingLeft="@dimen/activity_paddingLeft"
+    android:paddingRight="@dimen/activity_paddingRight"
+    android:paddingTop="@dimen/activity_paddingTop"
     tools:context=".Promotion.PromotionsList.FragmentHome">
 
     <TextView

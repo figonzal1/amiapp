@@ -279,7 +279,6 @@ public class FragmentHome extends Fragment {
                     item.setTotal(0);
                 }
 
-
                 c.setTime(dateIni);
 
                 item.setInitialDate(String.format(Locale.US, Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));

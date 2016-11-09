@@ -14,11 +14,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/tv_reservations_empty"
@@ -39,7 +35,10 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:scrollbars="vertical"
-                        android:padding="@dimen/activity_padding">
+                        android:paddingBottom="@dimen/activity_paddingBottom"
+                        android:paddingLeft="@dimen/activity_paddingLeft"
+                        android:paddingRight="@dimen/activity_paddingRight"
+                        android:paddingTop="@dimen/activity_paddingTop">
 
                     </android.support.v7.widget.RecyclerView>
 
