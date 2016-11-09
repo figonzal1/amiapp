@@ -43,7 +43,7 @@
                 android:id="@+id/od_tv_title"
                 android:layout_marginBottom="15dp"
                 android:textSize="16sp"
-                android:textStyle="normal|bold"
+                android:textStyle="bold"
                 android:layout_toStartOf="@+id/od_tv_company"/>
 
             <TextView

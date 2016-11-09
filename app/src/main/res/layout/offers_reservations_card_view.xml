@@ -36,7 +36,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:background="@drawable/need_reservations_status_square_background"
+                android:background="@drawable/reservations_status_square_background"
                 />
 
         </LinearLayout>

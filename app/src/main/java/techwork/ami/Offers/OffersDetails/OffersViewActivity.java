@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionMenu;
 import com.shawnlin.numberpicker.NumberPicker;
 
 import org.json.JSONArray;
@@ -27,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import techwork.ami.AnimateFab;
+import techwork.ami.AnimateMenuFab;
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
 import techwork.ami.Offers.OffersList.OffersActivity;
@@ -36,14 +41,15 @@ import techwork.ami.RequestHandler;
 
 public class OffersViewActivity extends AppCompatActivity {
 
-    TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvMaxPPerson;
-    Button btnAccept, btnDiscard;
+    TextView tvTittle,tvPrice,tvCompany,tvDescription,tvMaxPPerson;
     private String idOffer,idLocal;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
     private ProductAdapter adapter;
     private Vibrator c;
+    private com.github.clans.fab.FloatingActionButton fabAccept,fabDiscard;
+    private FloatingActionMenu fabMenu;
 
 
     @Override
@@ -56,16 +62,13 @@ public class OffersViewActivity extends AppCompatActivity {
 
         //Init textviews
         tvTittle = (TextView)findViewById(R.id.tv_offer_view_tittle);
-        tvPrice = (TextView)findViewById(R.id.tv_offer_view_price);
+        tvPrice = (TextView)findViewById(R.id.tv_offer_view_price_promotion);
         tvCompany= (TextView)findViewById(R.id.tv_offer_view_company);
         tvDescription= (TextView)findViewById(R.id.tv_offer_view_description);
-        tvDateIni = (TextView)findViewById(R.id.tv_offer_view_date_ini);
-        tvDateFin = (TextView)findViewById(R.id.tv_offer_view_date_fin);
         tvMaxPPerson = (TextView)findViewById(R.id.tv_offer_view_max_person);
-
-        //Init buttons
-        btnAccept = (Button)findViewById(R.id.btn_offer_view_accept);
-        btnDiscard= (Button)findViewById(R.id.btn_offer_view_discard);
+        fabAccept = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_accept);
+        fabDiscard= (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_discard);
+        fabMenu=(FloatingActionMenu)findViewById(R.id.menu_fab);
 
         //Get info from OffersActivity
         final Bundle bundle = getIntent().getExtras();
@@ -80,8 +83,6 @@ public class OffersViewActivity extends AppCompatActivity {
         tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_DESCRIPTION));
         tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
         tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_COMPANY));
-        tvDateIni.setText("Fecha de publicación: " + bundle.getString(Config.TAG_GET_OFFER_DATEINI));
-        tvDateFin.setText("Fecha de expiración: " + bundle.getString(Config.TAG_GET_OFFER_DATEFIN));
 
         //If stock > maxxperson, textview show maxxperson
         if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON))) {
@@ -132,13 +133,10 @@ public class OffersViewActivity extends AppCompatActivity {
             }
         });
 
-
-        //Actions of Buttons
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-
+        AnimateMenuFab.doAnimateMenuFab(fabMenu,getApplicationContext());
+        fabAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Accept Offer Task
                 class acceptOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
@@ -203,12 +201,10 @@ public class OffersViewActivity extends AppCompatActivity {
 
                 acceptOfferAsyncTask go = new acceptOfferAsyncTask();
                 go.execute();
-
-
             }
         });
 
-        btnDiscard.setOnClickListener(new View.OnClickListener() {
+        fabDiscard.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

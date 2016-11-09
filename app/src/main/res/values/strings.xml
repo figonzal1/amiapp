@@ -169,14 +169,13 @@
 
     <!-- Offer View -->
     <string name="OfferViewCardViewNameProduct">Nombre producto</string>
-    <string name="OfferViewOfferSendFor">Oferta enviada por: </string>
     <string name="OfferViewCompany">Empresa</string>
     <string name="OfferViewTittle">Título oferta</string>
     <string name="OfferViewDescription">Descripción de la oferta</string>
-    <string name="OfferViewDateIni">Fecha de publicación: XX/XX/XXXX</string>
-    <string name="OfferViewDateFin">Fecha de expiración: XX/XX/XXXX</string>
     <string name="OfferViewPrice">$x.xxx</string>
-    <string name="OfferViewProducts">Esta oferta contiene: </string>
+    <string name="OfferViewDsctTxt">Descuento</string>
+    <string name="OfferViewDsct">-x.x%</string>
+    <string name="OfferViewOffer">Oferta</string>
     <string name="OfferViewMaxPerson">¡Puedes reservar hasta x unidades!</string>
     <string name="OfferViewAcceptOfferProcessing">Aceptando oferta</string>
     <string name="OfferViewDiscardOfferProcessing">Rechazando oferta</string>
@@ -184,8 +183,6 @@
     <string name="OfferViewDiscardOffer">Oferta rechazada</string>
     <string name="OfferViewAcceptOfferFail">No se ha podido reservar</string>
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
-    <string name="OfferViewDateIni2">Fecha de publicación: </string>
-    <string name="OfferViewDateFin2">Fecha de expiración: </string>
 
     <!-- Offer Local View -->
     <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>

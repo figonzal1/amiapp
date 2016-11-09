@@ -67,7 +67,7 @@
                         android:layout_weight="1"
                         android:textSize="18dp"
                         android:gravity="center_horizontal"
-                        android:background="@drawable/need_offer_company_square_background"
+                        android:background="@drawable/offers_company_square_background"
                         />
                 </LinearLayout>
 
