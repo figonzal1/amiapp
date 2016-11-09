@@ -133,6 +133,9 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
                 JSONObject jsonObjectItem = jsonProductOffer.optJSONObject(i);
                 ProductModel item = new ProductModel();
                 item.setName(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_NAME));
+                item.setDescription(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_DESCRIPTION));
+                item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_PRODUCT_OFFER_PRICE));
+                item.setImage(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_IMAGE));
                 productList.add(item);
             }
 
