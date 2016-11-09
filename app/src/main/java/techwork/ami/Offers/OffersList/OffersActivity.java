@@ -165,6 +165,7 @@ public class OffersActivity extends AppCompatActivity {
                         intent.putExtra(Config.TAG_GET_OFFER_DATEFIN, m.getDateFin());
                         intent.putExtra(Config.TAG_GET_OFFER_DATEINI, m.getDateIni());
                         intent.putExtra(Config.TAG_GET_OFFER_COMPANY, m.getCompany());
+                        intent.putExtra(Config.TAG_GET_OFFER_PRICE_TOTAL,m.getPriceTotal());
                         startActivity(intent);
                     }
                     else {
@@ -211,6 +212,7 @@ public class OffersActivity extends AppCompatActivity {
                 item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GET_OFFER_MAXPPERSON));
                 item.setCompany(jsonObjectItem.getString(Config.TAG_GET_OFFER_COMPANY));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GET_OFFER_IMAGE));
+                item.setPriceTotal(jsonObjectItem.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL));
 
                 dIni = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEFIN);

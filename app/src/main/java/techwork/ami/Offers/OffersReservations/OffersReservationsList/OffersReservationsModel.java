@@ -23,6 +23,7 @@ public class OffersReservationsModel {
     String localCode;
     String image;
     int price;
+    int priceTotal;
 
 
     //Getters
@@ -58,6 +59,10 @@ public class OffersReservationsModel {
 
     public String getCalification() {
         return calification;
+    }
+
+    public int getPriceTotal() {
+        return priceTotal;
     }
 
     public String getCharge() {
@@ -173,5 +178,9 @@ public class OffersReservationsModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setPriceTotal(int priceTotal) {
+        this.priceTotal = priceTotal;
     }
 }

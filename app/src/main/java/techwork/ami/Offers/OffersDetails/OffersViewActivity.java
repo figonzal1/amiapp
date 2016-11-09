@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -43,7 +44,7 @@ import techwork.ami.RequestHandler;
 
 public class OffersViewActivity extends AppCompatActivity {
 
-    TextView tvTittle,tvPrice,tvCompany,tvDescription,tvMaxPPerson;
+    TextView tvTittle,tvCompany,tvDescription,tvMaxPPerson,tvPriceOffer,tvPriceNormal,tvDsctSym,tvDsct;
     private String idOffer,idLocal;
     private List<ProductModel> productList;
     private RecyclerView rv;
@@ -65,10 +66,13 @@ public class OffersViewActivity extends AppCompatActivity {
 
         //Init textviews
         tvTittle = (TextView)findViewById(R.id.tv_offer_view_tittle);
-        tvPrice = (TextView)findViewById(R.id.tv_offer_view_price_promotion);
         tvCompany= (TextView)findViewById(R.id.tv_offer_view_company);
         tvDescription= (TextView)findViewById(R.id.tv_offer_view_description);
         tvMaxPPerson = (TextView)findViewById(R.id.tv_offer_view_max_person);
+        tvPriceNormal=(TextView)findViewById(R.id.tv_offer_view_price_normal);
+        tvPriceOffer=(TextView)findViewById(R.id.tv_offer_view_price_promotion);
+        tvDsct=(TextView)findViewById(R.id.tv_offer_view_dsct);
+        tvDsctSym=(TextView)findViewById(R.id.tv_offer_view_dsct_sy);
         fabAccept = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_accept);
         fabDiscard= (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_discard);
         fabMenu=(FloatingActionMenu)findViewById(R.id.menu_fab);
@@ -84,8 +88,32 @@ public class OffersViewActivity extends AppCompatActivity {
         //Set TextViews with the information of each NeedOffer.
         tvTittle.setText(bundle.getString(Config.TAG_GET_OFFER_TITTLE));
         tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_DESCRIPTION));
-        tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
+        tvPriceOffer.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
+        tvPriceNormal.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL)));
         tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_COMPANY));
+
+        int perc = (bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL) != 0) ?
+                bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)*100/bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL):
+                100;
+        // If offer price is greater than total price
+        String s = "";
+        if (perc == 100){
+            tvDsct.setText("");
+        }
+        else if (perc > 100){
+            // Red color
+            tvDsct.setText(getResources().getString(R.string.od_tv_increase_txt));
+            tvDsct.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+            s = "+";
+            tvDsctSym.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        }
+        else{
+            s = "-";
+        }
+        if(!s.equals("")){
+            tvDsctSym.setText(s+String.valueOf(Math.abs(100-perc))+"%");
+        }
+        else tvDsctSym.setText("");
 
         //If stock > maxxperson, textview show maxxperson
         if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>
@@ -357,7 +385,6 @@ public class OffersViewActivity extends AppCompatActivity {
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_DESCRIPTION));
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_PRODUCT_OFFER_PRICE));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_IMAGE));
-
                 productList.add(item);
             }
 

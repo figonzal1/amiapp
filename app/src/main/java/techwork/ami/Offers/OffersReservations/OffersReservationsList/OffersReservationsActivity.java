@@ -138,6 +138,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                         intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATEINI,model.getDateIni());
                         intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATEFIN,model.getDateFin());
                         intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATERESERV,model.getDateReserv());
+                        intent.putExtra(Config.TAG_GET_OFFER_RESERVED_PRICE_TOTAL, model.getPriceTotal());
 
                         startActivity(intent);
                         return true;
@@ -661,6 +662,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 item.setLocalCode(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_LOCALCODE));
                 item.setDateCashed(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_CASHED));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_IMAGE));
+                item.setPriceTotal(jsonObjectItem.getInt(Config.TAG_GET_OFFER_RESERVED_PRICE_TOTAL));
 
                 //If dateChashed is != null, save variables.
                 if (!jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_DATECASHED).equals("")){

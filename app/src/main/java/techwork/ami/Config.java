@@ -224,6 +224,7 @@ public class Config {
 	public static final String TAG_GET_OFFER_DATEFIN="fechaTermino";
 	public static final String TAG_GET_OFFER_DATETIME_FIN="fechaTermino";
 	public static final String TAG_GET_OFFER_PRICEOFFER="precioOferta";
+	public static final String TAG_GET_OFFER_PRICE_TOTAL="precioTotal";
 	public static final String TAG_GET_OFFER_MAXPPERSON="maxPPersona";
 	public static final String TAG_GET_OFFER_COMPANY="nombreEmpresa";
 	public static final String TAG_GET_OFFER_IMAGE="imagen";
@@ -284,6 +285,7 @@ public class Config {
 	public static final String TAG_GET_OFFER_RESERVED_DATEINI="fechaInicio";
 	public static final String TAG_GET_OFFER_RESERVED_DATEFIN="fechaTermino";
 	public static final String TAG_GET_OFFER_RESERVED_PRICEOFFER="precioOferta";
+	public static final String TAG_GET_OFFER_RESERVED_PRICE_TOTAL="precioTotal";
 	public static final String TAG_GET_OFFER_RESERVED_COMPANY="empresa";
 	public static final String TAG_GET_OFFER_RESERVED_LOCALCODE="codigoLocal";
 	public static final String TAG_GET_OFFER_RESERVED_IMAGE="imagen";
