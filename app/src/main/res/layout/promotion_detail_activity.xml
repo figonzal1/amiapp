@@ -71,7 +71,8 @@
                     android:textSize="16sp"
                     android:textStyle="normal|italic"
                     android:layout_marginBottom="10dp"
-                    android:layout_below="@+id/od_tv_title"/>
+                    android:layout_below="@+id/od_tv_title"
+                    android:textAlignment="center" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_offer_detail"

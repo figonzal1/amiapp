@@ -126,13 +126,31 @@ public class MyPromotionsActivity extends AppCompatActivity {
         getReservations();
     }
 
-    public void showPopupMenu(final View view, final MyReservationPromotionModel model){
+    public void showPopupMenu(final View view, final MyReservationPromotionModel model, long expiryTime){
 
         final PopupMenu popup= new PopupMenu(view.getContext(),view);
         final MenuInflater inflater = popup.getMenuInflater();
-
         final Menu popumenu = popup.getMenu();
         inflater.inflate(R.menu.popup_menu_reservations,popup.getMenu());
+
+        if (expiryTime < 0.0){
+            popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+            popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+            if (model.getCharged().equals("0")){
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+        }else {
+            if (!model.getCharged().equals("0")) {
+                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+            } else {
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+            if (!model.getCalification().equals("")) {
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+        }
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -142,66 +160,75 @@ public class MyPromotionsActivity extends AppCompatActivity {
 
                 switch(item.getItemId()) {
                     case R.id.item_popup_menu_reservations_details:
-                        Intent intent = new Intent(MyPromotionsActivity.this, PromotionDetailActivity.class);
-                        intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
-                        intent.putExtra(Config.TAG_GO_DESCRIPTION, model.getDescription());
-                        intent.putExtra(Config.TAG_GO_IMAGE, model.getImage());
-                        intent.putExtra(Config.TAG_GO_COMPANY, model.getCompany());
-                        intent.putExtra(Config.TAG_GO_PRICE, model.getPrice());
-                        intent.putExtra(Config.TAG_GO_OFFER_ID, model.getIdReservationOffer());
-                        intent.putExtra(Config.TAG_GO_MAXXPER, model.getMaxPPerson());
-                        intent.putExtra(Config.TAG_GO_STOCK, model.getStock());
-                        intent.putExtra(Config.TAG_GO_DATEFIN, model.getFinalDate());
-                        intent.putExtra(Config.TAG_GO_TOTALPRICE, model.getTotalPrice());
-                        intent.putExtra(Config.TAG_GO_DATETIMEFIN, model.getFinalDateTime());
-                        intent.putExtra(Config.TAG_GO_NO_RESERVE_OPTION, false);
-                        startActivity(intent);
+                        goToDetails(model);
                         return true;
 
                     case R.id.item_popup_menu_reservations_charge:
-                        item.setEnabled(true);
-
-                        // If available
-                        if (expiryTime > 0.0) {
-                            // If the offer was already charged
-                            if (model.getCharged().equals("1")) {
-                                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
-                                //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                                Snackbar.make(view, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
-                            } else {
-                                dialogLocalCode(model);
-                            }
-                        } else {
-                            popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
-                            //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                            Snackbar.make(view, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
-                        }
+                        rateOffer(model, false);
                         return true;
 
                     case R.id.item_popup_menu_reservations_calificate:
-                        // If promotion is available
-                        if (expiryTime > 0.0) {
-                            // Validate before rate
-                            if (model.getCharged().equals("0")) {
-                                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
-                                Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
-                            }
-                            // If has already validated but not rated
-                            else if (!model.getCalification().equals("")) {
-                                item.setEnabled(false);
-                                Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
-                                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
-                            } else {
-                                rateOffer(model, false);
-                            }
-                        } else {
-                            Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
-                        }
+                        dialogLocalCode(model);
                 }
                 return false;
             }
         });
         popup.show();
+    }
+
+    private void goToDetails(MyReservationPromotionModel model) {
+        Intent intent = new Intent(MyPromotionsActivity.this, PromotionDetailActivity.class);
+        intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
+        intent.putExtra(Config.TAG_GO_DESCRIPTION, model.getDescription());
+        intent.putExtra(Config.TAG_GO_IMAGE, model.getImage());
+        intent.putExtra(Config.TAG_GO_COMPANY, model.getCompany());
+        intent.putExtra(Config.TAG_GO_PRICE, model.getPrice());
+        intent.putExtra(Config.TAG_GO_OFFER_ID, model.getIdReservationOffer());
+        intent.putExtra(Config.TAG_GO_MAXXPER, model.getMaxPPerson());
+        intent.putExtra(Config.TAG_GO_STOCK, model.getStock());
+        intent.putExtra(Config.TAG_GO_DATEFIN, model.getFinalDate());
+        intent.putExtra(Config.TAG_GO_TOTALPRICE, model.getTotalPrice());
+        intent.putExtra(Config.TAG_GO_DATETIMEFIN, model.getFinalDateTime());
+        intent.putExtra(Config.TAG_GO_NO_RESERVE_OPTION, false);
+        startActivity(intent);
+    }
+
+    private void charge(MyReservationPromotionModel model, long expiryTime) {
+        // This cover all conditions, but they are controlled by popup menu
+        // If available
+        if (expiryTime > 0.0) {
+            // If the offer was already charged
+            if (model.getCharged().equals("1")) {
+                //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+                Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
+            } else {
+                dialogLocalCode(model);
+            }
+        } else {
+            //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+            Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    private void calificate(MyReservationPromotionModel model, long expiryTime) {
+        // This cover all conditions, but they are controlled by popup menu
+        // If promotion is available
+        if (expiryTime > 0.0) {
+            // Validate before rate
+            if (model.getCharged().equals("0")) {
+                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
+            }
+            // If has already validated but not rated
+            else if (!model.getCalification().equals("")) {
+                Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+            } else {
+                rateOffer(model, false);
+            }
+        } else {
+            Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     // Call to DB
@@ -280,53 +307,42 @@ public class MyPromotionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(final View view) {
                 final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
-                //Calculate remainig time
-                ExpiryTime expt= new ExpiryTime();
-                long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
-                // If available
-                if(expiryTime > 0.0){
-                    // If the offer was already charged
-                    if(model.getCharged().equals("1")){
-                        //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                        Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
-                    }
-                    else {
-                        dialogLocalCode(model);
-                    }
-                }
-                else {
-                    Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
-                }
+                goToDetails(model);
             }
 
             @Override
             public void onItemLongClick(View view) {
+                // Make the option available
+                // Charge -> Rate -> Nothing
+
                 final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
+
                 //Calculate remainig time
                 ExpiryTime expt= new ExpiryTime();
                 long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
+
                 // If promotion is available
                 if (expiryTime > 0.0) {
-                    // Validate before rate
+                    // If not charged yet
                     if (model.getCharged().equals("0")) {
-                        //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
-                        Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
+                        dialogLocalCode(model);
                     }
-                    // If has already validated but not rated
-                    else if (!model.getCalification().equals("")) {
-                        Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
-                        //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
-                    } else {
+                    // If has already charged but not rated
+                    else if (model.getCalification().equals("")) {
                         rateOffer(model, false);
+                    } else {
+                        Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
                     }
                 }
+                // If promotion is unavailable
                 else {
-                    Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
+                    // If promotion is unavailable but not rated
+                    if (!model.getCharged().equals("0") && model.getCalification().equals("")) rateOffer(model, false);
+                        // Otherwise
+                    else Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 
     private void dialogLocalCode(final MyReservationPromotionModel ro) {

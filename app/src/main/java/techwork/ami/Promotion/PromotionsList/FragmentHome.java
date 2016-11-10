@@ -390,7 +390,6 @@ public class FragmentHome extends Fragment {
             super.onPostExecute(s);
             loading.dismiss();
             if (s.equals("0")) {
-                System.out.println("PRINT ENTRA");
                 Toast.makeText(context,
                         R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
             } else {

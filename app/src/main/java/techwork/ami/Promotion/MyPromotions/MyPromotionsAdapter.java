@@ -3,7 +3,6 @@ package techwork.ami.Promotion.MyPromotions;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
 import java.util.List;
 
 import techwork.ami.Config;
@@ -32,13 +30,13 @@ public class MyPromotionsAdapter
     private OnItemClickListenerRecyclerView itemClick;
     private List<MyReservationPromotionModel> items;
     private Context context;
-    private MyPromotionsActivity offersReservationsActivity;
+    private MyPromotionsActivity myPromotionActivity;
 
     // Class constructor
-    public MyPromotionsAdapter(Context context, List<MyReservationPromotionModel> items, MyPromotionsActivity offersReservationsActivity) {
+    public MyPromotionsAdapter(Context context, List<MyReservationPromotionModel> items, MyPromotionsActivity myPromotionActivity) {
         this.context = context;
         this.items = items;
-        this.offersReservationsActivity=offersReservationsActivity;
+        this.myPromotionActivity = myPromotionActivity;
     }
 
     // Class Holder
@@ -80,6 +78,10 @@ public class MyPromotionsAdapter
     public void onBindViewHolder(MyPromotionsAdapter.MyReservationsListViewHolder holder, int position) {
         final MyReservationPromotionModel model = items.get(position);
 
+        //Calculate remainig time
+        ExpiryTime expt= new ExpiryTime();
+        final long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
+
         holder.reservationTitle.setText(model.getTitle());
         holder.reservationFinalDate.setText(model.getFinalDate());
         if(Integer.valueOf(model.getQuantity())>1){
@@ -99,9 +101,6 @@ public class MyPromotionsAdapter
                 .placeholder(R.drawable.image_default)
                 .into(holder.reservationImage);
 
-        //Calculate remainig time
-        ExpiryTime expt= new ExpiryTime();
-        long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
         // If promotion is available
         if (expiryTime > 0.0){
             if (model.getCharged().equals("0")){
@@ -138,7 +137,7 @@ public class MyPromotionsAdapter
         holder.popupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                offersReservationsActivity.showPopupMenu(v,model);
+                myPromotionActivity.showPopupMenu(v,model,expiryTime);
             }
         });
     }
