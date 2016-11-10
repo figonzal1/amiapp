@@ -1,11 +1,13 @@
 package techwork.ami.Offers.OffersReservations.OffersReservationsList;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
@@ -214,19 +216,38 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(Void... params) {
-                HashMap<String,String> hashmap = new HashMap<>();
 
-                hashmap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON,idperson);
                 RequestHandler rh = new RequestHandler();
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
 
-                return rh.sendPostRequest(Config.URL_GET_OFFER_RESERVATIONS,hashmap);
+                if (connectionStatus) {
+                    HashMap<String, String> hashmap = new HashMap<>();
+
+                    hashmap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON, idperson);
+
+                    return rh.sendPostRequest(Config.URL_GET_OFFER_RESERVATIONS, hashmap);
+                }
+                else{
+                    return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showOfferReservations(s);
+
+                //if conection is correct do show.
+                if (!s.equals("-1")){
+                    showOfferReservations(s);
+                }
+
             }
         }
         OfferReservationsAsyncTask go = new OfferReservationsAsyncTask();

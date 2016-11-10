@@ -302,11 +302,26 @@ public class FragmentOrder extends Fragment {
 
             @Override
             protected String doInBackground(String... params) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_NE_ID, model.getIdNeed());
                 RequestHandler rh = new RequestHandler();
 
-                return rh.sendPostRequest(Config.URL_DELETE_NEED, hashMap);
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus){
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_NE_ID, model.getIdNeed());
+
+                    return rh.sendPostRequest(Config.URL_DELETE_NEED, hashMap);
+                }
+                else {
+                    return "-1";
+                }
+
             }
 
             @Override
@@ -314,7 +329,7 @@ public class FragmentOrder extends Fragment {
                 super.onPostExecute(s);
 
                 //If operation is correct dialog close in 1,5 [s]
-                if (s.equals("0")) {
+                if (s.equals("0") || !s.equals("-1")) {
 
                     Handler mHandler = new Handler();
                     mHandler.postDelayed(new Runnable() {
