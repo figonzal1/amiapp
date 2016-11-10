@@ -463,7 +463,6 @@ public class MyPromotionsActivity extends AppCompatActivity {
                             protected void onPostExecute(String s) {
                                 super.onPostExecute(s);
                                 loading.dismiss();
-                                System.out.println("PRINT " + s);
                                 if (s.equals("0")) {
                                     Toast.makeText(getApplicationContext(),
                                             R.string.my_reservations_offers_validate_ok, Toast.LENGTH_LONG).show();
