@@ -95,7 +95,7 @@ public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReserv
         }else{
             //
             if (model.getCalification().equals("")){
-                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.greenInTime));
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
                 holder.tvStatus.setText("Cobrada");
             }
             else {

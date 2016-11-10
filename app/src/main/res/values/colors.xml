@@ -4,8 +4,7 @@
     <color name="colorPrimaryDark">#01457d</color>
     <color name="colorAccent">#40c6ff</color>
     <color name="yellow">#f9c74b</color>
-    <color name="greenInTime">#64be27</color>
-    <color name="greenOutTime">#93d051</color>
+    <color name="green">#5cb91e</color>
     <color name="red">#ff0202</color>
     <color name="blue">#0271c0</color>
 </resources>

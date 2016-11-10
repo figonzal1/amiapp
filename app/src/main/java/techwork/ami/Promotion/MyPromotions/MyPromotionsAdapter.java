@@ -110,7 +110,7 @@ public class MyPromotionsAdapter
 
             }else{
                 if (model.getCalification().equals("")){
-                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.greenInTime));
+                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
                     holder.tvStatus.setText("Cobrada");
                 }
                 else {
@@ -127,7 +127,7 @@ public class MyPromotionsAdapter
             }
             else {
                 if (model.getCalification().equals("")) {
-                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.greenOutTime));
+                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.green));
                     holder.tvStatus.setText("Cobrada");
                 } else {
                     ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.blue));
