@@ -194,6 +194,65 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+
+
+
+
+
+
+                        // Write in the DB that offer has been hired
+                        class ValidateReservationOffer extends AsyncTask<String, Void, String> {
+                            ProgressDialog loading;
+
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                loading = ProgressDialog.show(MyPromotionsActivity.this,
+                                        getString(R.string.my_reservations_offers_delete_reservation_processing),
+                                        getString(R.string.wait), false, false);
+                            }
+
+                            @Override
+                            protected String doInBackground(String... params) {
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put(Config.KEY_RESERVE_PERSON_ID,
+                                        getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                                .getString(Config.KEY_SP_ID, "-1"));
+                                hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
+                                RequestHandler rh = new RequestHandler();
+                                return rh.sendPostRequest(Config.URL_MRO_DELETE, hashMap);
+                            }
+
+                            @Override
+                            protected void onPostExecute(String s) {
+                                super.onPostExecute(s);
+                                loading.dismiss();
+                                System.out.println("PRINT " + s);
+                                if (s.equals("0")) {
+                                    Toast.makeText(getApplicationContext(),
+                                            R.string.my_reservations_offers_delete_ok, Toast.LENGTH_LONG).show();
+                                    //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
+                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                    c.vibrate(500);
+                                } else {
+                                    Toast.makeText(getApplicationContext(),
+                                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                    c.vibrate(500);
+                                }
+                            }
+                        }
+                        new ValidateReservationOffer().execute(model.getIdReservationOffer());
+
+
+
+
+
+
+
+
+
+
                     }
                 });
 

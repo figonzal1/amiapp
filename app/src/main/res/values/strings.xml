@@ -310,6 +310,8 @@
     <string name="my_reservations_offers_expired_status">Vencida</string>
     <string name="my_reservations_offers_delete_reservation">¿Desea eliminar esta reserva?</string>
     <string name="my_reservations_offers_delete_reservation_yes">Eliminar</string>
+    <string name="my_reservations_offers_delete_reservation_processing">Eliminando reserva</string>
+    <string name="my_reservations_offers_delete_ok">¡Reserva eliminada!</string>
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
     <string name="my_reservations_offers_delete_positive">Eliminar</string>
