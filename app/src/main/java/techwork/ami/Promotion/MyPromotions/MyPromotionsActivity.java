@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -171,10 +172,10 @@ public class MyPromotionsActivity extends AppCompatActivity {
                         rateOffer(model, false);
                         break;
 
-                    case R.id.item_popup_menu_discard_order:
+                    case R.id.item_popup_menu_reservations_delete_reservation:
                         dialogDeleteReservation(model);
                 }
-                return false;
+                return true;
             }
         });
         popup.show();
@@ -189,7 +190,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
         dialogBuilder.setMessage(R.string.my_reservations_offers_delete_reservation);
 
         // Set your buttons OnClickListeners
-        dialogBuilder.setPositiveButton(R.string.my_reservations_offers_validate_positiveText,
+        dialogBuilder.setPositiveButton(R.string.my_reservations_offers_delete_reservation_yes,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
