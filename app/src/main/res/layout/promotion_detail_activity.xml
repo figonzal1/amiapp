@@ -30,150 +30,154 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/relative"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/activity_padding"
-            android:paddingBottom="@dimen/activity_paddingBottom"
-            android:paddingLeft="@dimen/cardView_marginLeft"
-            android:paddingRight="@dimen/cardView_marginRight">
+            android:paddingBottom="@dimen/activity_paddingBottom">
 
-            <TextView
-                android:text="@string/offer_cv_title"
+            <RelativeLayout
+                android:id="@+id/relative"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/od_tv_title"
-                android:layout_marginBottom="15dp"
-                android:textSize="16sp"
-                android:textStyle="normal|bold"
-                android:layout_toStartOf="@+id/od_tv_company"/>
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_padding"
+                android:paddingBottom="@dimen/activity_paddingBottom"
+                android:paddingLeft="@dimen/cardView_marginLeft"
+                android:paddingRight="@dimen/cardView_marginRight">
 
-            <TextView
-                android:id="@+id/od_tv_company"
-                android:text="@string/offer_cv_company"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_alignParentEnd="true"
-                android:textSize="15sp" />
+                <TextView
+                    android:text="@string/offer_cv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/od_tv_title"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold"
+                    android:layout_toStartOf="@+id/od_tv_company"/>
 
-            <TextView
-                android:id="@+id/od_tv_description"
-                android:text="@string/offer_cv_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="normal|italic"
-                android:layout_marginBottom="10dp"
-                android:layout_below="@+id/od_tv_title"/>
+                <TextView
+                    android:id="@+id/od_tv_company"
+                    android:text="@string/offer_cv_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="15sp" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_offer_detail"
-                android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:layout_below="@+id/od_tv_description"
-                android:scrollbars="vertical">
-                <!--android:layout_height="300dp"-->
-            </android.support.v7.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/od_tv_description"
+                    android:text="@string/offer_cv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="normal|italic"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/od_tv_title"/>
 
-
-            <LinearLayout
-                android:id="@+id/offer_cv_linear_layout"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/recycler_view_offer_detail"
-                android:layout_marginTop="15dp"
-                android:weightSum="30">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_offer_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/od_tv_description">
+                    <!--android:layout_height="300dp"-->
+                </android.support.v7.widget.RecyclerView>
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/offer_cv_linear_layout"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/recycler_view_offer_detail"
+                    android:layout_marginTop="15dp"
+                    android:weightSum="30">
 
-                    <TextView
-                        android:text="@string/od_tv_tprice_txt"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/od_tv_tprice_txt"
-                        android:textAlignment="center" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="10">
 
-                    <TextView
-                        android:text="@string/od_tv_tprice_txt"
+                        <TextView
+                            android:text="@string/od_tv_tprice_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/od_tv_tprice_txt"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:text="@string/od_tv_tprice_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/od_tv_tprice"
+                            android:textAlignment="center"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/od_tv_tprice"
-                        android:textAlignment="center"
-                        />
+                        android:layout_height="match_parent"
+                        android:layout_weight="10">
+
+                        <TextView
+                            android:id="@+id/od_tv_dsct_txt"
+                            android:text="@string/od_tv_dsct_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/green"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/od_tv_dsct"
+                            android:text="@string/od_tv_dsct_syg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/green"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        >
+
+                         <TextView
+                             android:text="@string/od_tv_price_txt"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:id="@+id/od_tv_price_txt"
+                             android:gravity="center"/>
+
+                        <TextView
+                            android:text="@string/od_tv_price_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/od_tv_price"
+                            android:gravity="center"
+                            android:textStyle="normal|bold" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <TextView
+                    android:text="@string/od_tv_rd"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/od_tv_rd"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/offer_cv_linear_layout"
+                    />
 
-                    <TextView
-                        android:id="@+id/od_tv_dsct_txt"
-                        android:text="@string/od_tv_dsct_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/green"
-                        />
-
-
-                    <TextView
-                        android:id="@+id/od_tv_dsct"
-                        android:text="@string/od_tv_dsct_syg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/green"
-                        />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10"
-                    >
-
-                     <TextView
-                         android:text="@string/od_tv_price_txt"
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:id="@+id/od_tv_price_txt"
-                         android:gravity="center"/>
-
-                    <TextView
-                        android:text="@string/od_tv_price_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/od_tv_price"
-                        android:gravity="center"
-                        android:textStyle="normal|bold" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <TextView
-                android:text="@string/od_tv_rd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/od_tv_rd"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:layout_below="@+id/offer_cv_linear_layout"
-                />
-
-        </RelativeLayout>
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -182,6 +186,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"
+        app:layout_behavior="techwork.ami.ScrollAwareFABBehavior"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
         android:src="@drawable/image_default"

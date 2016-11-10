@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
@@ -177,47 +178,8 @@ public class PromotionDetailActivity extends AppCompatActivity {
 
         // Floating Action Button
         floatingButton = (FloatingActionButton) findViewById(R.id.floating_button);
+        AnimateFab.doAnimate(floatingButton, context);
         if (!getIntent().hasExtra(Config.TAG_GO_NO_RESERVE_OPTION)) {
-
-            floatingButton.setScaleX(0);
-            floatingButton.setScaleY(0);
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                final Interpolator interpolador = AnimationUtils.loadInterpolator(getApplicationContext(),
-                        android.R.interpolator.fast_out_slow_in);
-
-                floatingButton.animate()
-                        .scaleX((float) 1.5)
-                        .scaleY((float) 1.5)
-                        .setInterpolator(interpolador)
-                        .setDuration(600)
-                        .setListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
-
-                            }
-
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                floatingButton.animate()
-                                        .scaleY(1)
-                                        .scaleX(1)
-                                        .setInterpolator(interpolador)
-                                        .setDuration(1000)
-                                        .start();
-                            }
-
-                            @Override
-                            public void onAnimationCancel(Animator animation) {
-
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animator animation) {
-
-                            }
-                        });
-            }
             floatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
