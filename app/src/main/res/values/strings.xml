@@ -246,7 +246,7 @@
     <!-- After Login Strings -->
     <string name="titleActivityAfterLogin">Bienvenido</string>
     <string name="afterLoginTitle">¡Bienvenido a AMI!</string>
-    <string name="afterLoginLeyend">Desde ahora podrás enterarte de las mejores promociones pensadas en tus gustos, pero primero necesitamos conocer un poco más de tí…</string>
+    <string name="afterLoginLeyend">Desde ahora podrás enterarte de las mejores promociones pensadas en tus gustos, pero primero necesitamos conocer un poco más de ti…</string>
     <string name="afterLoginDate">Fecha de nacimiento</string>
     <string name="AL_textViewBirthDate">¿Cuándo naciste?</string>
     <string name="AL_textViewOccupation">¿A qué te dedicas?</string>
