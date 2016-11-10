@@ -332,7 +332,7 @@
     <!-- Fragment Home / Offers list Strings -->
     <string name="offers_list_discard_question">¿Desea descartar esta promoción?</string>
     <string name="offers_list_discard_processing">Descartando promoción</string>
-    <string name="title_activity_offer_detail">Detalles</string>
+    <string name="title_activity_offer_detail">Detalles de la promoción</string>
 
     <!-- Popup menu strings -->
     <string name="PopupMenuViewDetails">Ver detalles</string>
