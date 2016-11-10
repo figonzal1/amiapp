@@ -2,9 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_paddingBottom"
-    android:paddingLeft="@dimen/activity_paddingLeft"
-    android:paddingRight="@dimen/activity_paddingRight"
     android:paddingTop="@dimen/activity_paddingTop"
     tools:context=".Promotion.PromotionsList.FragmentHome">
 
@@ -26,7 +23,9 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_offer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/cardView_marginLeft"
+                android:layout_marginRight="@dimen/cardView_marginRight" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

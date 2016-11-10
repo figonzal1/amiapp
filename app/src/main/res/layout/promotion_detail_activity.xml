@@ -36,8 +36,8 @@
             android:layout_height="match_parent"
             android:paddingTop="@dimen/activity_padding"
             android:paddingBottom="@dimen/activity_paddingBottom"
-            android:paddingLeft="@dimen/activity_paddingLeft"
-            android:paddingRight="@dimen/activity_paddingRight">
+            android:paddingLeft="@dimen/cardView_marginLeft"
+            android:paddingRight="@dimen/cardView_marginRight">
 
             <TextView
                 android:text="@string/offer_cv_title"
