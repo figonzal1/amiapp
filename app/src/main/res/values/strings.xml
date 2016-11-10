@@ -307,8 +307,10 @@
     <string name="my_reservations_offers_reserved">Reservada</string>
     <string name="my_reservations_offers_charged">Cobrada</string>
     <string name="my_reservations_offers_rated">Calificada</string>
+    <string name="my_reservations_offers_delete_reservation">¿Desea eliminar esta reserva?</string>
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
+    <string name="my_reservations_offers_delete_positive">Eliminar</string>
     <string name="my_reservations_offers_unvalidated">Esta promoción no ha sido cobrada</string>
     <string name="mrolcvReserved">Reservada</string>
     <string name="my_reservations_offers_empty">¡Oops! \n No tienes reservas recientes :(</string>

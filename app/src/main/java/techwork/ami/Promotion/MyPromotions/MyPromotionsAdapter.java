@@ -120,7 +120,11 @@ public class MyPromotionsAdapter
         }
         // Unavailable
         else {
-            if (model.getCharged().equals("0")){
+            if (!model.getCalification().equals("")){
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
+                holder.tvStatus.setText(R.string.my_reservations_offers_rated);
+            }
+            else if (model.getCharged().equals("0")){
                 ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
                 holder.tvStatus.setText(R.string.my_reservations_offers_expired);
             }
@@ -130,7 +134,7 @@ public class MyPromotionsAdapter
                     holder.tvStatus.setText(R.string.my_reservations_offers_charged);
                 } else {
                     ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.blue));
-                    holder.tvStatus.setText(R.string.my_reservations_offers_rate_message);
+                    holder.tvStatus.setText(R.string.my_reservations_offers_rated);
                 }
             }
         }

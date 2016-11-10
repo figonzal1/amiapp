@@ -161,19 +161,49 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 switch(item.getItemId()) {
                     case R.id.item_popup_menu_reservations_details:
                         goToDetails(model);
-                        return true;
+                        break;
 
                     case R.id.item_popup_menu_reservations_charge:
-                        rateOffer(model, false);
-                        return true;
+                        dialogLocalCode(model);
+                        break;
 
                     case R.id.item_popup_menu_reservations_calificate:
-                        dialogLocalCode(model);
+                        rateOffer(model, false);
+                        break;
+
+                    case R.id.item_popup_menu_discard_order:
+                        dialogDeleteReservation(model);
                 }
                 return false;
             }
         });
         popup.show();
+    }
+
+    private void dialogDeleteReservation(final MyReservationPromotionModel model) {
+        // Create the CustomAlertDialogBuilder
+        dialogBuilder = new CustomAlertDialogBuilder(context);
+
+        // Set the usual data, as you would do with AlertDialog.Builder
+        dialogBuilder.setTitle(R.string.PopupMenuDeleteReservation);
+        dialogBuilder.setMessage(R.string.my_reservations_offers_delete_reservation);
+
+        // Set your buttons OnClickListeners
+        dialogBuilder.setPositiveButton(R.string.my_reservations_offers_validate_positiveText,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+        dialogBuilder.setNegativeButton(R.string.cancel, null);
+
+        // (optional) set whether to dismiss dialog when touching outside
+        dialogBuilder.setCanceledOnTouchOutside(false);
+
+        // Show the dialog
+        dialogBuilder.show();
     }
 
     private void goToDetails(MyReservationPromotionModel model) {
