@@ -45,7 +45,7 @@
     <string name="action_sign_in_short">Listo</string>
     <string name="error_invalid_password">Contraseña demasiado corta</string>
     <string name="error_match_password">Las contraseñas no coinciden</string>
-    <string name="error_incorrect_password">Contraseña incorrecta</string>
+    <string name="error_incorrect_password">Datos incorrectos.</string>
     <string name="permission_rationale">"Permisos requeridos para acceder a Contactos."</string>
 
     <!-- String register -->
