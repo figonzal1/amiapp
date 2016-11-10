@@ -105,16 +105,16 @@ public class MyPromotionsAdapter
         if (expiryTime > 0.0){
             if (model.getCharged().equals("0")){
                 ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.yellow));
-                holder.tvStatus.setText(R.string.my_reservations_offers_reserved);
+                holder.tvStatus.setText(R.string.my_reservations_offers_reserved_status);
 
             }else{
                 if (model.getCalification().equals("")){
                     ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
-                    holder.tvStatus.setText(R.string.my_reservations_offers_charged);
+                    holder.tvStatus.setText(R.string.my_reservations_offers_charged_status);
                 }
                 else {
                     ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
-                    holder.tvStatus.setText(R.string.my_reservations_offers_rated);
+                    holder.tvStatus.setText(R.string.my_reservations_offers_rated_status);
                 }
             }
         }
@@ -122,19 +122,19 @@ public class MyPromotionsAdapter
         else {
             if (!model.getCalification().equals("")){
                 ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
-                holder.tvStatus.setText(R.string.my_reservations_offers_rated);
+                holder.tvStatus.setText(R.string.my_reservations_offers_rated_status);
             }
             else if (model.getCharged().equals("0")){
                 ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
-                holder.tvStatus.setText(R.string.my_reservations_offers_expired);
+                holder.tvStatus.setText(R.string.my_reservations_offers_expired_status);
             }
             else {
                 if (model.getCalification().equals("")) {
                     ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.green));
-                    holder.tvStatus.setText(R.string.my_reservations_offers_charged);
+                    holder.tvStatus.setText(R.string.my_reservations_offers_charged_status);
                 } else {
                     ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.blue));
-                    holder.tvStatus.setText(R.string.my_reservations_offers_rated);
+                    holder.tvStatus.setText(R.string.my_reservations_offers_rated_status);
                 }
             }
         }

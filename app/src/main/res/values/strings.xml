@@ -304,9 +304,10 @@
     <string name="my_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
     <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
     <string name="my_reservations_offers_expired">Promoción vencida</string>
-    <string name="my_reservations_offers_reserved">Reservada</string>
-    <string name="my_reservations_offers_charged">Cobrada</string>
-    <string name="my_reservations_offers_rated">Calificada</string>
+    <string name="my_reservations_offers_reserved_status">Reservada</string>
+    <string name="my_reservations_offers_charged_status">Cobrada</string>
+    <string name="my_reservations_offers_rated_status">Calificada</string>
+    <string name="my_reservations_offers_expired_status">Vencida</string>
     <string name="my_reservations_offers_delete_reservation">¿Desea eliminar esta reserva?</string>
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>

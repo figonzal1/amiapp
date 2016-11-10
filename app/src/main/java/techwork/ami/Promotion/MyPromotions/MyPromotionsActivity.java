@@ -463,6 +463,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                             protected void onPostExecute(String s) {
                                 super.onPostExecute(s);
                                 loading.dismiss();
+                                System.out.println("PRINT " + s);
                                 if (s.equals("0")) {
                                     Toast.makeText(getApplicationContext(),
                                             R.string.my_reservations_offers_validate_ok, Toast.LENGTH_LONG).show();
@@ -470,6 +471,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                                     c.vibrate(500);
                                     this.dialog.dismiss();
+                                    rateOffer(ro, true);
                                 } else {
                                     Toast.makeText(getApplicationContext(),
                                             R.string.operation_fail, Toast.LENGTH_LONG).show();
@@ -479,7 +481,6 @@ public class MyPromotionsActivity extends AppCompatActivity {
                             }
                         }
                         new ValidateReservationOffer(dialog).execute(ro.getIdReservationOffer());
-                        rateOffer(ro, true);
                     }
                 });
 
