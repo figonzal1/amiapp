@@ -64,7 +64,7 @@ public class FragmentHome extends Fragment {
     private LinearLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private TextView tvOffersEmpty;
-    private Vibrator c;
+    private static Vibrator c;
 
     //android.support.v4.app.NotificationCompat.Builder mBuilder;
     static int NOTIFY = 0;
@@ -359,7 +359,7 @@ public class FragmentHome extends Fragment {
                 .setContentIntent(contIntent);
     }
 
-    public static class DiscardOffer extends AsyncTask<String, Void, String> {
+    public class DiscardOffer extends AsyncTask<String, Void, String> {
         Context context;
         ProgressDialog loading;
         DialogInterface dialog;
@@ -397,6 +397,8 @@ public class FragmentHome extends Fragment {
                 Toast.makeText(context,
                         R.string.operation_fail, Toast.LENGTH_LONG).show();
             }
+            c = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            c.vibrate(500);
             this.dialog.dismiss();
         }
     }

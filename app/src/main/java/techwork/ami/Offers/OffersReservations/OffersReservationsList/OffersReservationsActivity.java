@@ -355,8 +355,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                             loading.dismiss();
 
-                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                            c.vibrate(500);
 
                             //If offer reserved is deleted finish OfferViewLocalActivity.
                             OffersViewLocalActivity.activity.finish();
@@ -376,6 +374,9 @@ public class OffersReservationsActivity extends AppCompatActivity {
                     Toast.makeText(context,
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
+                c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
+
                 this.dialog.dismiss();
             }
         }
@@ -491,9 +492,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
                                     public void run() {
                                         loading.dismiss();
 
-                                        c= (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                                        c.vibrate(500);
-
                                         Toast.makeText(getApplicationContext(),
                                                 R.string.OfferReservedValidateOk, Toast.LENGTH_LONG).show();
                                         getOfferReservation();
@@ -505,6 +503,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         R.string.operation_fail, Toast.LENGTH_LONG).show();
                             }
+                            c= (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
                             this.dialog.dismiss();
                         }
                     }
@@ -607,9 +607,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                             loading.dismiss();
 
-                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                            c.vibrate(500);
-
                             Toast.makeText(getApplicationContext(),
                                     R.string.OfferReservedRateOk, Toast.LENGTH_LONG).show();
                             getOfferReservation();
@@ -622,6 +619,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
+                c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
                 this.dialog.dismiss();
             }
         }
