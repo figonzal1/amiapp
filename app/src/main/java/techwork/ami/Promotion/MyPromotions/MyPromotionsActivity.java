@@ -227,19 +227,17 @@ public class MyPromotionsActivity extends AppCompatActivity {
                             protected void onPostExecute(String s) {
                                 super.onPostExecute(s);
                                 loading.dismiss();
-                                System.out.println("PRINT " + s);
                                 if (s.equals("0")) {
                                     Toast.makeText(getApplicationContext(),
                                             R.string.my_reservations_offers_delete_ok, Toast.LENGTH_LONG).show();
+                                    getReservations();
                                     //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
-                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                                    c.vibrate(500);
                                 } else {
                                     Toast.makeText(getApplicationContext(),
                                             R.string.operation_fail, Toast.LENGTH_LONG).show();
-                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                                    c.vibrate(500);
                                 }
+                                c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                c.vibrate(500);
                             }
                         }
                         new ValidateReservationOffer().execute(model.getIdReservationOffer());
@@ -635,21 +633,19 @@ public class MyPromotionsActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
+                dialog.dismiss();
 
                 if (s.equals("0")) {
                     Toast.makeText(getApplicationContext(),
                             R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
                     //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
-                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    c.vibrate(500);
-                    dialog.dismiss();
                     getReservations();
                 } else {
                     Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
-                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    c.vibrate(500);
                 }
+                c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
             }
         }
         new RateReservationOffer(dialog).execute(ro.getIdReservationOffer(), rate);
