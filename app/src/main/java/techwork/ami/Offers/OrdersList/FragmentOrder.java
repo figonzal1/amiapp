@@ -84,6 +84,7 @@ public class FragmentOrder extends Fragment {
         rv = (RecyclerView)v.findViewById(R.id.recycler_view_order);
         rv.setHasFixedSize(true);
 
+
         //1 cardviews in portrait mode.
         if (getResources().getConfiguration().orientation==1){
             layout = new GridLayoutManager(getActivity(), 1);
@@ -219,8 +220,9 @@ public class FragmentOrder extends Fragment {
             protected  void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                if (!s.equals("-1"))
+                if (!s.equals("-1")) {
                     showOrders(s);
+                }
             }
         }
         OrderAsyncTask go = new OrderAsyncTask();
@@ -229,13 +231,16 @@ public class FragmentOrder extends Fragment {
 
     //Show info in model in a recycler view
     private void showOrders(String s) {
-        getOrdersData(s);
+
+        if (!s.equals("-1")) {
+            getOrdersData(s);
+        }
 
         adapter = new OrderAdapter(getActivity(),orderList,FragmentOrder.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
-        if (orderList.size()==0){
+        if (orderList.size()==0 || orderList.isEmpty()){
             tvOrderEmpty.setText(R.string.OrderListTitleEmpty);
         }else {
             tvOrderEmpty.setText(R.string.OrderListTitle);

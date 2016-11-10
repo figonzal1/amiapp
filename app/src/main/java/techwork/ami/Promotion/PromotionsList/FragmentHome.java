@@ -162,8 +162,9 @@ public class FragmentHome extends Fragment {
                 if (connectionStatus) {
                     return rh.sendGetRequestParam(Config.URL_GET_OFFERS,params[0]);
                 }
-                else
+                else {
                     return "-1";
+                }
             }
 
             // Do operations after load data from DB.
