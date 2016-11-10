@@ -46,8 +46,10 @@ import java.util.List;
 import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.ExpiryTime;
 import techwork.ami.Promotion.PromotionDetail.PromotionDetailActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -106,45 +108,9 @@ public class MyPromotionsActivity extends AppCompatActivity {
         // Floating button
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        fab.setScaleX(0);
-        fab.setScaleY(0);
+        //Animate floating button
+        AnimateFab.doAnimate(fab,context);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            final Interpolator interpolador = AnimationUtils.loadInterpolator(getApplicationContext(),
-                    android.R.interpolator.fast_out_slow_in);
-
-            fab.animate()
-                    .scaleX((float) 1.5)
-                    .scaleY((float) 1.5)
-                    .setInterpolator(interpolador)
-                    .setDuration(600)
-                    .setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            fab.animate()
-                                    .scaleY(1)
-                                    .scaleX(1)
-                                    .setInterpolator(interpolador)
-                                    .setDuration(1000)
-                                    .start();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,69 +126,109 @@ public class MyPromotionsActivity extends AppCompatActivity {
         getReservations();
     }
 
-    public void showPopupMenu(final View view, final MyReservationPromotionModel model){
+    public void showPopupMenu(final View view, final MyReservationPromotionModel model, long expiryTime){
 
         final PopupMenu popup= new PopupMenu(view.getContext(),view);
         final MenuInflater inflater = popup.getMenuInflater();
-
         final Menu popumenu = popup.getMenu();
         inflater.inflate(R.menu.popup_menu_reservations,popup.getMenu());
+
+        if (expiryTime < 0.0){
+            popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+            popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+            if (model.getCharged().equals("0")){
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+        }else {
+            if (!model.getCharged().equals("0")) {
+                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+            } else {
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+            if (!model.getCalification().equals("")) {
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+        }
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                //Calculate remainig time
+                ExpiryTime expt= new ExpiryTime();
+                long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
 
-                switch(item.getItemId()){
+                switch(item.getItemId()) {
                     case R.id.item_popup_menu_reservations_details:
-                        Intent intent = new Intent(MyPromotionsActivity.this, PromotionDetailActivity.class);
-                        intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
-                        intent.putExtra(Config.TAG_GO_DESCRIPTION, model.getDescription());
-                        intent.putExtra(Config.TAG_GO_IMAGE, model.getImage());
-                        intent.putExtra(Config.TAG_GO_COMPANY, model.getCompany());
-                        intent.putExtra(Config.TAG_GO_PRICE, model.getPrice());
-                        intent.putExtra(Config.TAG_GO_OFFER_ID, model.getIdReservationOffer());
-                        intent.putExtra(Config.TAG_GO_MAXXPER, model.getMaxPPerson());
-                        intent.putExtra(Config.TAG_GO_STOCK, model.getStock());
-                        intent.putExtra(Config.TAG_GO_DATEFIN, model.getFinalDate());
-                        intent.putExtra(Config.TAG_GO_TOTALPRICE, model.getTotalPrice());
-                        intent.putExtra(Config.TAG_GO_DATETIMEFIN, model.getFinalDateTime());
-                        intent.putExtra(Config.TAG_GO_NO_RESERVE_OPTION, false);
-                        startActivity(intent);
+                        goToDetails(model);
                         return true;
 
                     case R.id.item_popup_menu_reservations_charge:
-                        item.setEnabled(true);
-                        //If needOffer is charge, not charged permitted.
-                        if (model.getCashed().equals("1")){
-                            popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
-                            //Toast.makeText(getApplicationContext(),R.string.need_reservations_offers_already,Toast.LENGTH_LONG).show();
-                            Snackbar.make(view,R.string.OfferReservedAlready,Snackbar.LENGTH_LONG).show();
-                        }
-                        //Do charge
-                        else {
-                            dialogLocalCode(model);
-                        }
+                        rateOffer(model, false);
                         return true;
 
                     case R.id.item_popup_menu_reservations_calificate:
-                        //If needOffer is not charge, not calificate.
-                        if (model.getCashed().equals("0")){
-                            //Toast.makeText(getApplicationContext(), R.string.need_reservations_offers_unvalidated, Toast.LENGTH_LONG).show();
-                            Snackbar.make(fab, R.string.OffersReservedUnvalidated, Snackbar.LENGTH_LONG).show();
-                        }
-                        //If has already validated and rated.
-                        else if (!model.getCalification().equals("")){
-                            item.setEnabled(false);
-                            //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_LONG).show();
-                            Snackbar.make(fab, R.string.OfferReservedAlreadyCommented, Snackbar.LENGTH_LONG).show();
-                        }
-                        else{
-                            rateOffer(model,false);
-                        }
+                        dialogLocalCode(model);
                 }
                 return false;
             }
         });
         popup.show();
+    }
+
+    private void goToDetails(MyReservationPromotionModel model) {
+        Intent intent = new Intent(MyPromotionsActivity.this, PromotionDetailActivity.class);
+        intent.putExtra(Config.TAG_GO_TITLE, model.getTitle());
+        intent.putExtra(Config.TAG_GO_DESCRIPTION, model.getDescription());
+        intent.putExtra(Config.TAG_GO_IMAGE, model.getImage());
+        intent.putExtra(Config.TAG_GO_COMPANY, model.getCompany());
+        intent.putExtra(Config.TAG_GO_PRICE, model.getPrice());
+        intent.putExtra(Config.TAG_GO_OFFER_ID, model.getIdReservationOffer());
+        intent.putExtra(Config.TAG_GO_MAXXPER, model.getMaxPPerson());
+        intent.putExtra(Config.TAG_GO_STOCK, model.getStock());
+        intent.putExtra(Config.TAG_GO_DATEFIN, model.getFinalDate());
+        intent.putExtra(Config.TAG_GO_TOTALPRICE, model.getTotalPrice());
+        intent.putExtra(Config.TAG_GO_DATETIMEFIN, model.getFinalDateTime());
+        intent.putExtra(Config.TAG_GO_NO_RESERVE_OPTION, false);
+        startActivity(intent);
+    }
+
+    private void charge(MyReservationPromotionModel model, long expiryTime) {
+        // This cover all conditions, but they are controlled by popup menu
+        // If available
+        if (expiryTime > 0.0) {
+            // If the offer was already charged
+            if (model.getCharged().equals("1")) {
+                //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+                Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
+            } else {
+                dialogLocalCode(model);
+            }
+        } else {
+            //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
+            Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    private void calificate(MyReservationPromotionModel model, long expiryTime) {
+        // This cover all conditions, but they are controlled by popup menu
+        // If promotion is available
+        if (expiryTime > 0.0) {
+            // Validate before rate
+            if (model.getCharged().equals("0")) {
+                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
+                Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
+            }
+            // If has already validated but not rated
+            else if (!model.getCalification().equals("")) {
+                Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
+            } else {
+                rateOffer(model, false);
+            }
+        } else {
+            Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     // Call to DB
@@ -291,7 +297,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(scaleAdapterReserved);
 
         if (reservationsOffersList.size()==0){
-            tvReservationsOffersEmpty.setText("No has hecho reservas aún.");
+            tvReservationsOffersEmpty.setText(R.string.my_reservations_offers_empty);
         } else {
             tvReservationsOffersEmpty.setText("");
         }
@@ -301,36 +307,42 @@ public class MyPromotionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(final View view) {
                 final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
-                // If the offer was already charged
-                if(model.getCashed().equals("1")){
-                    //Toast.makeText(context,R.string.my_reservations_offers_already,Toast.LENGTH_SHORT).show();
-                    Snackbar.make(fab, R.string.my_reservations_offers_already, Snackbar.LENGTH_LONG).show();
-                }
-                else {
-                    dialogLocalCode(model);
-                }
+                goToDetails(model);
             }
 
             @Override
             public void onItemLongClick(View view) {
+                // Make the option available
+                // Charge -> Rate -> Nothing
+
                 final MyReservationPromotionModel model = reservationsOffersList.get(mRecyclerView.getChildAdapterPosition(view));
-                // Validate before rate
-                if (model.getCashed().equals("0")){
-                    //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_unvalidated, Toast.LENGTH_SHORT).show();
-                    Snackbar.make(fab, R.string.my_reservations_offers_unvalidated, Snackbar.LENGTH_LONG).show();
+
+                //Calculate remainig time
+                ExpiryTime expt= new ExpiryTime();
+                long expiryTime = expt.getTimeDiference(model.getFinalDateTime());
+
+                // If promotion is available
+                if (expiryTime > 0.0) {
+                    // If not charged yet
+                    if (model.getCharged().equals("0")) {
+                        dialogLocalCode(model);
+                    }
+                    // If has already charged but not rated
+                    else if (model.getCalification().equals("")) {
+                        rateOffer(model, false);
+                    } else {
+                        Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
+                    }
                 }
-                // If has already validated but not rated
-                else if (!model.getCalification().equals("")){
-                    Snackbar.make(fab, R.string.my_reservations_offers_already_commented, Snackbar.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(), R.string.my_reservations_offers_already_commented, Toast.LENGTH_SHORT).show();
-                }
+                // If promotion is unavailable
                 else {
-                    rateOffer(model, false);
+                    // If promotion is unavailable but not rated
+                    if (!model.getCharged().equals("0") && model.getCalification().equals("")) rateOffer(model, false);
+                        // Otherwise
+                    else Snackbar.make(fab, R.string.my_reservations_offers_expired, Snackbar.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 
     private void dialogLocalCode(final MyReservationPromotionModel ro) {
@@ -602,7 +614,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 item.setLocalCode(jsonObjectItem.getString(Config.TAG_GRO_LOCCODE));
                 item.setCalification(jsonObjectItem.getString(Config.TAG_GRO_CALIFICATION));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GRO_IMAGE));
-                item.setCashed(jsonObjectItem.getString(Config.TAG_GRO_CASHED));
+                item.setCharged(jsonObjectItem.getString(Config.TAG_GRO_CHARGED));
                 item.setPaymentDate(jsonObjectItem.getString(Config.TAG_GRO_PAYDATE));
                 item.setMaxPPerson(jsonObjectItem.getInt(Config.TAG_GRO_MAXXPER));
                 item.setStock(jsonObjectItem.getInt(Config.TAG_GRO_STOCK));

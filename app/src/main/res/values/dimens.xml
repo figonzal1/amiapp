@@ -14,8 +14,8 @@
     <dimen name="subheader_font_height">14sp</dimen>
     <dimen name="subheader_pagging_left">16dp</dimen>
     <dimen name="activity_paddingBottom">5dp</dimen>
-    <dimen name="activity_paddingLeft">10dp</dimen>
-    <dimen name="activity_paddingRight">10dp</dimen>
+    <dimen name="cardView_marginLeft">10dp</dimen>
+    <dimen name="cardView_marginRight">10dp</dimen>
     <dimen name="activity_paddingTop">0dp</dimen>
     <dimen name="cardView_relativeLayout_padding">5dp</dimen>
     <dimen name="char_space">5dp</dimen>

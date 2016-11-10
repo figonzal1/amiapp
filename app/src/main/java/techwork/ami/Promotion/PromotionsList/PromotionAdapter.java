@@ -59,7 +59,7 @@ public class PromotionAdapter
     // Inflate the view
     @Override
     public PromotionAdapter.OfferViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotion_fragment_card_view,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotions_fragment_card_view,parent,false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
         OfferViewHolder vh = new OfferViewHolder(v);

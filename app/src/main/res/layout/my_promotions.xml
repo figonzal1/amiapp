@@ -25,24 +25,13 @@
                 android:layout_marginTop="30dp"
                 android:gravity="center_horizontal"/>
 
-            <android.support.v4.widget.NestedScrollView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/my_reservations_offers_list_reserved"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            </android.support.v7.widget.RecyclerView>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/my_reservations_offers_list_reserved"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:scrollbars="vertical"
-                        android:paddingBottom="@dimen/activity_paddingBottom"
-                        android:paddingLeft="@dimen/activity_paddingLeft"
-                        android:paddingRight="@dimen/activity_paddingRight"
-                        android:paddingTop="@dimen/activity_paddingTop">
-
-                    </android.support.v7.widget.RecyclerView>
-
-            </android.support.v4.widget.NestedScrollView>
 
         </RelativeLayout>
 

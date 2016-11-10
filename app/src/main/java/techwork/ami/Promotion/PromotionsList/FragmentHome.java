@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.NotificationCompat;
@@ -90,7 +91,7 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate view, find recycle view in layouts
-        View v = inflater.inflate(R.layout.fragment_promotions, container, false);
+        View v = inflater.inflate(R.layout.promotions_fragment, container, false);
         rv = (RecyclerView) v.findViewById(R.id.recycler_view_offer);
         tvOffersEmpty = (TextView)v.findViewById(R.id.tv_offers_empty);
         rv.setHasFixedSize(true);
@@ -390,7 +391,6 @@ public class FragmentHome extends Fragment {
             super.onPostExecute(s);
             loading.dismiss();
             if (s.equals("0")) {
-                System.out.println("PRINT ENTRA");
                 Toast.makeText(context,
                         R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
             } else {

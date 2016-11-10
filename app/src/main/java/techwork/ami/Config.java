@@ -103,7 +103,7 @@ public class Config {
 	public static final String TAG_GRO_PAYDATE = "fechaCobro";
 	public static final String TAG_GRO_CALIFICATION = "calificacion";
 	public static final String TAG_GRO_LOCCODE = "codigoLocal";
-	public static final String TAG_GRO_CASHED="cobrado";
+	public static final String TAG_GRO_CHARGED="cobrado";
 	public static final String TAG_GRO_MAXXPER = "maxPPersona";
 	public static final String TAG_GRO_STOCK = "stock";
 	public static final String TAG_GRO_TOTALPRICE = "precioTotal";
