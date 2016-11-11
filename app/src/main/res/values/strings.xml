@@ -28,7 +28,7 @@
     <!-- Main Activity Strings -->
     <string name="nav_edit_profile">Mi Perfil</string>
     <string name="nav_reserve_needs">Mis Ofertas Reservadas</string>
-    <string name="nav_reservations">Mis Promociones Reservadas</string>
+    <string name="nav_reservations">Mis Promociones</string>
     <string name="nav_logout">Cerrar Sesión</string>
     <string name="nav_contact_us">Contáctanos</string>
     <string name="nav_group_communication">Comunícate</string>
@@ -123,8 +123,7 @@
     <string name="OrderCardViewPriceMax">$x.xxx</string>
 
     <!-- New Order Strings -->
-    <string name="CreateNeedTitle">Aqui podras ver y generar tus pedidos</string>
-    <string name="NeedTitle">Realiza tu pedido</string>
+    <string name="CreateNeedTitle">Realiza tu pedido</string>
     <string name="NeedLeyend">¿Qué necesitas?</string>
     <string name="NeedData">Detalles del pedido</string>
     <string name="NeedMoney">¿Cuánto es tu presupuesto?</string>
@@ -197,7 +196,7 @@
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
 
     <!-- OfferReservations (NeedOffer) Strings -->
-    <string name="OrdersReservations">Mis pedidos reservados</string>
+    <string name="OrdersReservations">Mis ofertas reservadas</string>
     <string name="OfferReservedEmpty">¡Oops! \n No tienes reservas recientes :(</string>
     <string name="OfferReservedExpired">Oferta expirada</string>
     <string name="OfferReservedOfferDetails">Detalle oferta</string>
@@ -295,7 +294,7 @@
     <string name="od_tv_rd">Días restantes</string>
 
     <!-- My Reservations Offers Strings -->
-    <string name="title_activity_my_reservations">Mis reservas</string>
+    <string name="title_activity_my_reservations">Mis promociones</string>
     <string name="myReservationOfferDialog">Cobrar promoción</string>
     <string name="my_reservations_offers_validate_message">Solicite a un empleado de %s que ingrese código del local</string>
     <string name="my_reservations_offers_validate_title">Validar oferta</string>
@@ -322,7 +321,7 @@
     <string name="title_activity_filter_offers">Filtrar promociones</string>
 
     <!-- Map Strings -->
-    <string name="MA_storeFormatSingle">En este local existe %s promociones disponible.</string>
+    <string name="MA_storeFormatSingle">En este local existe %s promoción disponible.</string>
     <string name="MA_storeFormatPlural">En este local existen %s promociones disponibles.</string>
     <string name="MA_go">Ver</string>
 

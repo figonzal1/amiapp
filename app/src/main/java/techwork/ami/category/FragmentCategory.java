@@ -111,7 +111,7 @@ public class FragmentCategory extends Fragment {
         return v;
     }
 
-    private void getCategories() {
+    public void getCategories() {
         sendGetRequest();
     }
 

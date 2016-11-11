@@ -62,7 +62,13 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Get the id of the profile from the login data
         id = getProfileId();
@@ -113,7 +119,6 @@ public class MyProfileActivity extends AppCompatActivity {
         // If the activity is not restoring after screen rotation
         if (savedInstanceState == null)
             getProfile();
-
     }
 
     // Get the profile's id from the shared preferences

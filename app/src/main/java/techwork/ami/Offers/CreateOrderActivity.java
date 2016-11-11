@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,8 +40,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
+import techwork.ami.LoginActivity;
 import techwork.ami.MainActivity;
 import techwork.ami.R;
+import techwork.ami.RegisterActivity;
 import techwork.ami.RequestHandler;
 
 import android.widget.CheckBox;
@@ -89,6 +92,16 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_activity);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Prevent the keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -300,17 +313,19 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
                 loading.dismiss();
                 if (s.equals("0")) {
                     //Play a success sound
-                    MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arpeggio);
-                    mp.start();
+                    //MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arpeggio);
+                    //mp.start();
 
                     // Vibrate for 500 milliseconds
                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                     c.vibrate(500);
 
                     Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(CreateOrderActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(i);
+
+                    Intent intent = new Intent(CreateOrderActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("page", Config.NEED);
+                    startActivity(intent);
                 }
                 else if (!s.equals("-1")) {
                     Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedError), Toast.LENGTH_LONG).show();

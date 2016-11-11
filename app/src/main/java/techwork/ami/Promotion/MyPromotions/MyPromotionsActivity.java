@@ -76,8 +76,16 @@ public class MyPromotionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.my_promotions_activity);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.my_reservations_offers_list_reserved);
@@ -120,7 +128,6 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 //startActivity(new Intent(MyPromotionsActivity.this, MainActivity.class) );
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Get and show data
         getReservations();
