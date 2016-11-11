@@ -691,6 +691,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 } else {
                     loading.dismiss();
+                    c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                     Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }

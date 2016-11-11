@@ -356,6 +356,8 @@ public class FragmentOrder extends Fragment {
                 //If not correct depends of the operation.
                 else {
                     loading.dismiss();
+                    c=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                     Toast.makeText(view.getContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }

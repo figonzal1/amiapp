@@ -304,6 +304,9 @@ public class OffersViewActivity extends AppCompatActivity {
                             },1500);
 
                         }else{
+                            loading.dismiss();
+                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
                             Toast.makeText(getApplicationContext(),R.string.OfferViewDiscardOfferFail,Toast.LENGTH_LONG).show();
                         }
                     }
