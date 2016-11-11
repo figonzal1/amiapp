@@ -120,7 +120,7 @@ public class FragmentHome extends Fragment {
     }
 
     // Call to DB
-    public  void getOffers(){
+    public void getOffers(){
         sendGetRequest();
 
         if(notificado){
