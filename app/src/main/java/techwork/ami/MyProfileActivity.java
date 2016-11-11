@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +59,16 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile_activity);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Get the id of the profile from the login data
         id = getProfileId();
@@ -108,7 +119,6 @@ public class MyProfileActivity extends AppCompatActivity {
         // If the activity is not restoring after screen rotation
         if (savedInstanceState == null)
             getProfile();
-
     }
 
     // Get the profile's id from the shared preferences

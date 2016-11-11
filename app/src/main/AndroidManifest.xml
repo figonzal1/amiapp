@@ -50,10 +50,18 @@
             android:name=".RestorePassActivity"
             android:label="@string/titleActivityRestorePass"
             android:theme="@style/AppTheme" />
+        <activity android:name=".MyProfileActivity"
+            android:label="@string/titleActivityMyProfile"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/titleActivityEditProfile"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".MyProfileActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MyProfileActivity" />
+        </activity>
         <activity
             android:name=".AfterLoginActivity"
             android:label="@string/titleActivityAfterLogin"
@@ -62,7 +70,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBqz3kiAPD6gFdPjo71dAHIEnx0VUnqEmg" />
-
         <activity
             android:name=".MapsActivity"
             android:label="@string/titleActivityExploreOffers"
@@ -72,9 +79,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".Offers.CreateOrderActivity"
-            android:label="@string/titleActivityExploreOffers"
+            android:label="@string/CreateNeedTitle"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Offers.OffersList.OffersActivity"
@@ -123,12 +131,7 @@
         <activity
             android:name=".Promotion.MyPromotions.MyPromotionsActivity"
             android:label="@string/title_activity_my_reservations"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
             android:label="@string/OfferReservedOfferDetails"
@@ -147,7 +150,10 @@
                 />
 
         </activity>
-        <activity android:name=".ContactUsActivity" />
+        <activity
+            android:name=".ContactUsActivity"
+            android:label="@string/titleActivityContactUs"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Promotion.PromotionDetail.PromotionDetailActivity"
             android:label="@string/title_activity_offer_detail"
@@ -160,13 +166,8 @@
         <activity
             android:name=".Promotion.FilterActivity"
             android:label="@string/title_activity_filter_offers"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity android:name=".MyProfileActivity" />
-    </application>
+            android:theme="@style/AppTheme"/>
+
+</application>
 
 </manifest>

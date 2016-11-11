@@ -71,6 +71,13 @@ public class PromotionDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.offer_detail_toolbar);
         setSupportActionBar(toolbar);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         context = this;
 
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
@@ -245,8 +252,6 @@ public class PromotionDetailActivity extends AppCompatActivity {
         }*/
 
         getProducts();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void getProducts(){

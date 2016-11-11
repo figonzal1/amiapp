@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -26,8 +28,11 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+import techwork.ami.Category.FragmentCategory;
 import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
+import techwork.ami.Offers.OrdersList.FragmentOrder;
 import techwork.ami.Promotion.MyPromotions.MyPromotionsActivity;
+import techwork.ami.Promotion.PromotionsList.FragmentHome;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     private String id;
     private String gender;
     private String firstLogin;
+
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity
                 LOCATION_REQUEST_CODE);
 
         //Assign pageViewer and the Tab Handler
-        ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        viewPager = (ViewPager) findViewById(R.id.main_viewpager);
         viewPager.setAdapter(new MainPageAdapter(getSupportFragmentManager(), MainActivity.this));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.toolbarBottom);
         tabLayout.setupWithViewPager(viewPager);
@@ -182,8 +189,9 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_home:
-                Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                startActivity(intent);
+                viewPager.setCurrentItem(Config.HOME);
+                //Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                //startActivity(intent);
                 return true;
 
             case R.id.action_logout:
@@ -247,5 +255,30 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            viewPager.setCurrentItem(intent.getIntExtra("page", 0));
+
+            /*
+            // TODO: Refresh the respective fragment on resume
+            FragmentPagerAdapter fpa = (FragmentPagerAdapter) viewPager.getAdapter();
+            Fragment fragment = fpa.getItem(viewPager.getCurrentItem());
+
+            if (fragment instanceof FragmentHome) {
+                ((FragmentHome) fragment).getOffers();
+                System.out.println("Home");
+            } else if (fragment instanceof FragmentCategory) {
+                ((FragmentCategory) fragment).getCategories();
+                System.out.println("Category");
+            } else if (fragment instanceof FragmentOrder) {
+                ((FragmentOrder) fragment).getOrders();
+                System.out.println("Need");
+            }
+            */
+        }
     }
 }
