@@ -1,8 +1,11 @@
 package techwork.ami.Offers.OffersReservations.OffersReservationsDetails;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,9 +23,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Offers.OffersDetails.ProductAdapter;
 import techwork.ami.Offers.OffersDetails.ProductModel;
+import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -30,11 +35,12 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
 
     TextView tvCompany,tvTittle,tvDescription,tvPriceOffer,tvPriceNormal,tvDsctSym,tvDsct;
     Button btnLocal;
-    String idOffer,idLocal;
+    private String idOffer,idLocal;
     private RecyclerView rv;
     private LinearLayoutManager layout;
     private List<ProductModel> productList;
     private ProductAdapter adapter;
+    private SwipeRefreshLayout refreshLayout;
 
 
     @Override
@@ -94,6 +100,15 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
         layout = new LinearLayoutManager(this);
         rv.setLayoutManager(layout);
 
+        refreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_offers_reservations_view);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNeedOfferProducts();
+            }
+        });
+
         btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,23 +134,39 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute(){
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             @Override
             protected String doInBackground(Void... voids) {
-
-                HashMap<String,String> hashmap = new HashMap<>();
-
-                hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER,idOffer);
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER,hashmap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+
+                    HashMap<String, String> hashmap = new HashMap<>();
+                    hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER, idOffer);
+                    return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER, hashmap);
+                }
+                else{
+                    return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
-                showProducts(s);
+                refreshLayout.setRefreshing(false);
+                if (!s.equals("-1")) {
+                    showProducts(s);
+                }
             }
         }
         ProductOfferAsyncTask go = new ProductOfferAsyncTask();
@@ -146,7 +177,8 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
         getProductData(s);
 
         adapter = new ProductAdapter(getApplicationContext(),productList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
     }
 
     private void getProductData(String json) {

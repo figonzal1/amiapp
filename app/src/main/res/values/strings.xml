@@ -191,18 +191,18 @@
     <string name="OfferViewMaxppWarning">¡Puedes reservar hasta %s unidad!</string>
 
     <!-- Offer Local View -->
-    <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
     <string name="OfferViewLocalAdress">#Dirección, Comuna</string>
     <string name="OfferViewLocalWebText">Más información en</string>
     <string name="OfferViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferViewLocalStreetView">Ver street view</string>
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
+    <string name="OfferViewLocalInfo">Ver información local</string>
 
     <!-- OfferReservations (NeedOffer) Strings -->
     <string name="OrdersReservations">Mis pedidos reservados</string>
     <string name="OfferReservedEmpty">¡Oops! \n No tienes reservas recientes :(</string>
     <string name="OfferReservedExpired">Oferta expirada</string>
-    <string name="OfferReservedOfferDetails">Detalle oferta</string>
+    <string name="OfferReservedOfferDetails">Detalle oferta reservada</string>
     <string name="OfferReservedCompanies">Ofertas recibidas</string>
     <string name="OfferReservedLocalDetails">Información local</string>
     <string name="OfferReservedStreetView">StreetView local</string>
@@ -214,6 +214,7 @@
     <string name="OfferReservedCardViewPrice">$x.xxx</string>
     <string name="OfferReservedCardViewCompany">Empresa</string>
     <string name="OfferReservedCardViewState">Estado</string>
+    <string name="OfferReservedLocalInfo">Información local</string>
     <string name="OfferReservedViewTittle">Titulo oferta</string>
     <string name="OfferReservedViewCompany">Empresa</string>
     <string name="OfferReservedViewDescription">Descripción de la oferta</string>

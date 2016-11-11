@@ -109,7 +109,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_offer_view"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/number_picker"
                     android:layout_marginTop="15dp"
                     android:scrollbars="vertical">
@@ -200,6 +200,15 @@
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_offer_view_local"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/OfferViewLocalInfo"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/offer_view_linear_layout"
+                    android:layout_centerHorizontal="true"/>
             </RelativeLayout>
 
         </ScrollView>

@@ -22,11 +22,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
-        android:id="@+id/offer_reservations_details_activity"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_offers_reservations_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/appbar">
+        android:layout_below="@+id/appbar">
+
+
+        <ScrollView
+            android:id="@+id/offer_reservations_details_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/appbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -85,7 +92,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_offer_reservations_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="250dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/tv_offer_reservations_view_1"
@@ -188,6 +195,8 @@
 
             </RelativeLayout>
 
-    </ScrollView>
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

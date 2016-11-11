@@ -1,7 +1,10 @@
 package techwork.ami.Offers.OffersReservations.OffersReservationsDetails;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
+import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
 import techwork.ami.Offers.OffersLocalDetails.StreetViewPanoramaFragment;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -29,6 +33,7 @@ public class OffersReservationsViewLocalActivity extends AppCompatActivity {
     Button btnStreetView;
     TextView tvAddress,tvWeb;
     ImageView ivImage;
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +44,24 @@ public class OffersReservationsViewLocalActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
+        idLocal = bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
 
-        //Get local info
-        idLocal= bundle.getString(Config.TAG_GET_OFFER_RESERVED_IDLOCAL);
 
-        tvAddress=(TextView)findViewById(R.id.tv_address);
-        tvWeb=(TextView)findViewById(R.id.tv_web2);
-        ivImage=(ImageView)findViewById(R.id.iv_local);
+        refreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_offer_reservations_view_local);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getLocal();
+            }
+        });
+
         btnStreetView = (Button)findViewById(R.id.btn_local_street_view);
-
-        getLocal();
-
         btnStreetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent= new Intent(OffersReservationsViewLocalActivity.this, StreetViewPanoramaFragment.class);
+                Intent intent = new Intent(OffersReservationsViewLocalActivity.this,StreetViewPanoramaFragment.class);
                 intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
                 intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
                 startActivity(intent);
@@ -62,10 +69,10 @@ public class OffersReservationsViewLocalActivity extends AppCompatActivity {
         });
 
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //GetLocal info
+        getLocal();
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -82,27 +89,49 @@ public class OffersReservationsViewLocalActivity extends AppCompatActivity {
 
     private void sendPostRequest() {
 
+        final View v1 = getWindow().getDecorView().getRootView();
+
         class LocalDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             @Override
             protected String doInBackground(Void... params) {
-                HashMap<String,String> hashmap= new HashMap<>();
 
-                hashmap.put(Config.KEY_GET_LOCAL_IDLOCAL,idLocal);
                 RequestHandler rh = new RequestHandler();
 
-                return rh.sendPostRequest(Config.URL_GET_LOCAL,hashmap);
+                Boolean connectionStatus = rh.isConnectedToServer(v1, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashmap = new HashMap<>();
+                    //Send id local to php archive.
+                    hashmap.put(Config.KEY_GET_LOCAL_IDLOCAL, idLocal);
+
+                    return rh.sendPostRequest(Config.URL_GET_LOCAL, hashmap);
+                }
+                else{
+                    return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
-                showLocal(s);
+                refreshLayout.setRefreshing(false);
+                if (!s.equals("-1")){
+                    showLocal(s);
+                }
+
             }
         }
         LocalDetailsAsyncTask go = new LocalDetailsAsyncTask();
@@ -129,6 +158,7 @@ public class OffersReservationsViewLocalActivity extends AppCompatActivity {
             tvAddress.setText(address+", "+commune);
             tvWeb.setText(web);
 
+            //Image of local are get of admin directory
             Picasso.with(getApplicationContext())
                     .load(Config.URL_LOCAL_IMAGE+image)
                     .into(ivImage);
@@ -139,4 +169,3 @@ public class OffersReservationsViewLocalActivity extends AppCompatActivity {
         }
     }
 }
-

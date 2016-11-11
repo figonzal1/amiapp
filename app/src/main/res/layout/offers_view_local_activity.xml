@@ -23,96 +23,88 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_offer_view_local"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appbar">
 
-            <!-- Aviso de reserva -->
-            <TextView
-                android:id="@+id/tv_local"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center_horizontal"
-                android:textSize="27sp"
-                android:text="@string/OfferViewLocalCongratulations"/>
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
 
-            <!-- Imagen del local -->
-            <ImageView
-                android:id="@+id/iv_local"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/ic_loading_image"
-                android:layout_below="@id/tv_local" />
+                <!-- Imagen del local -->
+                <ImageView
+                    android:id="@+id/iv_local"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:src="@drawable/ic_loading_image"
+                    />
 
 
-            <!-- Direccion local -->
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/OfferViewLocalAdress"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center_horizontal"
-                android:layout_below="@+id/iv_local"
-                />
+                <!-- Direccion local -->
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/OfferViewLocalAdress"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@+id/iv_local"
+                    />
 
-            <!-- Texto web no dinamico -->
-            <TextView
-                android:id="@+id/tv_web1"
-                android:layout_marginTop="10dp"
-                android:textSize="23sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/OfferViewLocalWebText"
-                android:layout_below="@+id/tv_address"
-                android:layout_centerHorizontal="true"
-                />
+                <!-- Texto web no dinamico -->
+                <TextView
+                    android:id="@+id/tv_web1"
+                    android:layout_marginTop="10dp"
+                    android:textSize="23sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/OfferViewLocalWebText"
+                    android:layout_below="@+id/tv_address"
+                    android:layout_centerHorizontal="true"
+                    />
 
-            <!-- Web del local (empresa)-->
-            <TextView
-                android:id="@+id/tv_web2"
-                android:textSize="23sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/OfferViewLocalWebExample"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/tv_web1"
-                android:layout_centerHorizontal="true"
-                android:autoLink="web"
-                />
+                <!-- Web del local (empresa)-->
+                <TextView
+                    android:id="@+id/tv_web2"
+                    android:textSize="23sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/OfferViewLocalWebExample"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tv_web1"
+                    android:layout_centerHorizontal="true"
+                    android:autoLink="web"
+                    />
 
-            <!-- Boton de streetview -->
-            <Button
-                android:id="@+id/btn_local_street_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/OfferViewLocalStreetView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/tv_web2"/>
+                <!-- Boton de streetview -->
+                <Button
+                    android:id="@+id/btn_local_street_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/OfferViewLocalStreetView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@id/tv_web2"/>
+            </RelativeLayout>
 
-            <Button
-                android:id="@+id/btn_orders_reserved"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/OfferViewLocalMyOrders"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/btn_local_street_view"/>
-        </RelativeLayout>
+        </ScrollView>
 
-    </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
 </RelativeLayout>

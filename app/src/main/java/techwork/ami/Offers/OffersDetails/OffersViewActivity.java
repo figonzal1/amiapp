@@ -1,10 +1,13 @@
 package techwork.ami.Offers.OffersDetails;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -45,6 +48,7 @@ import techwork.ami.RequestHandler;
 public class OffersViewActivity extends AppCompatActivity {
 
     TextView tvTittle,tvCompany,tvDescription,tvMaxPPerson,tvPriceOffer,tvPriceNormal,tvDsctSym,tvDsct;
+    Button btnLocal;
     private String idOffer,idLocal;
     private List<ProductModel> productList;
     private RecyclerView rv;
@@ -76,6 +80,7 @@ public class OffersViewActivity extends AppCompatActivity {
         fabAccept = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_accept);
         fabDiscard= (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_discard);
         fabMenu=(FloatingActionMenu)findViewById(R.id.menu_fab);
+        btnLocal=(Button)findViewById(R.id.btn_offer_view_local);
 
         //Get info from OffersActivity
         final Bundle bundle = getIntent().getExtras();
@@ -178,6 +183,16 @@ public class OffersViewActivity extends AppCompatActivity {
             }
         });
 
+        btnLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(OffersViewActivity.this,OffersViewLocalActivity.class);
+                intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
+                startActivity(intent);
+            }
+        });
+
         AnimateMenuFab.doAnimateMenuFab(fabMenu,getApplicationContext());
         fabAccept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,24 +214,36 @@ public class OffersViewActivity extends AppCompatActivity {
 
                     @Override
                     protected String doInBackground(Void... params) {
-
-                        HashMap<String,String> hashMap = new HashMap<>();
-
-                        hashMap.put(Config.KEY_ACCEPT_OFFER_IDOFFER,idOffer);
-                        hashMap.put(Config.KEY_ACCEPT_OFFER_IDPERSON,idPerson);
-                        hashMap.put(Config.KEY_ACCEPT_OFFER_MAXPPERSON, cantidad[0]);
-
                         RequestHandler rh = new RequestHandler();
-                        return rh.sendPostRequest(Config.URL_ACCEPT_OFFER,hashMap);
+
+                        Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                            @Override
+                            @TargetApi(Build.VERSION_CODES.M)
+                            public void onClick(View v) {
+                                sendPostRequest();
+                            }
+                        });
+
+                        if (connectionStatus){
+                            HashMap<String,String> hashMap = new HashMap<>();
+
+                            hashMap.put(Config.KEY_ACCEPT_OFFER_IDOFFER,idOffer);
+                            hashMap.put(Config.KEY_ACCEPT_OFFER_IDPERSON,idPerson);
+                            hashMap.put(Config.KEY_ACCEPT_OFFER_MAXPPERSON, cantidad[0]);
+
+                            return rh.sendPostRequest(Config.URL_ACCEPT_OFFER,hashMap);
+                        }
+                        else {
+                            return "-1";
+                        }
+
+
                     }
                     @Override
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
 
-                        c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                        c.vibrate(500);
-
-                        if (s.equals("0")){
+                        if (s.equals("0") && !s.equals("-1")){
 
                             Handler mHandler = new Handler();
                             mHandler.postDelayed(new Runnable() {
@@ -226,21 +253,24 @@ public class OffersViewActivity extends AppCompatActivity {
 
                                     loading.dismiss();
 
+                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                    c.vibrate(500);
+
                                     Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
 
-                                    //OffersActivity (List offer companies) is finish.
-                                    OffersActivity.activity.finish();
-
-                                    //NeedOffer accept go to LocalDetails.
-                                    Intent intent = new Intent(OffersViewActivity.this,OffersViewLocalActivity.class);
-                                    intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
+                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
                                     finish();
                                     startActivity(intent);
+
                                 }
                             },1500);
 
                         }else{
                             loading.dismiss();
+
+                            c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
+
                             Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOfferFail,Toast.LENGTH_LONG).show();
                         }
                     }
