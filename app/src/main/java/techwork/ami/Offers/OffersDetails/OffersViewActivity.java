@@ -282,9 +282,6 @@ public class OffersViewActivity extends AppCompatActivity {
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
 
-                        c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                        c.vibrate(500);
-
                         if (s.equals("0")){
 
                             Handler mHandler = new Handler();
@@ -292,6 +289,9 @@ public class OffersViewActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     loading.dismiss();
+
+                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                    c.vibrate(500);
 
                                     Toast.makeText(getApplicationContext(), R.string.OfferViewDiscardOffer, Toast.LENGTH_LONG).show();
 
