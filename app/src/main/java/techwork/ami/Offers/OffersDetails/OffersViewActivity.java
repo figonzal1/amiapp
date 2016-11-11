@@ -369,19 +369,33 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... voids) {
 
-                HashMap<String,String> hashmap = new HashMap<>();
-
-                hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER,idOffer);
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER,hashmap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashmap = new HashMap<>();
+                    hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER, idOffer);
+                    return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER, hashmap);
+                }
+                else {
+                    return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showProducts(s);
+                if (!s.equals("-1")) {
+                    showProducts(s);
+                }
             }
         }
         ProductOfferAsyncTask go = new ProductOfferAsyncTask();

@@ -357,4 +357,5 @@
     <string name="PopupMenuCharged">Cobrar</string>
 
 
+    <string name="ConnectToInternet">Parece que no tienes conexion a internet</string>
 </resources>

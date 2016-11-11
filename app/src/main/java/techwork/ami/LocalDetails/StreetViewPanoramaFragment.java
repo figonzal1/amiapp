@@ -2,6 +2,7 @@ package techwork.ami.LocalDetails;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
@@ -12,7 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import techwork.ami.Config;
 import techwork.ami.R;
 
-public class StreetViewPanoramaFragment extends FragmentActivity {
+public class StreetViewPanoramaFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -37,18 +38,6 @@ public class StreetViewPanoramaFragment extends FragmentActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -4,20 +4,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
-    <RelativeLayout
-        android:id="@+id/street_view_panorama_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@+id/toolbar">
-
-        <fragment
-            android:id="@+id/street_view_panorama"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"/>
-
-    </RelativeLayout>
-
+    <fragment
+        android:id="@+id/street_view_panorama"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"/>
 
 </FrameLayout>

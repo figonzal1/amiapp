@@ -284,6 +284,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
         intent.putExtra(Config.TAG_GO_TOTALPRICE, model.getTotalPrice());
         intent.putExtra(Config.TAG_GO_DATETIMEFIN, model.getFinalDateTime());
         intent.putExtra(Config.TAG_GO_NO_RESERVE_OPTION, false);
+        intent.putExtra(Config.TAG_GO_IDLOCAL,model.getIdLocal());
         startActivity(intent);
     }
 
@@ -710,6 +711,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 item.setMaxPPerson(jsonObjectItem.getInt(Config.TAG_GRO_MAXXPER));
                 item.setStock(jsonObjectItem.getInt(Config.TAG_GRO_STOCK));
                 item.setTotalPrice(jsonObjectItem.getInt(Config.TAG_GRO_TOTALPRICE));
+                item.setIdLocal(jsonObjectItem.getString(Config.TAG_GRO_IDLOCAL));
 
 
                 reservationsOffersList.add(item);

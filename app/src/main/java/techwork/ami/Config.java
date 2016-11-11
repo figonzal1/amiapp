@@ -90,6 +90,7 @@ public class Config {
 	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GRO = "reservationsOffers";
 	public static final String TAG_GRO_ID_OFFER = "idOferta";
+	public static final String TAG_GRO_IDLOCAL="idLocal";
 	public static final String TAG_GRO_TITLE = "titulo";
 	public static final String TAG_GRO_DESCRIPTION = "descripcion";
 	public static final String TAG_GRO_PROMOCOD = "codPromocion";

@@ -5,6 +5,7 @@ package techwork.ami.Promotion.MyPromotions;
  */
 public class MyReservationPromotionModel {
     private String idReservationOffer;
+    private String idLocal;
     private String title;
     private String description;
     private String promotionCode;
@@ -29,6 +30,11 @@ public class MyReservationPromotionModel {
     public String getIdReservationOffer() {
         return idReservationOffer;
     }
+
+    public String getIdLocal() {
+        return idLocal;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -97,6 +103,11 @@ public class MyReservationPromotionModel {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public void setIdLocal(String idLocal) {
+        this.idLocal = idLocal;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
