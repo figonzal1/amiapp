@@ -313,8 +313,17 @@
     <string name="my_reservations_offers_rate_title">Califica tu experiencia con esta empresa</string>
     <string name="my_reservations_offers_rate_message">Tu opinión nos interesa</string>
     <string name="my_reservations_offers_expired">Promoción vencida</string>
+    <string name="my_reservations_offers_reserved_status">Reservada</string>
+    <string name="my_reservations_offers_charged_status">Cobrada</string>
+    <string name="my_reservations_offers_rated_status">Calificada</string>
+    <string name="my_reservations_offers_expired_status">Vencida</string>
+    <string name="my_reservations_offers_delete_reservation">¿Desea eliminar esta reserva?</string>
+    <string name="my_reservations_offers_delete_reservation_yes">Eliminar</string>
+    <string name="my_reservations_offers_delete_reservation_processing">Eliminando reserva</string>
+    <string name="my_reservations_offers_delete_ok">¡Reserva eliminada!</string>
     <string name="skip">Omitir</string>
     <string name="my_reservations_offers_rate_positive">Calificar</string>
+    <string name="my_reservations_offers_delete_positive">Eliminar</string>
     <string name="my_reservations_offers_unvalidated">Esta promoción no ha sido cobrada</string>
     <string name="mrolcvReserved">Reservada</string>
     <string name="my_reservations_offers_empty">¡Oops! \n No tienes reservas recientes :(</string>
@@ -341,12 +350,13 @@
     <!-- Fragment Home / Offers list Strings -->
     <string name="offers_list_discard_question">¿Desea descartar esta promoción?</string>
     <string name="offers_list_discard_processing">Descartando promoción</string>
-    <string name="title_activity_offer_detail">Detalles</string>
+    <string name="title_activity_offer_detail">Detalles de la promoción</string>
 
     <!-- Popup menu strings -->
     <string name="PopupMenuViewDetails">Ver detalles</string>
     <string name="PopupMenuCalification">Calificar</string>
     <string name="PopupMenuDeleteReservation">Eliminar reserva</string>
     <string name="PopupMenuCharged">Cobrar</string>
+
 
 </resources>

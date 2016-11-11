@@ -366,14 +366,12 @@ public class PromotionDetailActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
+                c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
                 if (s.equals("0")) {
-                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    c.vibrate(500);
                     Toast.makeText(context, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
                     finish();
                 } else if (!s.equals("-1")) {
-                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    c.vibrate(500);
                     Toast.makeText(context, R.string.operation_fail, Toast.LENGTH_SHORT).show();
                 }
             }

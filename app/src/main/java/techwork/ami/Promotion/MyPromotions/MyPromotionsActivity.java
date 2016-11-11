@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -160,19 +161,106 @@ public class MyPromotionsActivity extends AppCompatActivity {
                 switch(item.getItemId()) {
                     case R.id.item_popup_menu_reservations_details:
                         goToDetails(model);
-                        return true;
+                        break;
 
                     case R.id.item_popup_menu_reservations_charge:
-                        rateOffer(model, false);
-                        return true;
+                        dialogLocalCode(model);
+                        break;
 
                     case R.id.item_popup_menu_reservations_calificate:
-                        dialogLocalCode(model);
+                        rateOffer(model, false);
+                        break;
+
+                    case R.id.item_popup_menu_reservations_delete_reservation:
+                        dialogDeleteReservation(model);
                 }
-                return false;
+                return true;
             }
         });
         popup.show();
+    }
+
+    private void dialogDeleteReservation(final MyReservationPromotionModel model) {
+        // Create the CustomAlertDialogBuilder
+        dialogBuilder = new CustomAlertDialogBuilder(context);
+
+        // Set the usual data, as you would do with AlertDialog.Builder
+        dialogBuilder.setTitle(R.string.PopupMenuDeleteReservation);
+        dialogBuilder.setMessage(R.string.my_reservations_offers_delete_reservation);
+
+        // Set your buttons OnClickListeners
+        dialogBuilder.setPositiveButton(R.string.my_reservations_offers_delete_reservation_yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+
+
+
+
+
+                        // Write in the DB that offer has been hired
+                        class ValidateReservationOffer extends AsyncTask<String, Void, String> {
+                            ProgressDialog loading;
+
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                loading = ProgressDialog.show(MyPromotionsActivity.this,
+                                        getString(R.string.my_reservations_offers_delete_reservation_processing),
+                                        getString(R.string.wait), false, false);
+                            }
+
+                            @Override
+                            protected String doInBackground(String... params) {
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put(Config.KEY_RESERVE_PERSON_ID,
+                                        getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                                .getString(Config.KEY_SP_ID, "-1"));
+                                hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
+                                RequestHandler rh = new RequestHandler();
+                                return rh.sendPostRequest(Config.URL_MRO_DELETE, hashMap);
+                            }
+
+                            @Override
+                            protected void onPostExecute(String s) {
+                                super.onPostExecute(s);
+                                loading.dismiss();
+                                if (s.equals("0")) {
+                                    Toast.makeText(getApplicationContext(),
+                                            R.string.my_reservations_offers_delete_ok, Toast.LENGTH_LONG).show();
+                                    getReservations();
+                                    //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(),
+                                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                                }
+                                c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                c.vibrate(500);
+                            }
+                        }
+                        new ValidateReservationOffer().execute(model.getIdReservationOffer());
+
+
+
+
+
+
+
+
+
+
+                    }
+                });
+
+        // By passing null as the OnClickListener the dialog will dismiss when the button is clicked.
+        dialogBuilder.setNegativeButton(R.string.cancel, null);
+
+        // (optional) set whether to dismiss dialog when touching outside
+        dialogBuilder.setCanceledOnTouchOutside(false);
+
+        // Show the dialog
+        dialogBuilder.show();
     }
 
     private void goToDetails(MyReservationPromotionModel model) {
@@ -432,23 +520,21 @@ public class MyPromotionsActivity extends AppCompatActivity {
                             protected void onPostExecute(String s) {
                                 super.onPostExecute(s);
                                 loading.dismiss();
+                                c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                c.vibrate(500);
                                 if (s.equals("0")) {
                                     Toast.makeText(getApplicationContext(),
                                             R.string.my_reservations_offers_validate_ok, Toast.LENGTH_LONG).show();
                                     //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
-                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                                    c.vibrate(500);
                                     this.dialog.dismiss();
+                                    rateOffer(ro, true);
                                 } else {
                                     Toast.makeText(getApplicationContext(),
                                             R.string.operation_fail, Toast.LENGTH_LONG).show();
-                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                                    c.vibrate(500);
                                 }
                             }
                         }
                         new ValidateReservationOffer(dialog).execute(ro.getIdReservationOffer());
-                        rateOffer(ro, true);
                     }
                 });
 
@@ -544,20 +630,19 @@ public class MyPromotionsActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
+                dialog.dismiss();
+
+                c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
 
                 if (s.equals("0")) {
                     Toast.makeText(getApplicationContext(),
                             R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
                     //Snackbar.make(mRecyclerView, R.string.my_reservations_offers_validate_ok, Snackbar.LENGTH_LONG).show();
-                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    c.vibrate(500);
-                    dialog.dismiss();
                     getReservations();
                 } else {
                     Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
-                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    c.vibrate(500);
                 }
             }
         }

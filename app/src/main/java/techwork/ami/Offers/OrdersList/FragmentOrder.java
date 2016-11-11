@@ -341,11 +341,8 @@ public class FragmentOrder extends Fragment {
 
                             loading.dismiss();
 
-                            c=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                            c.vibrate(500);
                             Toast.makeText(view.getContext(),
                                   R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
-
                             //If operations is ok refresh orders.
                             getOrders();
                         }
@@ -359,6 +356,9 @@ public class FragmentOrder extends Fragment {
                     Toast.makeText(view.getContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
+                c=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
+
                 this.dialog.dismiss();
             }
         }

@@ -115,6 +115,7 @@ public class Config {
 	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String URL_MRO_VALIDATE = "http://amiapp.cl/public/getData/ReservationsOffers/validateReservationOffer.php";
 	public static final String URL_MRO_RATE = "http://amiapp.cl/public/getData/ReservationsOffers/rateOffer.php";
+	public static final String URL_MRO_DELETE = "http://amiapp.cl/public/getData/ReservationsOffers/deleteOffer.php";
 
 	// DO = Discard Promotion URLs
 	public static final String URL_DO_DISCARD = "http://amiapp.cl/public/getData/DiscardOffer/discardOffer.php";
