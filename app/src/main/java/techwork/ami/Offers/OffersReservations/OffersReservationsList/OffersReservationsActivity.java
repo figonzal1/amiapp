@@ -46,7 +46,6 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
-import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
 import techwork.ami.Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
@@ -61,18 +60,22 @@ public class OffersReservationsActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
     private TextView tvOffersReservationEmpty;
     CustomAlertDialogBuilder dialogBuilder;
-    Context context;
     private Vibrator c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context=this;
         setContentView(R.layout.offers_reservations_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         tvOffersReservationEmpty = (TextView)findViewById(R.id.tv_offers_reservations_empty);
 
@@ -91,22 +94,11 @@ public class OffersReservationsActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getOfferReservation();
 
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     public void showPopupMenu(final View view, final OffersReservationsModel model, long expiryTime){
 
@@ -354,7 +346,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
     private void deleteDialogOfferReservation(final OffersReservationsModel model){
 
-        dialogBuilder = new CustomAlertDialogBuilder(context);
+        dialogBuilder = new CustomAlertDialogBuilder(getApplicationContext());
         dialogBuilder.setTitle(R.string.OfferReservedDeleteTittle);
         dialogBuilder.setCancelable(false);
         dialogBuilder.setCanceledOnTouchOutside(false);
@@ -429,9 +421,9 @@ public class OffersReservationsActivity extends AppCompatActivity {
                             c.vibrate(500);
 
                             //If offer reserved is deleted finish OfferViewLocalActivity.
-                            //OffersViewLocalActivity.activity.finish();
+                            //LocalActivity.activity.finish();
 
-                            Toast.makeText(context,R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
 
                             //If operations is ok refresh orders.
                             getOfferReservation();
@@ -443,7 +435,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 //If not correct depends of the operation.
                 else {
                     loading.dismiss();
-                    Toast.makeText(context,
+                    Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
 
@@ -458,7 +450,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
     private void dialogLocalCode(final OffersReservationsModel model){
 
         //Create the CustomAlertDialogBuilder
-        dialogBuilder = new CustomAlertDialogBuilder(context);
+        dialogBuilder = new CustomAlertDialogBuilder(getApplicationContext());
 
         // Set the usual data, as you would do with AlertDialog.Builder
         dialogBuilder.setTitle(R.string.OfferReservedValidateTitle);
@@ -506,7 +498,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
         final String idOffer = model.getIdOffer();
 
         // Create the CustomAlertDialogBuilder
-        dialogBuilder = new CustomAlertDialogBuilder(context);
+        dialogBuilder = new CustomAlertDialogBuilder(getApplicationContext());
 
         // Set the usual data, as you would do with AlertDialog.Builder
         dialogBuilder.setTitle(R.string.OfferReservedValidateLocal);
@@ -603,7 +595,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
     private void rateOfferReserved(final OffersReservationsModel model, final boolean isFirst) {
         // Rate the Promotion
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getApplicationContext());
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.rank_dialog, null);
         dialogBuilder.setView(dialogView);

@@ -52,12 +52,18 @@ public class OffersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offers_activity);
-        activity = this;
 
         offerList = new ArrayList<>();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //Initialice empty
         offerList = new ArrayList<>();
@@ -82,7 +88,6 @@ public class OffersActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getOffers();
 
     }

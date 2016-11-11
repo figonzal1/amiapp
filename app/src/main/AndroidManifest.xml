@@ -87,69 +87,39 @@
         <activity
             android:name=".Offers.OffersList.OffersActivity"
             android:label="@string/OfferCompanies"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".Offers.OffersDetails.OffersViewActivity"
             android:label="@string/OfferDetails"
-            android:parentActivityName=".Offers.OffersList.OffersActivity"
             android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Offers.OffersList.OffersActivity" />
         </activity>
         <activity
-            android:name=".Offers.OffersLocalDetails.OffersViewLocalActivity"
+            android:name=".LocalDetails.LocalActivity"
             android:label="@string/OfferLocalDetails"
-            android:parentActivityName=".Offers.OffersDetails.OffersViewActivity"
             android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Offers.OffersDetails.OffersViewActivity" />
         </activity>
         <activity
-            android:name=".Offers.OffersLocalDetails.StreetViewPanoramaFragment"
+            android:name=".LocalDetails.StreetViewPanoramaFragment"
             android:label="@string/OfferLocalStreetView"
-            android:parentActivityName=".Offers.OffersLocalDetails.OffersViewLocalActivity"
             android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Offers.OffersLocalDetails.OffersViewLocalActivity" />
         </activity>
         <activity
             android:name=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity"
             android:label="@string/OrdersReservations"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+            android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
+            android:label="@string/OfferReservedOfferDetails"
+            android:theme="@style/AppTheme">
+        </activity>
+
         <activity
             android:name=".Promotion.MyPromotions.MyPromotionsActivity"
             android:label="@string/title_activity_my_reservations"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
-            android:label="@string/OfferReservedOfferDetails"
-            android:parentActivityName=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity" />
-        </activity>
-        <activity android:name=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewLocalActivity"
-            android:label="@string/OfferReservedLocalInfo"
-            android:parentActivityName=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
-                />
 
-        </activity>
         <activity
             android:name=".ContactUsActivity"
             android:label="@string/titleActivityContactUs"

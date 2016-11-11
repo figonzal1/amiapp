@@ -1,4 +1,4 @@
-package techwork.ami.Offers.OffersLocalDetails;
+package techwork.ami.LocalDetails;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ public class StreetViewPanoramaFragment extends FragmentActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.street_view_panorama_activity);
-
 
         Bundle bundle = getIntent().getExtras();
         double lat = Double.parseDouble(bundle.getString(Config.TAG_GET_LOCAL_LAT));
