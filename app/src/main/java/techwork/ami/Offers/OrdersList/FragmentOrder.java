@@ -232,9 +232,7 @@ public class FragmentOrder extends Fragment {
     //Show info in model in a recycler view
     private void showOrders(String s) {
 
-        if (!s.equals("-1")) {
-            getOrdersData(s);
-        }
+        getOrdersData(s);
 
         adapter = new OrderAdapter(getActivity(),orderList,FragmentOrder.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);

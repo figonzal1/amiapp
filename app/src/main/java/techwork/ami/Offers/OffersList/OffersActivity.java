@@ -52,7 +52,9 @@ public class OffersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offers_activity);
-        activity=this;
+        activity = this;
+
+        offerList = new ArrayList<>();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -127,7 +129,7 @@ public class OffersActivity extends AppCompatActivity {
 
                     return rh.sendPostRequest(Config.URL_GET_OFFER, hashmap);
                 }
-                else{
+                else {
                     return "-1";
                 }
             }
