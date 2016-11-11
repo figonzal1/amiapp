@@ -33,8 +33,7 @@
         <ScrollView
             android:id="@+id/offer_reservations_details_activity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/appbar">
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -96,8 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/tv_offer_reservations_view_1"
-                    android:scrollbars="vertical">
+                    android:layout_below="@+id/tv_offer_reservations_view_1">
 
                 </android.support.v7.widget.RecyclerView>
 
