@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -23,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,7 @@ import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
+import techwork.ami.LocalDetails.LocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -55,10 +58,10 @@ public class PromotionDetailActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
     private NumberPicker numberPicker;
     private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsct, priceTxt, price, remainingDays;
+    private Button btnLocal;
     private FloatingActionButton floatingButton;
 
-    private String idOffer;
-    private String idPersona;
+    private String idOffer,idLocal,idPersona;
     private Context context;
     public CountDownTimer countDownTimer;
     private Vibrator c;
@@ -85,6 +88,7 @@ public class PromotionDetailActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         idOffer = bundle.getString(Config.TAG_GO_OFFER_ID);
+        idLocal= bundle.getString(Config.TAG_GO_IDLOCAL);
 
         rv = (RecyclerView)findViewById(R.id.recycler_view_offer_detail);
         rv.setHasFixedSize(true);
@@ -112,6 +116,7 @@ public class PromotionDetailActivity extends AppCompatActivity {
         price = (TextView)findViewById(R.id.od_tv_price);
         priceTxt = (TextView)findViewById(R.id.od_tv_price_txt);
         remainingDays = (TextView)findViewById(R.id.od_tv_rd);
+        btnLocal=(Button)findViewById(R.id.btn_promotion_details);
 
         //Calculate remainigDays
         ExpiryTime expt= new ExpiryTime();
@@ -182,6 +187,15 @@ public class PromotionDetailActivity extends AppCompatActivity {
             dsct.setText(s+String.valueOf(Math.abs(100-perc))+"%");
         }
         else dsct.setText("");
+
+        btnLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PromotionDetailActivity.this, LocalActivity.class);
+                intent.putExtra(Config.TAG_GO_IDLOCAL,idLocal);
+                startActivity(intent);
+            }
+        });
 
         // Floating Action Button
         floatingButton = (FloatingActionButton) findViewById(R.id.floating_button);

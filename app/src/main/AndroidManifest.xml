@@ -127,11 +127,7 @@
         <activity
             android:name=".Promotion.PromotionDetail.PromotionDetailActivity"
             android:label="@string/title_activity_offer_detail"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".Promotion.FilterActivity"
