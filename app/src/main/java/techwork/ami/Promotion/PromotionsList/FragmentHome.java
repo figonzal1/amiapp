@@ -359,7 +359,7 @@ public class FragmentHome extends Fragment {
                 .setContentIntent(contIntent);
     }
 
-    public class DiscardOffer extends AsyncTask<String, Void, String> {
+    public static class DiscardOffer extends AsyncTask<String, Void, String> {
         Context context;
         ProgressDialog loading;
         DialogInterface dialog;
