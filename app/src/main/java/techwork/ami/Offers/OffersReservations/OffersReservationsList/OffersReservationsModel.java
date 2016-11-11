@@ -17,12 +17,14 @@ public class OffersReservationsModel {
     String calification;
     String dateReserv;
     String dateCashed;
+    String dateTimeFin;
     String dateIni;
     String dateFin;
     String company;
     String localCode;
     String image;
     int price;
+    int priceTotal;
 
 
     //Getters
@@ -60,6 +62,10 @@ public class OffersReservationsModel {
         return calification;
     }
 
+    public int getPriceTotal() {
+        return priceTotal;
+    }
+
     public String getCharge() {
         return charge;
     }
@@ -82,6 +88,10 @@ public class OffersReservationsModel {
 
     public String getDateFin() {
         return dateFin;
+    }
+
+    public String getDateTimeFin() {
+        return dateTimeFin;
     }
 
     public int getPrice() {
@@ -173,5 +183,13 @@ public class OffersReservationsModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setPriceTotal(int priceTotal) {
+        this.priceTotal = priceTotal;
+    }
+
+    public void setDateTimeFin(String dateTimeFin) {
+        this.dateTimeFin = dateTimeFin;
     }
 }

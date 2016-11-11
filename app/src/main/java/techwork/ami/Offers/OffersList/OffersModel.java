@@ -16,6 +16,7 @@ public class OffersModel {
     String dateTimeFin;
     String dateFin;
     int price;
+    int priceTotal;
     String maxPPerson;
     String company;
     String image;
@@ -79,6 +80,10 @@ public class OffersModel {
         return image;
     }
 
+    public int getPriceTotal() {
+        return priceTotal;
+    }
+
     //Setters
 
     public void setIdNeed(String idNeed) {
@@ -135,5 +140,9 @@ public class OffersModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setPriceTotal(int priceTotal) {
+        this.priceTotal = priceTotal;
     }
 }

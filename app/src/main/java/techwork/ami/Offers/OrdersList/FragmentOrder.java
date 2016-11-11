@@ -84,6 +84,7 @@ public class FragmentOrder extends Fragment {
         rv = (RecyclerView)v.findViewById(R.id.recycler_view_order);
         rv.setHasFixedSize(true);
 
+
         //1 cardviews in portrait mode.
         if (getResources().getConfiguration().orientation==1){
             layout = new GridLayoutManager(getActivity(), 1);
@@ -219,8 +220,9 @@ public class FragmentOrder extends Fragment {
             protected  void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                if (!s.equals("-1"))
+                if (!s.equals("-1")) {
                     showOrders(s);
+                }
             }
         }
         OrderAsyncTask go = new OrderAsyncTask();
@@ -229,13 +231,14 @@ public class FragmentOrder extends Fragment {
 
     //Show info in model in a recycler view
     private void showOrders(String s) {
+
         getOrdersData(s);
 
         adapter = new OrderAdapter(getActivity(),orderList,FragmentOrder.this);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
-        if (orderList.size()==0){
+        if (orderList.size()==0 || orderList.isEmpty()){
             tvOrderEmpty.setText(R.string.OrderListTitleEmpty);
         }else {
             tvOrderEmpty.setText(R.string.OrderListTitle);
@@ -302,11 +305,26 @@ public class FragmentOrder extends Fragment {
 
             @Override
             protected String doInBackground(String... params) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_NE_ID, model.getIdNeed());
                 RequestHandler rh = new RequestHandler();
 
-                return rh.sendPostRequest(Config.URL_DELETE_NEED, hashMap);
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus){
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_NE_ID, model.getIdNeed());
+
+                    return rh.sendPostRequest(Config.URL_DELETE_NEED, hashMap);
+                }
+                else {
+                    return "-1";
+                }
+
             }
 
             @Override
@@ -314,7 +332,7 @@ public class FragmentOrder extends Fragment {
                 super.onPostExecute(s);
 
                 //If operation is correct dialog close in 1,5 [s]
-                if (s.equals("0")) {
+                if (s.equals("0") || !s.equals("-1")) {
 
                     Handler mHandler = new Handler();
                     mHandler.postDelayed(new Runnable() {
@@ -322,6 +340,9 @@ public class FragmentOrder extends Fragment {
                         public void run() {
 
                             loading.dismiss();
+
+                            c=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
 
                             Toast.makeText(view.getContext(),
                                   R.string.OrderDeleteOk, Toast.LENGTH_LONG).show();
@@ -335,11 +356,11 @@ public class FragmentOrder extends Fragment {
                 //If not correct depends of the operation.
                 else {
                     loading.dismiss();
+                    c=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                     Toast.makeText(view.getContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
-                c=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                c.vibrate(500);
 
                 this.dialog.dismiss();
             }

@@ -1,8 +1,10 @@
 package techwork.ami.Offers.OffersList;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,10 +52,15 @@ public class OffersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offers_activity);
-        activity=this;
+        activity = this;
+
+        offerList = new ArrayList<>();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Initialice empty
+        offerList = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
         idNeedOffer = bundle.getString(Config.TAG_GET_OFFER_IDNEED);
@@ -80,19 +87,6 @@ public class OffersActivity extends AppCompatActivity {
 
     }
 
-    //Permit go to back activity
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void getOffers(){
         sendPostRequest();
     }
@@ -108,16 +102,37 @@ public class OffersActivity extends AppCompatActivity {
             }
             @Override
             protected String doInBackground(Void... voids) {
-                HashMap<String, String> hashmap = new HashMap<>();
-                hashmap.put(Config.KEY_GET_OFFER_IDNEED,idNeedOffer);
+
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_OFFER,hashmap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashmap = new HashMap<>();
+                    hashmap.put(Config.KEY_GET_OFFER_IDNEED, idNeedOffer);
+
+                    return rh.sendPostRequest(Config.URL_GET_OFFER, hashmap);
+                }
+                else {
+                    return "-1";
+                }
             }
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showOffers(s);
+
+                //If operation is correct
+                if (!s.equals("-1")){
+                    showOffers(s);
+                }
+
             }
         }
         OfferAsyncTask go = new OfferAsyncTask();
@@ -126,17 +141,21 @@ public class OffersActivity extends AppCompatActivity {
 
     //Show info in model in a recycler view
     private void showOffers(String s){
+
         getOffersData(s);
+
 
         adapter = new OffersAdapter(getApplicationContext(),offerList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
 
-        if (offerList.size()==0){
+
+        if (offerList.size() == 0) {
             tvOfferEmpty.setText(R.string.OfferEmpty);
-        }else {
+        } else {
             tvOfferEmpty.setText("");
         }
+
 
         adapter.setOnItemClickListener(new OnItemClickListenerRecyclerView() {
             @Override
@@ -165,6 +184,7 @@ public class OffersActivity extends AppCompatActivity {
                         intent.putExtra(Config.TAG_GET_OFFER_DATEFIN, m.getDateFin());
                         intent.putExtra(Config.TAG_GET_OFFER_DATEINI, m.getDateIni());
                         intent.putExtra(Config.TAG_GET_OFFER_COMPANY, m.getCompany());
+                        intent.putExtra(Config.TAG_GET_OFFER_PRICE_TOTAL,m.getPriceTotal());
                         startActivity(intent);
                     }
                     else {
@@ -190,52 +210,54 @@ public class OffersActivity extends AppCompatActivity {
         Date dateIni,dateFin,dateTimeFin;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
-        try{
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonNeedOffer = jsonObject.optJSONArray(Config.TAG_GET_OFFER_NEED);
-            Calendar c = Calendar.getInstance();
-            offerList = new ArrayList<>();
 
-            for (int i=0;i<jsonNeedOffer.length();i++){
-                JSONObject jsonObjectItem = jsonNeedOffer.getJSONObject(i);
-                OffersModel item = new OffersModel();
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                JSONArray jsonNeedOffer = jsonObject.optJSONArray(Config.TAG_GET_OFFER_NEED);
+                Calendar c = Calendar.getInstance();
+                offerList = new ArrayList<>();
 
-                item.setIdOferta(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDOFFER));
-                item.setIdNeed(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDNEED));
-                item.setIdLocal(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDLOCAL));
-                item.setTittle(jsonObjectItem.getString(Config.TAG_GET_OFFER_TITTLE));
-                item.setDescription(jsonObjectItem.getString(Config.TAG_GET_OFFER_DESCRIPTION));
-                item.setCodPromotion(jsonObjectItem.getString(Config.TAG_GET_OFFER_CODPROMOTION));
-                item.setStock(jsonObjectItem.getString(Config.TAG_GET_OFFER_STOCK));
-                item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_OFFER_PRICEOFFER));
-                item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GET_OFFER_MAXPPERSON));
-                item.setCompany(jsonObjectItem.getString(Config.TAG_GET_OFFER_COMPANY));
-                item.setImage(jsonObjectItem.getString(Config.TAG_GET_OFFER_IMAGE));
+                for (int i = 0; i < jsonNeedOffer.length(); i++) {
+                    JSONObject jsonObjectItem = jsonNeedOffer.getJSONObject(i);
+                    OffersModel item = new OffersModel();
 
-                dIni = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEINI);
-                dFin = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEFIN);
-                dTimeFin= jsonObjectItem.getString(Config.TAG_GET_OFFER_DATETIME_FIN);
-                dateIni= format.parse(dIni);
-                dateFin = format.parse(dFin);
-                dateTimeFin=format.parse(dTimeFin);
+                    item.setIdOferta(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDOFFER));
+                    item.setIdNeed(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDNEED));
+                    item.setIdLocal(jsonObjectItem.getString(Config.TAG_GET_OFFER_IDLOCAL));
+                    item.setTittle(jsonObjectItem.getString(Config.TAG_GET_OFFER_TITTLE));
+                    item.setDescription(jsonObjectItem.getString(Config.TAG_GET_OFFER_DESCRIPTION));
+                    item.setCodPromotion(jsonObjectItem.getString(Config.TAG_GET_OFFER_CODPROMOTION));
+                    item.setStock(jsonObjectItem.getString(Config.TAG_GET_OFFER_STOCK));
+                    item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_OFFER_PRICEOFFER));
+                    item.setMaxPPerson(jsonObjectItem.getString(Config.TAG_GET_OFFER_MAXPPERSON));
+                    item.setCompany(jsonObjectItem.getString(Config.TAG_GET_OFFER_COMPANY));
+                    item.setImage(jsonObjectItem.getString(Config.TAG_GET_OFFER_IMAGE));
+                    item.setPriceTotal(jsonObjectItem.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL));
 
-                c.setTime(dateIni);
-                item.setDateIni(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+                    dIni = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEINI);
+                    dFin = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATEFIN);
+                    dTimeFin = jsonObjectItem.getString(Config.TAG_GET_OFFER_DATETIME_FIN);
+                    dateIni = format.parse(dIni);
+                    dateFin = format.parse(dFin);
+                    dateTimeFin = format.parse(dTimeFin);
 
-                c.setTime(dateFin);
-                item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+                    c.setTime(dateIni);
+                    item.setDateIni(String.format(Locale.US, Config.DATE_FORMAT, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH) + 1, c.get(Calendar.YEAR)));
 
-                c.setTime(dateTimeFin);
-                item.setDateTimeFin(String.format(Locale.US,Config.DATETIME_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
+                    c.setTime(dateFin);
+                    item.setDateFin(String.format(Locale.US, Config.DATE_FORMAT, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH) + 1, c.get(Calendar.YEAR)));
 
-                offerList.add(item);
+                    c.setTime(dateTimeFin);
+                    item.setDateTimeFin(String.format(Locale.US, Config.DATETIME_FORMAT, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH) + 1, c.get(Calendar.YEAR), c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), c.get(Calendar.SECOND)));
+
+                    offerList.add(item);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
-
 }

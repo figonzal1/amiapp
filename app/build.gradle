@@ -38,4 +38,5 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.4'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
     compile 'com.shawnlin:number-picker:2.0.1'
+    compile 'com.github.clans:fab:1.6.4'
 }

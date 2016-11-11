@@ -1,13 +1,19 @@
 package techwork.ami.Offers.OffersDetails;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +23,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionMenu;
 import com.shawnlin.numberpicker.NumberPicker;
 
 import org.json.JSONArray;
@@ -27,6 +35,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import techwork.ami.AnimateFab;
+import techwork.ami.AnimateMenuFab;
 import techwork.ami.Config;
 import techwork.ami.MainActivity;
 import techwork.ami.Offers.OffersList.OffersActivity;
@@ -36,14 +47,17 @@ import techwork.ami.RequestHandler;
 
 public class OffersViewActivity extends AppCompatActivity {
 
-    TextView tvTittle,tvPrice,tvCompany,tvDescription,tvDateIni,tvDateFin,tvMaxPPerson;
-    Button btnAccept, btnDiscard;
+    TextView tvTittle,tvCompany,tvDescription,tvMaxPPerson,tvPriceOffer,tvPriceNormal,tvDsctSym,tvDsct;
+    Button btnLocal;
     private String idOffer,idLocal;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
     private ProductAdapter adapter;
     private Vibrator c;
+    private com.github.clans.fab.FloatingActionButton fabAccept,fabDiscard;
+    private FloatingActionMenu fabMenu;
+    private SwipeRefreshLayout refreshLayout;
 
 
     @Override
@@ -56,16 +70,17 @@ public class OffersViewActivity extends AppCompatActivity {
 
         //Init textviews
         tvTittle = (TextView)findViewById(R.id.tv_offer_view_tittle);
-        tvPrice = (TextView)findViewById(R.id.tv_offer_view_price);
         tvCompany= (TextView)findViewById(R.id.tv_offer_view_company);
         tvDescription= (TextView)findViewById(R.id.tv_offer_view_description);
-        tvDateIni = (TextView)findViewById(R.id.tv_offer_view_date_ini);
-        tvDateFin = (TextView)findViewById(R.id.tv_offer_view_date_fin);
         tvMaxPPerson = (TextView)findViewById(R.id.tv_offer_view_max_person);
-
-        //Init buttons
-        btnAccept = (Button)findViewById(R.id.btn_offer_view_accept);
-        btnDiscard= (Button)findViewById(R.id.btn_offer_view_discard);
+        tvPriceNormal=(TextView)findViewById(R.id.tv_offer_view_price_normal);
+        tvPriceOffer=(TextView)findViewById(R.id.tv_offer_view_price_promotion);
+        tvDsct=(TextView)findViewById(R.id.tv_offer_view_dsct);
+        tvDsctSym=(TextView)findViewById(R.id.tv_offer_view_dsct_sy);
+        fabAccept = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_accept);
+        fabDiscard= (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_discard);
+        fabMenu=(FloatingActionMenu)findViewById(R.id.menu_fab);
+        btnLocal=(Button)findViewById(R.id.btn_offer_view_local);
 
         //Get info from OffersActivity
         final Bundle bundle = getIntent().getExtras();
@@ -78,29 +93,51 @@ public class OffersViewActivity extends AppCompatActivity {
         //Set TextViews with the information of each NeedOffer.
         tvTittle.setText(bundle.getString(Config.TAG_GET_OFFER_TITTLE));
         tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_DESCRIPTION));
-        tvPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
+        tvPriceOffer.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
+        tvPriceNormal.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL)));
         tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_COMPANY));
-        tvDateIni.setText(R.string.OfferViewDateIni2 + bundle.getString(Config.TAG_GET_OFFER_DATEINI));
-        tvDateFin.setText(R.string.OfferViewDateFin2 + bundle.getString(Config.TAG_GET_OFFER_DATEFIN));
+
+        int perc = (bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL) != 0) ?
+                bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)*100/bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL):
+                100;
+        // If offer price is greater than total price
+        String s = "";
+        if (perc == 100){
+            tvDsct.setText("");
+        }
+        else if (perc > 100){
+            // Red color
+            tvDsct.setText(getResources().getString(R.string.od_tv_increase_txt));
+            tvDsct.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+            s = "+";
+            tvDsctSym.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        }
+        else{
+            s = "-";
+        }
+        if(!s.equals("")){
+            tvDsctSym.setText(s+String.valueOf(Math.abs(100-perc))+"%");
+        }
+        else tvDsctSym.setText("");
 
         //If stock > maxxperson, textview show maxxperson
         if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK))>
                 Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON))) {
             if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)) > 1) {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warnings),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarnings),
                         bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)));
             } else {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warning),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarning),
                         bundle.getString(Config.TAG_GET_OFFER_MAXPPERSON)));
             }
         }
         //if stock < maxpperson, textview show stock
         else{
             if (Integer.valueOf(bundle.getString(Config.TAG_GET_OFFER_STOCK)) > 1) {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warnings),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarnings),
                         bundle.getString(Config.TAG_GET_OFFER_STOCK)));
             } else {
-                tvMaxPPerson.setText(String.format(getResources().getString(R.string.offers_view_maxpp_warning),
+                tvMaxPPerson.setText(String.format(getResources().getString(R.string.OfferViewMaxppWarning),
                         bundle.getString(Config.TAG_GET_OFFER_STOCK)));
             }
         }
@@ -137,14 +174,30 @@ public class OffersViewActivity extends AppCompatActivity {
             }
         });
 
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_offers_view);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getOfferProducts();
+            }
+        });
 
-        //Actions of Buttons
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-
+        btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Accept Promotion Task
+                Intent intent = new Intent(OffersViewActivity.this,OffersViewLocalActivity.class);
+                intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
+                startActivity(intent);
+            }
+        });
+
+        AnimateMenuFab.doAnimateMenuFab(fabMenu,getApplicationContext());
+        fabAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Accept Offer Task
                 class acceptOfferAsyncTask extends AsyncTask<Void,Void,String>{
 
                     private ProgressDialog loading;
@@ -161,24 +214,36 @@ public class OffersViewActivity extends AppCompatActivity {
 
                     @Override
                     protected String doInBackground(Void... params) {
-
-                        HashMap<String,String> hashMap = new HashMap<>();
-
-                        hashMap.put(Config.KEY_ACCEPT_OFFER_IDOFFER,idOffer);
-                        hashMap.put(Config.KEY_ACCEPT_OFFER_IDPERSON,idPerson);
-                        hashMap.put(Config.KEY_ACCEPT_OFFER_MAXPPERSON, cantidad[0]);
-
                         RequestHandler rh = new RequestHandler();
-                        return rh.sendPostRequest(Config.URL_ACCEPT_OFFER,hashMap);
+
+                        Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                            @Override
+                            @TargetApi(Build.VERSION_CODES.M)
+                            public void onClick(View v) {
+                                sendPostRequest();
+                            }
+                        });
+
+                        if (connectionStatus){
+                            HashMap<String,String> hashMap = new HashMap<>();
+
+                            hashMap.put(Config.KEY_ACCEPT_OFFER_IDOFFER,idOffer);
+                            hashMap.put(Config.KEY_ACCEPT_OFFER_IDPERSON,idPerson);
+                            hashMap.put(Config.KEY_ACCEPT_OFFER_MAXPPERSON, cantidad[0]);
+
+                            return rh.sendPostRequest(Config.URL_ACCEPT_OFFER,hashMap);
+                        }
+                        else {
+                            return "-1";
+                        }
+
+
                     }
                     @Override
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
 
-                        c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                        c.vibrate(500);
-
-                        if (s.equals("0")){
+                        if (s.equals("0") && !s.equals("-1")){
 
                             Handler mHandler = new Handler();
                             mHandler.postDelayed(new Runnable() {
@@ -188,21 +253,24 @@ public class OffersViewActivity extends AppCompatActivity {
 
                                     loading.dismiss();
 
+                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                    c.vibrate(500);
+
                                     Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
 
-                                    //OffersActivity (List offer companies) is finish.
-                                    OffersActivity.activity.finish();
-
-                                    //NeedOffer accept go to LocalDetails.
-                                    Intent intent = new Intent(OffersViewActivity.this,OffersViewLocalActivity.class);
-                                    intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
+                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
                                     finish();
                                     startActivity(intent);
+
                                 }
                             },1500);
 
                         }else{
                             loading.dismiss();
+
+                            c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
+
                             Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOfferFail,Toast.LENGTH_LONG).show();
                         }
                     }
@@ -210,12 +278,10 @@ public class OffersViewActivity extends AppCompatActivity {
 
                 acceptOfferAsyncTask go = new acceptOfferAsyncTask();
                 go.execute();
-
-
             }
         });
 
-        btnDiscard.setOnClickListener(new View.OnClickListener() {
+        fabDiscard.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -246,9 +312,6 @@ public class OffersViewActivity extends AppCompatActivity {
                     protected void onPostExecute(String s){
                         super.onPostExecute(s);
 
-                        c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                        c.vibrate(500);
-
                         if (s.equals("0")){
 
                             Handler mHandler = new Handler();
@@ -257,9 +320,12 @@ public class OffersViewActivity extends AppCompatActivity {
                                 public void run() {
                                     loading.dismiss();
 
+                                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                    c.vibrate(500);
+
                                     Toast.makeText(getApplicationContext(), R.string.OfferViewDiscardOffer, Toast.LENGTH_LONG).show();
 
-                                    //If Promotion is discard go to Main activity refreshed
+                                    //If Offer is discard go to Main activity refreshed
                                     Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
                                     finish();
                                     startActivity(intent);
@@ -268,6 +334,9 @@ public class OffersViewActivity extends AppCompatActivity {
                             },1500);
 
                         }else{
+                            loading.dismiss();
+                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
                             Toast.makeText(getApplicationContext(),R.string.OfferViewDiscardOfferFail,Toast.LENGTH_LONG).show();
                         }
                     }
@@ -304,6 +373,7 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute(){
                 super.onPreExecute();
+                refreshLayout.setRefreshing(true);
             }
 
             @Override
@@ -320,6 +390,7 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
+                refreshLayout.setRefreshing(false);
                 showProducts(s);
             }
         }
@@ -331,7 +402,8 @@ public class OffersViewActivity extends AppCompatActivity {
         getProductData(s);
 
         adapter = new ProductAdapter(getApplicationContext(),productList);
-        rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        rv.setAdapter(scaleAdapter);
     }
 
     private void getProductData(String json) {
@@ -345,6 +417,9 @@ public class OffersViewActivity extends AppCompatActivity {
                 JSONObject jsonObjectItem = jsonProductOffer.optJSONObject(i);
                 ProductModel item = new ProductModel();
                 item.setName(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_NAME));
+                item.setDescription(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_DESCRIPTION));
+                item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_PRODUCT_OFFER_PRICE));
+                item.setImage(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_IMAGE));
                 productList.add(item);
             }
 

@@ -1,11 +1,13 @@
 package techwork.ami.Offers.OffersReservations.OffersReservationsList;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
@@ -43,6 +45,7 @@ import java.util.Locale;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
+import techwork.ami.ExpiryTime;
 import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
 import techwork.ami.Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
@@ -105,13 +108,56 @@ public class OffersReservationsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showPopupMenu(final View view, final OffersReservationsModel model){
+    public void showPopupMenu(final View view, final OffersReservationsModel model, long expiryTime){
 
         final PopupMenu popup= new PopupMenu(view.getContext(),view);
         final MenuInflater inflater = popup.getMenuInflater();
-
         final Menu popumenu = popup.getMenu();
         inflater.inflate(R.menu.popup_menu_reservations,popup.getMenu());
+
+        //If offer is out of time
+        if (expiryTime < 0.0){
+
+            //If offer is out of time and not charged (vencida)
+            if (model.getCharge().equals("0")){
+                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+
+            //If odder is charged and not rated
+            else if(model.getCharge().equals("1") && model.getCalification().equals("")){
+                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+            }
+            //if offer is rated, disable all except view details.
+            else{
+                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+            }
+
+        }
+        //if offer is in time
+        else{
+
+            //If offer is reserved and not charged.
+            if (model.getCharge().equals("0")){
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+            //If offer is charged and not rated
+            else if (model.getCharge().equals("1") && model.getCalification().equals("")){
+                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+            }
+            //If offer is charged and rated
+            else{
+                popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
+                popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
+            }
+
+        }
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -138,56 +184,26 @@ public class OffersReservationsActivity extends AppCompatActivity {
                         intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATEINI,model.getDateIni());
                         intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATEFIN,model.getDateFin());
                         intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATERESERV,model.getDateReserv());
+                        intent.putExtra(Config.TAG_GET_OFFER_RESERVED_PRICE_TOTAL, model.getPriceTotal());
 
                         startActivity(intent);
                         return true;
 
                     case R.id.item_popup_menu_reservations_charge:
-                        item.setEnabled(true);
-                        //If needOffer is charge, not charged permitted.
-                        if (model.getCharge().equals("1")){
-                            popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
-                            Toast.makeText(getApplicationContext(),R.string.OfferReservedAlready,Toast.LENGTH_LONG).show();
-                            Snackbar.make(view,R.string.OfferReservedAlready,Snackbar.LENGTH_SHORT).show();
-                        }
-                        //Do charge
-                        else {
-                            dialogLocalCode(model);
-                        }
+
+                        dialogLocalCode(model);
                         return true;
 
                     case R.id.item_popup_menu_reservations_calificate:
 
-                        //If needOffer is not charge, not calificate.
-                        if (model.getCharge().equals("0")){
-
-                            Toast.makeText(getApplicationContext(), R.string.OffersReservedUnvalidated, Toast.LENGTH_SHORT).show();
-                        }
-                        //If has already validated and rated.
-                        else if (!model.getCalification().equals("")){
-
-                            Toast.makeText(getApplicationContext(), R.string.OfferReservedAlreadyCommented, Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            rateOfferReserved(model,false);
-                        }
+                        rateOfferReserved(model,false);
                         return true;
 
                     case R.id.item_popup_menu_reservations_delete_reservation:
 
-                        if (!model.getCalification().equals("")){
-                            Toast.makeText(getApplicationContext(),R.string.OfferReservedDeleteOfferCalificated,Toast.LENGTH_LONG).show();
-                        }
-                        else if (model.getCharge().equals("1")){
-                            Toast.makeText(getApplicationContext(),R.string.OfferReservedDeleteOfferCharged,Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            deleteDialogOfferReservation(model);
-                        }
+                        deleteDialogOfferReservation(model);
                         return true;
-
                 }
-
                 return false;
             }
         });
@@ -213,19 +229,38 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(Void... params) {
-                HashMap<String,String> hashmap = new HashMap<>();
 
-                hashmap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON,idperson);
                 RequestHandler rh = new RequestHandler();
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
 
-                return rh.sendPostRequest(Config.URL_GET_OFFER_RESERVATIONS,hashmap);
+                if (connectionStatus) {
+                    HashMap<String, String> hashmap = new HashMap<>();
+
+                    hashmap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON, idperson);
+
+                    return rh.sendPostRequest(Config.URL_GET_OFFER_RESERVATIONS, hashmap);
+                }
+                else{
+                    return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showOfferReservations(s);
+
+                //if conection is correct do show.
+                if (!s.equals("-1")){
+                    showOfferReservations(s);
+                }
+
             }
         }
         OfferReservationsAsyncTask go = new OfferReservationsAsyncTask();
@@ -253,29 +288,63 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 final OffersReservationsModel model = offersReservationsList.get(rv.getChildAdapterPosition(view));
 
-                //If the needOffer was already cashed
-                if (model.getCharge().equals("1")){
-                    Toast.makeText(getApplicationContext(),R.string.OfferReservedAlready,Toast.LENGTH_LONG).show();
-                    Snackbar.make(view,R.string.OfferReservedAlready,Snackbar.LENGTH_SHORT).show();
-                }
-                else{
-                    dialogLocalCode(model);
-                }
+                //Go to see details of each needOffer reserved.
+                Intent intent = new Intent(OffersReservationsActivity.this,OffersReservationsViewActivity.class);
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_IDOFFER,model.getIdOffer());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_IDLOCAL,model.getIdLocal());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_IDNEED,model.getIdNeed());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_TITTLE,model.getTittle());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DESCRIPTION,model.getDescription());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_PRICEOFFER,model.getPrice());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_CASHED,model.getDescription());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATECASHED,model.getDateCashed());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_CALIFICATION,model.getCalification());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_CODPROMOTION,model.getCodPromotion());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_QUANTITY,model.getQuantity());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_LOCALCODE,model.getLocalCode());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_COMPANY,model.getCompany());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATEINI,model.getDateIni());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATEFIN,model.getDateFin());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_DATERESERV,model.getDateReserv());
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_PRICE_TOTAL, model.getPriceTotal());
+
+                startActivity(intent);
+
             }
 
             @Override
             public void onItemLongClick(final View view) {
                 final OffersReservationsModel model = offersReservationsList.get(rv.getChildAdapterPosition(view));
 
-                if (model.getCharge().equals("0")){
-                    Toast.makeText(getApplicationContext(), R.string.OffersReservedUnvalidated, Toast.LENGTH_SHORT).show();
+                ExpiryTime expt = new ExpiryTime();
+                long expiryTime = expt.getTimeDiference(model.getDateTimeFin());
+
+                //If offer is in time
+                if (expiryTime> 0.0){
+
+                    //If offer not charged yet
+                    if (model.getCharge().equals("0")){
+                        dialogLocalCode(model);
+                    }
+                    //If is carged and not rated
+                    else if (model.getCalification().equals("")){
+                        rateOfferReserved(model,false);
+                    }
+                    else {
+                        Snackbar.make(view,R.string.OfferReservedAlreadyCommented, Snackbar.LENGTH_LONG).show();
+                    }
                 }
-                //If has already validated and rated.
-                else if (!model.getCalification().equals("")){
-                    Toast.makeText(getApplicationContext(), R.string.OfferReservedAlreadyCommented, Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    rateOfferReserved(model,false);
+
+                //If offer is out of time
+                else {
+
+                    //If offer is charged and is not rated.
+                    if (!model.getCharge().equals("0") && model.getCalification().equals("")){
+                        rateOfferReserved(model,false);
+                    }
+                    else{
+                        Snackbar.make(view, R.string.OfferReservedExpired, Snackbar.LENGTH_LONG).show();
+                    }
                 }
 
             }
@@ -334,7 +403,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDOFFER,model.getIdOffer());
                 hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDPERSON,idPerson);
-                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_QUANTITY,model.getQuantity()); //Send quatity reserved by user
+                //Send quantity reserved by user
+                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_QUANTITY,model.getQuantity());
 
 
                 RequestHandler rh = new RequestHandler();
@@ -355,9 +425,11 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                             loading.dismiss();
 
+                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
 
                             //If offer reserved is deleted finish OfferViewLocalActivity.
-                            OffersViewLocalActivity.activity.finish();
+                            //OffersViewLocalActivity.activity.finish();
 
                             Toast.makeText(context,R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
 
@@ -374,8 +446,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
                     Toast.makeText(context,
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
-                c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                c.vibrate(500);
 
                 this.dialog.dismiss();
             }
@@ -492,6 +562,9 @@ public class OffersReservationsActivity extends AppCompatActivity {
                                     public void run() {
                                         loading.dismiss();
 
+                                        c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                        c.vibrate(500);
+
                                         Toast.makeText(getApplicationContext(),
                                                 R.string.OfferReservedValidateOk, Toast.LENGTH_LONG).show();
                                         getOfferReservation();
@@ -503,8 +576,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         R.string.operation_fail, Toast.LENGTH_LONG).show();
                             }
-                            c= (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                            c.vibrate(500);
+
                             this.dialog.dismiss();
                         }
                     }
@@ -607,6 +679,9 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                             loading.dismiss();
 
+                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
+
                             Toast.makeText(getApplicationContext(),
                                     R.string.OfferReservedRateOk, Toast.LENGTH_LONG).show();
                             getOfferReservation();
@@ -616,11 +691,11 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 } else {
                     loading.dismiss();
+                    c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                     Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
-                c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                c.vibrate(500);
                 this.dialog.dismiss();
             }
         }
@@ -630,8 +705,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
     }
 
     private void getOfferReservationsData(String json) {
-        String dIni, dFin,dReserv,dCashed;
-        Date dateIni, dateFin,dateReserv,dateCashed;
+        String dIni, dFin,dReserv,dCashed,dTime;
+        Date dateIni, dateFin,dateReserv,dateCashed,dateTime;
 
         SimpleDateFormat format = new SimpleDateFormat(Config.DATETIME_FORMAT_DB);
         try {
@@ -659,6 +734,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 item.setLocalCode(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_LOCALCODE));
                 item.setDateCashed(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_CASHED));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_IMAGE));
+                item.setPriceTotal(jsonObjectItem.getInt(Config.TAG_GET_OFFER_RESERVED_PRICE_TOTAL));
 
                 //If dateChashed is != null, save variables.
                 if (!jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_DATECASHED).equals("")){
@@ -672,17 +748,36 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 dIni = jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_DATEINI);
                 dFin = jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_DATEFIN);
                 dReserv= jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_DATERESERV);
+                dTime=jsonObjectItem.getString(Config.TAG_GET_OFFER_RESERVED_DATETIME);
 
                 dateIni= format.parse(dIni);
                 dateFin = format.parse(dFin);
                 dateReserv=format.parse(dReserv);
+                dateTime=format.parse(dTime);
 
                 c.setTime(dateIni);
-                item.setDateIni(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+                item.setDateIni(String.format(Locale.US,Config.DATE_FORMAT,
+                        c.get(Calendar.DAY_OF_MONTH),
+                        c.get(Calendar.MONTH)+1,
+                        c.get(Calendar.YEAR)));
+
                 c.setTime(dateFin);
-                item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+                item.setDateFin(String.format(Locale.US,Config.DATE_FORMAT,
+                        c.get(Calendar.DAY_OF_MONTH),
+                        c.get(Calendar.MONTH)+1
+                        ,c.get(Calendar.YEAR)));
+
                 c.setTime(dateReserv);
-                item.setDateReserv(String.format(Locale.US,Config.DATE_FORMAT,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR)));
+                item.setDateReserv(String.format(Locale.US,Config.DATE_FORMAT,
+                        c.get(Calendar.DAY_OF_MONTH),
+                        c.get(Calendar.MONTH)+1,
+                        c.get(Calendar.YEAR)));
+
+                c.setTime(dateTime);
+                item.setDateTimeFin(String.format(Locale.US,Config.DATETIME_FORMAT,
+                        c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,
+                        c.get(Calendar.YEAR),c.get(Calendar.HOUR_OF_DAY),
+                        c.get(Calendar.MINUTE),c.get(Calendar.SECOND)));
 
                 offersReservationsList.add(item);
             }

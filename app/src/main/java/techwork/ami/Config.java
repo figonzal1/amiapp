@@ -225,15 +225,20 @@ public class Config {
 	public static final String TAG_GET_OFFER_DATEFIN="fechaTermino";
 	public static final String TAG_GET_OFFER_DATETIME_FIN="fechaTermino";
 	public static final String TAG_GET_OFFER_PRICEOFFER="precioOferta";
+	public static final String TAG_GET_OFFER_PRICE_TOTAL="precioTotal";
 	public static final String TAG_GET_OFFER_MAXPPERSON="maxPPersona";
 	public static final String TAG_GET_OFFER_COMPANY="nombreEmpresa";
 	public static final String TAG_GET_OFFER_IMAGE="imagen";
 
 	//Get Products for OffersViewActivity
 	public static final String URL_GET_PRODUCT_OFFER="http://amiapp.cl/public/getData/Need/getProductOffer.php";
+	public static final String URL_IMAGES_PRODUCTS="http://amiapp.cl/encargado/uploads/";
 	public static final String KEY_GET_PRODUCT_OFFER_IDOFFER="idOferta";
 	public static final String TAG_GET_PRODUCT_OFFER="productos";
 	public static final String TAG_GET_PRODUCT_OFFER_NAME="nombre";
+	public static final String TAG_GET_PRODUCT_OFFER_DESCRIPTION="descripcion";
+	public static final String TAG_GET_PRODUCT_OFFER_PRICE="precio";
+	public static final String TAG_GET_PRODUCT_OFFER_IMAGE="imagen";
 	//Discard OffersActivity
 	public static final String URL_DISCARD_OFFER="http://amiapp.cl/public/getData/Need/discardOffer.php";
 	public static final String KEY_DISCARD_OFFER_IDOFFER="idOferta";
@@ -280,7 +285,9 @@ public class Config {
 	public static final String TAG_GET_OFFER_RESERVED_DATECASHED="fechaCobro";
 	public static final String TAG_GET_OFFER_RESERVED_DATEINI="fechaInicio";
 	public static final String TAG_GET_OFFER_RESERVED_DATEFIN="fechaTermino";
+	public static final String TAG_GET_OFFER_RESERVED_DATETIME="fechaTermino";
 	public static final String TAG_GET_OFFER_RESERVED_PRICEOFFER="precioOferta";
+	public static final String TAG_GET_OFFER_RESERVED_PRICE_TOTAL="precioTotal";
 	public static final String TAG_GET_OFFER_RESERVED_COMPANY="empresa";
 	public static final String TAG_GET_OFFER_RESERVED_LOCALCODE="codigoLocal";
 	public static final String TAG_GET_OFFER_RESERVED_IMAGE="imagen";

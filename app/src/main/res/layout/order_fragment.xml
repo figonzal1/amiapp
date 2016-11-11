@@ -1,59 +1,68 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="5dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     tools:context=".Offers.OrdersList.FragmentOrder">
 
-    <!-- Refresh fragment -->
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_need"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <!-- Tus pedidos-->
-            <TextView
-                android:id="@+id/tv_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/OrderListTitle"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:textSize="25sp"/>
+        <!-- Refresh fragment -->
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_need"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
-            <!-- Listado de pedidos-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_order"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/tv_order"
-                android:scrollbars="vertical">
+                android:layout_height="wrap_content"
+                >
 
-            </android.support.v7.widget.RecyclerView>
-        </RelativeLayout>
+                <!-- Tus pedidos-->
+                <TextView
+                    android:id="@+id/tv_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/OrderListTitle"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:textSize="25sp"/>
+
+                <!-- Listado de pedidos-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv_order"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="10dp"
+                    android:scrollbars="vertical">
+
+                </android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floating_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_add_white_48dp"
+            app:layout_behavior="techwork.ami.ScrollAwareFABBehavior"
+            android:background="@color/colorAccent">
+        </android.support.design.widget.FloatingActionButton>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fabSize="normal"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="15dp"
-        android:src="@drawable/ic_add_white_48dp"
-        app:layout_behavior="techwork.ami.ScrollAwareFABBehavior"
-        android:background="@color/colorAccent">
-    </android.support.design.widget.FloatingActionButton>
-
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

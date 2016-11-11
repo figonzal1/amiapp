@@ -169,16 +169,17 @@
     <string name="OfferCardViewPrice">$x.xxx</string>
     <string name="OfferCardViewCompany">Empresa</string>
 
-    <!-- Promotion View -->
+    <!-- Offer View -->
     <string name="OfferViewCardViewNameProduct">Nombre producto</string>
-    <string name="OfferViewOfferSendFor">Oferta enviada por: </string>
+    <string name="OfferViewCardViewPriceProduct">$xx.xxx</string>
+    <string name="OfferViewCardViewDescriptionProduct">Descripción</string>
     <string name="OfferViewCompany">Empresa</string>
     <string name="OfferViewTittle">Título oferta</string>
     <string name="OfferViewDescription">Descripción de la oferta</string>
-    <string name="OfferViewDateIni">Fecha de publicación: XX/XX/XXXX</string>
-    <string name="OfferViewDateFin">Fecha de expiración: XX/XX/XXXX</string>
     <string name="OfferViewPrice">$x.xxx</string>
-    <string name="OfferViewProducts">Esta oferta contiene: </string>
+    <string name="OfferViewDsctTxt">Descuento</string>
+    <string name="OfferViewDsct">-x.x%</string>
+    <string name="OfferViewOffer">Oferta</string>
     <string name="OfferViewMaxPerson">¡Puedes reservar hasta x unidades!</string>
     <string name="OfferViewAcceptOfferProcessing">Aceptando oferta</string>
     <string name="OfferViewDiscardOfferProcessing">Rechazando oferta</string>
@@ -186,34 +187,43 @@
     <string name="OfferViewDiscardOffer">Oferta rechazada</string>
     <string name="OfferViewAcceptOfferFail">No se ha podido reservar</string>
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
-    <string name="OfferViewDateIni2">Fecha de publicación: </string>
-    <string name="OfferViewDateFin2">Fecha de expiración: </string>
-    <string name="offers_view_maxpp_warnings">¡Puedes reservar hasta %s unidades!</string>
-    <string name="offers_view_maxpp_warning">¡Puedes reservar hasta %s unidades!</string>
+    <string name="OfferViewMaxppWarnings">¡Puedes reservar hasta %s unidades!</string>
+    <string name="OfferViewMaxppWarning">¡Puedes reservar hasta %s unidad!</string>
 
-    <!-- Promotion Local View -->
-    <string name="OfferViewLocalCongratulations">¡Felicitaciones! \n Has realizado la reserva</string>
+    <!-- Offer Local View -->
     <string name="OfferViewLocalAdress">#Dirección, Comuna</string>
     <string name="OfferViewLocalWebText">Más información en</string>
     <string name="OfferViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferViewLocalStreetView">Ver street view</string>
     <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
+    <string name="OfferViewLocalInfo">Ver información local</string>
 
     <!-- OfferReservations (NeedOffer) Strings -->
     <string name="OrdersReservations">Mis pedidos reservados</string>
     <string name="OfferReservedEmpty">¡Oops! \n No tienes reservas recientes :(</string>
     <string name="OfferReservedExpired">Oferta expirada</string>
-    <string name="OfferReservedOfferDetails">Detalle oferta</string>
+    <string name="OfferReservedOfferDetails">Detalle oferta reservada</string>
     <string name="OfferReservedCompanies">Ofertas recibidas</string>
     <string name="OfferReservedLocalDetails">Información local</string>
     <string name="OfferReservedStreetView">StreetView local</string>
-    <string name="OfferReservedExpiredShort">Expirada</string>
     <string name="OfferReservedExpired2">Expira en \n</string>
     <string name="OfferReservedCardViewTittle">Titulo oferta</string>
-    <string name="OfferReservedCardViewDescription">Descripcion de la oferta</string>
+    <string name="OfferReservedCardViewDateReservTxt">Reservada el</string>
+    <string name="OfferReservedCardViewDateFin">Termina el</string>
+    <string name="OfferReservedCardViewDate">XX/XX/XXXX</string>
     <string name="OfferReservedCardViewPrice">$x.xxx</string>
     <string name="OfferReservedCardViewCompany">Empresa</string>
     <string name="OfferReservedCardViewState">Estado</string>
+    <string name="OfferReservedLocalInfo">Información local</string>
+    <string name="OfferReservedViewTittle">Titulo oferta</string>
+    <string name="OfferReservedViewCompany">Empresa</string>
+    <string name="OfferReservedViewDescription">Descripción de la oferta</string>
+    <string name="OfferReservedViewProducts">Esta oferta contiene:</string>
+    <string name="OfferReservedViewPrice">$xxx.xxx</string>
+    <string name="OfferReservedViewDsctTxt">Descuento</string>
+    <string name="OfferReservedViewDsct">-x.x%</string>
+    <string name="OfferReservedViewOffer">Oferta</string>
+    <string name="OfferreservedViewButton">Ver información local</string>
     <string name="OfferReservedValidateMessage">Solicite a un empleado de %s que ingrese código del local</string>
     <string name="OfferReservedValidateTitle">Validar oferta</string>
     <string name="OfferReservedValidatePositiveText">Validar</string>
@@ -222,13 +232,13 @@
     <string name="OfferReservedValidateOk">¡Oferta validada!</string>
     <string name="OfferReservedRateProcessing">Opinando</string>
     <string name="OfferReservedRateOk">¡Gracias por tu opinión!</string>
-    <string name="OfferReservedValidateLocal">El código de la promoción es</string>
+    <string name="OfferReservedValidateLocal">El código de la oferta es</string>
     <string name="OfferReservedAlready">Esta oferta ya ha sido cobrada</string>
     <string name="OfferReservedAlreadyCommented">¡Gracias, ya opinaste!</string>
     <string name="OfferReservedRateMessage">Califica tu experiencia con esta empresa</string>
     <string name="OfferReservedRateTittle">Tu opinión nos interesa</string>
     <string name="OfferReservedRatePositive">Calificar</string>
-    <string name="OffersReservedUnvalidated">Esta oferta no ha sido cobrada</string>
+    <string name="OfferReservedUnvalidated">Esta oferta no ha sido cobrada</string>
     <string name="OfferReservedValidateProcessing">Validando oferta</string>
     <string name="OfferReservedDeleteProcessing">Eliminando reserva</string>
     <string name="OfferReservedDeleteTittle">¿Desea eliminar esta reserva?</string>
