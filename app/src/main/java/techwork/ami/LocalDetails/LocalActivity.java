@@ -1,8 +1,6 @@
-package techwork.ami.Offers.OffersLocalDetails;
+package techwork.ami.LocalDetails;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,12 +22,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
-import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class OffersViewLocalActivity extends AppCompatActivity{
+public class LocalActivity extends AppCompatActivity{
 
     private String idLocal,lat,lon,address,web,image,commune;
     Button btnStreetView;
@@ -40,10 +36,17 @@ public class OffersViewLocalActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.offers_view_local_activity);
+        setContentView(R.layout.local_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         idLocal= bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
@@ -63,15 +66,13 @@ public class OffersViewLocalActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OffersViewLocalActivity.this,StreetViewPanoramaFragment.class);
+                Intent intent = new Intent(LocalActivity.this,StreetViewPanoramaFragment.class);
                 intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
                 intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
                 startActivity(intent);
             }
         });
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //GetLocal info
         getLocal();
 

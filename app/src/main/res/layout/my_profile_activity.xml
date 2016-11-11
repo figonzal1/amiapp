@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/MP_coordinatorLayout"
@@ -8,6 +8,7 @@
     tools:context="techwork.ami.MyProfileActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -22,198 +23,192 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:id="@+id/myProfile_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="outsideInset"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/appbar">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <ScrollView
-            android:id="@+id/myProfile_form"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarStyle="outsideInset"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingTop="@dimen/activity_vertical_margin">
+            <ImageView
+                android:id="@+id/myProfileImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/profile_icon_other"
+                android:layout_weight="0.57"
+                android:scaleType="fitXY"/>
 
-            <LinearLayout
-                android:orientation="vertical"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="20sp"
+                android:text="@string/myProfileLeyend"
+                android:id="@+id/MP_textViewTitle"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/profileName"
+                android:id="@+id/MP_textViewName"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:id="@+id/MP_textViewFieldName"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/profileLastnames"
+                android:id="@+id/MP_textViewLastnames"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:id="@+id/MP_textViewFieldLastnames"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/profileEmail"
+                android:id="@+id/MP_textViewEmail"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:id="@+id/MP_textViewFieldEmail"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/profileDate"
+                android:id="@+id/MP_textViewDate"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:id="@+id/MP_textViewFieldDate"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/profileOccupation"
+                android:id="@+id/MP_textViewOccupation"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:id="@+id/MP_textViewFieldOccupation"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/profileGender"
+                android:id="@+id/MP_textViewGender"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:id="@+id/MP_textViewFieldGender"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/myProfilePhone"
+                android:id="@+id/MP_textViewPhone"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:id="@+id/MP_textViewFieldPhone"
+                android:layout_margin="10dp"
+                android:gravity="center"/>
+
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+                android:text="@string/myProfileEdit"
+                android:id="@+id/MP_buttonEdit"
+                android:layout_gravity="center_horizontal"/>
 
-                <ImageView
-                    android:id="@+id/myProfileImageView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/profile_icon_other"
-                    android:layout_weight="0.57"
-                    android:scaleType="fitXY"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/myProfileCloseAccount"
+                android:backgroundTint="@color/red"
+                android:textColor="#FFFFFF"
+                android:id="@+id/MP_buttonCloseAccount"
+                android:layout_gravity="center_horizontal"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textSize="20sp"
-                    android:text="@string/myProfileLeyend"
-                    android:id="@+id/MP_textViewTitle"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/profileName"
-                    android:id="@+id/MP_textViewName"
-                    android:layout_marginStart="12dp"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldName"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/profileLastnames"
-                    android:id="@+id/MP_textViewLastnames"
-                    android:layout_marginStart="12dp"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldLastnames"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/profileEmail"
-                    android:id="@+id/MP_textViewEmail"
-                    android:layout_marginStart="12dp"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldEmail"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/profileDate"
-                    android:id="@+id/MP_textViewDate"
-                    android:layout_marginStart="12dp"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldDate"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/profileOccupation"
-                    android:id="@+id/MP_textViewOccupation"
-                    android:layout_marginStart="12dp"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldOccupation"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/profileGender"
-                    android:id="@+id/MP_textViewGender"
-                    android:layout_marginStart="12dp"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldGender"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/myProfilePhone"
-                    android:id="@+id/MP_textViewPhone"
-                    android:layout_marginStart="12dp"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:id="@+id/MP_textViewFieldPhone"
-                    android:layout_margin="10dp"
-                    android:gravity="center"/>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/myProfileEdit"
-                    android:id="@+id/MP_buttonEdit"
-                    android:layout_gravity="center_horizontal"/>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/myProfileCloseAccount"
-                    android:textColor="#FFFFFF"
-                    android:id="@+id/MP_buttonCloseAccount"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

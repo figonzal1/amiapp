@@ -25,9 +25,9 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
+import techwork.ami.LocalDetails.LocalActivity;
 import techwork.ami.Offers.OffersDetails.ProductAdapter;
 import techwork.ami.Offers.OffersDetails.ProductModel;
-import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -50,6 +50,13 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
 
@@ -112,14 +119,12 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
         btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OffersReservationsViewActivity.this, OffersReservationsViewLocalActivity.class);
+                Intent intent = new Intent(OffersReservationsViewActivity.this, LocalActivity.class);
                 intent.putExtra(Config.TAG_GET_OFFER_RESERVED_IDLOCAL,idLocal);
                 startActivity(intent);
             }
         });
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getNeedOfferProducts();
     }
 

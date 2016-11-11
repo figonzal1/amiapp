@@ -56,6 +56,7 @@ public class Config {
 	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GO_OFFERS="offers";
 	public static final String TAG_GO_OFFER_ID="id";
+	public static final String TAG_GO_IDLOCAL="idLocal";
 	public static final String TAG_GO_TITLE="titulo";
 	public static final String TAG_GO_DESCRIPTION="descripcion";
 	public static final String TAG_GO_STOCK="stock";

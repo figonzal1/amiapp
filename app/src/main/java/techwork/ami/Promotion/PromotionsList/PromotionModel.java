@@ -5,6 +5,7 @@ package techwork.ami.Promotion.PromotionsList;
  */
 public class PromotionModel {
     private String id;
+    private String idLocal;
     private String title;
     private String description;
     private String initialDate;
@@ -24,6 +25,11 @@ public class PromotionModel {
     public void setId(String id){
         this.id=id;
     }
+
+    public String getIdLocal() {
+        return idLocal;
+    }
+
     public void setTitle(String title){
         this.title=title;
     }
@@ -65,6 +71,11 @@ public class PromotionModel {
 
     //Getters
     public String getId(){return id;}
+
+    public void setIdLocal(String idLocal) {
+        this.idLocal = idLocal;
+    }
+
     public String getTitle(){return title;}
     public String getDescription(){return description;}
     public String getInitialDate(){return initialDate;}
