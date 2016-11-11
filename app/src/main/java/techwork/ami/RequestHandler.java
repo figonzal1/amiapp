@@ -72,6 +72,7 @@ public class RequestHandler {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "-1";
 		}
 		// Close the connection
 		finally {
@@ -115,7 +116,9 @@ public class RequestHandler {
 			while((s=bufferedReader.readLine())!=null){
 				sb.append(s).append("\n");
 			}
-		}catch(Exception ignored){
+		}catch(Exception e){
+			e.printStackTrace();
+			return "-1";
 		}
 		// Close the connection
 		finally {
@@ -130,6 +133,9 @@ public class RequestHandler {
 			HttpURLConnection connection = (HttpURLConnection) myUrl.openConnection();
 			connection.setConnectTimeout(5000);
 			connection.connect();
+			HttpURLConnection connection2 = (HttpURLConnection) myUrl.openConnection();
+			connection2.setConnectTimeout(5000);
+			connection2.connect();
 			return true;
 		} catch (Exception e) {
 			Snackbar.make(v, R.string.error_on_connection, Snackbar.LENGTH_INDEFINITE)
