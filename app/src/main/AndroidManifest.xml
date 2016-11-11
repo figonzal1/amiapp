@@ -50,10 +50,23 @@
             android:name=".RestorePassActivity"
             android:label="@string/titleActivityRestorePass"
             android:theme="@style/AppTheme" />
+        <activity android:name=".MyProfileActivity"
+            android:label="@string/titleActivityMyProfile"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/titleActivityEditProfile"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".MyProfileActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MyProfileActivity" />
+        </activity>
         <activity
             android:name=".AfterLoginActivity"
             android:label="@string/titleActivityAfterLogin"
@@ -163,7 +176,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MyProfileActivity" />
 
     </application>
 

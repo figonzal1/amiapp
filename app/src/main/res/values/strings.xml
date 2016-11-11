@@ -85,7 +85,6 @@
 
     <!-- My Profile Strings -->
     <string name="titleActivityMyProfile">Mi Perfil</string>
-    <string name="myProfileTitle">Mi perfil</string>
     <string name="myProfileLeyend">Tus Puntos: %s</string>
     <string name="myProfilePhone">Teléfono</string>
     <string name="myProfileEdit">Editar</string>
@@ -97,7 +96,6 @@
     <!-- Edit Profile Strings -->
     <string name="titleActivityEditProfile">Editar Perfil</string>
     <string name="getProfileError">No se pudo obtener su perfil</string>
-    <string name="editProfileTitle">Editar perfil</string>
     <string name="editProfileLeyend">Aquí puedes actualizar tus datos</string>
     <string name="editProfileSave">Guardar</string>
     <string name="editProfilePhone">Teléfono (Opcional)</string>
