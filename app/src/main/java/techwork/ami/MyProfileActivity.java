@@ -114,7 +114,6 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         });
 
-        buttonCloseAccount.setBackgroundColor(Color.RED);
 
         // If the activity is not restoring after screen rotation
         if (savedInstanceState == null)
