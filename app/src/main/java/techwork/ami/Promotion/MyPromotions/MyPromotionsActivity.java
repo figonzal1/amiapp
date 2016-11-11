@@ -142,7 +142,6 @@ public class MyPromotionsActivity extends AppCompatActivity {
         }else {
             if (!model.getCharged().equals("0")) {
                 popumenu.findItem(R.id.item_popup_menu_reservations_charge).setEnabled(false);
-                popumenu.findItem(R.id.item_popup_menu_reservations_delete_reservation).setEnabled(false);
             } else {
                 popumenu.findItem(R.id.item_popup_menu_reservations_calificate).setEnabled(false);
             }

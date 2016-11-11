@@ -284,6 +284,7 @@ public class Config {
 	public static final String TAG_GET_OFFER_RESERVED_DATECASHED="fechaCobro";
 	public static final String TAG_GET_OFFER_RESERVED_DATEINI="fechaInicio";
 	public static final String TAG_GET_OFFER_RESERVED_DATEFIN="fechaTermino";
+	public static final String TAG_GET_OFFER_RESERVED_DATETIME="fechaTermino";
 	public static final String TAG_GET_OFFER_RESERVED_PRICEOFFER="precioOferta";
 	public static final String TAG_GET_OFFER_RESERVED_PRICE_TOTAL="precioTotal";
 	public static final String TAG_GET_OFFER_RESERVED_COMPANY="empresa";

@@ -206,7 +206,6 @@
     <string name="OfferReservedCompanies">Ofertas recibidas</string>
     <string name="OfferReservedLocalDetails">Información local</string>
     <string name="OfferReservedStreetView">StreetView local</string>
-    <string name="OfferReservedExpiredShort">Expirada</string>
     <string name="OfferReservedExpired2">Expira en \n</string>
     <string name="OfferReservedCardViewTittle">Titulo oferta</string>
     <string name="OfferReservedCardViewDateReservTxt">Reservada el</string>
@@ -232,13 +231,13 @@
     <string name="OfferReservedValidateOk">¡Oferta validada!</string>
     <string name="OfferReservedRateProcessing">Opinando</string>
     <string name="OfferReservedRateOk">¡Gracias por tu opinión!</string>
-    <string name="OfferReservedValidateLocal">El código de la promoción es</string>
+    <string name="OfferReservedValidateLocal">El código de la oferta es</string>
     <string name="OfferReservedAlready">Esta oferta ya ha sido cobrada</string>
     <string name="OfferReservedAlreadyCommented">¡Gracias, ya opinaste!</string>
     <string name="OfferReservedRateMessage">Califica tu experiencia con esta empresa</string>
     <string name="OfferReservedRateTittle">Tu opinión nos interesa</string>
     <string name="OfferReservedRatePositive">Calificar</string>
-    <string name="OffersReservedUnvalidated">Esta oferta no ha sido cobrada</string>
+    <string name="OfferReservedUnvalidated">Esta oferta no ha sido cobrada</string>
     <string name="OfferReservedValidateProcessing">Validando oferta</string>
     <string name="OfferReservedDeleteProcessing">Eliminando reserva</string>
     <string name="OfferReservedDeleteTittle">¿Desea eliminar esta reserva?</string>

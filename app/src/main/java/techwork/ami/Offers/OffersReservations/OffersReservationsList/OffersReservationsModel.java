@@ -17,6 +17,7 @@ public class OffersReservationsModel {
     String calification;
     String dateReserv;
     String dateCashed;
+    String dateTimeFin;
     String dateIni;
     String dateFin;
     String company;
@@ -87,6 +88,10 @@ public class OffersReservationsModel {
 
     public String getDateFin() {
         return dateFin;
+    }
+
+    public String getDateTimeFin() {
+        return dateTimeFin;
     }
 
     public int getPrice() {
@@ -182,5 +187,9 @@ public class OffersReservationsModel {
 
     public void setPriceTotal(int priceTotal) {
         this.priceTotal = priceTotal;
+    }
+
+    public void setDateTimeFin(String dateTimeFin) {
+        this.dateTimeFin = dateTimeFin;
     }
 }

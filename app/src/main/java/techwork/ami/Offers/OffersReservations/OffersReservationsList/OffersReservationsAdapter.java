@@ -1,6 +1,7 @@
 package techwork.ami.Offers.OffersReservations.OffersReservationsList;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import techwork.ami.Config;
+import techwork.ami.ExpiryTime;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 
@@ -86,31 +88,55 @@ public class OffersReservationsAdapter extends RecyclerView.Adapter<OffersReserv
                 .placeholder(R.drawable.image_default)
                 .into(holder.ivImage);
 
-        //Si no esta cobrada
+        ExpiryTime expt = new ExpiryTime();
+        final long expiryTime = expt.getTimeDiference(model.getDateTimeFin());
 
+        //If offer is not expired
+        if (expiryTime>0.0){
 
-
-        if (model.getCharge().equals("0")){
-            ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.yellow));
-            holder.tvStatus.setText("Reservada");
-
-
-        }else{
-            //
-            if (model.getCalification().equals("")){
-                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
-                holder.tvStatus.setText("Cobrada");
+            //If offer is reserved and not charged
+            if (model.getCharge().equals("0")){
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.yellow));
+                holder.tvStatus.setText("Reservada");
             }
             else {
-                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
-                holder.tvStatus.setText("Calificada");
+
+                //
+                if (model.getCalification().equals("")) {
+                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.green));
+                    holder.tvStatus.setText("Cobrada");
+                }
+                else {
+                    ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.blue));
+                    holder.tvStatus.setTextColor(ContextCompat.getColor(context,R.color.white));
+                    holder.tvStatus.setText("Calificada");
+                }
+            }
+        }
+        //If offer is out of time
+        else {
+
+            //If offer is reserved, not charged and out of time.
+            if (model.getCharge().equals("0")){
+                ((GradientDrawable)holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context,R.color.red));
+                holder.tvStatus.setText("Vencida");
+            }
+            else {
+                if (model.getCalification().equals("")) {
+                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.green));
+                    holder.tvStatus.setText("Cobrada");
+                } else {
+                    ((GradientDrawable) holder.tvStatus.getBackground()).setColor(ContextCompat.getColor(context, R.color.blue));
+                    holder.tvStatus.setTextColor(ContextCompat.getColor(context,R.color.white));
+                    holder.tvStatus.setText("Calificada");
+                }
             }
         }
 
         holder.popupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                offersReservationsActivity.showPopupMenu(v,model);
+                offersReservationsActivity.showPopupMenu(v,model,expiryTime);
           }
         });
     }

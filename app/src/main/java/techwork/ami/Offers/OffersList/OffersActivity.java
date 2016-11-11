@@ -57,6 +57,9 @@ public class OffersActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Initialice empty
+        offerList = new ArrayList<>();
+
         Bundle bundle = getIntent().getExtras();
         idNeedOffer = bundle.getString(Config.TAG_GET_OFFER_IDNEED);
 
@@ -150,9 +153,8 @@ public class OffersActivity extends AppCompatActivity {
     //Show info in model in a recycler view
     private void showOffers(String s){
 
-        if (!s.equals("-1")) {
-            getOffersData(s);
-        }
+        getOffersData(s);
+
 
         adapter = new OffersAdapter(getApplicationContext(),offerList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
