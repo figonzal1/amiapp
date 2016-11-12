@@ -25,11 +25,6 @@ public class PromotionModel {
     public void setId(String id){
         this.id=id;
     }
-
-    public String getIdLocal() {
-        return idLocal;
-    }
-
     public void setTitle(String title){
         this.title=title;
     }
@@ -57,6 +52,9 @@ public class PromotionModel {
     public void setStock(int stock){
         this.stock=stock;
     }
+    public void setIdLocal(String idLocal) {
+        this.idLocal = idLocal;
+    }
     public void setPromotionCode(String promotionCode){
         this.promotionCode=promotionCode;
     }
@@ -72,11 +70,10 @@ public class PromotionModel {
     //Getters
     public String getId(){return id;}
 
-    public void setIdLocal(String idLocal) {
-        this.idLocal = idLocal;
-    }
-
     public String getTitle(){return title;}
+    public String getIdLocal() {
+        return idLocal;
+    }
     public String getDescription(){return description;}
     public String getInitialDate(){return initialDate;}
     public String getFinalDate(){return finalDate;}

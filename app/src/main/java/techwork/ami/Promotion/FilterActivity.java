@@ -202,6 +202,7 @@ public class FilterActivity extends AppCompatActivity {
                 intent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
                 intent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
                 intent.putExtra(Config.TAG_GO_DATETIMEFIN,o.getFinalDateTime());
+                intent.putExtra(Config.TAG_GO_IDLOCAL,o.getIdLocal());
                 startActivity(intent);
             }
 
@@ -256,6 +257,7 @@ public class FilterActivity extends AppCompatActivity {
                 item.setStock(jsonObjectItem.getInt(Config.TAG_GO_STOCK));
                 item.setPromotionCode(Config.TAG_GO_PROMCOD);
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GO_PRICE));
+                item.setIdLocal(jsonObjectItem.getString(Config.TAG_GO_IDLOCAL));
                 //TODO: en teoría se debería poder borrar, puesto que el precio siempre exisitrá (tendrán al menos un producto asociado)
                 try {
                     item.setTotal(jsonObjectItem.getInt(Config.TAG_GO_TOTALPRICE));
