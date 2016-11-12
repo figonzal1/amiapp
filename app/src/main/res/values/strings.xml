@@ -193,8 +193,8 @@
     <string name="OfferViewMaxPerson">¡Puedes reservar hasta x unidades!</string>
     <string name="OfferViewAcceptOfferProcessing">Aceptando oferta</string>
     <string name="OfferViewDiscardOfferProcessing">Rechazando oferta</string>
-    <string name="OfferViewAcceptOffer">Oferta aceptada</string>
-    <string name="OfferViewDiscardOffer">Oferta rechazada</string>
+    <string name="OfferViewAcceptOffer">¡Oferta aceptada!</string>
+    <string name="OfferViewDiscardOffer">¡Oferta rechazada!</string>
     <string name="OfferViewAcceptOfferFail">No se ha podido reservar</string>
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
     <string name="OfferViewMaxppWarnings">¡Puedes reservar hasta %s unidades!</string>
@@ -252,7 +252,7 @@
     <string name="OfferReservedDeleteProcessing">Eliminando reserva</string>
     <string name="OfferReservedDeleteTittle">¿Desea eliminar esta reserva?</string>
     <string name="OfferReservedDeleteConfirm">Confirme la acción</string>
-    <string name="OfferReservedDeleteOk">La reserva ha sido eliminada</string>
+    <string name="OfferReservedDeleteOk">¡Reserva eliminada!</string>
     <string name="OfferReservedDeleteOfferCharged">No puedes eliminar una cobrada</string>
     <string name="OfferReservedDeleteOfferCalificated">No puedes eliminar una calificada</string>
 

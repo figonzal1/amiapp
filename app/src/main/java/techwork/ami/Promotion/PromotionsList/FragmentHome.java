@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -382,6 +383,7 @@ public class FragmentHome extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
+            //TODO: Realizar un chequeo de conexion a internet, arroja problema con clase estatica.
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put(Config.KEY_DO_PERSON_ID, params[0]);
             hashMap.put(Config.KEY_DO_OFFER_ID, params[1]);
@@ -392,16 +394,33 @@ public class FragmentHome extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            loading.dismiss();
+
             if (s.equals("0")) {
-                Toast.makeText(context,
-                        R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismiss();
+
+                        c = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                        c.vibrate(500);
+
+                        Toast.makeText(context,
+                                R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+
+                    }
+                },1500);
+
             } else {
+                loading.dismiss();
+
+                c = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
+
                 Toast.makeText(context,
                         R.string.operation_fail, Toast.LENGTH_LONG).show();
             }
-            c = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            c.vibrate(500);
             this.dialog.dismiss();
         }
     }

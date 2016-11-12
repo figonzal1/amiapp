@@ -28,6 +28,7 @@ public class PromotionAdapter
     private List<PromotionModel> items;
     private Context context;
 
+
     // Class constructor
     public PromotionAdapter(Context context, List<PromotionModel> items){
         this.context = context;
@@ -62,8 +63,7 @@ public class PromotionAdapter
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.promotions_fragment_card_view,parent,false);
         v.setOnLongClickListener(this);
         v.setOnClickListener(this);
-        OfferViewHolder vh = new OfferViewHolder(v);
-        return vh;
+        return new OfferViewHolder(v);
     }
 
     // Set data into view offers (list)
@@ -96,12 +96,13 @@ public class PromotionAdapter
 
         holder.offerDiscard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 new CustomAlertDialogBuilder(context)
                         .setTitle(R.string.offers_list_discard_question)
                         .setMessage("Confirme la acción")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+
                                 String idPerson = context.getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
                                         .getString(Config.KEY_SP_ID, "-1");
                                 String idOffer = offer.getId();

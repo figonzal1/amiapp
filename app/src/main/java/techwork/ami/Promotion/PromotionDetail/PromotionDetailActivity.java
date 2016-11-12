@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -60,7 +61,6 @@ public class PromotionDetailActivity extends AppCompatActivity {
     private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsct, priceTxt, price, remainingDays;
     private Button btnLocal;
     private FloatingActionButton floatingButton;
-
     private String idOffer,idLocal,idPersona;
     private Context context;
     public CountDownTimer countDownTimer;
@@ -282,22 +282,38 @@ public class PromotionDetailActivity extends AppCompatActivity {
             }
             @Override
             protected String doInBackground(String... params) {
+
                 RequestHandler rh = new RequestHandler();
 
-                // Notify that the user saw the offer
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
-                hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
-                rh.sendPostRequest(Config.URL_OFFER_SAW, hashMap);
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
 
-                // Get offer detail
-                return rh.sendGetRequest(Config.URL_GOD+params[1]+params[0]);
+                if (connectionStatus) {
+                    // Notify that the user saw the offer
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_RESERVE_OFFER_ID, params[0]);
+                    hashMap.put(Config.KEY_RESERVE_PERSON_ID, idPersona);
+                    rh.sendPostRequest(Config.URL_OFFER_SAW, hashMap);
+
+                    // Get offer detail
+                    return rh.sendGetRequest(Config.URL_GOD + params[1] + params[0]);
+                }
+                else{
+                    return "-1";
+                }
             }
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showProducts(s);
+                if (!s.equals("-1")) {
+                    showProducts(s);
+                }
             }
         }
         OfferDetailAsyncTask go = new OfferDetailAsyncTask();
@@ -355,7 +371,6 @@ public class PromotionDetailActivity extends AppCompatActivity {
             protected String doInBackground(Bundle... params) {
                 RequestHandler rh = new RequestHandler();
 
-                // TODO: no entiendo muy bien qué hace esta función
                 Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
                     @Override
                     @TargetApi(Build.VERSION_CODES.M)
@@ -377,20 +392,36 @@ public class PromotionDetailActivity extends AppCompatActivity {
 
                     return rh.sendPostRequest(Config.URL_OFFER_RESERVE, hashMap);
                 }
-                else
+                else {
                     return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
-                c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                c.vibrate(500);
-                if (s.equals("0")) {
-                    Toast.makeText(context, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
-                    finish();
-                } else if (!s.equals("-1")) {
+
+                if (s.equals("0")&& !s.equals("-1")) {
+
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loading.dismiss();
+
+                            c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
+
+                            Toast.makeText(context, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    },1500);
+
+                } else {
+                    loading.dismiss();
+
+                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                    c.vibrate(500);
                     Toast.makeText(context, R.string.operation_fail, Toast.LENGTH_SHORT).show();
                 }
             }

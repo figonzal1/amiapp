@@ -688,8 +688,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
         final String idPerson = sharedPref.getString(Config.KEY_SP_ID, "-1");
 
         class RateOfferReservation extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
-            DialogInterface dialog;
+            private ProgressDialog loading;
+            private DialogInterface dialog;
 
             private RateOfferReservation(DialogInterface dialog) {
                 this.dialog = dialog;
