@@ -266,10 +266,10 @@ public class OffersViewActivity extends AppCompatActivity {
                                     c.vibrate(500);
 
                                     //Finish OfferListActivity
-                                    OffersActivity.activity.finish();
+                                    //OffersActivity.activity.finish();
 
                                     Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(OffersViewActivity.this,OffersReservationsActivity.class);
+                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
                                     finish();
                                     startActivity(intent);
 
@@ -401,7 +401,7 @@ public class OffersViewActivity extends AppCompatActivity {
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                if (s.equals("0") && !s.equals("-1")) {
+                if (!s.equals("-1")) {
                     showProducts(s);
                 }
             }

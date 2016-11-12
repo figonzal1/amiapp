@@ -133,7 +133,7 @@ public class OffersActivity extends AppCompatActivity {
                 refreshLayout.setRefreshing(false);
 
                 //If operation is correct
-                if (s.equals("0")&&!s.equals("-1")){
+                if (!s.equals("-1")){
                     showOffers(s);
                 }
 
