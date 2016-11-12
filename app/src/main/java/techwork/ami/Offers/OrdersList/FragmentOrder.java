@@ -43,7 +43,6 @@ import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.Offers.OffersList.OffersActivity;
-import techwork.ami.Offers.CreateOrderActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -128,7 +127,7 @@ public class FragmentOrder extends Fragment {
         PopupMenu popup= new PopupMenu(view.getContext(),view);
         MenuInflater inflater = popup.getMenuInflater();
 
-        inflater.inflate(R.menu.popup_menu,popup.getMenu());
+        inflater.inflate(R.menu.popup_menu_orders,popup.getMenu());
 
         //Set on click listener in popup menu on cardview.
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -136,8 +135,13 @@ public class FragmentOrder extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
 
+                    //If case is a "Ver detalle"
+                    case R.id.item_popup_menu_order_view:
+                        Intent mIntent = new Intent(view.getContext(),OrderViewActivity.class);
+                        startActivity(mIntent);
+
                     // If case is a "Ver Ofertas"
-                    case R.id.item_popup_menu_need_view:
+                    case R.id.item_popup_menu_offer_view:
 
                         Intent intent = new Intent(view.getContext(),OffersActivity.class);
 

@@ -175,6 +175,7 @@ public class OffersActivity extends AppCompatActivity {
                     if (format2.parse(m.getDateTimeFin()).after(c.getTime())) {
 
                         //Send to NeedOfferDetails the details of each offer.
+                        intent.putExtra(Config.TAG_GET_OFFER_IDNEED,m.getIdNeed());
                         intent.putExtra(Config.TAG_GET_OFFER_IDOFFER, m.getIdOferta());
                         intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL, m.getIdLocal());
                         intent.putExtra(Config.TAG_GET_OFFER_TITTLE, m.getTittle());

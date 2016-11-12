@@ -49,7 +49,7 @@ public class OffersViewActivity extends AppCompatActivity {
 
     TextView tvTittle,tvCompany,tvDescription,tvMaxPPerson,tvPriceOffer,tvPriceNormal,tvDsctSym,tvDsct;
     Button btnLocal;
-    private String idOffer,idLocal;
+    private String idOffer,idLocal,idNeed;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
@@ -96,6 +96,7 @@ public class OffersViewActivity extends AppCompatActivity {
         //Capture id's
         idOffer = bundle.getString(Config.TAG_GET_OFFER_IDOFFER);
         idLocal = bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
+        idNeed = bundle.getString(Config.TAG_GET_OFFER_IDNEED);
 
 
         //Set TextViews with the information of each NeedOffer.
@@ -337,7 +338,8 @@ public class OffersViewActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), R.string.OfferViewDiscardOffer, Toast.LENGTH_LONG).show();
 
                                     //If Offer is discard go to Main activity refreshed
-                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
+                                    Intent intent = new Intent(OffersViewActivity.this,OffersActivity.class);
+                                    intent.putExtra(Config.TAG_GET_OFFER_IDNEED,idNeed);
                                     finish();
                                     startActivity(intent);
 

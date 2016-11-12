@@ -1,4 +1,4 @@
-package techwork.ami.Offers;
+package techwork.ami.Offers.OrdersList;
 
 
 import android.Manifest;
@@ -12,10 +12,10 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,10 +40,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
-import techwork.ami.LoginActivity;
 import techwork.ami.MainActivity;
 import techwork.ami.R;
-import techwork.ami.RegisterActivity;
 import techwork.ami.RequestHandler;
 
 import android.widget.CheckBox;
@@ -310,24 +308,30 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+
                 if (s.equals("0")) {
-                    //Play a success sound
-                    //MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arpeggio);
-                    //mp.start();
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
 
-                    // Vibrate for 500 milliseconds
-                    c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    c.vibrate(500);
+                            loading.dismiss();
 
-                    Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
+                            c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            c.vibrate(500);
 
-                    Intent intent = new Intent(CreateOrderActivity.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("page", Config.NEED);
-                    startActivity(intent);
+                            Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(CreateOrderActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra("page", Config.NEED);
+                            startActivity(intent);
+                        }
+                    },1500);
+
                 }
                 else if (!s.equals("-1")) {
+                    loading.dismiss();
                     Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedError), Toast.LENGTH_LONG).show();
                     c = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     c.vibrate(500);
