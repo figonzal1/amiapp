@@ -270,7 +270,7 @@ public class OffersViewActivity extends AppCompatActivity {
                                     //OffersActivity.activity.finish();
 
                                     Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
+                                    Intent intent = new Intent(OffersViewActivity.this,OffersReservationsActivity.class);
                                     finish();
                                     startActivity(intent);
 

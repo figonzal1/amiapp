@@ -46,7 +46,9 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
+import techwork.ami.MainActivity;
 import techwork.ami.Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity;
+import techwork.ami.Offers.OrdersList.OrderViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -74,7 +76,17 @@ public class OffersReservationsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //arrow back refresh main activity.
+                int count = getFragmentManager().getBackStackEntryCount();
+
+                if(count==0){
+                    Intent intent = new Intent(OffersReservationsActivity.this,MainActivity.class);
+                    startActivity(intent);
+                }
+
+                else {
+                    getFragmentManager().popBackStack();
+                }
             }
         });
 
@@ -201,6 +213,22 @@ public class OffersReservationsActivity extends AppCompatActivity {
             }
         });
         popup.show();
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if(count==0){
+            super.onBackPressed();
+            Intent intent = new Intent(OffersReservationsActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
+
+        else {
+            getFragmentManager().popBackStack();
+        }
     }
 
     private void getOfferReservation() {
@@ -828,5 +856,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 
 }
