@@ -153,6 +153,7 @@
     <string name="OrderViewExpiryTime">¡Recuerda! \n Tu pedido expira en \n xDias XXh:XXm:XXs</string>
     <string name="OrderViewExpiryFragmentOrder">¡Recuerda! \n Tu pedido expira en \n </string>
     <string name="OrderViewExpiryCreateOrder">Tu pedido expira en \n</string>
+    <string name="OrderViewExpiryTodayCreateOrder">Tu pedido vence \n hoy</string>
 
     <!-- Discard Order -->
     <string name="OrderButtonDelete">Eliminar pedido</string>
