@@ -143,6 +143,7 @@
     <string name="NeedUserLocation">Usar mi ubicación</string>
 
     <!-- Order View -->
+    <string name="OrderViewDetails">Detalle pedido</string>
     <string name="OrderViewTittle">Título del pedido</string>
     <string name="OrderViewWait">¡Espera a que lleguen las ofertas de las empresas!</string>
     <string name="OrderSubcategory">Subcategoría</string>

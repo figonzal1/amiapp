@@ -85,30 +85,36 @@
             android:name=".Offers.OrdersList.CreateOrderActivity"
             android:label="@string/CreateNeedTitle"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".Offers.OrdersList.OrderViewActivity"
+            android:label="@string/OrderViewDetails"
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Offers.OffersList.OffersActivity"
             android:label="@string/OfferCompanies"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Offers.OffersDetails.OffersViewActivity"
             android:label="@string/OfferDetails"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".LocalDetails.LocalActivity"
             android:label="@string/OfferLocalDetails"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".LocalDetails.StreetViewPanoramaFragment"
             android:label="@string/OfferLocalStreetView"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity"
             android:label="@string/OrdersReservations"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity"
             android:label="@string/OfferReservedOfferDetails"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Promotion.MyPromotions.MyPromotionsActivity"
             android:label="@string/title_activity_my_reservations"
@@ -120,12 +126,12 @@
         <activity
             android:name=".Promotion.PromotionDetail.PromotionDetailActivity"
             android:label="@string/title_activity_offer_detail"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Promotion.FilterActivity"
             android:label="@string/title_activity_filter_offers"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Offers.OrdersList.OrderViewActivity"></activity>
+
     </application>
 
 </manifest>
