@@ -210,6 +210,7 @@ public class Config {
 	public static final String TAG_GET_ORDER_RADIO="radio";
 	public static final String TAG_GET_ORDER_OFFERS_COMPANY = "ofertasEmpresas";
 	public static final String TAG_GET_ORDER_NDISCARD_OFFERS="nDescartadas";
+	public static final String TAG_GET_ORDER_SUBCATEGORY="subCategoria";
 
 	//OfferActivity (NeedOffer after)
 	public static final String URL_GET_OFFER="http://amiapp.cl/public/getData/Need/getOffers.php";

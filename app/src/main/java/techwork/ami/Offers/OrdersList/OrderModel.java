@@ -13,6 +13,7 @@ public class OrderModel {
     String radio;
     String offersCompany;
     String nDiscardOffers;
+    String subCategory;
 
     //Getters
     public String getIdNeed() {
@@ -50,6 +51,10 @@ public class OrderModel {
 
     public String getDateTimeFin() {
         return dateTimeFin;
+    }
+
+    public String getSubCategory() {
+        return subCategory;
     }
     //Setters
 
@@ -93,5 +98,9 @@ public class OrderModel {
 
     public void setDateTimeFin(String dateTime) {
         this.dateTimeFin = dateTime;
+    }
+
+    public void setSubCategory(String subCategory) {
+        this.subCategory = subCategory;
     }
 }
