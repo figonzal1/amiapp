@@ -280,10 +280,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 if (!s.equals("-1")){
                     showOfferReservations(s);
                 }
-                else {
-                    Toast.makeText(context,"No entre",Toast.LENGTH_LONG).show();
-                }
-
             }
         }
         OfferReservationsAsyncTask go = new OfferReservationsAsyncTask();

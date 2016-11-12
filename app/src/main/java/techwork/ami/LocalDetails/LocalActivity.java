@@ -54,6 +54,12 @@ public class LocalActivity extends AppCompatActivity{
             }
         });
 
+        //If connection to internet is false, activity local not open.
+        if (!checkInternet()){
+            Toast.makeText(getApplicationContext(),R.string.ConnectToInternet,Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         Bundle bundle = getIntent().getExtras();
         idLocal= bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
 

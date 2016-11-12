@@ -205,7 +205,6 @@
     <string name="OfferViewLocalWebText">Más información en</string>
     <string name="OfferViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferViewLocalStreetView">Ver street view</string>
-    <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
     <string name="OfferViewLocalInfo">Ver información local</string>
 
     <!-- OfferReservations (NeedOffer) Strings -->
