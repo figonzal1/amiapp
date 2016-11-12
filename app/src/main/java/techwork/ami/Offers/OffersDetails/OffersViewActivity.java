@@ -1,6 +1,7 @@
 package techwork.ami.Offers.OffersDetails;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,10 @@ import techwork.ami.AnimateMenuFab;
 import techwork.ami.Config;
 import techwork.ami.LocalDetails.LocalActivity;
 import techwork.ami.MainActivity;
+import techwork.ami.Offers.OffersList.OffersActivity;
+import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
+import techwork.ami.Offers.OrdersList.FragmentOrder;
+import techwork.ami.Promotion.PromotionsList.FragmentHome;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -53,6 +58,7 @@ public class OffersViewActivity extends AppCompatActivity {
     private com.github.clans.fab.FloatingActionButton fabAccept,fabDiscard;
     private FloatingActionMenu fabMenu;
     private SwipeRefreshLayout refreshLayout;
+
 
 
     @Override
@@ -259,9 +265,11 @@ public class OffersViewActivity extends AppCompatActivity {
                                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                                     c.vibrate(500);
 
-                                    Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
+                                    //Finish OfferListActivity
+                                    OffersActivity.activity.finish();
 
-                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
+                                    Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(OffersViewActivity.this,OffersReservationsActivity.class);
                                     finish();
                                     startActivity(intent);
 
@@ -393,7 +401,7 @@ public class OffersViewActivity extends AppCompatActivity {
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                if (!s.equals("-1")) {
+                if (s.equals("0") && !s.equals("-1")) {
                     showProducts(s);
                 }
             }

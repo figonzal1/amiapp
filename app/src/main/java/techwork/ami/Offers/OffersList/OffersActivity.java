@@ -2,16 +2,16 @@ package techwork.ami.Offers.OffersList;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,13 +45,15 @@ public class OffersActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private String idNeedOffer;
-    public static Activity activity;
     TextView tvOfferEmpty;
+    public static Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offers_activity);
+        activity=this;
 
         offerList = new ArrayList<>();
 
@@ -64,9 +66,6 @@ public class OffersActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        //Initialice empty
-        offerList = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
         idNeedOffer = bundle.getString(Config.TAG_GET_OFFER_IDNEED);
@@ -134,7 +133,7 @@ public class OffersActivity extends AppCompatActivity {
                 refreshLayout.setRefreshing(false);
 
                 //If operation is correct
-                if (!s.equals("-1")){
+                if (s.equals("0")&&!s.equals("-1")){
                     showOffers(s);
                 }
 
@@ -148,7 +147,6 @@ public class OffersActivity extends AppCompatActivity {
     private void showOffers(String s){
 
         getOffersData(s);
-
 
         adapter = new OffersAdapter(getApplicationContext(),offerList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);

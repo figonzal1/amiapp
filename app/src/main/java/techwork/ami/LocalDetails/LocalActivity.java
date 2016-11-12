@@ -143,7 +143,7 @@ public class LocalActivity extends AppCompatActivity{
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                if (!s.equals("-1")){
+                if (s.equals("0") &&!s.equals("-1")){
                     showLocal(s);
                 }
 

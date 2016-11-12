@@ -250,7 +250,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
                 refreshLayout.setRefreshing(false);
 
                 //if conection is correct do show.
-                if (!s.equals("-1")){
+                if (s.equals("0") &&!s.equals("-1")){
                     showOfferReservations(s);
                 }
 

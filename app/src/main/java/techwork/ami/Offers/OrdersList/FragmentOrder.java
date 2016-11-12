@@ -220,7 +220,7 @@ public class FragmentOrder extends Fragment {
             protected  void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                if (!s.equals("-1")) {
+                if (s.equals("0") && !s.equals("-1")) {
                     showOrders(s);
                 }
             }
@@ -332,7 +332,7 @@ public class FragmentOrder extends Fragment {
                 super.onPostExecute(s);
 
                 //If operation is correct dialog close in 1,5 [s]
-                if (s.equals("0") || !s.equals("-1")) {
+                if (s.equals("0") && !s.equals("-1")) {
 
                     Handler mHandler = new Handler();
                     mHandler.postDelayed(new Runnable() {
