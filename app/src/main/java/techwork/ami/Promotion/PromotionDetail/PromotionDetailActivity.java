@@ -44,6 +44,7 @@ import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
 import techwork.ami.LocalDetails.LocalActivity;
+import techwork.ami.Promotion.MyPromotions.MyPromotionsActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -357,6 +358,7 @@ public class PromotionDetailActivity extends AppCompatActivity {
 
         // First are params to doInBackground and last are params that returns
         class Reserve extends AsyncTask<Bundle, Void, String> {
+
             ProgressDialog loading;
 
             @Override
@@ -413,7 +415,11 @@ public class PromotionDetailActivity extends AppCompatActivity {
                             c.vibrate(500);
 
                             Toast.makeText(context, R.string.reserve_ok, Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(PromotionDetailActivity.this, MyPromotionsActivity.class);
                             finish();
+                            startActivity(intent);
+
                         }
                     },1500);
 
@@ -422,8 +428,10 @@ public class PromotionDetailActivity extends AppCompatActivity {
 
                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                     c.vibrate(500);
+
                     Toast.makeText(context, R.string.operation_fail, Toast.LENGTH_SHORT).show();
                 }
+
             }
         }
         Reserve r = new Reserve();
