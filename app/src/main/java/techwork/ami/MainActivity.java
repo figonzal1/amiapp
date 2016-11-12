@@ -188,12 +188,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 return true;
 
-            case R.id.action_home:
-                viewPager.setCurrentItem(Config.HOME);
-                //Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                //startActivity(intent);
-                return true;
-
             case R.id.action_logout:
                 logout();
                 Intent intentLogout = new Intent(MainActivity.this, LoginActivity.class);
