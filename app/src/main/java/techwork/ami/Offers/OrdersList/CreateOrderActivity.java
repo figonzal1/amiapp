@@ -322,9 +322,19 @@ public class CreateOrderActivity extends AppCompatActivity implements LocationLi
 
                             Toast.makeText(CreateOrderActivity.this, getResources().getString(R.string.NeedRegistered), Toast.LENGTH_LONG).show();
 
-                            Intent intent = new Intent(CreateOrderActivity.this, MainActivity.class);
+                            /*Intent intent = new Intent(CreateOrderActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("page", Config.NEED);
+                            intent.putExtra("page", Config.NEED);*/
+
+                            Intent intent= new Intent(CreateOrderActivity.this,OrderViewActivity.class);
+                            intent.putExtra("CallFrom","CreaterOrderActivity");
+                            intent.putExtra(Config.TAG_GET_ORDER_TITTLE,title);
+                            intent.putExtra(Config.TAG_GET_ORDER_DESCRIPTION,description);
+                            intent.putExtra(Config.TAG_GET_ORDER_EXPIRATIONDATE,days);
+                            intent.putExtra(Config.TAG_GET_ORDER_PRICEMAX,money);
+                            finish();
+                            //Falta enviarle el nombre la subcategoria.
+                            //intent.putExtra(Config.TAG_GET_ORDER_SUBCATEGORY,nombreSubcategoria);
                             startActivity(intent);
                         }
                     },1500);

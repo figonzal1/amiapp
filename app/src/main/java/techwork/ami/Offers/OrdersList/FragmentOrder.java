@@ -139,6 +139,7 @@ public class FragmentOrder extends Fragment {
                     //If case is a "Ver detalle"
                     case R.id.item_popup_menu_order_view:
                         Intent mIntent = new Intent(view.getContext(),OrderViewActivity.class);
+                        mIntent.putExtra("CallFrom","FragmentOrder");
                         mIntent.putExtra(Config.TAG_GET_ORDER_IDNEED,model.getIdNeed());
                         mIntent.putExtra(Config.TAG_GET_ORDER_TITTLE,model.getTittle());
                         mIntent.putExtra(Config.TAG_GET_ORDER_DESCRIPTION,model.getDescription());

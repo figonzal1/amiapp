@@ -151,7 +151,8 @@
     <string name="OrderViewPrice">Tu presupuesto es: $xxx.xxx</string>
     <string name="OrderViewPrice2">Tu presupuesto es: </string>
     <string name="OrderViewExpiryTime">¡Recuerda! \n Tu pedido expira en \n xDias XXh:XXm:XXs</string>
-    <string name="OrderViewExpiryTime2">¡Recuerda! \n Tu pedido expira en \n </string>
+    <string name="OrderViewExpiryFragmentOrder">¡Recuerda! \n Tu pedido expira en \n </string>
+    <string name="OrderViewExpiryCreateOrder">Tu pedido expira en \n</string>
 
     <!-- Discard Order -->
     <string name="OrderButtonDelete">Eliminar pedido</string>
