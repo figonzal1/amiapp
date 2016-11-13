@@ -37,6 +37,7 @@ public class Config {
 	public static final String URL_UPDATE_AFTER_LOGIN_DATA="http://amiapp.cl/public/getData/AfterLogin/updateAfterLogin.php";
 	public static final String URL_UPDATE_PROFILE="http://amiapp.cl/public/getData/Profile/updateProfile.php";
 	public static final String URL_LOGIN="http://amiapp.cl/public/getData/Login/login.php";
+	public static final String URL_HASH="http://amiapp.cl/public/getData/Login/getHash.php";
 	public static final String URL_REGISTER="http://amiapp.cl/public/getData/Register/register.php";
 	public static final String URL_REGISTER_EMAIL = "http://amiapp.cl/public/getData/Register/sendWelcomeEmail.php";
 	public static final String URL_RESTORE_PASS="http://amiapp.cl/public/getData/Login/findEmail.php";
@@ -152,6 +153,14 @@ public class Config {
 	// login Keys
 	public static final  String KEY_LI_PASS="password";
 	public static final  String KEY_LI_EMAIL="email";
+
+	//Hash keys and tags
+	public static final String URL_REGISTER_HASH="http://amiapp.cl/public/getData/Register/registerHash.php";
+	public static final String URL_LOGIN_HASH="http://amiapp.cl/public/getData/Login/loginHash.php";
+	public static final String KEY_HASH_EMAIL="email";
+	public static final String KEY_HASH_PASSWORD="passwordHash";
+	public static final String TAG_GET_HASH="hash";
+	public static final String TAG_GET_PASSWORD_HASH="passwordHash";
 
 	// JSON tags
 	public static final String TAG_LATITUDE ="latitud";

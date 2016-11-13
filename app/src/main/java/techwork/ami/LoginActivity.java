@@ -60,6 +60,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private UserLoginHashTask mAuthHashTask =null;
+    private boolean loginNormal = true;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -215,8 +217,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+
+            if (loginNormal){
+                mAuthTask = new UserLoginTask(email, password);
+                mAuthTask.execute((Void) null);
+            }
+
+
         }
     }
 
@@ -326,6 +333,117 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
+    private void getHash(final String email,final String password){
+        class getHashAsync extends AsyncTask<Void,Void,String>{
+
+            @Override
+            protected void onPreExecute(){
+                super.onPreExecute();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                Boolean connectionStatus = rh.isConnectedToServer(mEmailView, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        getHash(email,password);
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_HASH_EMAIL, email);
+                    return rh.sendPostRequest(Config.URL_HASH, hashMap);
+                }
+                else{
+                    return "-1";
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String s){
+                super.onPostExecute(s);
+
+                if (!s.equals("-1")) {
+                    getHashData(s,email,password);
+                }
+                else if (s.equals("1")){
+                    Toast.makeText(getApplicationContext(),"Login tiró 1",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        getHashAsync go = new getHashAsync();
+        go.execute();
+    }
+
+    private void getHashData(String s, String email, String password){
+        //Get hash data.
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONObject persona = jsonObject.getJSONArray(Config.TAG_GET_HASH).getJSONObject(0);
+
+            //If password in plane text == to hash in BD.
+            if (Bcrypt.checkpw(password,persona.getString(Config.TAG_GET_PASSWORD_HASH))) {
+                //  Toast.makeText(getApplicationContext(),"Pass = que hash",Toast.LENGTH_LONG).show();
+                mAuthHashTask = new UserLoginHashTask(email, persona.getString(Config.TAG_GET_PASSWORD_HASH));
+                mAuthHashTask.execute((Void) null);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class UserLoginHashTask extends AsyncTask<Void,Void,String>{
+
+        private final String mEmail;
+        private final String mPasswordHash;
+
+        UserLoginHashTask(String email,String passwordHash) {
+            mEmail = email;
+            mPasswordHash = passwordHash;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            RequestHandler rh = new RequestHandler();
+
+            Boolean connectionStatus = rh.isConnectedToServer(mEmailView, new View.OnClickListener() {
+                @Override
+                @TargetApi(Build.VERSION_CODES.M)
+                public void onClick(View v) {
+                    attemptLogin();
+                }
+            });
+
+            if (connectionStatus) {
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_LI_EMAIL, mEmail);
+                hashMap.put(Config.KEY_HASH_PASSWORD,mPasswordHash);
+                return rh.sendPostRequest(Config.URL_LOGIN_HASH, hashMap);
+            }
+            else
+                return "-1";
+        }
+
+        @Override
+        protected void onPostExecute(final String s) {
+            mAuthHashTask = null;
+            showProgress(false);
+            if (!s.equals("-1")) {
+                processResult(s, mEmail);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthHashTask = null;
+            showProgress(false);
+        }
+    }
+
     public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         private final String mEmail;
@@ -333,7 +451,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         UserLoginTask(String email, String password) {
             mEmail = email;
-            mPassword = password;
+            mPassword=password;
         }
 
         @Override
@@ -362,8 +480,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final String s) {
             mAuthTask = null;
             showProgress(false);
-            if (!s.equals("-1"))
+            if (!s.equals("-1")) {
                 processResult(s, mEmail);
+            }
         }
 
         @Override
