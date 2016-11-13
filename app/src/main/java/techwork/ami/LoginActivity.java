@@ -222,7 +222,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mAuthTask = new UserLoginTask(email, password);
                 mAuthTask.execute((Void) null);
             }
-
+            else{
+                getHash(email,password);
+            }
 
         }
     }
@@ -366,11 +368,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
 
-                if (!s.equals("-1")) {
+                if (!s.equals("-1")&& !s.equals("1")) {
+                    //Si entra aqui encontro un hash del usuario.
+                    Toast.makeText(getApplicationContext(),"Encontre hash",Toast.LENGTH_LONG).show();
                     getHashData(s,email,password);
                 }
                 else if (s.equals("1")){
-                    Toast.makeText(getApplicationContext(),"Login tiró 1",Toast.LENGTH_LONG).show();
+                    //usuario no tiene hash (o  No existe su email)
+                    Toast.makeText(getApplicationContext(),"Hash llego vacio",Toast.LENGTH_LONG).show();
+                    showProgress(false);
+                    // If the account doesn't exist
+                    Snackbar.make(mEmailView, R.string.email_dont_exist, Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.ask_new_account, new View.OnClickListener() {
+                                @Override
+                                @TargetApi(Build.VERSION_CODES.M)
+                                public void onClick(View v) {
+                                    Intent iRegisterPass = new Intent(LoginActivity.this, RegisterActivity.class);
+                                    iRegisterPass.putExtra("email", mEmailView.getText().toString());
+                                    startActivity(iRegisterPass);
+                                }
+                            }).show();
                 }
             }
         }
@@ -382,12 +399,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //Get hash data.
         try {
             JSONObject jsonObject = new JSONObject(s);
-            JSONObject persona = jsonObject.getJSONArray(Config.TAG_GET_HASH).getJSONObject(0);
+            JSONObject person = jsonObject.getJSONArray(Config.TAG_GET_HASH).getJSONObject(0);
+
+            String hashPerson = person.getString(Config.TAG_GET_PASSWORD_HASH);
 
             //If password in plane text == to hash in BD.
-            if (Bcrypt.checkpw(password,persona.getString(Config.TAG_GET_PASSWORD_HASH))) {
-                //  Toast.makeText(getApplicationContext(),"Pass = que hash",Toast.LENGTH_LONG).show();
-                mAuthHashTask = new UserLoginHashTask(email, persona.getString(Config.TAG_GET_PASSWORD_HASH));
+            if (Bcrypt.checkpw(password,hashPerson)) {
+
+                //Send hash pass to a LoginPhp.
+                mAuthHashTask = new UserLoginHashTask(email, hashPerson);
+                mAuthHashTask.execute((Void) null);
+
+            }else{
+                Toast.makeText(getApplicationContext(),"Hash invalido",Toast.LENGTH_LONG).show();
+                //Enviar una pass generica para anular el select de la consulta.
+                mAuthHashTask = new UserLoginHashTask(email, "passInvalida");
                 mAuthHashTask.execute((Void) null);
             }
 
@@ -431,7 +457,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final String s) {
             mAuthHashTask = null;
-            showProgress(false);
             if (!s.equals("-1")) {
                 processResult(s, mEmail);
             }
@@ -495,6 +520,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void processResult(String json, String email) {
         // If the account has been closed
         if (json.equals("1")) {
+            showProgress(false);
             Snackbar.make(mEmailView, R.string.account_closed, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.yes, new OnClickListener() {
                         @Override
@@ -513,6 +539,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     // If login fails, check if the account exist
                     if (jsonObject.getString(Config.TAG_EXIST_EMAIL).equals("1")) {
                         // If the account exist
+                        showProgress(false);
                         Snackbar.make(mEmailView, R.string.error_incorrect_password, Snackbar.LENGTH_INDEFINITE)
                                 .setAction(R.string.did_forget_your_pass, new View.OnClickListener() {
                                     @Override
@@ -527,7 +554,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         mPasswordView.setError(getString(R.string.error_incorrect_password));
                         mPasswordView.setText("");
                         mPasswordView.requestFocus();
-                    } else {
+                    } /*else {
                         // If the account doesn't exist
                         Snackbar.make(mEmailView, R.string.email_dont_exist, Snackbar.LENGTH_INDEFINITE)
                                 .setAction(R.string.ask_new_account, new View.OnClickListener() {
@@ -538,11 +565,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                         iRegisterPass.putExtra("email", mEmailView.getText().toString());
                                         startActivity(iRegisterPass);
                                     }
-                                }).show();
-                    }
+                                }).show();*/
+                    //}
                 } else {
                     // Successful login
-
+                    showProgress(false);
                     // Save the data of the profile on the application's shared preferences
                     SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
