@@ -38,13 +38,8 @@
                     android:id="@+id/recycler_view_order"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/tv_order"
-                    android:paddingBottom="5dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingTop="10dp"
-                    android:scrollbars="vertical">
-
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_order">
                 </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
 

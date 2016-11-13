@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ConfigurationInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,7 +44,6 @@ import techwork.ami.AnimateFab;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.Offers.OffersList.OffersActivity;
-import techwork.ami.Offers.CreateOrderActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -128,7 +128,7 @@ public class FragmentOrder extends Fragment {
         PopupMenu popup= new PopupMenu(view.getContext(),view);
         MenuInflater inflater = popup.getMenuInflater();
 
-        inflater.inflate(R.menu.popup_menu,popup.getMenu());
+        inflater.inflate(R.menu.popup_menu_orders,popup.getMenu());
 
         //Set on click listener in popup menu on cardview.
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -136,8 +136,21 @@ public class FragmentOrder extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
 
+                    //If case is a "Ver detalle"
+                    case R.id.item_popup_menu_order_view:
+                        Intent mIntent = new Intent(view.getContext(),OrderViewActivity.class);
+                        mIntent.putExtra("CallFrom","FragmentOrder");
+                        mIntent.putExtra(Config.TAG_GET_ORDER_IDNEED,model.getIdNeed());
+                        mIntent.putExtra(Config.TAG_GET_ORDER_TITTLE,model.getTittle());
+                        mIntent.putExtra(Config.TAG_GET_ORDER_DESCRIPTION,model.getDescription());
+                        mIntent.putExtra(Config.TAG_GET_ORDER_SUBCATEGORY,model.getSubCategory());
+                        mIntent.putExtra(Config.TAG_GET_ORDER_PRICEMAX,model.getPriceMax());
+                        mIntent.putExtra(Config.TAG_GET_ORDER_EXPIRATIONDATE,model.getDateTimeFin());
+                        startActivity(mIntent);
+                        return true;
+
                     // If case is a "Ver Ofertas"
-                    case R.id.item_popup_menu_need_view:
+                    case R.id.item_popup_menu_offer_view:
 
                         Intent intent = new Intent(view.getContext(),OffersActivity.class);
 
@@ -332,7 +345,7 @@ public class FragmentOrder extends Fragment {
                 super.onPostExecute(s);
 
                 //If operation is correct dialog close in 1,5 [s]
-                if (s.equals("0") || !s.equals("-1")) {
+                if (s.equals("0") && !s.equals("-1")) {
 
                     Handler mHandler = new Handler();
                     mHandler.postDelayed(new Runnable() {
@@ -404,6 +417,7 @@ public class FragmentOrder extends Fragment {
                 item.setRadio(jsonObjectItem.getString(Config.TAG_GET_ORDER_RADIO));
                 item.setOffersCompany(jsonObjectItem.getString(Config.TAG_GET_ORDER_OFFERS_COMPANY));
                 item.setnDiscardOffers(jsonObjectItem.getString(Config.TAG_GET_ORDER_NDISCARD_OFFERS));
+                item.setSubCategory(jsonObjectItem.getString(Config.TAG_GET_ORDER_SUBCATEGORY));
 
                 orderList.add(item);
             }

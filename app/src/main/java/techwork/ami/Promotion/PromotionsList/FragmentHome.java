@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -212,6 +213,7 @@ public class FragmentHome extends Fragment {
                 intent.putExtra(Config.TAG_GO_DATEFIN, o.getFinalDate());
                 intent.putExtra(Config.TAG_GO_TOTALPRICE, o.getTotalPrice());
                 intent.putExtra(Config.TAG_GO_DATETIMEFIN,o.getFinalDateTime());
+                intent.putExtra(Config.TAG_GO_IDLOCAL,o.getIdLocal());
                 startActivity(intent);
             }
 
@@ -274,6 +276,7 @@ public class FragmentHome extends Fragment {
                 item.setStock(jsonObjectItem.getInt(Config.TAG_GO_STOCK));
                 item.setPromotionCode(Config.TAG_GO_PROMCOD);
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GO_PRICE));
+                item.setIdLocal(jsonObjectItem.getString(Config.TAG_GO_IDLOCAL));
                 //TODO: en teoría se debería poder borrar, puesto que el precio siempre exisitrá (tendrán al menos un producto asociado)
                 try {
                     item.setTotal(jsonObjectItem.getInt(Config.TAG_GO_TOTALPRICE));
@@ -380,6 +383,7 @@ public class FragmentHome extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
+            //TODO: Realizar un chequeo de conexion a internet, arroja problema con clase estatica.
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put(Config.KEY_DO_PERSON_ID, params[0]);
             hashMap.put(Config.KEY_DO_OFFER_ID, params[1]);
@@ -390,16 +394,33 @@ public class FragmentHome extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            loading.dismiss();
+
             if (s.equals("0")) {
-                Toast.makeText(context,
-                        R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismiss();
+
+                        c = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                        c.vibrate(500);
+
+                        Toast.makeText(context,
+                                R.string.my_reservations_offers_rate_ok, Toast.LENGTH_LONG).show();
+
+                    }
+                },1500);
+
             } else {
+                loading.dismiss();
+
+                c = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
+
                 Toast.makeText(context,
                         R.string.operation_fail, Toast.LENGTH_LONG).show();
             }
-            c = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            c.vibrate(500);
             this.dialog.dismiss();
         }
     }

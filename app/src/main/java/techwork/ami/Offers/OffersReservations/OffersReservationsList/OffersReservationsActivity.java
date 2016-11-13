@@ -46,8 +46,9 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import techwork.ami.Config;
 import techwork.ami.Dialogs.CustomAlertDialogBuilder;
 import techwork.ami.ExpiryTime;
-import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
+import techwork.ami.MainActivity;
 import techwork.ami.Offers.OffersReservations.OffersReservationsDetails.OffersReservationsViewActivity;
+import techwork.ami.Offers.OrdersList.OrderViewActivity;
 import techwork.ami.OnItemClickListenerRecyclerView;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
@@ -67,12 +68,27 @@ public class OffersReservationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context=this;
         setContentView(R.layout.offers_reservations_activity);
-
+        context=this;
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //arrow back refresh main activity.
+                int count = getFragmentManager().getBackStackEntryCount();
+
+                if(count==0){
+                    Intent intent = new Intent(OffersReservationsActivity.this,MainActivity.class);
+                    startActivity(intent);
+                }
+
+                else {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
 
         tvOffersReservationEmpty = (TextView)findViewById(R.id.tv_offers_reservations_empty);
 
@@ -91,22 +107,11 @@ public class OffersReservationsActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getOfferReservation();
 
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     public void showPopupMenu(final View view, final OffersReservationsModel model, long expiryTime){
 
@@ -201,13 +206,29 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                     case R.id.item_popup_menu_reservations_delete_reservation:
 
-                        deleteDialogOfferReservation(model);
+                        deleteOfferReservation(model);
                         return true;
                 }
                 return false;
             }
         });
         popup.show();
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if(count==0){
+            super.onBackPressed();
+            Intent intent = new Intent(OffersReservationsActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
+
+        else {
+            getFragmentManager().popBackStack();
+        }
     }
 
     private void getOfferReservation() {
@@ -255,12 +276,10 @@ public class OffersReservationsActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-
                 //if conection is correct do show.
                 if (!s.equals("-1")){
                     showOfferReservations(s);
                 }
-
             }
         }
         OfferReservationsAsyncTask go = new OfferReservationsAsyncTask();
@@ -352,7 +371,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
     }
 
-    private void deleteDialogOfferReservation(final OffersReservationsModel model){
+    private void deleteOfferReservation(final OffersReservationsModel model){
 
         dialogBuilder = new CustomAlertDialogBuilder(context);
         dialogBuilder.setTitle(R.string.OfferReservedDeleteTittle);
@@ -362,9 +381,99 @@ public class OffersReservationsActivity extends AppCompatActivity {
         dialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteOfferReservation(model, dialog);
+
+                        SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+                        final String idPerson = sharedPref.getString(Config.KEY_SP_ID, "-1");
+
+                        class deleteOfferReservationAsyncTask extends AsyncTask<Void,Void,String>{
+
+                            private ProgressDialog loading;
+                            private DialogInterface dialog;
+
+                            private deleteOfferReservationAsyncTask(DialogInterface dialog){
+                                this.dialog=dialog;
+                            }
+
+                            @Override
+                            protected void onPreExecute(){
+                                super.onPreExecute();
+
+                                loading= ProgressDialog.show(OffersReservationsActivity.this,
+                                        getString(R.string.OfferReservedDeleteProcessing),
+                                        getString(R.string.wait),false,false);
+                            }
+                            @Override
+                            protected String doInBackground(Void... voids) {
+
+                                RequestHandler rh = new RequestHandler();
+                                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                                    @Override
+                                    @TargetApi(Build.VERSION_CODES.M)
+                                    public void onClick(View v) {
+                                        sendPostRequest();
+                                    }
+                                });
+
+                                if (connectionStatus) {
+                                    HashMap<String, String> hashMap = new HashMap<>();
+
+                                    hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDOFFER, model.getIdOffer());
+                                    hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDPERSON, idPerson);
+                                    //Send quantity reserved by user
+                                    hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_QUANTITY, model.getQuantity());
+
+                                    return rh.sendPostRequest(Config.URL_DELETE_OFFER_RESERVED, hashMap);
+                                }
+                                else {
+                                    return "-1";
+                                }
+                            }
+
+                            @Override
+                            protected void onPostExecute(String s){
+                                super.onPostExecute(s);
+
+                                //If operation is correct dialog close in 1,5 [s]
+                                if (s.equals("0") && !s.equals("-1")){
+
+                                    Handler mHandler = new Handler();
+                                    mHandler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            loading.dismiss();
+
+                                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                            c.vibrate(500);
+
+                                            //If offer reserved is deleted finish OfferViewLocalActivity.
+                                            //LocalActivity.activity.finish();
+
+                                            Toast.makeText(getApplicationContext(),R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
+
+                                            //If operations is ok refresh orders.
+                                            getOfferReservation();
+                                        }
+                                    },1500);
+
+                                }
+
+                                //If not correct depends of the operation.
+                                else {
+                                    loading.dismiss();
+                                    Toast.makeText(getApplicationContext(),
+                                            R.string.operation_fail, Toast.LENGTH_LONG).show();
+                                }
+
+                                this.dialog.dismiss();
+                            }
+                        }
+                        deleteOfferReservationAsyncTask go = new deleteOfferReservationAsyncTask(dialog);
+                        go.execute();
+
                     }
-                });
+        });
+
         dialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -375,85 +484,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
     }
 
-    private void deleteOfferReservation(final OffersReservationsModel model, DialogInterface dialog){
-
-        SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
-        final String idPerson = sharedPref.getString(Config.KEY_SP_ID, "-1");
-
-        class deleteOfferReservationAsyncTask extends AsyncTask<Void,Void,String>{
-
-            private ProgressDialog loading;
-            private DialogInterface dialog;
-
-            private deleteOfferReservationAsyncTask(DialogInterface dialog){
-                this.dialog=dialog;
-            }
-
-            @Override
-            protected void onPreExecute(){
-                super.onPreExecute();
-
-                loading= ProgressDialog.show(OffersReservationsActivity.this,
-                        getString(R.string.OfferReservedDeleteProcessing),
-                        getString(R.string.wait),false,false);
-            }
-            @Override
-            protected String doInBackground(Void... voids) {
-                HashMap<String,String> hashMap = new HashMap<>();
-
-                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDOFFER,model.getIdOffer());
-                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_IDPERSON,idPerson);
-                //Send quantity reserved by user
-                hashMap.put(Config.KEY_DELETE_OFFER_RESERVED_QUANTITY,model.getQuantity());
-
-
-                RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_DELETE_OFFER_RESERVED,hashMap);
-            }
-
-            @Override
-            protected void onPostExecute(String s){
-                super.onPostExecute(s);
-
-                //If operation is correct dialog close in 1,5 [s]
-                if (s.equals("0")){
-
-                    Handler mHandler = new Handler();
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            loading.dismiss();
-
-                            c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                            c.vibrate(500);
-
-                            //If offer reserved is deleted finish OfferViewLocalActivity.
-                            //OffersViewLocalActivity.activity.finish();
-
-                            Toast.makeText(context,R.string.OfferReservedDeleteOk, Toast.LENGTH_LONG).show();
-
-                            //If operations is ok refresh orders.
-                            getOfferReservation();
-                        }
-                    },1500);
-
-                }
-
-                //If not correct depends of the operation.
-                else {
-                    loading.dismiss();
-                    Toast.makeText(context,
-                            R.string.operation_fail, Toast.LENGTH_LONG).show();
-                }
-
-                this.dialog.dismiss();
-            }
-        }
-        deleteOfferReservationAsyncTask go = new deleteOfferReservationAsyncTask(dialog);
-        go.execute();
-
-    }
 
     private void dialogLocalCode(final OffersReservationsModel model){
 
@@ -539,22 +569,37 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                         @Override
                         protected String doInBackground(String... params) {
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON,
-                                    getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
-                                            .getString(Config.KEY_SP_ID, "-1"));
 
-
-                            hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDOFFER, idOffer);
                             RequestHandler rh = new RequestHandler();
-                            return rh.sendPostRequest(Config.URL_VALIDATE_OFFER_RESERV, hashMap);
+                            Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                                @Override
+                                @TargetApi(Build.VERSION_CODES.M)
+                                public void onClick(View v) {
+                                    sendPostRequest();
+                                }
+                            });
+
+                            if (connectionStatus) {
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON,
+                                        getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE)
+                                                .getString(Config.KEY_SP_ID, "-1"));
+
+
+                                hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDOFFER, idOffer);
+
+                                return rh.sendPostRequest(Config.URL_VALIDATE_OFFER_RESERV, hashMap);
+                            }
+                            else{
+                                return "-1";
+                            }
                         }
 
                         @Override
                         protected void onPostExecute(String s) {
                             super.onPostExecute(s);
 
-                            if (s.equals("0")) {
+                            if (s.equals("0") && !s.equals("-1")) {
 
                                 Handler mHandler = new Handler();
                                 mHandler.postDelayed(new Runnable() {
@@ -567,12 +612,14 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                                         Toast.makeText(getApplicationContext(),
                                                 R.string.OfferReservedValidateOk, Toast.LENGTH_LONG).show();
-                                        getOfferReservation();
+                                        rateOfferReserved(model,true);
                                     }
                                 },1500);
 
                             } else {
                                 loading.dismiss();
+                                c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                                c.vibrate(500);
                                 Toast.makeText(getApplicationContext(),
                                         R.string.operation_fail, Toast.LENGTH_LONG).show();
                             }
@@ -641,8 +688,8 @@ public class OffersReservationsActivity extends AppCompatActivity {
         final String idPerson = sharedPref.getString(Config.KEY_SP_ID, "-1");
 
         class RateOfferReservation extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
-            DialogInterface dialog;
+            private ProgressDialog loading;
+            private DialogInterface dialog;
 
             private RateOfferReservation(DialogInterface dialog) {
                 this.dialog = dialog;
@@ -658,19 +705,34 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... params) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON,idPerson);
-                hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDOFFER, idOffer);
-                hashMap.put(Config.KEY_GET_OFFER_RESERVED_RATE, rate);
+
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_OFFER_RATE, hashMap);
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDPERSON, idPerson);
+                    hashMap.put(Config.KEY_GET_OFFER_RESERVED_IDOFFER, idOffer);
+                    hashMap.put(Config.KEY_GET_OFFER_RESERVED_RATE, rate);
+
+                    return rh.sendPostRequest(Config.URL_OFFER_RATE, hashMap);
+                }
+                else {
+                    return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-                if (s.equals("0")) {
+                if (s.equals("0")&& !s.equals("-1")) {
 
                     Handler mHandler = new Handler();
                     mHandler.postDelayed(new Runnable() {
@@ -691,8 +753,10 @@ public class OffersReservationsActivity extends AppCompatActivity {
 
                 } else {
                     loading.dismiss();
+
                     c=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                     c.vibrate(500);
+
                     Toast.makeText(getApplicationContext(),
                             R.string.operation_fail, Toast.LENGTH_LONG).show();
                 }
@@ -788,5 +852,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 
 }

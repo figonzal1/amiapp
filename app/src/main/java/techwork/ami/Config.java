@@ -56,6 +56,7 @@ public class Config {
 	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GO_OFFERS="offers";
 	public static final String TAG_GO_OFFER_ID="id";
+	public static final String TAG_GO_IDLOCAL="idLocal";
 	public static final String TAG_GO_TITLE="titulo";
 	public static final String TAG_GO_DESCRIPTION="descripcion";
 	public static final String TAG_GO_STOCK="stock";
@@ -89,6 +90,7 @@ public class Config {
 	//TODO: Cambiar los nombres a la actual definicion.
 	public static final String TAG_GRO = "reservationsOffers";
 	public static final String TAG_GRO_ID_OFFER = "idOferta";
+	public static final String TAG_GRO_IDLOCAL="idLocal";
 	public static final String TAG_GRO_TITLE = "titulo";
 	public static final String TAG_GRO_DESCRIPTION = "descripcion";
 	public static final String TAG_GRO_PROMOCOD = "codPromocion";
@@ -208,6 +210,7 @@ public class Config {
 	public static final String TAG_GET_ORDER_RADIO="radio";
 	public static final String TAG_GET_ORDER_OFFERS_COMPANY = "ofertasEmpresas";
 	public static final String TAG_GET_ORDER_NDISCARD_OFFERS="nDescartadas";
+	public static final String TAG_GET_ORDER_SUBCATEGORY="subCategoria";
 
 	//OfferActivity (NeedOffer after)
 	public static final String URL_GET_OFFER="http://amiapp.cl/public/getData/Need/getOffers.php";

@@ -42,8 +42,8 @@
                 android:layout_height="match_parent"
                 android:paddingTop="@dimen/activity_padding"
                 android:paddingBottom="@dimen/activity_paddingBottom"
-                android:paddingLeft="@dimen/cardView_marginLeft"
-                android:paddingRight="@dimen/cardView_marginRight">
+                android:paddingStart="@dimen/cardView_marginLeft"
+                android:paddingEnd="@dimen/cardView_marginRight">
 
                 <TextView
                     android:text="@string/offer_cv_title"
@@ -62,6 +62,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_alignParentEnd="true"
+                    android:padding="3dp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/offers_company_square_background"
                     android:textSize="15sp" />
 
                 <TextView
@@ -80,7 +83,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/od_tv_description">
-                    <!--android:layout_height="300dp"-->
                 </android.support.v7.widget.RecyclerView>
 
                 <LinearLayout
@@ -178,7 +180,17 @@
                     android:layout_below="@+id/offer_cv_linear_layout"
                     />
 
+                <Button
+                    android:id="@+id/btn_promotion_details"
+                    android:text="Ver información local"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/od_tv_rd"/>
+
             </RelativeLayout>
+
         </android.support.v4.widget.NestedScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>

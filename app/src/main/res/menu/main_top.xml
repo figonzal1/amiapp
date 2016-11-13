@@ -9,11 +9,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_home"
-        android:title="@string/action_home"
-        app:showAsAction="never">
-    </item>
-    <item
         android:id="@+id/action_config"
         android:title="@string/action_config"
         app:showAsAction="never">

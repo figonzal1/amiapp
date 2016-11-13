@@ -1,9 +1,9 @@
 package techwork.ami.Offers.OffersDetails;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -11,14 +11,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,12 +34,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import techwork.ami.AnimateFab;
 import techwork.ami.AnimateMenuFab;
 import techwork.ami.Config;
+import techwork.ami.LocalDetails.LocalActivity;
 import techwork.ami.MainActivity;
 import techwork.ami.Offers.OffersList.OffersActivity;
-import techwork.ami.Offers.OffersLocalDetails.OffersViewLocalActivity;
+import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
+import techwork.ami.Offers.OrdersList.FragmentOrder;
+import techwork.ami.Promotion.PromotionsList.FragmentHome;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
@@ -49,7 +49,7 @@ public class OffersViewActivity extends AppCompatActivity {
 
     TextView tvTittle,tvCompany,tvDescription,tvMaxPPerson,tvPriceOffer,tvPriceNormal,tvDsctSym,tvDsct;
     Button btnLocal;
-    private String idOffer,idLocal;
+    private String idOffer,idLocal,idNeed;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
@@ -60,6 +60,7 @@ public class OffersViewActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,13 @@ public class OffersViewActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //Init textviews
         tvTittle = (TextView)findViewById(R.id.tv_offer_view_tittle);
@@ -88,6 +96,7 @@ public class OffersViewActivity extends AppCompatActivity {
         //Capture id's
         idOffer = bundle.getString(Config.TAG_GET_OFFER_IDOFFER);
         idLocal = bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
+        idNeed = bundle.getString(Config.TAG_GET_OFFER_IDNEED);
 
 
         //Set TextViews with the information of each NeedOffer.
@@ -174,6 +183,7 @@ public class OffersViewActivity extends AppCompatActivity {
             }
         });
 
+        //Refresh layout
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_offers_view);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -187,7 +197,7 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OffersViewActivity.this,OffersViewLocalActivity.class);
+                Intent intent = new Intent(OffersViewActivity.this,LocalActivity.class);
                 intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
                 startActivity(intent);
             }
@@ -256,9 +266,11 @@ public class OffersViewActivity extends AppCompatActivity {
                                     c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                                     c.vibrate(500);
 
-                                    Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
+                                    //Finish OfferListActivity
+                                    //OffersActivity.activity.finish();
 
-                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
+                                    Toast.makeText(getApplicationContext(),R.string.OfferViewAcceptOffer, Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(OffersViewActivity.this,OffersReservationsActivity.class);
                                     finish();
                                     startActivity(intent);
 
@@ -326,7 +338,8 @@ public class OffersViewActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), R.string.OfferViewDiscardOffer, Toast.LENGTH_LONG).show();
 
                                     //If Offer is discard go to Main activity refreshed
-                                    Intent intent = new Intent(OffersViewActivity.this,MainActivity.class);
+                                    Intent intent = new Intent(OffersViewActivity.this,OffersActivity.class);
+                                    intent.putExtra(Config.TAG_GET_OFFER_IDNEED,idNeed);
                                     finish();
                                     startActivity(intent);
 
@@ -345,21 +358,8 @@ public class OffersViewActivity extends AppCompatActivity {
                 go.execute();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getOfferProducts();
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void getOfferProducts(){
@@ -379,19 +379,33 @@ public class OffersViewActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... voids) {
 
-                HashMap<String,String> hashmap = new HashMap<>();
-
-                hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER,idOffer);
-
                 RequestHandler rh = new RequestHandler();
-                return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER,hashmap);
+
+                Boolean connectionStatus = rh.isConnectedToServer(rv, new View.OnClickListener() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.M)
+                    public void onClick(View v) {
+                        sendPostRequest();
+                    }
+                });
+
+                if (connectionStatus) {
+                    HashMap<String, String> hashmap = new HashMap<>();
+                    hashmap.put(Config.KEY_GET_PRODUCT_OFFER_IDOFFER, idOffer);
+                    return rh.sendPostRequest(Config.URL_GET_PRODUCT_OFFER, hashmap);
+                }
+                else {
+                    return "-1";
+                }
             }
 
             @Override
             protected void onPostExecute(String s){
                 super.onPostExecute(s);
                 refreshLayout.setRefreshing(false);
-                showProducts(s);
+                if (!s.equals("-1")) {
+                    showProducts(s);
+                }
             }
         }
         ProductOfferAsyncTask go = new ProductOfferAsyncTask();

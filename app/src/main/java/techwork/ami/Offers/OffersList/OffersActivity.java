@@ -2,16 +2,16 @@ package techwork.ami.Offers.OffersList;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,22 +45,27 @@ public class OffersActivity extends AppCompatActivity {
     private GridLayoutManager layout;
     private SwipeRefreshLayout refreshLayout;
     private String idNeedOffer;
-    public static Activity activity;
     TextView tvOfferEmpty;
+    public static Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offers_activity);
-        activity = this;
+        activity=this;
 
         offerList = new ArrayList<>();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Initialice empty
-        offerList = new ArrayList<>();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         idNeedOffer = bundle.getString(Config.TAG_GET_OFFER_IDNEED);
@@ -82,7 +87,6 @@ public class OffersActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getOffers();
 
     }
@@ -144,7 +148,6 @@ public class OffersActivity extends AppCompatActivity {
 
         getOffersData(s);
 
-
         adapter = new OffersAdapter(getApplicationContext(),offerList);
         ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(adapter);
         rv.setAdapter(scaleAdapter);
@@ -172,6 +175,7 @@ public class OffersActivity extends AppCompatActivity {
                     if (format2.parse(m.getDateTimeFin()).after(c.getTime())) {
 
                         //Send to NeedOfferDetails the details of each offer.
+                        intent.putExtra(Config.TAG_GET_OFFER_IDNEED,m.getIdNeed());
                         intent.putExtra(Config.TAG_GET_OFFER_IDOFFER, m.getIdOferta());
                         intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL, m.getIdLocal());
                         intent.putExtra(Config.TAG_GET_OFFER_TITTLE, m.getTittle());

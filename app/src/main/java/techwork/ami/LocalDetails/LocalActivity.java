@@ -1,9 +1,11 @@
-package techwork.ami.Offers.OffersLocalDetails;
+package techwork.ami.LocalDetails;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -24,26 +27,38 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import techwork.ami.Config;
-import techwork.ami.MainActivity;
-import techwork.ami.Offers.OffersReservations.OffersReservationsList.OffersReservationsActivity;
 import techwork.ami.R;
 import techwork.ami.RequestHandler;
 
-public class OffersViewLocalActivity extends AppCompatActivity{
+public class LocalActivity extends AppCompatActivity{
 
     private String idLocal,lat,lon,address,web,image,commune;
     Button btnStreetView;
     TextView tvAddress,tvWeb;
     ImageView ivImage;
     private SwipeRefreshLayout refreshLayout;
+    private NetworkInfo networkInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.offers_view_local_activity);
+        setContentView(R.layout.local_activity);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //If connection to internet is false, activity local not open.
+        if (!checkInternet()){
+            Toast.makeText(getApplicationContext(),R.string.ConnectToInternet,Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         Bundle bundle = getIntent().getExtras();
         idLocal= bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
@@ -63,30 +78,33 @@ public class OffersViewLocalActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OffersViewLocalActivity.this,StreetViewPanoramaFragment.class);
-                intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
-                intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
-                startActivity(intent);
+                //check if the phone is connect to internet
+                if (checkInternet()){
+
+                    /*Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+lat+","+lon+"");
+                    Intent intent2 = new Intent(Intent.ACTION_VIEW, gmmIntentUri);*/
+
+                    Intent intent = new Intent(LocalActivity.this,StreetViewPanoramaFragment.class);
+                    intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
+                    intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),R.string.ConnectToInternet,Toast.LENGTH_LONG).show();
+                }
             }
         });
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //GetLocal info
         getLocal();
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    private boolean checkInternet(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
+
 
     private void getLocal(){ sendPostRequest();}
 

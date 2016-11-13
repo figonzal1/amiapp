@@ -142,6 +142,19 @@
     <string name="NeedButtonText">Enviar Pedido</string>
     <string name="NeedUserLocation">Usar mi ubicación</string>
 
+    <!-- Order View -->
+    <string name="OrderViewDetails">Detalle pedido</string>
+    <string name="OrderViewTittle">Título del pedido</string>
+    <string name="OrderViewWait">¡Espera a que lleguen las ofertas de las empresas!</string>
+    <string name="OrderSubcategory">Subcategoría</string>
+    <string name="OrderViewDescription">Descripción</string>
+    <string name="OrderViewPrice">Tu presupuesto es: $xxx.xxx</string>
+    <string name="OrderViewPrice2">Tu presupuesto es: </string>
+    <string name="OrderViewExpiryTime">¡Recuerda! \n Tu pedido expira en \n xDias XXh:XXm:XXs</string>
+    <string name="OrderViewExpiryFragmentOrder">¡Recuerda! \n Tu pedido expira en \n </string>
+    <string name="OrderViewExpiryCreateOrder">Tu pedido expira en \n</string>
+    <string name="OrderViewExpiryTodayCreateOrder">Tu pedido vence \n hoy</string>
+
     <!-- Discard Order -->
     <string name="OrderButtonDelete">Eliminar pedido</string>
     <string name="OrderDelete">El pedido ha sido eliminado</string>
@@ -180,8 +193,8 @@
     <string name="OfferViewMaxPerson">¡Puedes reservar hasta x unidades!</string>
     <string name="OfferViewAcceptOfferProcessing">Aceptando oferta</string>
     <string name="OfferViewDiscardOfferProcessing">Rechazando oferta</string>
-    <string name="OfferViewAcceptOffer">Oferta aceptada</string>
-    <string name="OfferViewDiscardOffer">Oferta rechazada</string>
+    <string name="OfferViewAcceptOffer">¡Oferta aceptada!</string>
+    <string name="OfferViewDiscardOffer">¡Oferta rechazada!</string>
     <string name="OfferViewAcceptOfferFail">No se ha podido reservar</string>
     <string name="OfferViewDiscardOfferFail">No se ha podido rechazar</string>
     <string name="OfferViewMaxppWarnings">¡Puedes reservar hasta %s unidades!</string>
@@ -192,7 +205,6 @@
     <string name="OfferViewLocalWebText">Más información en</string>
     <string name="OfferViewLocalWebExample">wwww.webempresa.cl</string>
     <string name="OfferViewLocalStreetView">Ver street view</string>
-    <string name="OfferViewLocalMyOrders">Mis pedidos reservados</string>
     <string name="OfferViewLocalInfo">Ver información local</string>
 
     <!-- OfferReservations (NeedOffer) Strings -->
@@ -240,7 +252,7 @@
     <string name="OfferReservedDeleteProcessing">Eliminando reserva</string>
     <string name="OfferReservedDeleteTittle">¿Desea eliminar esta reserva?</string>
     <string name="OfferReservedDeleteConfirm">Confirme la acción</string>
-    <string name="OfferReservedDeleteOk">La reserva ha sido eliminada</string>
+    <string name="OfferReservedDeleteOk">¡Reserva eliminada!</string>
     <string name="OfferReservedDeleteOfferCharged">No puedes eliminar una cobrada</string>
     <string name="OfferReservedDeleteOfferCalificated">No puedes eliminar una calificada</string>
 
@@ -357,4 +369,5 @@
     <string name="PopupMenuCharged">Cobrar</string>
 
 
+    <string name="ConnectToInternet">Parece que no tienes conexion a internet</string>
 </resources>

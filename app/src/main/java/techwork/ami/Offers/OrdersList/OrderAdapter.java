@@ -72,7 +72,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.NeedViewHold
     public void onBindViewHolder(final OrderAdapter.NeedViewHolder holder, final int position) {
         final OrderModel model = items.get(position);
         holder.tvTitle.setText(model.getTittle());
-        holder.tvDateFin.setText(model.getDateFin());
+        holder.tvDateFin.setText("Expira el "+model.getDateFin());
         holder.tvPricemax.setText(String.format(Config.CLP_FORMAT,model.getPriceMax()));
         holder.tvNOffers.setText(model.getOffersCompany());
         holder.tvNOffersDiscard.setText(model.getnDiscardOffers());
