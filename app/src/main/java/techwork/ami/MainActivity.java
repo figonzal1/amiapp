@@ -245,6 +245,13 @@ public class MainActivity extends AppCompatActivity
             finish();
             startActivity(iLogin);
         }
+        else if (id == R.id.promo_ami){
+            Intent iPromo = new Intent(MainActivity.this, Promo.class);
+            if(null == name){
+                getProfile();
+            }
+            startActivity(iPromo);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

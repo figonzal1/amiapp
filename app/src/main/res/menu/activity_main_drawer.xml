@@ -29,4 +29,13 @@
         </menu>
     </item>
 
+    <item android:title="Promo AMI">
+        <menu>
+            <item
+                android:id="@+id/promo_ami"
+                android:icon="@android:drawable/ic_menu_today"
+                android:title="¡Particpa!" />
+        </menu>
+    </item>
+
 </menu>

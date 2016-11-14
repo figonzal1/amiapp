@@ -85,12 +85,10 @@
             android:name=".Offers.OrdersList.CreateOrderActivity"
             android:label="@string/CreateNeedTitle"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".Offers.OrdersList.OrderViewActivity"
             android:label="@string/OrderViewDetails"
-            android:theme="@style/AppTheme"/>
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Offers.OffersList.OffersActivity"
             android:label="@string/OfferCompanies"
@@ -131,7 +129,7 @@
             android:name=".Promotion.FilterActivity"
             android:label="@string/title_activity_filter_offers"
             android:theme="@style/AppTheme" />
-
+        <activity android:name=".Promo"></activity>
     </application>
 
 </manifest>
