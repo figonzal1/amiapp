@@ -62,7 +62,7 @@ public class PromotionDetailActivity extends AppCompatActivity {
     private TextView title, company, description, tPriceTxt, tPrice, dsctTxt, dsct, priceTxt, price, remainingDays;
     private Button btnLocal;
     private FloatingActionButton floatingButton;
-    private String idOffer,idLocal,idPersona;
+    private String idOffer,idLocal,idPersona, companyName;
     private Context context;
     public CountDownTimer countDownTimer;
     private Vibrator c;
@@ -162,7 +162,8 @@ public class PromotionDetailActivity extends AppCompatActivity {
 
         // From offer
         title.setText(bundle.getString(Config.TAG_GO_TITLE));
-        company.setText(bundle.getString(Config.TAG_GO_COMPANY));
+        companyName = bundle.getString(Config.TAG_GO_COMPANY);
+        company.setText(companyName);
         description.setText(bundle.getString(Config.TAG_GO_DESCRIPTION));
         tPrice.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_TOTALPRICE)));
         price.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GO_PRICE)));
@@ -193,6 +194,7 @@ public class PromotionDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PromotionDetailActivity.this, LocalActivity.class);
+                intent.putExtra(Config.TAG_LOCAL_ACTIVITY_COMPANY, companyName);
                 intent.putExtra(Config.TAG_GO_IDLOCAL,idLocal);
                 startActivity(intent);
             }

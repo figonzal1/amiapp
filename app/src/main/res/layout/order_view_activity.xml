@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_below="@id/tv_order_view_wait"
+                    android:padding="@dimen/cardView_relativeLayout_padding"
                     app:cardCornerRadius="2dp"
                     app:cardUseCompatPadding="true">
 
@@ -122,8 +123,9 @@
                             android:textColor="#ffffffff"
                             android:padding="3dp"
                             android:background="@drawable/offers_company_square_background"
+                            android:layout_marginTop="20dp"
                             android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignEnd="@+id/tv_order_view_tittle" />
 
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>

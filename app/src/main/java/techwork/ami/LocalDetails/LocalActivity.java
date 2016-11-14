@@ -32,8 +32,8 @@ import techwork.ami.RequestHandler;
 
 public class LocalActivity extends AppCompatActivity{
 
-    private String idLocal,lat,lon,address,web,image,commune;
-    Button btnStreetView;
+    private String idLocal,lat,lon,address,web,image,commune, localName;
+    Button btnStreetView, btnMap;
     TextView tvAddress,tvWeb;
     ImageView ivImage;
     private SwipeRefreshLayout refreshLayout;
@@ -60,9 +60,9 @@ public class LocalActivity extends AppCompatActivity{
             finish();
         }
 
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
         idLocal= bundle.getString(Config.TAG_GET_OFFER_IDLOCAL);
-
+        localName = bundle.getString(Config.TAG_LOCAL_ACTIVITY_COMPANY);
 
         refreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_offer_view_local);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
@@ -77,7 +77,6 @@ public class LocalActivity extends AppCompatActivity{
         btnStreetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //check if the phone is connect to internet
                 if (checkInternet()){
 
@@ -87,6 +86,23 @@ public class LocalActivity extends AppCompatActivity{
                     Intent intent = new Intent(LocalActivity.this,StreetViewPanoramaFragment.class);
                     intent.putExtra(Config.TAG_GET_LOCAL_LAT,lat);
                     intent.putExtra(Config.TAG_GET_LOCAL_LONG,lon);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),R.string.ConnectToInternet,Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        btnMap = (Button)findViewById(R.id.btn_local_map) ;
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //check if the phone is connect to internet
+                if (checkInternet()){
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                            Uri.parse("geo:"+lat+","+lon+"?z=16&q="+lat+","+lon+"("+localName+")"));
+                    intent.setClassName("com.google.android.apps.maps",
+                            "com.google.android.maps.MapsActivity");
                     startActivity(intent);
                 }
                 else {

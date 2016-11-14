@@ -58,7 +58,7 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
             }
         });
 
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
 
         //Capture id's .
         idOffer = bundle.getString(Config.TAG_GET_OFFER_RESERVED_IDOFFER);
@@ -120,7 +120,8 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OffersReservationsViewActivity.this, LocalActivity.class);
-                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_IDLOCAL,idLocal);
+                intent.putExtra(Config.TAG_GET_OFFER_RESERVED_IDLOCAL, idLocal);
+                intent.putExtra(Config.TAG_LOCAL_ACTIVITY_COMPANY, bundle.getString(String.valueOf(tvCompany.getText())));
                 startActivity(intent);
             }
         });

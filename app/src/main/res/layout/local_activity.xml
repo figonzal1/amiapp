@@ -47,6 +47,7 @@
                     android:paddingTop="10dp">
 
                     <!-- Imagen del local -->
+
                     <ImageView
                         android:id="@+id/iv_local"
                         android:layout_centerHorizontal="true"
@@ -93,14 +94,32 @@
                         />
 
                     <!-- Boton de streetview -->
-                    <Button
-                        android:id="@+id/btn_local_street_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/OfferViewLocalStreetView"
-                        android:layout_centerHorizontal="true"
+
+                    <!-- Boton de streetview -->
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/tv_web2"
                         android:layout_marginTop="15dp"
-                        android:layout_below="@id/tv_web2"/>
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btn_local_street_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/OfferViewLocalStreetView"
+                            android:layout_weight="0.5"/>
+
+                        <Button
+                            android:id="@+id/btn_local_map"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/OfferViewLocalMap"
+                            android:layout_weight="0.5"/>
+
+                    </LinearLayout>
 
 
                 </RelativeLayout>
