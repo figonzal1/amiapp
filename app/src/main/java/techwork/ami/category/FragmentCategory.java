@@ -1,7 +1,9 @@
 package techwork.ami.Category;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -140,8 +142,11 @@ public class FragmentCategory extends Fragment {
                         sendGetRequest();
                     }
                 });
-                if (connectionStatus)
-                    return rh.sendGetRequest(Config.URL_GET_CATEGORY);
+                if (connectionStatus){
+                    SharedPreferences sharedPref = getActivity().getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
+                    final String idperson = sharedPref.getString(Config.KEY_SP_ID, "-1");
+                    return rh.sendGetRequestParam(Config.URL_GET_CATEGORY, "idPersona="+idperson);
+                }
                 else
                     return "-1";
             }
