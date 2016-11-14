@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         // TODO: revisar seguridad de sharedPreferences, onda si puede cambiar el id a la mala
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         id = sharedPref.getString(Config.KEY_SP_ID, "-1");
-        name = sharedPref.getString(Config.KEY_SP_NAME, "");
+        name = sharedPref.getString(Config.KEY_SP_NAME, " ");
         lastnames = sharedPref.getString(Config.KEY_SP_LASTNAMES, "");
         email = sharedPref.getString(Config.KEY_SP_EMAIL, "");
         gender = sharedPref.getString(Config.KEY_SP_GENDER, "0");
