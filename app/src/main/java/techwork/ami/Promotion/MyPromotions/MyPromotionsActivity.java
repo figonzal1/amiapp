@@ -86,17 +86,7 @@ public class MyPromotionsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //arrow back refresh main activity.
-                int count = getFragmentManager().getBackStackEntryCount();
-
-                if(count==0){
-                    Intent intent = new Intent(MyPromotionsActivity.this,MainActivity.class);
-                    startActivity(intent);
-                }
-
-                else {
-                    getFragmentManager().popBackStack();
-                }
+                finish();
             }
         });
 
@@ -299,22 +289,6 @@ public class MyPromotionsActivity extends AppCompatActivity {
 
         // Show the dialog
         dialogBuilder.show();
-    }
-
-    @Override
-    public void onBackPressed(){
-
-        int count = getFragmentManager().getBackStackEntryCount();
-
-        if(count==0){
-            super.onBackPressed();
-            Intent intent = new Intent(MyPromotionsActivity.this,MainActivity.class);
-            startActivity(intent);
-        }
-
-        else {
-            getFragmentManager().popBackStack();
-        }
     }
 
     private void goToDetails(MyReservationPromotionModel model) {

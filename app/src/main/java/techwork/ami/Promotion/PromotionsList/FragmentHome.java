@@ -53,11 +53,6 @@ import techwork.ami.RequestHandler;
 
 public class FragmentHome extends Fragment {
 
-    @Override
-    public void onResume() {
-        super.onResume();  // Always call the superclass method first
-        getOffers();
-    }
     // Required for fragment use
     private PromotionAdapter adapter;
     private List<PromotionModel> offerList;
@@ -423,6 +418,12 @@ public class FragmentHome extends Fragment {
             }
             this.dialog.dismiss();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        getOffers();
     }
 
 }

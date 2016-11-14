@@ -77,16 +77,7 @@ public class OffersReservationsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //arrow back refresh main activity.
-                int count = getFragmentManager().getBackStackEntryCount();
-
-                if(count==0){
-                    Intent intent = new Intent(OffersReservationsActivity.this,MainActivity.class);
-                    startActivity(intent);
-                }
-
-                else {
-                    getFragmentManager().popBackStack();
-                }
+                finish();
             }
         });
 
@@ -213,22 +204,6 @@ public class OffersReservationsActivity extends AppCompatActivity {
             }
         });
         popup.show();
-    }
-
-    @Override
-    public void onBackPressed(){
-
-        int count = getFragmentManager().getBackStackEntryCount();
-
-        if(count==0){
-            super.onBackPressed();
-            Intent intent = new Intent(OffersReservationsActivity.this,MainActivity.class);
-            startActivity(intent);
-        }
-
-        else {
-            getFragmentManager().popBackStack();
-        }
     }
 
     private void getOfferReservation() {

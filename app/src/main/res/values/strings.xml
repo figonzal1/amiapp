@@ -114,7 +114,7 @@
     <!-- Order Fragment -->
     <string name="OrderListTitle">Tus Pedidos</string>
     <string name="OrderNDiscard">Ofertas descartadas:</string>
-    <string name="OrderNRecived">Ofertas descartadas:</string>
+    <string name="OrderNRecived">Ofertas recibidas:</string>
     <string name="OrderListTitleEmpty">¡Oops! \n No tienes pedidos recientes :(</string>
     <string name="OrderCardViewTittle">Titulo del pedido</string>
     <string name="OrderCardViewDescription">Descripción del pedido</string>

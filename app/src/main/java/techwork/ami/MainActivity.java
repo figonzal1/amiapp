@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private String firstLogin;
 
     private ViewPager viewPager;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity
             finish();
             startActivity(iAfterLogin);
         }
+
+        fragment = null;
 
         requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,
                 LOCATION_REQUEST_CODE);
@@ -124,7 +127,9 @@ public class MainActivity extends AppCompatActivity
         TextView textViewNavHeaderName = (TextView) header.findViewById(R.id.navHeaderTextName);
         TextView textViewNavHeaderEmail = (TextView) header.findViewById(R.id.navHeaderTextEmail);
 
-        textViewNavHeaderName.setText(name + " " + lastnames);
+        String name_capitalize = name.substring(0, 1).toUpperCase() + name.substring(1);
+
+        textViewNavHeaderName.setText(name_capitalize + " " + lastnames);
         textViewNavHeaderEmail.setText(email);
 
         switch (gender) {
@@ -207,6 +212,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        System.out.println("OnResume MainActivity");
 
         updateProfileView();
 
@@ -256,30 +262,5 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent != null) {
-            viewPager.setCurrentItem(intent.getIntExtra("page", 0));
-
-            /*
-            // TODO: Refresh the respective fragment on resume
-            FragmentPagerAdapter fpa = (FragmentPagerAdapter) viewPager.getAdapter();
-            Fragment fragment = fpa.getItem(viewPager.getCurrentItem());
-
-            if (fragment instanceof FragmentHome) {
-                ((FragmentHome) fragment).getOffers();
-                System.out.println("Home");
-            } else if (fragment instanceof FragmentCategory) {
-                ((FragmentCategory) fragment).getCategories();
-                System.out.println("Category");
-            } else if (fragment instanceof FragmentOrder) {
-                ((FragmentOrder) fragment).getOrders();
-                System.out.println("Need");
-            }
-            */
-        }
     }
 }

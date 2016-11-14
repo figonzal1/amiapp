@@ -44,6 +44,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class RegisterActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -53,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
      * Keep track of the register task to ensure we can cancel it if requested.
      */
     private UserRegisterTask mAuthTask = null;
+    private UserRegisterHashTask mAuthHashTask = null;
 
     // UI references.
     private AutoCompleteTextView mNameView;
@@ -62,6 +64,9 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     private EditText mPassword2View;
     private View mProgressView;
     private View mRegisterFormView;
+
+    //Cambiar variable dependiendo del tipo de registro.
+    private boolean registerNormal = false;
 
     CustomAlertDialogBuilder dialogBuilder;
 
@@ -237,8 +242,18 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             // Show a progress spinner, and kick off a background task to
             // perform the user register attempt.
             showProgress(true);
-            mAuthTask = new UserRegisterTask(name, email, lastnames, password1);
-            mAuthTask.execute((Void) null);
+
+            if (registerNormal){
+                mAuthTask = new UserRegisterTask(name, email, lastnames, password1);
+                mAuthTask.execute((Void) null);
+            }else{
+                String passwordHash = Bcrypt.hashpw(password1,Bcrypt.gensalt(12));
+                mAuthHashTask = new UserRegisterHashTask(name, email, lastnames,passwordHash);
+                mAuthHashTask.execute((Void) null);
+            }
+
+
+
         }
     }
 
@@ -357,6 +372,105 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
      * Represents an asynchronous registration task used to authenticate
      * the user.
      */
+    public class UserRegisterHashTask extends AsyncTask<Void, Void, String> {
+
+
+        private final String mEmail;
+        private final String mName;
+        private final String mLastnames;
+        private final String mPasswordHash;
+
+        UserRegisterHashTask(String name, String email, String lastnames, String passwordHash) {
+            mName = name;
+            mLastnames = lastnames;
+            mEmail = email;
+            mPasswordHash = passwordHash;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            RequestHandler rh = new RequestHandler();
+
+            Boolean connectionStatus = rh.isConnectedToServer(mEmailView, new View.OnClickListener() {
+                @Override
+                @TargetApi(Build.VERSION_CODES.M)
+                public void onClick(View v) {
+                    attemptRegister();
+                }
+            });
+
+            if (connectionStatus) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Config.KEY_NAME, mName);
+                hashMap.put(Config.KEY_LASTNAMES, mLastnames);
+                hashMap.put(Config.KEY_EMAIL, mEmail);
+                hashMap.put(Config.KEY_HASH_PASSWORD, mPasswordHash);
+
+                return rh.sendPostRequest(Config.URL_REGISTER_HASH, hashMap);
+            }
+            else
+                return "-1";
+        }
+
+        @Override
+        protected void onPostExecute(final String result) {
+            mAuthHashTask = null;
+            showProgress(false);
+
+            switch (result) {
+                case "0":
+                    showProgress(true);
+                    SendWelcomeEmailTask swe = new SendWelcomeEmailTask(mEmail);
+                    swe.execute();
+                    break;
+                case "1":
+                    Snackbar.make(mEmailView, R.string.email_already_exist, Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.did_forget_your_pass, new OnClickListener() {
+                                @Override
+                                @TargetApi(Build.VERSION_CODES.M)
+                                public void onClick(View v) {
+                                    Intent iRestorePass = new Intent(RegisterActivity.this, RestorePassActivity.class);
+                                    iRestorePass.putExtra("email", mEmailView.getText().toString());
+                                    startActivity(iRestorePass);
+                                }
+                            }).show();
+                    mEmailView.setError(getResources().getString(R.string.insert_another_email));
+                    mEmailView.requestFocus();
+                    mPassword1View.setText("");
+                    mPassword2View.setText("");
+                    break;
+                case "2":
+                    Snackbar.make(mEmailView, R.string.account_closed, Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.yes, new OnClickListener() {
+                                @Override
+                                @TargetApi(Build.VERSION_CODES.M)
+                                public void onClick(View v) {
+                                    dialogReactivateAccount(false);
+                                }
+                            }).show();
+                    break;
+                case "-1":
+                    break;
+                default:
+                    Snackbar.make(findViewById(android.R.id.content), R.string.saveFail, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.retry, new View.OnClickListener() {
+                                @Override
+                                @TargetApi(Build.VERSION_CODES.M)
+                                public void onClick(View v) {
+                                    attemptRegister();
+                                }
+                            }).show();
+                    break;
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthHashTask = null;
+            showProgress(false);
+        }
+    }
+
     public class UserRegisterTask extends AsyncTask<Void, Void, String> {
 
 
