@@ -200,9 +200,9 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intentLogout);
                 return true;
 
-            case R.id.action_config:
+            /*case R.id.action_config:
                 Toast.makeText(getApplicationContext(),"Configuración",Toast.LENGTH_LONG).show();
-                return true;
+                return true;*/
 
             default:
                 return super.onOptionsItemSelected(item);

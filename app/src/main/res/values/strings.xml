@@ -27,7 +27,7 @@
 
     <!-- Main Activity Strings -->
     <string name="nav_edit_profile">Mi Perfil</string>
-    <string name="nav_reserve_needs">Mis Ofertas Reservadas</string>
+    <string name="nav_reserve_needs">Mis Ofertas</string>
     <string name="nav_reservations">Mis Promociones</string>
     <string name="nav_logout">Cerrar Sesión</string>
     <string name="nav_contact_us">Contáctanos</string>

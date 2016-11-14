@@ -8,11 +8,11 @@
         android:icon="@drawable/ic_map"
         app:showAsAction="ifRoom" />
 
-    <item
+    <!--<item
         android:id="@+id/action_config"
         android:title="@string/action_config"
         app:showAsAction="never">
-    </item>
+    </item>-->
     <item
         android:id="@+id/action_logout"
         android:title="@string/action_logout"

@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         Button mEmailSignInButton = (Button) findViewById(R.id.login_email_sign_in_button);
 
-        Button mStartRestorePassActivity = (Button) findViewById(R.id.login_start_restorePassActivity);
+        /*Button mStartRestorePassActivity = (Button) findViewById(R.id.login_start_restorePassActivity);
         mStartRestorePassActivity.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 i.putExtra("email", mEmailView.getText().toString());
                 startActivity(i);
             }
-        });
+        });*/
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
