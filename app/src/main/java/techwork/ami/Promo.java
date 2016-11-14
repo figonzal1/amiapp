@@ -85,8 +85,16 @@ public class Promo extends AppCompatActivity {
                 super.onPostExecute(s);
                 loading.dismiss();
                 String msg;
-                int i = Integer.valueOf(s);
-                System.out.println("print i ="+i);
+                if (s.compareTo("0\n") == 0) {
+                    msg = "¡Ya estabas participando!";
+                } else if (s.compareTo("1\n") == 0) {
+                    msg = "¡Tus posibilidades de ganar se han duplicado!";
+                } else if (s.compareTo("2\n") == 0) {
+                    msg = "¡Gracias por participar!\n";
+                } else {
+                    msg = "Ha ocurrido un error.";
+                }
+                /*int i = Integer.valueOf(j);
                 if (i == 0) {
                     msg = "¡Ya estabas participando!";
                 } else if (i == 1) {
@@ -95,13 +103,12 @@ public class Promo extends AppCompatActivity {
                     msg = "¡Gracias por participar! Ahora tienes el doble de posibilidades de ganar.";
                 } else {
                     msg = "Ha ocurrido un error.";
-                }
-                System.out.println("print s = "+s);
-                System.out.println("print msg = "+msg);
+                }*/
                 Vibrator c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                 c.vibrate(500);
                 Toast.makeText(contexto, msg, Toast.LENGTH_LONG).show();
-                if (i == 1 || i == 2){
+                //if (i == 1 || i == 2){
+                if(s.compareTo("1\n") == 0 || s.compareTo("2\n") == 0 || s.compareTo("0\n") == 0 ){
                     finish();
                 }
             }
@@ -114,7 +121,6 @@ public class Promo extends AppCompatActivity {
                 "&email=" + email +
                 "&telefono=" + tiTel.getText().toString() +
                 "&nombre=" + name;
-        System.out.println("print params = "+params);
         (new Participar()).execute(params);
     }
 }
