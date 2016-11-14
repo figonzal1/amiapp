@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class Promo extends AppCompatActivity {
 
     //UI references
-    EditText tiRut, tiPromo, tiTel;
+    EditText tiPromo, tiTel;
     Button btnDonde, btnParticipar;
     Context contexto;
 
@@ -30,7 +30,6 @@ public class Promo extends AppCompatActivity {
         setContentView(R.layout.activity_promo);
 
         contexto = this;
-        tiRut = (EditText) findViewById(R.id.rut);
         tiPromo = (EditText) findViewById(R.id.promoCode);
         tiTel = (EditText) findViewById(R.id.telefono);
         btnDonde = (Button) findViewById(R.id.button2);
@@ -86,27 +85,23 @@ public class Promo extends AppCompatActivity {
                 super.onPostExecute(s);
                 loading.dismiss();
                 String msg;
-                System.out.println("print s = "+s.equals("0"));
-                System.out.println("print s = "+s.equals("1"));
-                System.out.println("print s = "+s.equals("2"));
-                if (s.equals("0")) {
+                int i = Integer.valueOf(s);
+                System.out.println("print i ="+i);
+                if (i == 0) {
                     msg = "¡Ya estabas participando!";
-                } else if (s.equals("1")) {
+                } else if (i == 1) {
                     msg = "¡Tus posibilidades de ganar se han duplicado!";
-                } else if (s.equals("2")) {
+                } else if (i == 2) {
                     msg = "¡Gracias por participar! Ahora tienes el doble de posibilidades de ganar.";
                 } else {
                     msg = "Ha ocurrido un error.";
                 }
                 System.out.println("print s = "+s);
-                System.out.println("print s = "+s.equals("0"));
-                System.out.println("print s = "+s.equals("1"));
-                System.out.println("print s = "+s.equals("2"));
                 System.out.println("print msg = "+msg);
                 Vibrator c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                 c.vibrate(500);
                 Toast.makeText(contexto, msg, Toast.LENGTH_LONG).show();
-                if (s.equals("1") || s.equals("2")){
+                if (i == 1 || i == 2){
                     finish();
                 }
             }
@@ -114,10 +109,11 @@ public class Promo extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         String email = sharedPref.getString(Config.KEY_SP_EMAIL, "-1");
         String idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
+        String name = sharedPref.getString(Config.KEY_SP_NAME, "");
         String params = "idPersona=" + idPersona +
                 "&email=" + email +
                 "&telefono=" + tiTel.getText().toString() +
-                "&rut=" + tiRut.getText().toString();
+                "&nombre=" + name;
         System.out.println("print params = "+params);
         (new Participar()).execute(params);
     }

@@ -74,21 +74,7 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Ingresa tu rut"
-                android:nextFocusForward="@+id/telefono"
-                android:textSize="14sp"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/rut"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:maxLines="1"
-                android:imeOptions="flagNoExtractUi"/>
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"></android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
