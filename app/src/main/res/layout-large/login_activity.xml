@@ -99,6 +99,7 @@
                     android:textStyle="bold"
                     android:paddingTop="30dp"
                     android:paddingBottom="30dp"/>
+<!--
 
                 <Button
                     android:id="@+id/login_start_restorePassActivity"
@@ -110,6 +111,7 @@
                     android:textStyle="bold"
                     android:paddingTop="30dp"
                     android:paddingBottom="30dp"/>
+-->
 
                 <Button
                     android:id="@+id/login_start_registerActivity"

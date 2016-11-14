@@ -91,14 +91,14 @@
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"/>
 
-                <Button
+                <!--<Button
                     android:id="@+id/login_start_restorePassActivity"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/titleActivityRestorePass"
-                    android:textStyle="bold" />
+                    android:textStyle="bold" />-->
 
                 <Button
                     android:id="@+id/login_start_registerActivity"
