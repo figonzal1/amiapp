@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
     private UserLoginHashTask mAuthHashTask =null;
-    private boolean loginNormal = true;
+    private boolean loginNormal = false;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -370,12 +370,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 if (!s.equals("-1")&& !s.equals("1")) {
                     //Si entra aqui encontro un hash del usuario.
-                    Toast.makeText(getApplicationContext(),"Encontre hash",Toast.LENGTH_LONG).show();
                     getHashData(s,email,password);
                 }
                 else if (s.equals("1")){
                     //usuario no tiene hash (o  No existe su email)
-                    Toast.makeText(getApplicationContext(),"Hash llego vacio",Toast.LENGTH_LONG).show();
                     showProgress(false);
                     // If the account doesn't exist
                     Snackbar.make(mEmailView, R.string.email_dont_exist, Snackbar.LENGTH_INDEFINITE)
@@ -411,7 +409,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mAuthHashTask.execute((Void) null);
 
             }else{
-                Toast.makeText(getApplicationContext(),"Hash invalido",Toast.LENGTH_LONG).show();
                 //Enviar una pass generica para anular el select de la consulta.
                 mAuthHashTask = new UserLoginHashTask(email, "passInvalida");
                 mAuthHashTask.execute((Void) null);

@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     private View mRegisterFormView;
 
     //Cambiar variable dependiendo del tipo de registro.
-    private boolean registerNormal=true;
+    private boolean registerNormal = false;
 
     CustomAlertDialogBuilder dialogBuilder;
 
