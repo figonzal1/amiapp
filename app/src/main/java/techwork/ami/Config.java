@@ -7,9 +7,7 @@ import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
 @SuppressWarnings("WeakerAccess")
 public class Config {
 
-
 	public static final double MILIS_TO_MIN = 1.0 / (1000 * 60);
-
 	// Slack time (in minutes, change only first number) that define if the notification is shown or not (if greater than this, no show).
 	public static final double NOTIFICATION_SLACK_TIME= 5.0;
 
@@ -263,7 +261,8 @@ public class Config {
 	public static final String TAG_GET_LOCAL_WEB="pagina";
 	public static final String TAG_GET_LOCAL_IMAGE="imagen";
 	public static final String TAG_GET_LOCAL_COMMUNE="comuna";
-
+	public static final String TAG_LOCAL_ACTIVITY_COMPANY = "nameCompany";
+	
 	//Offers Reservations
 	public static final String URL_GET_OFFER_RESERVATIONS="http://amiapp.cl/public/getData/NeedReserved/getOfferReserved.php";
 	public static final String URL_VALIDATE_OFFER_RESERV ="http://amiapp.cl/public/getData/NeedReserved/validateOfferReserved.php";

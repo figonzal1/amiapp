@@ -49,7 +49,7 @@ public class OffersViewActivity extends AppCompatActivity {
 
     TextView tvTittle,tvCompany,tvDescription,tvMaxPPerson,tvPriceOffer,tvPriceNormal,tvDsctSym,tvDsct;
     Button btnLocal;
-    private String idOffer,idLocal,idNeed;
+    private String idOffer,idLocal,idNeed, companyName;
     private List<ProductModel> productList;
     private RecyclerView rv;
     private GridLayoutManager layout;
@@ -104,7 +104,8 @@ public class OffersViewActivity extends AppCompatActivity {
         tvDescription.setText(bundle.getString(Config.TAG_GET_OFFER_DESCRIPTION));
         tvPriceOffer.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)));
         tvPriceNormal.setText(String.format(Config.CLP_FORMAT,bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL)));
-        tvCompany.setText(bundle.getString(Config.TAG_GET_OFFER_COMPANY));
+        companyName = bundle.getString(Config.TAG_GET_OFFER_COMPANY);
+        tvCompany.setText(companyName);
 
         int perc = (bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL) != 0) ?
                 bundle.getInt(Config.TAG_GET_OFFER_PRICEOFFER)*100/bundle.getInt(Config.TAG_GET_OFFER_PRICE_TOTAL):
@@ -198,6 +199,7 @@ public class OffersViewActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(OffersViewActivity.this,LocalActivity.class);
+                intent.putExtra(Config.TAG_LOCAL_ACTIVITY_COMPANY, companyName);
                 intent.putExtra(Config.TAG_GET_OFFER_IDLOCAL,idLocal);
                 startActivity(intent);
             }
