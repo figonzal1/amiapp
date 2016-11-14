@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Vibrator;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class Promo extends AppCompatActivity {
 
         contexto = this;
         tiRut = (EditText) findViewById(R.id.rut);
-        tiPromo = (EditText) findViewById(R.id.promo_ami);
+        tiPromo = (EditText) findViewById(R.id.promoCode);
         tiTel = (EditText) findViewById(R.id.telefono);
         btnDonde = (Button) findViewById(R.id.button2);
         btnDonde.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +49,12 @@ public class Promo extends AppCompatActivity {
         btnParticipar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                participar();
+                if (tiPromo.getText().toString().compareTo("promoami") == 0) {
+                    participar();
+                }else {
+                    tiPromo.setError("Código incorrecto");
+                    tiPromo.requestFocus();
+                }
             }
         });
     }
@@ -97,6 +103,8 @@ public class Promo extends AppCompatActivity {
                 System.out.println("print s = "+s.equals("1"));
                 System.out.println("print s = "+s.equals("2"));
                 System.out.println("print msg = "+msg);
+                Vibrator c = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                c.vibrate(500);
                 Toast.makeText(contexto, msg, Toast.LENGTH_LONG).show();
                 if (s.equals("1") || s.equals("2")){
                     finish();
@@ -106,7 +114,10 @@ public class Promo extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(Config.KEY_SHARED_PREF, Context.MODE_PRIVATE);
         String email = sharedPref.getString(Config.KEY_SP_EMAIL, "-1");
         String idPersona = sharedPref.getString(Config.KEY_SP_ID, "-1");
-        String params = "idPersona=" + idPersona + "&email=" + email + "&telefono=" + tiTel.getText() + "&rut=" + tiRut.getText();
+        String params = "idPersona=" + idPersona +
+                "&email=" + email +
+                "&telefono=" + tiTel.getText().toString() +
+                "&rut=" + tiRut.getText().toString();
         System.out.println("print params = "+params);
         (new Participar()).execute(params);
     }
