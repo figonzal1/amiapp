@@ -216,4 +216,10 @@ public class FragmentCategory extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCategories();
+    }
+
 }

@@ -33,16 +33,7 @@ public class OrderViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //arrow back refresh main activity.
-                int count = getFragmentManager().getBackStackEntryCount();
-
-                if(count==0){
-                    Intent intent = new Intent(OrderViewActivity.this,MainActivity.class);
-                    startActivity(intent);
-                }
-
-                else {
-                    getFragmentManager().popBackStack();
-                }
+                finish();
             }
         });
 
@@ -119,22 +110,6 @@ public class OrderViewActivity extends AppCompatActivity {
                 }
             }.start();
 
-        }
-    }
-
-    @Override
-    public void onBackPressed(){
-
-        int count = getFragmentManager().getBackStackEntryCount();
-
-        if(count==0){
-            super.onBackPressed();
-            Intent intent = new Intent(OrderViewActivity.this,MainActivity.class);
-            startActivity(intent);
-        }
-
-        else {
-            getFragmentManager().popBackStack();
         }
     }
 }
