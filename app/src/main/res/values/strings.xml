@@ -187,6 +187,7 @@
     <string name="OfferViewTittle">Título oferta</string>
     <string name="OfferViewDescription">Descripción de la oferta</string>
     <string name="OfferViewPrice">$x.xxx</string>
+    <string name="OfferViewPriceCU">c/u</string>
     <string name="OfferViewDsctTxt">Descuento</string>
     <string name="OfferViewDsct">-x.x%</string>
     <string name="OfferViewOffer">Oferta</string>

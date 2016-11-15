@@ -9,6 +9,7 @@ public class ProductModel {
     private String description;
     private int price;
     private String image;
+    private String quantity;
 
     //Getters
 
@@ -28,6 +29,10 @@ public class ProductModel {
         return name;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
     //Setters
 
 
@@ -45,5 +50,9 @@ public class ProductModel {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }

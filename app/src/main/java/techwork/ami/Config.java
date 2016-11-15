@@ -249,6 +249,7 @@ public class Config {
 	public static final String TAG_GET_PRODUCT_OFFER_DESCRIPTION="descripcion";
 	public static final String TAG_GET_PRODUCT_OFFER_PRICE="precio";
 	public static final String TAG_GET_PRODUCT_OFFER_IMAGE="imagen";
+	public static final String TAG_GET_PRODUCT_OFFER_QUANTITY="cantidad";
 	//Discard OffersActivity
 	public static final String URL_DISCARD_OFFER="http://amiapp.cl/public/getData/Need/discardOffer.php";
 	public static final String KEY_DISCARD_OFFER_IDOFFER="idOferta";
