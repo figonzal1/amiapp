@@ -103,7 +103,8 @@
                         android:layout_height="match_parent"
                         android:layout_below="@+id/tv_web2"
                         android:layout_marginTop="15dp"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:weightSum="1">
 
                         <Button
                             android:id="@+id/btn_local_street_view"
