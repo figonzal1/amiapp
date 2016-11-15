@@ -201,6 +201,7 @@ public class OffersReservationsViewActivity extends AppCompatActivity {
                 item.setDescription(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_DESCRIPTION));
                 item.setPrice(jsonObjectItem.getInt(Config.TAG_GET_PRODUCT_OFFER_PRICE));
                 item.setImage(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_IMAGE));
+                item.setQuantity(jsonObjectItem.getString(Config.TAG_GET_PRODUCT_OFFER_QUANTITY));
                 productList.add(item);
             }
 

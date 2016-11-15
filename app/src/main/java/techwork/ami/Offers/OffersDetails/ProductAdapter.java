@@ -61,6 +61,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.tvName.setText(model.getName());
         holder.tvDescription.setText(model.getDescription());
         holder.tvPrice.setText(String.format(Config.CLP_FORMAT,model.getPrice()));
+
+        if (Integer.valueOf(model.getQuantity())>1){
+            holder.tvPrice.setText(String.format(Config.QUANTITYPRICE_FORMAT,model.getQuantity(),
+                    String.format(Config.CLP_FORMAT,model.getPrice()),
+                    context.getResources().getString(R.string.OfferViewPriceCU)));
+        }else{
+            holder.tvPrice.setText(String.format(Config.CLP_FORMAT,model.getPrice()));
+        }
+
         Picasso.with(context)
                 .load(Config.URL_IMAGES_PRODUCTS+model.getImage())
                 .placeholder(R.drawable.image_default)
