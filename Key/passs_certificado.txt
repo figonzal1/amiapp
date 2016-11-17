@@ -1,0 +1,5 @@
+Certificado Android
+
+Key store password:techworkamiapp
+Key Alias: AMI
+Key passwork: techworkamiapp
